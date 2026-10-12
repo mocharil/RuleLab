@@ -7,3 +7,4 @@ credentials/
 artifacts/
 node_modules/
 gemini_sa.json
+"gemini_sa.json"
