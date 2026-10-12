@@ -1,0 +1,173 @@
+{
+  "$defs": {
+    "EvidenceQuote": {
+      "properties": {
+        "evidence_id": {
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "quote": {
+          "maxLength": 12000,
+          "minLength": 1,
+          "title": "Quote",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "quote"
+      ],
+      "title": "EvidenceQuote",
+      "type": "object"
+    },
+    "Finding": {
+      "properties": {
+        "article_number": {
+          "title": "Article Number",
+          "type": "string"
+        },
+        "category": {
+          "enum": [
+            "potential_vertical_conflict",
+            "potential_horizontal_conflict",
+            "ambiguity",
+            "implementation_risk",
+            "coverage_gap"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "reasoning": {
+          "title": "Reasoning",
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "counterargument": {
+          "title": "Counterargument",
+          "type": "string"
+        },
+        "proposed_text": {
+          "title": "Proposed Text",
+          "type": "string"
+        },
+        "review_questions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Review Questions",
+          "type": "array"
+        },
+        "legal_rule_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Legal Rule Ids",
+          "type": "array"
+        },
+        "evidence_quotes": {
+          "items": {
+            "$ref": "#/$defs/EvidenceQuote"
+          },
+          "title": "Evidence Quotes",
+          "type": "array"
+        },
+        "norm_collision": {
+          "default": "",
+          "title": "Norm Collision",
+          "type": "string"
+        },
+        "legal_checks": {
+          "$ref": "#/$defs/LegalChecks"
+        }
+      },
+      "required": [
+        "article_number",
+        "category",
+        "severity",
+        "title",
+        "reasoning",
+        "counterargument",
+        "proposed_text"
+      ],
+      "title": "Finding",
+      "type": "object"
+    },
+    "LegalChecks": {
+      "properties": {
+        "temporal": {
+          "default": "belum diverifikasi",
+          "title": "Temporal",
+          "type": "string"
+        },
+        "scope": {
+          "default": "belum diverifikasi",
+          "title": "Scope",
+          "type": "string"
+        },
+        "authority": {
+          "default": "belum diverifikasi",
+          "title": "Authority",
+          "type": "string"
+        },
+        "exceptions": {
+          "default": "belum diverifikasi",
+          "title": "Exceptions",
+          "type": "string"
+        },
+        "alternative_interpretation": {
+          "default": "belum diverifikasi",
+          "title": "Alternative Interpretation",
+          "type": "string"
+        }
+      },
+      "title": "LegalChecks",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "summary": {
+      "title": "Summary",
+      "type": "string"
+    },
+    "findings": {
+      "items": {
+        "$ref": "#/$defs/Finding"
+      },
+      "title": "Findings",
+      "type": "array"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "summary",
+    "findings",
+    "limitations"
+  ],
+  "title": "AnalysisOutput",
+  "type": "object"
+}

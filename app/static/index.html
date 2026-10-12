@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#b42338"><title>RuleLab · Workspace regulasi</title><meta name="description" content="Editor, pustaka, bot edukasi hukum dan simulasi dampak untuk rancangan regulasi Indonesia."><link rel="icon" href="/static/brand/rulelab-logo-manrope-v2.png">
+<link rel="preload" href="/static/fonts/Manrope.ttf" as="font" type="font/ttf" crossorigin><link rel="preload" href="/static/fonts/CormorantGaramond.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="/static/framework/framework.css"><link rel="stylesheet" href="/static/design.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Langsung ke konten</a>
+<aside class="sidebar" id="workspace-sidebar" aria-label="Sidebar workspace"></aside>
+<div class="shell">
+<header class="topbar"><div class="breadcrumb"><span class="breadcrumb-workspace">Workspace</span><span class="breadcrumb-separator">/</span><strong id="crumb">Ringkasan</strong></div><div class="topbar-right"><div id="framework-tools"></div><span class="topbar-divider"></span><button id="menu-help" class="menu-help" data-ux="tour" aria-label="Panduan menu"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.2 9a3 3 0 0 1 5.7 1c0 2-3 2-3 4m0 3h.1"/></svg></button><span id="provider-pill" class="pill amber">Mode demo</span><span id="corpus-pill" class="pill corpus-status">Memuat sumber…</span></div></header>
+<main id="main" tabindex="-1"><div class="loading" role="status">Menyiapkan workspace…</div></main>
+<footer class="app-footer"><span>RuleLab · Indonesia</span><div class="actions"><button class="text-button" data-action="legal-guide">Pedoman legal</button><span>Hasil analisis memerlukan review manusia.</span></div></footer>
+</div>
+<dialog id="guide-dialog" aria-labelledby="coach-title"></dialog>
+<dialog id="progress-modal" aria-labelledby="progress-title" aria-describedby="progress-copy"><div class="loading-paper" aria-hidden="true"><span class="loading-paper-heading"></span><span></span><span></span><span class="loading-paper-short"></span></div><h2 id="progress-title">Menyiapkan workspace</h2><p id="progress-copy" role="status" aria-live="polite">Memuat data…</p><div class="progress-track" role="progressbar" aria-label="Proses berlangsung"></div><p class="micro">Durasi bergantung pada dokumen dan layanan AI.</p></dialog>
+<div id="toast" role="status"></div><dialog id="modal"><div id="modal-content"></div></dialog><script type="module" src="/static/app.js"></script>
+</body></html>

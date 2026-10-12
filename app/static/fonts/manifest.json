@@ -1,0 +1,20 @@
+[
+  {
+    "family": "Manrope",
+    "file": "app/static/fonts/Manrope.ttf",
+    "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6",
+    "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/Manrope%5Bwght%5D.ttf",
+    "license": "Manrope-OFL.txt",
+    "downloaded_on": "2026-10-11",
+    "weight": "variable"
+  },
+  {
+    "family": "CormorantGaramond",
+    "file": "app/static/fonts/CormorantGaramond.ttf",
+    "sha256": "b20b7d9626dd956b2c5e558692ad328b1f19e3275e2782db4fa07670d83f35e0",
+    "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/CormorantGaramond%5Bwght%5D.ttf",
+    "license": "CormorantGaramond-OFL.txt",
+    "downloaded_on": "2026-10-11",
+    "weight": "variable"
+  }
+]

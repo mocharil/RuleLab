@@ -1,0 +1,1063 @@
+[
+  {
+    "id": "uu-15-2019/instruction/1",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "1",
+    "operation": "replace_article",
+    "target_articles": [
+      "1"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "1. Ketentuan Pasal 1 diubah sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      2
+    ],
+    "replacement_evidence_ids": [
+      "uu-15-2019@88867eea2eb4/pasal/1"
+    ],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-15-2019/instruction/2",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "2",
+    "operation": "replace_article",
+    "target_articles": [
+      "20"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "2. Ketentuan Pasal 20 diubah sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      5
+    ],
+    "replacement_evidence_ids": [
+      "uu-15-2019@88867eea2eb4/pasal/20"
+    ],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-15-2019/instruction/3",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "3",
+    "operation": "replace_paragraph",
+    "target_articles": [
+      "21"
+    ],
+    "target_paragraphs": [
+      "4"
+    ],
+    "source_quote": "3. Ketentuan ayat (4) Pasal 21 diubah sehingga Pasal 21 berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      6
+    ],
+    "replacement_evidence_ids": [
+      "uu-15-2019@88867eea2eb4/pasal/21"
+    ],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-15-2019/instruction/4",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "4",
+    "operation": "replace_paragraph",
+    "target_articles": [
+      "23"
+    ],
+    "target_paragraphs": [
+      "2"
+    ],
+    "source_quote": "4. Ketentuan ayat (2) Pasal 23 diubah sehingga Pasal 23 berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      6
+    ],
+    "replacement_evidence_ids": [
+      "uu-15-2019@88867eea2eb4/pasal/23"
+    ],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-15-2019/instruction/5",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "5",
+    "operation": "replace_paragraph",
+    "target_articles": [
+      "26"
+    ],
+    "target_paragraphs": [
+      "1"
+    ],
+    "source_quote": "5. Ketentuan ayat (1) Pasal 26 diubah sehingga Pasal 26 berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      7
+    ],
+    "replacement_evidence_ids": [
+      "uu-15-2019@88867eea2eb4/pasal/26"
+    ],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-15-2019/instruction/6",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "6",
+    "operation": "replace_article",
+    "target_articles": [
+      "47"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "6. Ketentuan Pasal 47 diubah sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      7
+    ],
+    "replacement_evidence_ids": [
+      "uu-15-2019@88867eea2eb4/pasal/47"
+    ],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-15-2019/instruction/7",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "7",
+    "operation": "replace_article",
+    "target_articles": [
+      "49"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "7. Ketentuan Pasal 49 diubah sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      8
+    ],
+    "replacement_evidence_ids": [
+      "uu-15-2019@88867eea2eb4/pasal/49"
+    ],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-15-2019/instruction/8",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "8",
+    "operation": "replace_article",
+    "target_articles": [
+      "54"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "8. Ketentuan Pasal 54 diubah sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      8
+    ],
+    "replacement_evidence_ids": [
+      "uu-15-2019@88867eea2eb4/pasal/54"
+    ],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-15-2019/instruction/9",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "9",
+    "operation": "replace_article",
+    "target_articles": [
+      "55"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "9. Ketentuan Pasal 55 diubah sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      9
+    ],
+    "replacement_evidence_ids": [
+      "uu-15-2019@88867eea2eb4/pasal/55"
+    ],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-15-2019/instruction/10",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "10",
+    "operation": "replace_paragraph",
+    "target_articles": [
+      "58"
+    ],
+    "target_paragraphs": [
+      "2"
+    ],
+    "source_quote": "10. Ketentuan ayat (2) Pasal 58 diubah sehingga Pasal 58 berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      9
+    ],
+    "replacement_evidence_ids": [
+      "uu-15-2019@88867eea2eb4/pasal/58"
+    ],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-15-2019/instruction/11",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "11",
+    "operation": "insert_article",
+    "target_articles": [
+      "71A"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "11. Di antara Pasal 71 dan Pasal 72 disisipkan 1 (satu) pasal, yakni Pasal 71A sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      10
+    ],
+    "replacement_evidence_ids": [
+      "uu-15-2019@88867eea2eb4/pasal/71A"
+    ],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-15-2019/instruction/12",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "12",
+    "operation": "change_explanation",
+    "target_articles": [
+      "72"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "12. Ketentuan Pasal 72 tetap, Penjelasan Pasal 72 diubah sebagaimana tercantum dalam penjelasan pasal demi pasal.",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      10
+    ],
+    "replacement_evidence_ids": [],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-15-2019/instruction/13",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "13",
+    "operation": "replace_article",
+    "target_articles": [
+      "85"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "13. Ketentuan Pasal 85 diubah sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      10
+    ],
+    "replacement_evidence_ids": [
+      "uu-15-2019@88867eea2eb4/pasal/85"
+    ],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-15-2019/instruction/14",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "14",
+    "operation": "replace_paragraph",
+    "target_articles": [
+      "91"
+    ],
+    "target_paragraphs": [
+      "1"
+    ],
+    "source_quote": "14. Ketentuan ayat (1) Pasal 91 diubah sehingga Pasal 91 berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      10
+    ],
+    "replacement_evidence_ids": [
+      "uu-15-2019@88867eea2eb4/pasal/91"
+    ],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-15-2019/instruction/15",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "15",
+    "operation": "requires_manual_interpretation",
+    "target_articles": [],
+    "target_paragraphs": [],
+    "source_quote": "15. Di antara BAB X dan BAB XI disisipkan 1 (satu) bab, yakni BAB XA sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      11
+    ],
+    "replacement_evidence_ids": [],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-15-2019/instruction/16",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "16",
+    "operation": "insert_article",
+    "target_articles": [
+      "95A",
+      "95B"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "16. Di antara Pasal 95 dan Pasal 96 disisipkan 2 (dua) pasal, yakni Pasal 95A dan Pasal 95B sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      11
+    ],
+    "replacement_evidence_ids": [
+      "uu-15-2019@88867eea2eb4/pasal/95A",
+      "uu-15-2019@88867eea2eb4/pasal/95B"
+    ],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-15-2019/instruction/17",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "17",
+    "operation": "requires_manual_interpretation",
+    "target_articles": [],
+    "target_paragraphs": [],
+    "source_quote": "17. Di antara BAB XII dan BAB XIII disisipkan 1 (satu) bab, yakni BAB XIIA sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      12
+    ],
+    "replacement_evidence_ids": [],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-15-2019/instruction/18",
+    "source_regulation_id": "uu-15-2019",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "18",
+    "operation": "insert_article",
+    "target_articles": [
+      "99A"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "18. Di antara Pasal 99 dan Pasal 100 disisipkan 1 (satu) pasal, yakni Pasal 99A sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "pages": [
+      12
+    ],
+    "replacement_evidence_ids": [
+      "uu-15-2019@88867eea2eb4/pasal/99A"
+    ],
+    "effective_date_candidate": "2019-10-04",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-13-2022/instruction/1",
+    "source_regulation_id": "uu-13-2022",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "1",
+    "operation": "change_explanation",
+    "target_articles": [],
+    "target_paragraphs": [],
+    "source_quote": "1. Penjelasan Pasal 5 huruf g diubah sebagaimana tercantum dalam penjelasan.",
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "pages": [
+      3
+    ],
+    "replacement_evidence_ids": [],
+    "effective_date_candidate": "2022-06-16",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-13-2022/instruction/2",
+    "source_regulation_id": "uu-13-2022",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "2",
+    "operation": "replace_article",
+    "target_articles": [
+      "9"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "2. Ketentuan Pasal 9 diubah sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "pages": [
+      3
+    ],
+    "replacement_evidence_ids": [
+      "uu-13-2022@bdcdf76cb1b0/pasal/9"
+    ],
+    "effective_date_candidate": "2022-06-16",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-13-2022/instruction/3",
+    "source_regulation_id": "uu-13-2022",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "3",
+    "operation": "requires_manual_interpretation",
+    "target_articles": [],
+    "target_paragraphs": [],
+    "source_quote": "3. Setelah Bagian Keenam Bab IV ditambahkan 1 (satu) bagian, yakni Bagian Ketujuh sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "pages": [
+      4
+    ],
+    "replacement_evidence_ids": [],
+    "effective_date_candidate": "2022-06-16",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-13-2022/instruction/4",
+    "source_regulation_id": "uu-13-2022",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "4",
+    "operation": "insert_article",
+    "target_articles": [
+      "42A"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "4. Di antara Pasal 42 dan Pasal 43 disisipkan 1 (satu) pasal, yakni Pasal 42A sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "pages": [
+      5
+    ],
+    "replacement_evidence_ids": [
+      "uu-13-2022@bdcdf76cb1b0/pasal/42A"
+    ],
+    "effective_date_candidate": "2022-06-16",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-13-2022/instruction/5",
+    "source_regulation_id": "uu-13-2022",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "5",
+    "operation": "replace_paragraph",
+    "target_articles": [
+      "49"
+    ],
+    "target_paragraphs": [
+      "2"
+    ],
+    "source_quote": "5. Ketentuan ayat (2) Pasal 49 diubah sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "pages": [
+      5
+    ],
+    "replacement_evidence_ids": [
+      "uu-13-2022@bdcdf76cb1b0/pasal/49"
+    ],
+    "effective_date_candidate": "2022-06-16",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-13-2022/instruction/6",
+    "source_regulation_id": "uu-13-2022",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "6",
+    "operation": "replace_article",
+    "target_articles": [
+      "58"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "6. Ketentuan Pasal 58 diubah sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "pages": [
+      5
+    ],
+    "replacement_evidence_ids": [
+      "uu-13-2022@bdcdf76cb1b0/pasal/58"
+    ],
+    "effective_date_candidate": "2022-06-16",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-13-2022/instruction/7",
+    "source_regulation_id": "uu-13-2022",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "7",
+    "operation": "insert_paragraph",
+    "target_articles": [
+      "64"
+    ],
+    "target_paragraphs": [
+      "1a",
+      "1b"
+    ],
+    "source_quote": "7. Di antara ayat (1) dan ayat (2) Pasal 64 disisipkan 2 (dua) ayat, yakni ayat (1a) dan ayat (1b) sehingga Pasal 64 berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "pages": [
+      6
+    ],
+    "replacement_evidence_ids": [
+      "uu-13-2022@bdcdf76cb1b0/pasal/64"
+    ],
+    "effective_date_candidate": "2022-06-16",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-13-2022/instruction/8",
+    "source_regulation_id": "uu-13-2022",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "8",
+    "operation": "compound_change",
+    "target_articles": [
+      "72"
+    ],
+    "target_paragraphs": [
+      "1a",
+      "1b",
+      "2"
+    ],
+    "source_quote": "8. Di antara ayat (1) dan ayat (2) Pasal 72 disisipkan 2 (dua) ayat, yakni ayat (1a) dan ayat (1b) serta ketentuan ayat (2) Pasal 72 diubah sehingga Pasal 72 berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "pages": [
+      7
+    ],
+    "replacement_evidence_ids": [
+      "uu-13-2022@bdcdf76cb1b0/pasal/72"
+    ],
+    "effective_date_candidate": "2022-06-16",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-13-2022/instruction/9",
+    "source_regulation_id": "uu-13-2022",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "9",
+    "operation": "replace_article",
+    "target_articles": [
+      "73"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "9. Ketentuan Pasal 73 diubah sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "pages": [
+      8
+    ],
+    "replacement_evidence_ids": [
+      "uu-13-2022@bdcdf76cb1b0/pasal/73"
+    ],
+    "effective_date_candidate": "2022-06-16",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-13-2022/instruction/10",
+    "source_regulation_id": "uu-13-2022",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "10",
+    "operation": "change_explanation",
+    "target_articles": [],
+    "target_paragraphs": [],
+    "source_quote": "10. Penjelasan Pasal 78 diubah sebagaimana tercantum dalam penjelasan.",
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "pages": [
+      9
+    ],
+    "replacement_evidence_ids": [],
+    "effective_date_candidate": "2022-06-16",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-13-2022/instruction/11",
+    "source_regulation_id": "uu-13-2022",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "11",
+    "operation": "replace_article",
+    "target_articles": [
+      "85"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "11. Ketentuan Pasal 85 diubah sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "pages": [
+      9
+    ],
+    "replacement_evidence_ids": [
+      "uu-13-2022@bdcdf76cb1b0/pasal/85"
+    ],
+    "effective_date_candidate": "2022-06-16",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-13-2022/instruction/12",
+    "source_regulation_id": "uu-13-2022",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "12",
+    "operation": "change_explanation",
+    "target_articles": [],
+    "target_paragraphs": [],
+    "source_quote": "12. Penjelasan Pasal 95 diubah sebagaimana tercantum dalam penjelasan.",
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "pages": [
+      9
+    ],
+    "replacement_evidence_ids": [],
+    "effective_date_candidate": "2022-06-16",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-13-2022/instruction/13",
+    "source_regulation_id": "uu-13-2022",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "13",
+    "operation": "replace_paragraph",
+    "target_articles": [
+      "95A"
+    ],
+    "target_paragraphs": [
+      "3",
+      "3",
+      "4",
+      "3a",
+      "3b",
+      "2",
+      "4"
+    ],
+    "source_quote": "13. Ketentuan ayat (3) Pasal 95A diubah dan di antara ayat (3) dan ayat (4) disisipkan 2 (dua) ayat, yakni ayat (3a) dan ayat (3b), serta penjelasan ayat (2) dan ayat (4) Pasal 95A diubah sehingga Pasal 95A berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "pages": [
+      10
+    ],
+    "replacement_evidence_ids": [
+      "uu-13-2022@bdcdf76cb1b0/pasal/95A"
+    ],
+    "effective_date_candidate": "2022-06-16",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-13-2022/instruction/14",
+    "source_regulation_id": "uu-13-2022",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "14",
+    "operation": "replace_article",
+    "target_articles": [
+      "96"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "14. Ketentuan Pasal 96 diubah sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "pages": [
+      11
+    ],
+    "replacement_evidence_ids": [
+      "uu-13-2022@bdcdf76cb1b0/pasal/96"
+    ],
+    "effective_date_candidate": "2022-06-16",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-13-2022/instruction/15",
+    "source_regulation_id": "uu-13-2022",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "15",
+    "operation": "insert_article",
+    "target_articles": [
+      "97A",
+      "97B",
+      "97C",
+      "97D"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "15. Di antara Pasal 97 dan Pasal 98 disisipkan 4 (empat) pasal, yakni Pasal 97A, Pasal 97B, Pasal 97C, dan Pasal 97D sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "pages": [
+      12
+    ],
+    "replacement_evidence_ids": [
+      "uu-13-2022@bdcdf76cb1b0/pasal/97A",
+      "uu-13-2022@bdcdf76cb1b0/pasal/97B",
+      "uu-13-2022@bdcdf76cb1b0/pasal/97C",
+      "uu-13-2022@bdcdf76cb1b0/pasal/97D"
+    ],
+    "effective_date_candidate": "2022-06-16",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-13-2022/instruction/16",
+    "source_regulation_id": "uu-13-2022",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "16",
+    "operation": "insert_paragraph",
+    "target_articles": [
+      "98"
+    ],
+    "target_paragraphs": [
+      "1a"
+    ],
+    "source_quote": "16. Di antara ayat (1) dan ayat (2) Pasal 98 disisipkan 1 (satu) ayat, yakni ayat (1a) sehingga Pasal 98 berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "pages": [
+      14
+    ],
+    "replacement_evidence_ids": [
+      "uu-13-2022@bdcdf76cb1b0/pasal/98"
+    ],
+    "effective_date_candidate": "2022-06-16",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  },
+  {
+    "id": "uu-13-2022/instruction/17",
+    "source_regulation_id": "uu-13-2022",
+    "source_regulation_type": "UU",
+    "target_regulation_id": "uu-12-2011",
+    "instruction_number": "17",
+    "operation": "replace_article",
+    "target_articles": [
+      "99"
+    ],
+    "target_paragraphs": [],
+    "source_quote": "17. Ketentuan Pasal 99 diubah sehingga berbunyi sebagai berikut:",
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "pages": [
+      14
+    ],
+    "replacement_evidence_ids": [
+      "uu-13-2022@bdcdf76cb1b0/pasal/99"
+    ],
+    "effective_date_candidate": "2022-06-16",
+    "effective_from": null,
+    "review_status": "pending",
+    "auto_apply": false,
+    "method": "limited_regex_from_original_pdf",
+    "limitations": [
+      "Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.",
+      "Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan."
+    ]
+  }
+]

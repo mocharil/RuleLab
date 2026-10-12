@@ -1,0 +1,238 @@
+{
+  "generated_at": "2026-10-11T10:47:58.008287+00:00",
+  "documents": [
+    {
+      "id": "uu-25-2009",
+      "status": "ok",
+      "source_url": "https://jdih.kemenkeu.go.id/api/download/fullText/2009/25TAHUN2009UU.htm",
+      "raw_file": "25TAHUN2009UU.htm",
+      "sha256": "60e640cd8305768c7ea81c50a84eb6b79d16e8e7575ceaf0e265fce0b9b23931",
+      "article_count": 62,
+      "quality": {
+        "ocr_needed_pages": [],
+        "human_verified": false,
+        "article_count": 62,
+        "expected_articles": 62,
+        "missing_article_numbers": [],
+        "body_complete_by_number": true,
+        "limitations": [
+          "OCR belum dijalankan pada halaman tanpa teks.",
+          "Enrichment berbasis aturan, belum divalidasi ahli.",
+          "Lampiran/penjelasan disimpan terpisah bila tersedia."
+        ]
+      },
+      "retrieved_at": "2026-10-11T10:18:00.532052+00:00",
+      "cache_used": true,
+      "attachments": [
+        {
+          "url": "https://peraturan.go.id/files/uu25-2009bt.pdf",
+          "raw_file": "uu25-2009bt.pdf",
+          "sha256": "ad947bb833a33abb29b940e28bbaeaa81aab3a6e9ada433743622b071b7fd6c5",
+          "pages": 36,
+          "ocr_needed_pages": []
+        }
+      ],
+      "attempt_errors": []
+    },
+    {
+      "id": "pp-96-2012",
+      "status": "ok",
+      "source_url": "https://peraturan.go.id/files/pp96-2012bt.pdf",
+      "raw_file": "pp96-2012bt.pdf",
+      "sha256": "f037d890f97b52a94e8b3e5195d64e39a573153f54736151e797511b8972dde7",
+      "article_count": 51,
+      "quality": {
+        "ocr_needed_pages": [],
+        "human_verified": false,
+        "article_count": 51,
+        "expected_articles": 51,
+        "missing_article_numbers": [],
+        "body_complete_by_number": true,
+        "limitations": [
+          "OCR belum dijalankan pada halaman tanpa teks.",
+          "Enrichment berbasis aturan, belum divalidasi ahli.",
+          "Lampiran/penjelasan disimpan terpisah bila tersedia."
+        ]
+      },
+      "retrieved_at": "2026-10-11T10:18:07.957509+00:00",
+      "cache_used": true,
+      "attachments": [],
+      "attempt_errors": []
+    },
+    {
+      "id": "uu-8-2016",
+      "status": "ok",
+      "source_url": "https://peraturan.go.id/files/uu8-2016bt.pdf",
+      "raw_file": "uu8-2016bt.pdf",
+      "sha256": "cae383fd43c9f313ce024bb386ffd9357b28a116cfee86b99db97c9022395a13",
+      "article_count": 153,
+      "quality": {
+        "ocr_needed_pages": [],
+        "human_verified": false,
+        "article_count": 153,
+        "expected_articles": 153,
+        "missing_article_numbers": [],
+        "body_complete_by_number": true,
+        "limitations": [
+          "OCR belum dijalankan pada halaman tanpa teks.",
+          "Enrichment berbasis aturan, belum divalidasi ahli.",
+          "Lampiran/penjelasan disimpan terpisah bila tersedia."
+        ]
+      },
+      "retrieved_at": "2026-10-11T10:18:56.202062+00:00",
+      "cache_used": true,
+      "attachments": [
+        {
+          "url": "https://peraturan.go.id/files/uu8-2016pjl.pdf",
+          "raw_file": "uu8-2016pjl.pdf",
+          "sha256": "241038602f7d928de0ce2f3b2408bd3687a3f5fefe86bdbf09a528d4cf937ca4",
+          "pages": 27,
+          "ocr_needed_pages": []
+        }
+      ],
+      "attempt_errors": []
+    },
+    {
+      "id": "uu-12-2011",
+      "status": "ok",
+      "source_url": "https://peraturan.go.id/files/uu12-2011bt.pdf",
+      "raw_file": "uu12-2011bt.pdf",
+      "sha256": "6e437449b68b0964a114373a388c7a13e652316da78b4a46e1a1ee13ae719310",
+      "article_count": 104,
+      "quality": {
+        "ocr_needed_pages": [],
+        "human_verified": false,
+        "article_count": 104,
+        "expected_articles": 104,
+        "missing_article_numbers": [],
+        "body_complete_by_number": true,
+        "limitations": [
+          "OCR belum dijalankan pada halaman tanpa teks.",
+          "Enrichment berbasis aturan, belum divalidasi ahli.",
+          "Lampiran/penjelasan disimpan terpisah bila tersedia."
+        ]
+      },
+      "retrieved_at": "2026-10-11T10:19:34.956533+00:00",
+      "cache_used": true,
+      "attachments": [
+        {
+          "url": "https://peraturan.go.id/files/uu12-2011pjl.pdf",
+          "raw_file": "uu12-2011pjl.pdf",
+          "status": "not_downloaded"
+        },
+        {
+          "url": "https://peraturan.go.id/files/uu12-2011lmp1.pdf",
+          "raw_file": "uu12-2011lmp1.pdf",
+          "sha256": "d5d90dc6796dec323828546b2c5213b65e18f1eab375bbfdd104f6ffa67a5613",
+          "pages": 8,
+          "ocr_needed_pages": []
+        },
+        {
+          "url": "https://peraturan.go.id/files/uu12-2011lmp2.pdf",
+          "raw_file": "uu12-2011lmp2.pdf",
+          "sha256": "ae7f0561561a38d45d3046aa4fea307a923ea42e995337d199e0767f119c7bb6",
+          "pages": 117,
+          "ocr_needed_pages": []
+        }
+      ],
+      "attempt_errors": []
+    },
+    {
+      "id": "uu-15-2019",
+      "status": "ok",
+      "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+      "raw_file": "uu15-2019bt.pdf",
+      "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+      "article_count": 18,
+      "quality": {
+        "ocr_needed_pages": [],
+        "human_verified": false,
+        "article_count": 18,
+        "expected_articles": null,
+        "missing_article_numbers": [],
+        "body_complete_by_number": false,
+        "limitations": [
+          "OCR belum dijalankan pada halaman tanpa teks.",
+          "Enrichment berbasis aturan, belum divalidasi ahli.",
+          "Lampiran/penjelasan disimpan terpisah bila tersedia."
+        ]
+      },
+      "retrieved_at": "2026-10-11T10:18:08.273659+00:00",
+      "cache_used": true,
+      "attachments": [
+        {
+          "url": "https://peraturan.go.id/files/uu15-2019pjl.pdf",
+          "raw_file": "uu15-2019pjl.pdf",
+          "sha256": "6643ec0af0151cf208012f0ef33e81621233d0bafe6e61bd0f08d864759b26c5",
+          "pages": 5,
+          "ocr_needed_pages": []
+        }
+      ],
+      "attempt_errors": []
+    },
+    {
+      "id": "uu-13-2022",
+      "status": "ok",
+      "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+      "raw_file": "uu13-2022.pdf",
+      "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+      "article_count": 18,
+      "quality": {
+        "ocr_needed_pages": [
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55
+        ],
+        "human_verified": false,
+        "article_count": 18,
+        "expected_articles": null,
+        "missing_article_numbers": [],
+        "body_complete_by_number": false,
+        "limitations": [
+          "OCR belum dijalankan pada halaman tanpa teks.",
+          "Enrichment berbasis aturan, belum divalidasi ahli.",
+          "Lampiran/penjelasan disimpan terpisah bila tersedia."
+        ]
+      },
+      "retrieved_at": "2026-10-11T10:18:08.470389+00:00",
+      "cache_used": true,
+      "attachments": [],
+      "attempt_errors": []
+    }
+  ]
+}

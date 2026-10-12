@@ -1,0 +1,10 @@
+.venv
+.env
+credentials
+__pycache__
+.pytest_cache
+*.sqlite*
+artifacts
+.git
+node_modules
+credentials/

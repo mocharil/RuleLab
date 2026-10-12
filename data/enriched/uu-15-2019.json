@@ -1,0 +1,1048 @@
+{
+  "schema_version": "1.0",
+  "id": "uu-15-2019",
+  "version_id": "uu-15-2019@88867eea2eb4",
+  "metadata": {
+    "id": "uu-15-2019",
+    "type": "UU",
+    "number": 15,
+    "year": 2019,
+    "title": "Perubahan atas Undang-Undang Nomor 12 Tahun 2011 tentang Pembentukan Peraturan Perundang-undangan",
+    "promulgated_on": "2019-10-04",
+    "expected_articles": null,
+    "source_page": "https://peraturan.go.id/id/uu-no-15-tahun-2019",
+    "urls": [
+      "https://peraturan.go.id/files/uu15-2019bt.pdf"
+    ],
+    "amends": [
+      "uu-12-2011"
+    ],
+    "version_kind": "amendment",
+    "attachments": [
+      "https://peraturan.go.id/files/uu15-2019pjl.pdf"
+    ],
+    "hierarchy_rank": 3,
+    "jurisdiction": "Indonesia",
+    "language": "id",
+    "dates_method": "curated_from_source",
+    "status_as_of": null,
+    "status_note": "Snapshot naskah asli, bukan konsolidasi hukum berlaku. Perubahan dan putusan pengadilan belum diverifikasi menyeluruh."
+  },
+  "provenance": {
+    "source_url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+    "source_page": "https://peraturan.go.id/id/uu-no-15-tahun-2019",
+    "retrieved_at": "2026-10-11T10:18:08.273659+00:00",
+    "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+    "raw_file": "raw/uu15-2019bt.pdf",
+    "extracted_file": "extracted/uu-15-2019.json"
+  },
+  "quality": {
+    "ocr_needed_pages": [],
+    "human_verified": false,
+    "article_count": 18,
+    "expected_articles": null,
+    "missing_article_numbers": [],
+    "body_complete_by_number": false,
+    "limitations": [
+      "OCR belum dijalankan pada halaman tanpa teks.",
+      "Enrichment berbasis aturan, belum divalidasi ahli.",
+      "Lampiran/penjelasan disimpan terpisah bila tersedia."
+    ]
+  },
+  "articles": [
+    {
+      "number": "I",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        2
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/I",
+      "text": "Beberapa ketentuan dalam Undang-Undang Nomor 12 Tahun 2011 tentang Pembentukan Peraturan Perundang- undangan (Lembaran Negara Republik Indonesia Tahun 2011 Nomor 82, Tambahan Lembaran Negara Republik Indonesia Nomor 5234) diubah sebagai berikut: 1. Ketentuan Pasal 1 diubah sehingga berbunyi sebagai berikut:",
+      "paragraphs": [],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [],
+        "norm_types": [],
+        "actors": [],
+        "references": [
+          "Pasal 1"
+        ],
+        "extractive_preview": "Beberapa ketentuan dalam Undang-Undang Nomor 12 Tahun 2011 tentang Pembentukan Peraturan Perundang- undangan (Lembaran Negara Republik Indonesia Tahun 2011 Nomor 82, Tambahan Lembaran Negara Republik Indonesia Nomor 5234) diubah sebagai ber",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          2
+        ]
+      }
+    },
+    {
+      "number": "1",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/1",
+      "text": "Dalam Undang-Undang ini yang dimaksud dengan: 1. Pembentukan Peraturan Perundang-undangan adalah pembuatan Peraturan Perundang-undangan yang mencakup tahapan perencanaan, penyusunan, pembahasan, pengesahan atau penetapan, dan pengundangan. 2. Peraturan Perundang-undangan adalah peraturan tertulis yang memuat norma hukum yang mengikat secara umum dan dibentuk atau ditetapkan oleh lembaga negara atau pejabat yang berwenang melalui prosedur yang ditetapkan dalam Peraturan Perundang- undangan. 3. Undang-Undang adalah Peraturan Perundang- undangan yang dibentuk oleh Dewan Perwakilan Rakyat dengan persetujuan bersama Presiden. 4. Peraturan Pemerintah Pengganti Undang-Undang adalah Peraturan Perundang-undangan yang ditetapkan oleh Presiden dalam hal ihwal kegentingan yang memaksa. 5. Peraturan Pemerintah adalah Peraturan Perundang- undangan yang ditetapkan oleh Presiden untuk menjalankan Undang-Undang sebagaimana mestinya. 6. Peraturan Presiden adalah Peraturan Perundang- undangan yang ditetapkan oleh Presiden untuk menjalankan perintah Peraturan Perundang-undangan yang lebih tinggi atau dalam menyelenggarakan kekuasaan pemerintahan. 7. Peraturan Daerah Provinsi adalah Peraturan Perundang- undangan yang dibentuk oleh Dewan Perwakilan Rakyat Daerah Provinsi dengan persetujuan bersama Gubernur. 8. Peraturan Daerah Kabupaten/Kota adalah Peraturan Perundang-undangan yang dibentuk oleh Dewan Perwakilan Rakyat Daerah Kabupaten/Kota dengan persetujuan bersama Bupati/Walikota. 9. Program Legislasi Nasional yang selanjutnya disebut Prolegnas adalah instrumen perencanaan program pembentukan Undang-Undang yang disusun secara terencana, terpadu, dan sistematis. 10. Program Legislasi Daerah yang selanjutnya disebut Prolegda adalah instrumen perencanaan program pembentukan Peraturan Daerah Provinsi atau Peraturan Daerah Kabupaten/Kota yang disusun secara terencana, terpadu, dan sistematis. 11. Naskah Akademik adalah naskah hasil penelitian atau pengkajian hukum dan hasil penelitian lainnya terhadap suatu masalah tertentu yang dapat dipertanggungjawabkan secara ilmiah mengenai pengaturan masalah tersebut dalam suatu Rancangan Undang-Undang, Rancangan Peraturan Daerah Provinsi, atau Rancangan Peraturan Daerah Kabupaten/Kota sebagai solusi terhadap permasalahan dan kebutuhan hukum masyarakat. 12. Pengundangan adalah penempatan Peraturan Perundang-undangan dalam Lembaran Negara Republik Indonesia, Tambahan Lembaran Negara Republik Indonesia, Berita Negara Republik Indonesia, Tambahan Berita Negara Republik Indonesia, Lembaran Daerah, Tambahan Lembaran Daerah, atau Berita Daerah. 13. Materi Muatan Peraturan Perundang-undangan adalah materi yang dimuat dalam Peraturan Perundang-undangan sesuai dengan jenis, fungsi, dan hierarki Peraturan Perundang-undangan. 14. Pemantauan dan Peninjauan adalah kegiatan untuk mengamati, mencatat, dan menilai atas pelaksanaan Undang-Undang yang berlaku sehingga diketahui ketercapaian hasil yang direncanakan, dampak yang ditimbulkan, dan kemanfaatannya bagi Negara Kesatuan Republik Indonesia. 15. Dewan Perwakilan Rakyat yang selanjutnya disingkat DPR adalah Dewan Perwakilan Rakyat sebagaimana dimaksud dalam Undang-Undang Dasar Negara Republik Indonesia Tahun 1945. 16. Dewan Perwakilan Daerah yang selanjutnya disingkat DPD adalah Dewan Perwakilan Daerah sebagaimana dimaksud dalam Undang-Undang Dasar Negara Republik Indonesia Tahun 1945. 17. Dewan Perwakilan Rakyat Daerah yang selanjutnya disingkat DPRD adalah Dewan Perwakilan Rakyat Daerah sebagaimana dimaksud dalam Undang- Undang Dasar Negara Republik Indonesia Tahun 1945. 2. Ketentuan Pasal 20 diubah sehingga berbunyi sebagai berikut:",
+      "paragraphs": [],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "partisipasi",
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [
+          "permission"
+        ],
+        "actors": [
+          "masyarakat",
+          "pemerintah",
+          "pelaksana",
+          "presiden"
+        ],
+        "references": [
+          "Pasal 20"
+        ],
+        "extractive_preview": "Dalam Undang-Undang ini yang dimaksud dengan: 1. Pembentukan Peraturan Perundang-undangan adalah pembuatan Peraturan Perundang-undangan yang mencakup tahapan perencanaan, penyusunan, pembahasan, pengesahan atau penetapan, dan pengundangan. ",
+        "exceptions_detected": true
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    },
+    {
+      "number": "20",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        5,
+        6
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/20",
+      "text": "(1) Penyusunan Prolegnas dilaksanakan oleh DPR, DPD, dan Pemerintah. (2) Prolegnas ditetapkan untuk jangka menengah dan tahunan berdasarkan skala prioritas pembentukan Rancangan Undang-Undang. (3) Penyusunan dan penetapan Prolegnas jangka menengah dilakukan pada awal masa keanggotaan DPR sebagai Prolegnas untuk jangka waktu 5 (lima) tahun. (4) Sebelum menyusun dan menetapkan Prolegnas jangka menengah sebagaimana dimaksud pada ayat (3), DPR, DPD, dan Pemerintah melakukan evaluasi terhadap Prolegnas jangka menengah masa keanggotaan DPR sebelumnya. (5) Prolegnas jangka menengah sebagaimana dimaksud pada ayat (3) dapat dievaluasi setiap akhir tahun bersamaan dengan penyusunan dan penetapan Prolegnas prioritas tahunan. (6) Penyusunan dan penetapan Prolegnas prioritas tahunan sebagai pelaksanaan Prolegnas jangka menengah dilakukan setiap tahun sebelum penetapan Rancangan Undang-Undang tentang Anggaran Pendapatan dan Belanja Negara. 3. Ketentuan ayat (4) Pasal 21 diubah sehingga Pasal 21 berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Penyusunan Prolegnas dilaksanakan oleh DPR, DPD, dan Pemerintah."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Prolegnas ditetapkan untuk jangka menengah dan tahunan berdasarkan skala prioritas pembentukan Rancangan Undang-Undang."
+        },
+        {
+          "number": "3",
+          "kind": "ayat",
+          "text": "(3) Penyusunan dan penetapan Prolegnas jangka menengah dilakukan pada awal masa keanggotaan DPR sebagai Prolegnas untuk jangka waktu 5 (lima) tahun."
+        },
+        {
+          "number": "4",
+          "kind": "ayat",
+          "text": "(4) Sebelum menyusun dan menetapkan Prolegnas jangka menengah sebagaimana dimaksud pada ayat"
+        },
+        {
+          "number": "3",
+          "kind": "ayat",
+          "text": "(3), DPR, DPD, dan Pemerintah melakukan evaluasi terhadap Prolegnas jangka menengah masa keanggotaan DPR sebelumnya."
+        },
+        {
+          "number": "5",
+          "kind": "ayat",
+          "text": "(5) Prolegnas jangka menengah sebagaimana dimaksud pada ayat (3) dapat dievaluasi setiap akhir tahun bersamaan dengan penyusunan dan penetapan Prolegnas prioritas tahunan."
+        },
+        {
+          "number": "6",
+          "kind": "ayat",
+          "text": "(6) Penyusunan dan penetapan Prolegnas prioritas tahunan sebagai pelaksanaan Prolegnas jangka menengah dilakukan setiap tahun sebelum penetapan Rancangan Undang-Undang tentang Anggaran Pendapatan dan Belanja Negara. 3. Ketentuan ayat (4) Pasal 21 diubah sehingga Pasal 21 berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi",
+          "biaya"
+        ],
+        "norm_types": [
+          "permission"
+        ],
+        "actors": [
+          "pemerintah",
+          "pelaksana"
+        ],
+        "references": [
+          "Pasal 21"
+        ],
+        "extractive_preview": "(1) Penyusunan Prolegnas dilaksanakan oleh DPR, DPD, dan Pemerintah. (2) Prolegnas ditetapkan untuk jangka menengah dan tahunan berdasarkan skala prioritas pembentukan Rancangan Undang-Undang. (3) Penyusunan dan penetapan Prolegnas jangka m",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          5,
+          6
+        ]
+      }
+    },
+    {
+      "number": "21",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        6
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/21",
+      "text": "(1) Penyusunan Prolegnas antara DPR dan Pemerintah dikoordinasikan oleh DPR melalui alat kelengkapan DPR yang khusus menangani bidang legislasi. (2) Penyusunan Prolegnas di lingkungan DPR dikoordinasikan oleh alat kelengkapan DPR yang khusus menangani bidang legislasi. (3) Penyusunan Prolegnas di lingkungan DPR sebagaimana dimaksud pada ayat (2) dilakukan dengan mempertimbangkan usulan dari fraksi, komisi, anggota DPR, DPD, dan/atau masyarakat. (4) Penyusunan Prolegnas di lingkungan Pemerintah dikoordinasikan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang- undangan. (5) Ketentuan lebih lanjut mengenai tata cara penyusunan Prolegnas sebagaimana dimaksud pada ayat (1), ayat (2), dan ayat (3) diatur dengan Peraturan DPR. (6) Ketentuan lebih lanjut mengenai tata cara penyusunan Prolegnas di lingkungan Pemerintah sebagaimana dimaksud pada ayat (4) diatur dengan Peraturan Presiden. 4. Ketentuan ayat (2) Pasal 23 diubah sehingga Pasal 23 berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Penyusunan Prolegnas antara DPR dan Pemerintah dikoordinasikan oleh DPR melalui alat kelengkapan DPR yang khusus menangani bidang legislasi."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Penyusunan Prolegnas di lingkungan DPR dikoordinasikan oleh alat kelengkapan DPR yang khusus menangani bidang legislasi."
+        },
+        {
+          "number": "3",
+          "kind": "ayat",
+          "text": "(3) Penyusunan Prolegnas di lingkungan DPR sebagaimana dimaksud pada ayat (2) dilakukan dengan mempertimbangkan usulan dari fraksi, komisi, anggota DPR, DPD, dan/atau masyarakat."
+        },
+        {
+          "number": "4",
+          "kind": "ayat",
+          "text": "(4) Penyusunan Prolegnas di lingkungan Pemerintah dikoordinasikan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang- undangan."
+        },
+        {
+          "number": "5",
+          "kind": "ayat",
+          "text": "(5) Ketentuan lebih lanjut mengenai tata cara penyusunan Prolegnas sebagaimana dimaksud pada ayat (1), ayat"
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2), dan ayat (3) diatur dengan Peraturan DPR."
+        },
+        {
+          "number": "6",
+          "kind": "ayat",
+          "text": "(6) Ketentuan lebih lanjut mengenai tata cara penyusunan Prolegnas di lingkungan Pemerintah sebagaimana dimaksud pada ayat (4) diatur dengan Peraturan Presiden. 4. Ketentuan ayat (2) Pasal 23 diubah sehingga Pasal 23 berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "partisipasi"
+        ],
+        "norm_types": [],
+        "actors": [
+          "masyarakat",
+          "pemerintah",
+          "menteri",
+          "presiden"
+        ],
+        "references": [
+          "Pasal 23"
+        ],
+        "extractive_preview": "(1) Penyusunan Prolegnas antara DPR dan Pemerintah dikoordinasikan oleh DPR melalui alat kelengkapan DPR yang khusus menangani bidang legislasi. (2) Penyusunan Prolegnas di lingkungan DPR dikoordinasikan oleh alat kelengkapan DPR yang khusu",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          6
+        ]
+      }
+    },
+    {
+      "number": "23",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        6,
+        7
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/23",
+      "text": "(1) Dalam Prolegnas dimuat daftar kumulatif terbuka yang terdiri atas: a. pengesahan perjanjian internasional tertentu; b. akibat putusan Mahkamah Konstitusi; c. Anggaran Pendapatan dan Belanja Negara; d. pembentukan, pemekaran, dan penggabungan daerah Provinsi dan/atau Kabupaten/Kota; dan e. penetapan/pencabutan Peraturan Pemerintah Pengganti Undang-Undang. (2) Dalam keadaan tertentu, DPR atau Presiden dapat mengajukan Rancangan Undang-Undang di luar Prolegnas mencakup: a. untuk mengatasi keadaan luar biasa, keadaan konflik, atau bencana alam; dan b. keadaan tertentu lainnya yang memastikan adanya urgensi nasional atas suatu Rancangan Undang- Undang yang dapat disetujui bersama oleh alat kelengkapan DPR yang khusus menangani bidang legislasi dan menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan. 5. Ketentuan ayat (1) Pasal 26 diubah sehingga Pasal 26 berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Dalam Prolegnas dimuat daftar kumulatif terbuka yang terdiri atas: a. pengesahan perjanjian internasional tertentu; b. akibat putusan Mahkamah Konstitusi; c. Anggaran Pendapatan dan Belanja Negara; d. pembentukan, pemekaran, dan penggabungan daerah Provinsi dan/atau Kabupaten/Kota; dan e. penetapan/pencabutan Peraturan Pemerintah Pengganti Undang-Undang."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Dalam keadaan tertentu, DPR atau Presiden dapat mengajukan Rancangan Undang-Undang di luar Prolegnas mencakup: a. untuk mengatasi keadaan luar biasa, keadaan konflik, atau bencana alam; dan b. keadaan tertentu lainnya yang memastikan adanya urgensi nasional atas suatu Rancangan Undang- Undang yang dapat disetujui bersama oleh alat kelengkapan DPR yang khusus menangani bidang legislasi dan menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan. 5. Ketentuan ayat (1) Pasal 26 diubah sehingga Pasal 26 berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [
+        {
+          "letter": "a",
+          "text": "pengesahan perjanjian internasional tertentu;"
+        },
+        {
+          "letter": "b",
+          "text": "akibat putusan Mahkamah Konstitusi;"
+        },
+        {
+          "letter": "c",
+          "text": "Anggaran Pendapatan dan Belanja Negara;"
+        },
+        {
+          "letter": "d",
+          "text": "pembentukan, pemekaran, dan penggabungan daerah Provinsi dan/atau Kabupaten/Kota; dan"
+        },
+        {
+          "letter": "e",
+          "text": "penetapan/pencabutan Peraturan Pemerintah Pengganti Undang-Undang. (2) Dalam keadaan tertentu, DPR atau Presiden dapat mengajukan Rancangan Undang-Undang di luar Prolegnas mencakup:"
+        },
+        {
+          "letter": "a",
+          "text": "untuk mengatasi keadaan luar biasa, keadaan konflik, atau bencana alam; dan"
+        },
+        {
+          "letter": "b",
+          "text": "keadaan tertentu lainnya yang memastikan adanya urgensi nasional atas suatu Rancangan Undang- Undang yang dapat disetujui bersama oleh alat kelengkapan DPR yang khusus menangani bidang legislasi dan menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan. 5. Ketentuan ayat (1) Pasal 26 diubah sehingga Pasal 26 berbunyi sebagai berikut:"
+        }
+      ],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi",
+          "biaya"
+        ],
+        "norm_types": [
+          "permission"
+        ],
+        "actors": [
+          "pemerintah",
+          "menteri",
+          "presiden"
+        ],
+        "references": [
+          "Pasal 26"
+        ],
+        "extractive_preview": "(1) Dalam Prolegnas dimuat daftar kumulatif terbuka yang terdiri atas: a. pengesahan perjanjian internasional tertentu; b. akibat putusan Mahkamah Konstitusi; c. Anggaran Pendapatan dan Belanja Negara; d. pembentukan, pemekaran, dan penggab",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "number": "26",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        7
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/26",
+      "text": "(1) Perencanaan penyusunan Peraturan Pemerintah sebagaimana dimaksud dalam Pasal 25 dikoordinasikan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang- undangan. (2) Perencanaan penyusunan Peraturan Pemerintah sebagaimana dimaksud pada ayat (1) ditetapkan dengan Keputusan Presiden. 6. Ketentuan Pasal 47 diubah sehingga berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Perencanaan penyusunan Peraturan Pemerintah sebagaimana dimaksud dalam Pasal 25 dikoordinasikan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang- undangan."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Perencanaan penyusunan Peraturan Pemerintah sebagaimana dimaksud pada ayat (1) ditetapkan dengan Keputusan Presiden. 6. Ketentuan Pasal 47 diubah sehingga berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [],
+        "norm_types": [],
+        "actors": [
+          "pemerintah",
+          "menteri",
+          "presiden"
+        ],
+        "references": [
+          "Pasal 25",
+          "Pasal 47"
+        ],
+        "extractive_preview": "(1) Perencanaan penyusunan Peraturan Pemerintah sebagaimana dimaksud dalam Pasal 25 dikoordinasikan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang- undangan. (2) Perencan",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          7
+        ]
+      }
+    },
+    {
+      "number": "47",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        7,
+        8
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/47",
+      "text": "(1) Rancangan Undang-Undang yang diajukan oleh Presiden disiapkan oleh menteri atau pimpinan lembaga pemerintah nonkementerian sesuai dengan lingkup tugas dan tanggung jawabnya. (2) Dalam penyusunan Rancangan Undang-Undang, menteri atau pimpinan lembaga pemerintah nonkementerian terkait membentuk panitia antar kementerian dan/atau antar nonkementerian. (3) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Undang-Undang yang berasal dari Presiden dikoordinasikan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan. (4) Ketentuan lebih lanjut mengenai tata cara mempersiapkan Rancangan Undang-Undang sebagaimana dimaksud pada ayat (1) diatur dengan Peraturan Presiden. 7. Ketentuan Pasal 49 diubah sehingga berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Rancangan Undang-Undang yang diajukan oleh Presiden disiapkan oleh menteri atau pimpinan lembaga pemerintah nonkementerian sesuai dengan lingkup tugas dan tanggung jawabnya."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Dalam penyusunan Rancangan Undang-Undang, menteri atau pimpinan lembaga pemerintah nonkementerian terkait membentuk panitia antar kementerian dan/atau antar nonkementerian."
+        },
+        {
+          "number": "3",
+          "kind": "ayat",
+          "text": "(3) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Undang-Undang yang berasal dari Presiden dikoordinasikan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan."
+        },
+        {
+          "number": "4",
+          "kind": "ayat",
+          "text": "(4) Ketentuan lebih lanjut mengenai tata cara mempersiapkan Rancangan Undang-Undang sebagaimana dimaksud pada ayat (1) diatur dengan Peraturan Presiden. 7. Ketentuan Pasal 49 diubah sehingga berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [],
+        "actors": [
+          "pemerintah",
+          "menteri",
+          "presiden"
+        ],
+        "references": [
+          "Pasal 49"
+        ],
+        "extractive_preview": "(1) Rancangan Undang-Undang yang diajukan oleh Presiden disiapkan oleh menteri atau pimpinan lembaga pemerintah nonkementerian sesuai dengan lingkup tugas dan tanggung jawabnya. (2) Dalam penyusunan Rancangan Undang-Undang, menteri atau pim",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          7,
+          8
+        ]
+      }
+    },
+    {
+      "number": "49",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        8
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/49",
+      "text": "(1) Rancangan Undang-Undang dari DPR disampaikan dengan surat pimpinan DPR kepada Presiden. (2) Presiden menugasi menteri yang mewakili untuk membahas Rancangan Undang-Undang bersama DPR dalam jangka waktu paling lama 60 (enam puluh) hari terhitung sejak surat pimpinan DPR diterima. (3) Menteri sebagaimana dimaksud pada ayat (2) mengoordinasikan persiapan pembahasan dengan menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan. 8. Ketentuan Pasal 54 diubah sehingga berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Rancangan Undang-Undang dari DPR disampaikan dengan surat pimpinan DPR kepada Presiden."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Presiden menugasi menteri yang mewakili untuk membahas Rancangan Undang-Undang bersama DPR dalam jangka waktu paling lama 60 (enam puluh) hari terhitung sejak surat pimpinan DPR diterima."
+        },
+        {
+          "number": "3",
+          "kind": "ayat",
+          "text": "(3) Menteri sebagaimana dimaksud pada ayat (2) mengoordinasikan persiapan pembahasan dengan menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan. 8. Ketentuan Pasal 54 diubah sehingga berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [],
+        "actors": [
+          "pemerintah",
+          "menteri",
+          "presiden"
+        ],
+        "references": [
+          "Pasal 54"
+        ],
+        "extractive_preview": "(1) Rancangan Undang-Undang dari DPR disampaikan dengan surat pimpinan DPR kepada Presiden. (2) Presiden menugasi menteri yang mewakili untuk membahas Rancangan Undang-Undang bersama DPR dalam jangka waktu paling lama 60 (enam puluh) hari t",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          8
+        ]
+      }
+    },
+    {
+      "number": "54",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        8,
+        9
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/54",
+      "text": "(1) Dalam penyusunan Rancangan Peraturan Pemerintah, pemrakarsa membentuk panitia antarkementerian dan/atau lembaga pemerintah nonkementerian. (2) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Pemerintah dikoordinasikan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang- undangan. (3) Ketentuan lebih lanjut mengenai tata cara penyusunan Rancangan Peraturan Pemerintah diatur dengan Peraturan Presiden. 9. Ketentuan Pasal 55 diubah sehingga berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Dalam penyusunan Rancangan Peraturan Pemerintah, pemrakarsa membentuk panitia antarkementerian dan/atau lembaga pemerintah nonkementerian."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Pemerintah dikoordinasikan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang- undangan."
+        },
+        {
+          "number": "3",
+          "kind": "ayat",
+          "text": "(3) Ketentuan lebih lanjut mengenai tata cara penyusunan Rancangan Peraturan Pemerintah diatur dengan Peraturan Presiden. 9. Ketentuan Pasal 55 diubah sehingga berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [],
+        "actors": [
+          "pemerintah",
+          "menteri",
+          "presiden"
+        ],
+        "references": [
+          "Pasal 55"
+        ],
+        "extractive_preview": "(1) Dalam penyusunan Rancangan Peraturan Pemerintah, pemrakarsa membentuk panitia antarkementerian dan/atau lembaga pemerintah nonkementerian. (2) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Pemerintah dikoord",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          8,
+          9
+        ]
+      }
+    },
+    {
+      "number": "55",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        9
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/55",
+      "text": "(1) Dalam penyusunan Rancangan Peraturan Presiden, pemrakarsa membentuk panitia antarkementerian dan/atau antarnonkementerian. (2) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Presiden dikoordinasikan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang- undangan. (3) Ketentuan lebih lanjut mengenai tata cara penyusunan Rancangan Peraturan Presiden diatur dengan Peraturan Presiden. 10. Ketentuan ayat (2) Pasal 58 diubah sehingga Pasal 58 berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Dalam penyusunan Rancangan Peraturan Presiden, pemrakarsa membentuk panitia antarkementerian dan/atau antarnonkementerian."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Presiden dikoordinasikan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang- undangan."
+        },
+        {
+          "number": "3",
+          "kind": "ayat",
+          "text": "(3) Ketentuan lebih lanjut mengenai tata cara penyusunan Rancangan Peraturan Presiden diatur dengan Peraturan Presiden. 10. Ketentuan ayat (2) Pasal 58 diubah sehingga Pasal 58 berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [],
+        "actors": [
+          "pemerintah",
+          "menteri",
+          "presiden"
+        ],
+        "references": [
+          "Pasal 58"
+        ],
+        "extractive_preview": "(1) Dalam penyusunan Rancangan Peraturan Presiden, pemrakarsa membentuk panitia antarkementerian dan/atau antarnonkementerian. (2) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Presiden dikoordinasikan oleh ment",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          9
+        ]
+      }
+    },
+    {
+      "number": "58",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        9,
+        10
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/58",
+      "text": "(1) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Daerah Provinsi yang berasal dari DPRD Provinsi dikoordinasikan oleh alat kelengkapan DPRD Provinsi yang khusus menangani bidang legislasi. (2) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Daerah Provinsi yang berasal dari Gubernur dilaksanakan oleh kementerian atau lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan. 11. Di antara Pasal 71 dan Pasal 72 disisipkan 1 (satu) pasal, yakni Pasal 71A sehingga berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Daerah Provinsi yang berasal dari DPRD Provinsi dikoordinasikan oleh alat kelengkapan DPRD Provinsi yang khusus menangani bidang legislasi."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Daerah Provinsi yang berasal dari Gubernur dilaksanakan oleh kementerian atau lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan. 11. Di antara Pasal 71 dan Pasal 72 disisipkan 1 (satu) pasal, yakni Pasal 71A sehingga berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [],
+        "actors": [
+          "pemerintah",
+          "menteri"
+        ],
+        "references": [
+          "Pasal 71",
+          "Pasal 72",
+          "Pasal 71A"
+        ],
+        "extractive_preview": "(1) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Daerah Provinsi yang berasal dari DPRD Provinsi dikoordinasikan oleh alat kelengkapan DPRD Provinsi yang khusus menangani bidang legislasi. (2) Pengharmonisasian",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          9,
+          10
+        ]
+      }
+    },
+    {
+      "number": "71A",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        10
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/71A",
+      "text": "Dalam hal pembahasan Rancangan Undang-Undang sebagaimana dimaksud dalam Pasal 65 ayat (1) telah memasuki pembahasan Daftar Inventarisasi Masalah pada periode masa keanggotaan DPR saat itu, hasil pembahasan Rancangan Undang-Undang tersebut disampaikan kepada DPR periode berikutnya dan berdasarkan kesepakatan DPR, Presiden, dan/atau DPD, Rancangan Undang-Undang tersebut dapat dimasukkan kembali ke dalam daftar Prolegnas jangka menengah dan/atau Prolegnas prioritas tahunan. 12. Ketentuan Pasal 72 tetap, Penjelasan Pasal 72 diubah sebagaimana tercantum dalam penjelasan pasal demi pasal. 13. Ketentuan Pasal 85 diubah sehingga berbunyi sebagai berikut:",
+      "paragraphs": [],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [
+          "permission"
+        ],
+        "actors": [
+          "presiden"
+        ],
+        "references": [
+          "Pasal 65 ayat (1)",
+          "Pasal 72",
+          "Pasal 85"
+        ],
+        "extractive_preview": "Dalam hal pembahasan Rancangan Undang-Undang sebagaimana dimaksud dalam Pasal 65 ayat (1) telah memasuki pembahasan Daftar Inventarisasi Masalah pada periode masa keanggotaan DPR saat itu, hasil pembahasan Rancangan Undang-Undang tersebut d",
+        "exceptions_detected": true
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          10
+        ]
+      }
+    },
+    {
+      "number": "85",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        10
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/85",
+      "text": "Pengundangan Peraturan Perundang-undangan dalam Lembaran Negara Republik Indonesia atau Berita Negara Republik Indonesia sebagaimana dimaksud dalam Pasal 82 dan Pasal 83 dilaksanakan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan. 14. Ketentuan ayat (1) Pasal 91 diubah sehingga Pasal 91 berbunyi sebagai berikut:",
+      "paragraphs": [],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [],
+        "actors": [
+          "pemerintah",
+          "menteri"
+        ],
+        "references": [
+          "Pasal 82",
+          "Pasal 83",
+          "Pasal 91"
+        ],
+        "extractive_preview": "Pengundangan Peraturan Perundang-undangan dalam Lembaran Negara Republik Indonesia atau Berita Negara Republik Indonesia sebagaimana dimaksud dalam Pasal 82 dan Pasal 83 dilaksanakan oleh menteri atau kepala lembaga yang menyelenggarakan ur",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          10
+        ]
+      }
+    },
+    {
+      "number": "91",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        10,
+        11
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/91",
+      "text": "(1) Dalam hal Peraturan Perundang-undangan perlu diterjemahkan ke dalam bahasa asing, penerjemahannya dilaksanakan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan. (2) Terjemahan sebagaimana dimaksud pada ayat (1) merupakan terjemahan resmi. 15. Di antara BAB X dan BAB XI disisipkan 1 (satu) bab, yakni BAB XA sehingga berbunyi sebagai berikut: PEMANTAUAN DAN PENINJAUAN TERHADAP UNDANG-UNDANG 16. Di antara Pasal 95 dan Pasal 96 disisipkan 2 (dua) pasal, yakni Pasal 95A dan Pasal 95B sehingga berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Dalam hal Peraturan Perundang-undangan perlu diterjemahkan ke dalam bahasa asing, penerjemahannya dilaksanakan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Terjemahan sebagaimana dimaksud pada ayat (1) merupakan terjemahan resmi. 15. Di antara BAB X dan BAB XI disisipkan 1 (satu) bab, yakni BAB XA sehingga berbunyi sebagai berikut: PEMANTAUAN DAN PENINJAUAN TERHADAP UNDANG-UNDANG 16. Di antara Pasal 95 dan Pasal 96 disisipkan 2 (dua) pasal, yakni Pasal 95A dan Pasal 95B sehingga berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [],
+        "actors": [
+          "pemerintah",
+          "menteri"
+        ],
+        "references": [
+          "Pasal 95",
+          "Pasal 96",
+          "Pasal 95A",
+          "Pasal 95B"
+        ],
+        "extractive_preview": "(1) Dalam hal Peraturan Perundang-undangan perlu diterjemahkan ke dalam bahasa asing, penerjemahannya dilaksanakan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan",
+        "exceptions_detected": true
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          10,
+          11
+        ]
+      }
+    },
+    {
+      "number": "95A",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        11
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/95A",
+      "text": "(1) Pemantauan dan Peninjauan terhadap Undang- Undang dilakukan setelah Undang-Undang berlaku. (2) Pemantauan dan Peninjauan terhadap Undang- Undang sebagaimana dimaksud pada ayat (1) dilaksanakan oleh DPR, DPD, dan Pemerintah. (3) Pemantauan dan Peninjauan terhadap Undang- Undang sebagaimana dimaksud pada ayat (1) dikoordinasikan oleh DPR melalui alat kelengkapan yang khusus menangani bidang legislasi. (4) Hasil dari Pemantauan dan Peninjauan terhadap Undang-Undang sebagaimana dimaksud pada ayat (2) dapat menjadi usul dalam penyusunan Prolegnas.",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Pemantauan dan Peninjauan terhadap Undang- Undang dilakukan setelah Undang-Undang berlaku."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Pemantauan dan Peninjauan terhadap Undang- Undang sebagaimana dimaksud pada ayat (1) dilaksanakan oleh DPR, DPD, dan Pemerintah."
+        },
+        {
+          "number": "3",
+          "kind": "ayat",
+          "text": "(3) Pemantauan dan Peninjauan terhadap Undang- Undang sebagaimana dimaksud pada ayat (1) dikoordinasikan oleh DPR melalui alat kelengkapan yang khusus menangani bidang legislasi."
+        },
+        {
+          "number": "4",
+          "kind": "ayat",
+          "text": "(4) Hasil dari Pemantauan dan Peninjauan terhadap Undang-Undang sebagaimana dimaksud pada ayat (2) dapat menjadi usul dalam penyusunan Prolegnas."
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [],
+        "norm_types": [
+          "permission"
+        ],
+        "actors": [
+          "pemerintah"
+        ],
+        "references": [],
+        "extractive_preview": "(1) Pemantauan dan Peninjauan terhadap Undang- Undang dilakukan setelah Undang-Undang berlaku. (2) Pemantauan dan Peninjauan terhadap Undang- Undang sebagaimana dimaksud pada ayat (1) dilaksanakan oleh DPR, DPD, dan Pemerintah. (3) Pemantau",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          11
+        ]
+      }
+    },
+    {
+      "number": "95B",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        11,
+        12
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/95B",
+      "text": "(1) Pemantauan dan Peninjauan terhadap Undang- Undang dilaksanakan dalam 3 (tiga) tahap sebagai berikut: a. tahap perencanaan; b. tahap pelaksanaan; dan c. tahap tindak lanjut. (2) Ketentuan lebih lanjut mengenai Pemantauan dan Peninjauan terhadap Undang-Undang diatur masing- masing dengan Peraturan DPR, Peraturan DPD, dan Peraturan Presiden. 17. Di antara BAB XII dan BAB XIII disisipkan 1 (satu) bab, yakni BAB XIIA sehingga berbunyi sebagai berikut: KETENTUAN PERALIHAN 18. Di antara Pasal 99 dan Pasal 100 disisipkan 1 (satu) pasal, yakni Pasal 99A sehingga berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Pemantauan dan Peninjauan terhadap Undang- Undang dilaksanakan dalam 3 (tiga) tahap sebagai berikut: a. tahap perencanaan; b. tahap pelaksanaan; dan c. tahap tindak lanjut."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Ketentuan lebih lanjut mengenai Pemantauan dan Peninjauan terhadap Undang-Undang diatur masing- masing dengan Peraturan DPR, Peraturan DPD, dan Peraturan Presiden. 17. Di antara BAB XII dan BAB XIII disisipkan 1 (satu) bab, yakni BAB XIIA sehingga berbunyi sebagai berikut: KETENTUAN PERALIHAN 18. Di antara Pasal 99 dan Pasal 100 disisipkan 1 (satu) pasal, yakni Pasal 99A sehingga berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [
+        {
+          "letter": "a",
+          "text": "tahap perencanaan;"
+        },
+        {
+          "letter": "b",
+          "text": "tahap pelaksanaan; dan"
+        },
+        {
+          "letter": "c",
+          "text": "tahap tindak lanjut. (2) Ketentuan lebih lanjut mengenai Pemantauan dan Peninjauan terhadap Undang-Undang diatur masing- masing dengan Peraturan DPR, Peraturan DPD, dan Peraturan Presiden. 17. Di antara BAB XII dan BAB XIII disisipkan 1 (satu) bab, yakni BAB XIIA sehingga berbunyi sebagai berikut: KETENTUAN PERALIHAN 18. Di antara Pasal 99 dan Pasal 100 disisipkan 1 (satu) pasal, yakni Pasal 99A sehingga berbunyi sebagai berikut:"
+        }
+      ],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [],
+        "norm_types": [],
+        "actors": [
+          "pelaksana",
+          "presiden"
+        ],
+        "references": [
+          "Pasal 99",
+          "Pasal 100",
+          "Pasal 99A"
+        ],
+        "extractive_preview": "(1) Pemantauan dan Peninjauan terhadap Undang- Undang dilaksanakan dalam 3 (tiga) tahap sebagai berikut: a. tahap perencanaan; b. tahap pelaksanaan; dan c. tahap tindak lanjut. (2) Ketentuan lebih lanjut mengenai Pemantauan dan Peninjauan t",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          11,
+          12
+        ]
+      }
+    },
+    {
+      "number": "99A",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        12
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/99A",
+      "text": "Pada saat pembentukan kementerian atau lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan belum terbentuk, tugas dan fungsi Pembentukan Peraturan Perundang-undangan tetap dilaksanakan oleh menteri yang menyelenggarakan urusan pemerintahan di bidang hukum.",
+      "paragraphs": [],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [],
+        "actors": [
+          "pemerintah",
+          "menteri"
+        ],
+        "references": [],
+        "extractive_preview": "Pada saat pembentukan kementerian atau lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan belum terbentuk, tugas dan fungsi Pembentukan Peraturan Perundang-undangan tetap dilaksanakan oleh m",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          12
+        ]
+      }
+    },
+    {
+      "number": "II",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        12,
+        13
+      ],
+      "id": "uu-15-2019@88867eea2eb4/pasal/II",
+      "text": "Undang-Undang ini mulai berlaku pada tanggal diundangkan.",
+      "paragraphs": [],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [],
+        "norm_types": [],
+        "actors": [],
+        "references": [],
+        "extractive_preview": "Undang-Undang ini mulai berlaku pada tanggal diundangkan.",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu15-2019bt.pdf",
+        "raw_file": "raw/uu15-2019bt.pdf",
+        "sha256": "88867eea2eb4f2796dbb1c052191b699e3b3c25d46551e2a1b71dba2de2ebb4d",
+        "pages": [
+          12,
+          13
+        ]
+      }
+    }
+  ]
+}

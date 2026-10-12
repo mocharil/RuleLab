@@ -1,0 +1,15 @@
+# Used after setup_vertex.py has written .env. Credentials are mounted read-only.
+services:
+  rulelab:
+    environment:
+      AI_PROVIDER: vertex
+      GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/rulelab-sa.json
+      GOOGLE_CLOUD_PROJECT: ${GOOGLE_CLOUD_PROJECT:-}
+      GOOGLE_CLOUD_LOCATION: ${GOOGLE_CLOUD_LOCATION:-global}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-3.8-flash}
+      EMBEDDING_LOCATION: ${EMBEDDING_LOCATION:-us-central1}
+    volumes:
+      - type: bind
+        source: ${GOOGLE_APPLICATION_CREDENTIALS:?Run setup_vertex.py before using the Vertex compose override}
+        target: /run/secrets/rulelab-sa.json
+        read_only: true

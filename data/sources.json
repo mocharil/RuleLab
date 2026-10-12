@@ -1,0 +1,123 @@
+[
+  {
+    "id": "uu-25-2009",
+    "type": "UU",
+    "number": 25,
+    "year": 2009,
+    "title": "Pelayanan Publik",
+    "promulgated_on": "2009-07-18",
+    "expected_articles": 62,
+    "source_page": "https://peraturan.go.id/id/uu-no-25-tahun-2009",
+    "urls": [
+      "https://jdih.kemenkeu.go.id/api/download/fullText/2009/25TAHUN2009UU.htm",
+      "https://peraturan.go.id/files/uu25-2009bt.pdf"
+    ],
+    "amends": [],
+    "version_kind": "original",
+    "attachments": [
+      "https://peraturan.go.id/files/uu25-2009bt.pdf"
+    ],
+    "source_issues": [
+      "PDF peraturan.go.id page 30 labels the article between 47 and 49 as Pasal 4. Canonical extraction uses official Kemenkeu HTML; PDF preserved unchanged."
+    ]
+  },
+  {
+    "id": "pp-96-2012",
+    "type": "PP",
+    "number": 96,
+    "year": 2012,
+    "title": "Pelaksanaan Undang-Undang Nomor 25 Tahun 2009 tentang Pelayanan Publik",
+    "promulgated_on": "2012-10-30",
+    "expected_articles": 51,
+    "source_page": "https://peraturan.go.id/id/pp-no-96-tahun-2012",
+    "urls": [
+      "https://peraturan.go.id/files/pp96-2012bt.pdf"
+    ],
+    "amends": [],
+    "implements": [
+      "uu-25-2009"
+    ],
+    "version_kind": "original"
+  },
+  {
+    "id": "uu-8-2016",
+    "type": "UU",
+    "number": 8,
+    "year": 2016,
+    "title": "Penyandang Disabilitas",
+    "promulgated_on": "2016-04-15",
+    "expected_articles": 153,
+    "source_page": "https://peraturan.go.id/id/uu-no-8-tahun-2016",
+    "urls": [
+      "https://peraturan.go.id/files/uu8-2016bt.pdf"
+    ],
+    "amends": [],
+    "version_kind": "original",
+    "attachments": [
+      "https://peraturan.go.id/files/uu8-2016pjl.pdf"
+    ]
+  },
+  {
+    "id": "uu-12-2011",
+    "type": "UU",
+    "number": 12,
+    "year": 2011,
+    "title": "Pembentukan Peraturan Perundang-undangan",
+    "promulgated_on": "2011-08-12",
+    "expected_articles": 104,
+    "source_page": "https://peraturan.go.id/id/uu-no-12-tahun-2011",
+    "urls": [
+      "https://peraturan.go.id/files/uu12-2011bt.pdf",
+      "https://peraturan.bpk.go.id/Download/28610/UU%2012%20Tahun%202011.pdf"
+    ],
+    "amends": [],
+    "amended_by": [
+      "uu-15-2019",
+      "uu-13-2022"
+    ],
+    "version_kind": "original_amended",
+    "attachments": [
+      "https://peraturan.go.id/files/uu12-2011pjl.pdf",
+      "https://peraturan.go.id/files/uu12-2011lmp1.pdf",
+      "https://peraturan.go.id/files/uu12-2011lmp2.pdf"
+    ]
+  },
+  {
+    "id": "uu-15-2019",
+    "type": "UU",
+    "number": 15,
+    "year": 2019,
+    "title": "Perubahan atas Undang-Undang Nomor 12 Tahun 2011 tentang Pembentukan Peraturan Perundang-undangan",
+    "promulgated_on": "2019-10-04",
+    "expected_articles": null,
+    "source_page": "https://peraturan.go.id/id/uu-no-15-tahun-2019",
+    "urls": [
+      "https://peraturan.go.id/files/uu15-2019bt.pdf"
+    ],
+    "amends": [
+      "uu-12-2011"
+    ],
+    "version_kind": "amendment",
+    "attachments": [
+      "https://peraturan.go.id/files/uu15-2019pjl.pdf"
+    ]
+  },
+  {
+    "id": "uu-13-2022",
+    "type": "UU",
+    "number": 13,
+    "year": 2022,
+    "title": "Perubahan Kedua atas Undang-Undang Nomor 12 Tahun 2011 tentang Pembentukan Peraturan Perundang-undangan",
+    "promulgated_on": "2022-06-16",
+    "expected_articles": null,
+    "source_page": "https://peraturan.go.id/id/uu-no-13-tahun-2022",
+    "urls": [
+      "https://peraturan.go.id/files/uu13-2022.pdf",
+      "https://peraturan.bpk.go.id/Download/207035/UU%20Nomor%2013%20Tahun%202022.pdf"
+    ],
+    "amends": [
+      "uu-12-2011"
+    ],
+    "version_kind": "amendment"
+  }
+]

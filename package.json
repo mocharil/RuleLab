@@ -1,0 +1,14 @@
+{
+  "name": "rulelab-workspace",
+  "private": true,
+  "scripts": {
+    "test:browser": "node scripts/browser_smoke.cjs",
+    "frontend:build": "npm --prefix frontend run build",
+    "frontend:test": "npm --prefix frontend test",
+    "screenshots": "node scripts/capture_ui.cjs",
+    "test:dom": "node scripts/dom_workspace_ux.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.51.1"
+  }
+}

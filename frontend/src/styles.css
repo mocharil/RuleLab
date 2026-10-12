@@ -1,0 +1,4 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@source "./";
+/* Product tokens and component appearance are defined once in /static/design.css. */

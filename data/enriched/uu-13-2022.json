@@ -1,0 +1,1140 @@
+{
+  "schema_version": "1.0",
+  "id": "uu-13-2022",
+  "version_id": "uu-13-2022@bdcdf76cb1b0",
+  "metadata": {
+    "id": "uu-13-2022",
+    "type": "UU",
+    "number": 13,
+    "year": 2022,
+    "title": "Perubahan Kedua atas Undang-Undang Nomor 12 Tahun 2011 tentang Pembentukan Peraturan Perundang-undangan",
+    "promulgated_on": "2022-06-16",
+    "expected_articles": null,
+    "source_page": "https://peraturan.go.id/id/uu-no-13-tahun-2022",
+    "urls": [
+      "https://peraturan.go.id/files/uu13-2022.pdf",
+      "https://peraturan.bpk.go.id/Download/207035/UU%20Nomor%2013%20Tahun%202022.pdf"
+    ],
+    "amends": [
+      "uu-12-2011"
+    ],
+    "version_kind": "amendment",
+    "hierarchy_rank": 3,
+    "jurisdiction": "Indonesia",
+    "language": "id",
+    "dates_method": "curated_from_source",
+    "status_as_of": null,
+    "status_note": "Snapshot naskah asli, bukan konsolidasi hukum berlaku. Perubahan dan putusan pengadilan belum diverifikasi menyeluruh."
+  },
+  "provenance": {
+    "source_url": "https://peraturan.go.id/files/uu13-2022.pdf",
+    "source_page": "https://peraturan.go.id/id/uu-no-13-tahun-2022",
+    "retrieved_at": "2026-10-11T10:18:08.470389+00:00",
+    "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+    "raw_file": "raw/uu13-2022.pdf",
+    "extracted_file": "extracted/uu-13-2022.json"
+  },
+  "quality": {
+    "ocr_needed_pages": [
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55
+    ],
+    "human_verified": false,
+    "article_count": 18,
+    "expected_articles": null,
+    "missing_article_numbers": [],
+    "body_complete_by_number": false,
+    "limitations": [
+      "OCR belum dijalankan pada halaman tanpa teks.",
+      "Enrichment berbasis aturan, belum divalidasi ahli.",
+      "Lampiran/penjelasan disimpan terpisah bila tersedia."
+    ]
+  },
+  "articles": [
+    {
+      "number": "I",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        3
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/I",
+      "text": "Beberapa ketentuan dalam Undang-Undang Nomor 12 Tahun 2011 tentang Pembentukan Peraturan Perundang- undangan (Lembaran Negara Republik Indonesia Tahun 2011 Nomor 82, Tambahan Lembaran Negara Republik Indonesia Nomor 5234) sebagaimana telah diubah dengan Undang-Undang Nomor 15 Tahun 2019 tentang Perubahan atas Undang-Undang Nomor 12 Tahun 2011 tentang Pembentukan Peraturan Perundang-undangan (Lembaran Negara Republik Indonesia Tahun 2019 Nomor 183, Tambahan Lembaran Negara Republik Indonesia Nomor 6398) diubah sebagai berikut: 1. Penjelasan Pasal 5 huruf g diubah sebagaimana tercantum dalam penjelasan. 2. Ketentuan Pasal 9 diubah sehingga berbunyi sebagai berikut:",
+      "paragraphs": [],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [],
+        "actors": [],
+        "references": [
+          "Pasal 5",
+          "Pasal 9"
+        ],
+        "extractive_preview": "Beberapa ketentuan dalam Undang-Undang Nomor 12 Tahun 2011 tentang Pembentukan Peraturan Perundang- undangan (Lembaran Negara Republik Indonesia Tahun 2011 Nomor 82, Tambahan Lembaran Negara Republik Indonesia Nomor 5234) sebagaimana telah ",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          3
+        ]
+      }
+    },
+    {
+      "number": "9",
+      "chapter": null,
+      "section": null,
+      "pages": [
+        3,
+        4
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/9",
+      "text": "(1) Dalam hal suatu Undang-Undang diduga bertentangan dengan Undang-Undang Dasar Negara Republik Indonesia Tahun 1945, pengujiannya dilakukan oleh Mahkamah Konstitusi. (2) Dalam hal suatu Peraturan Perundang-undangan di bawah Undang-Undang diduga bertentangan dengan Undang-Undang, pengujiannya dilakukan oleh Mahkamah Agung. (3) Penanganan pengujian terhadap Undang-Undang di Mahkamah Konstitusi sebagaimana dimaksud pada ayat (1) di lingkungan DPR dikoordinasikan oleh alat kelengkapan DPR yang membahas Rancangan Undang-Undang dengan melibatkan komisi yang membidangi hukum dan perundang- undangan. (4) Dalam hal alat kelengkapan DPR sebagaimana dimaksud pada ayat (3) sudah tidak ada pada saat Undang-Undang diuji di Mahkamah Konstitusi sebagaimana dimaksud pada ayat (1), komisi yang membidangi hukum dan perundang- undangan menjadi kuasa DPR. (5) Penanganan pengujian terhadap Undang-Undang di Mahkamah Konstitusi sebagaimana dimaksud pada ayat (1) dan penanganan pengujian Peraturan Perundang-undangan di bawah Undang-Undang di Mahkamah Agung sebagaimana dimaksud pada ayat (2) di lingkungan Pemerintah dilaksanakan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang- undangan dan melibatkan menteri atau kepala lembaga terkait. (6) Ketentuan lebih lanjut mengenai penanganan pengujian sebagaimana dimaksud pada ayat (3) dan ayat (4) diatur dalam Peraturan DPR serta penanganan pengujian sebagaimana dimaksud pada ayat (5) diatur dalam Peraturan Presiden. 3. Setelah Bagian Keenam Bab IV ditambahkan 1 (satu) bagian, yakni Bagian Ketujuh sehingga berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Dalam hal suatu Undang-Undang diduga bertentangan dengan Undang-Undang Dasar Negara Republik Indonesia Tahun 1945, pengujiannya dilakukan oleh Mahkamah Konstitusi."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Dalam hal suatu Peraturan Perundang-undangan di bawah Undang-Undang diduga bertentangan dengan Undang-Undang, pengujiannya dilakukan oleh Mahkamah Agung."
+        },
+        {
+          "number": "3",
+          "kind": "ayat",
+          "text": "(3) Penanganan pengujian terhadap Undang-Undang di Mahkamah Konstitusi sebagaimana dimaksud pada ayat (1) di lingkungan DPR dikoordinasikan oleh alat kelengkapan DPR yang membahas Rancangan Undang-Undang dengan melibatkan komisi yang membidangi hukum dan perundang- undangan."
+        },
+        {
+          "number": "4",
+          "kind": "ayat",
+          "text": "(4) Dalam hal alat kelengkapan DPR sebagaimana dimaksud pada ayat (3) sudah tidak ada pada saat Undang-Undang diuji di Mahkamah Konstitusi sebagaimana dimaksud pada ayat (1), komisi yang membidangi hukum dan perundang- undangan menjadi kuasa DPR."
+        },
+        {
+          "number": "5",
+          "kind": "ayat",
+          "text": "(5) Penanganan pengujian terhadap Undang-Undang di Mahkamah Konstitusi sebagaimana dimaksud pada ayat (1) dan penanganan pengujian Peraturan Perundang-undangan di bawah Undang-Undang di Mahkamah Agung sebagaimana dimaksud pada ayat (2) di lingkungan Pemerintah dilaksanakan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang- undangan dan melibatkan menteri atau kepala lembaga terkait."
+        },
+        {
+          "number": "6",
+          "kind": "ayat",
+          "text": "(6) Ketentuan lebih lanjut mengenai penanganan pengujian sebagaimana dimaksud pada ayat (3) dan ayat (4) diatur dalam Peraturan DPR serta penanganan pengujian sebagaimana dimaksud pada ayat (5) diatur dalam Peraturan Presiden. 3. Setelah Bagian Keenam Bab IV ditambahkan 1 (satu) bagian, yakni Bagian Ketujuh sehingga berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [],
+        "actors": [
+          "pemerintah",
+          "menteri",
+          "presiden"
+        ],
+        "references": [],
+        "extractive_preview": "(1) Dalam hal suatu Undang-Undang diduga bertentangan dengan Undang-Undang Dasar Negara Republik Indonesia Tahun 1945, pengujiannya dilakukan oleh Mahkamah Konstitusi. (2) Dalam hal suatu Peraturan Perundang-undangan di bawah Undang-Undang ",
+        "exceptions_detected": true
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "number": "42A",
+      "chapter": null,
+      "section": "Bagian Ketujuh",
+      "pages": [
+        5
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/42A",
+      "text": "Penggunaan metode omnibus dalam penyusunan suatu Rancangan Peraturan Perundang-undangan harus ditetapkan dalam dokumen perencanaan. 5. Ketentuan ayat (2) Pasal 49 diubah sehingga berbunyi sebagai berikut:",
+      "paragraphs": [],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [
+          "obligation"
+        ],
+        "actors": [],
+        "references": [
+          "Pasal 49"
+        ],
+        "extractive_preview": "Penggunaan metode omnibus dalam penyusunan suatu Rancangan Peraturan Perundang-undangan harus ditetapkan dalam dokumen perencanaan. 5. Ketentuan ayat (2) Pasal 49 diubah sehingga berbunyi sebagai berikut:",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          5
+        ]
+      }
+    },
+    {
+      "number": "49",
+      "chapter": null,
+      "section": "Bagian Ketujuh",
+      "pages": [
+        5
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/49",
+      "text": "(1) Rancangan Undang-Undang dari DPR disampaikan dengan surat pimpinan DPR kepada Presiden. (2) Presiden menugasi menteri yang mewakili untuk membahas Rancangan Undang-Undang disertai dengan daftar inventarisasi masalah bersama DPR dalam jangka waktu paling lama 60 (enam puluh) hari terhitung sejak surat pimpinan DPR diterima. (3) Menteri sebagaimana dimaksud pada ayat (2) mengoordinasikan persiapan pembahasan dengan menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang- undangan. 6. Ketentuan Pasal 58 diubah sehingga berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Rancangan Undang-Undang dari DPR disampaikan dengan surat pimpinan DPR kepada Presiden."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Presiden menugasi menteri yang mewakili untuk membahas Rancangan Undang-Undang disertai dengan daftar inventarisasi masalah bersama DPR dalam jangka waktu paling lama 60 (enam puluh) hari terhitung sejak surat pimpinan DPR diterima."
+        },
+        {
+          "number": "3",
+          "kind": "ayat",
+          "text": "(3) Menteri sebagaimana dimaksud pada ayat (2) mengoordinasikan persiapan pembahasan dengan menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang- undangan. 6. Ketentuan Pasal 58 diubah sehingga berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [],
+        "actors": [
+          "pemerintah",
+          "menteri",
+          "presiden"
+        ],
+        "references": [
+          "Pasal 58"
+        ],
+        "extractive_preview": "(1) Rancangan Undang-Undang dari DPR disampaikan dengan surat pimpinan DPR kepada Presiden. (2) Presiden menugasi menteri yang mewakili untuk membahas Rancangan Undang-Undang disertai dengan daftar inventarisasi masalah bersama DPR dalam ja",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          5
+        ]
+      }
+    },
+    {
+      "number": "58",
+      "chapter": null,
+      "section": "Bagian Ketujuh",
+      "pages": [
+        5,
+        6
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/58",
+      "text": "(1) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Daerah Provinsi dikoordinasikan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan. (2) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Daerah Provinsi sebagaimana dimaksud pada ayat (1) dilaksanakan oleh instansi vertikal kementerian atau lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang- undangan. 7. Di antara ayat (1) dan ayat (2) Pasal 64 disisipkan 2 (dua) ayat, yakni ayat (1a) dan ayat (1b) sehingga Pasal 64 berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Daerah Provinsi dikoordinasikan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Daerah Provinsi sebagaimana dimaksud pada ayat (1) dilaksanakan oleh instansi vertikal kementerian atau lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang- undangan. 7. Di antara ayat (1) dan ayat (2) Pasal 64 disisipkan 2 (dua) ayat, yakni ayat (1a) dan ayat (1b) sehingga Pasal 64 berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [],
+        "actors": [
+          "pemerintah",
+          "menteri"
+        ],
+        "references": [
+          "Pasal 64"
+        ],
+        "extractive_preview": "(1) Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Daerah Provinsi dikoordinasikan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan. (2",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          5,
+          6
+        ]
+      }
+    },
+    {
+      "number": "64",
+      "chapter": null,
+      "section": "Bagian Ketujuh",
+      "pages": [
+        6,
+        7
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/64",
+      "text": "(1) Penyusunan Rancangan Peraturan Perundang- undangan dilakukan sesuai dengan teknik penyusunan Peraturan Perundang-undangan. (1a) Penyusunan Rancangan Peraturan Perundang- undangan sebagaimana dimaksud pada ayat (1) dapat menggunakan metode omnibus. (1b) Metode omnibus sebagaimana dimaksud pada ayat (1a) merupakan metode penyusunan Peraturan Perundang-undangan dengan: a. memuat materi muatan baru; b. mengubah materi muatan yang memiliki keterkaitan dan/atau kebutuhan hukum yang diatur dalam berbagai Peraturan Perundang-undangan yang jenis dan hierarkinya sama; dan/atau c. mencabut Peraturan Perundang-undangan yang jenis dan hierarkinya sama, dengan menggabungkannya ke dalam satu Peraturan Perundang-undangan untuk mencapai tujuan tertentu. (2) Ketentuan mengenai teknik penyusunan Peraturan Perundang-undangan sebagaimana dimaksud pada ayat (1) tercantum dalam Lampiran II yang merupakan bagian tidak terpisahkan dari Undang-Undang ini. (3) Ketentuan mengenai perubahan terhadap teknik penyusunan Peraturan Perundang-undangan sebagaimana dimaksud pada ayat (2) diatur dengan Peraturan Presiden. 8. Di antara ayat (1) dan ayat (2) Pasal 72 disisipkan 2 (dua) ayat, yakni ayat (1a) dan ayat (1b) serta ketentuan ayat (2) Pasal 72 diubah sehingga Pasal 72 berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Penyusunan Rancangan Peraturan Perundang- undangan dilakukan sesuai dengan teknik penyusunan Peraturan Perundang-undangan."
+        },
+        {
+          "number": "1a",
+          "kind": "ayat",
+          "text": "(1a) Penyusunan Rancangan Peraturan Perundang- undangan sebagaimana dimaksud pada ayat (1) dapat menggunakan metode omnibus."
+        },
+        {
+          "number": "1b",
+          "kind": "ayat",
+          "text": "(1b) Metode omnibus sebagaimana dimaksud pada ayat (1a) merupakan metode penyusunan Peraturan Perundang-undangan dengan: a. memuat materi muatan baru; b. mengubah materi muatan yang memiliki keterkaitan dan/atau kebutuhan hukum yang diatur dalam berbagai Peraturan Perundang-undangan yang jenis dan hierarkinya sama; dan/atau c. mencabut Peraturan Perundang-undangan yang jenis dan hierarkinya sama, dengan menggabungkannya ke dalam satu Peraturan Perundang-undangan untuk mencapai tujuan tertentu."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Ketentuan mengenai teknik penyusunan Peraturan Perundang-undangan sebagaimana dimaksud pada ayat (1) tercantum dalam Lampiran II yang merupakan bagian tidak terpisahkan dari Undang-Undang ini."
+        },
+        {
+          "number": "3",
+          "kind": "ayat",
+          "text": "(3) Ketentuan mengenai perubahan terhadap teknik penyusunan Peraturan Perundang-undangan sebagaimana dimaksud pada ayat (2) diatur dengan Peraturan Presiden. 8. Di antara ayat (1) dan ayat (2) Pasal 72 disisipkan 2 (dua) ayat, yakni ayat (1a) dan ayat (1b) serta ketentuan ayat (2) Pasal 72 diubah sehingga Pasal 72 berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [
+        {
+          "letter": "a",
+          "text": "memuat materi muatan baru;"
+        },
+        {
+          "letter": "b",
+          "text": "mengubah materi muatan yang memiliki keterkaitan dan/atau kebutuhan hukum yang diatur dalam berbagai Peraturan Perundang-undangan yang jenis dan hierarkinya sama; dan/atau"
+        },
+        {
+          "letter": "c",
+          "text": "mencabut Peraturan Perundang-undangan yang jenis dan hierarkinya sama, dengan menggabungkannya ke dalam satu Peraturan Perundang-undangan untuk mencapai tujuan tertentu. (2) Ketentuan mengenai teknik penyusunan Peraturan Perundang-undangan sebagaimana dimaksud pada ayat (1) tercantum dalam Lampiran II yang merupakan bagian tidak terpisahkan dari Undang-Undang ini. (3) Ketentuan mengenai perubahan terhadap teknik penyusunan Peraturan Perundang-undangan sebagaimana dimaksud pada ayat (2) diatur dengan Peraturan Presiden. 8. Di antara ayat (1) dan ayat (2) Pasal 72 disisipkan 2 (dua) ayat, yakni ayat (1a) dan ayat (1b) serta ketentuan ayat (2) Pasal 72 diubah sehingga Pasal 72 berbunyi sebagai berikut:"
+        }
+      ],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [
+          "permission"
+        ],
+        "actors": [
+          "presiden"
+        ],
+        "references": [
+          "Pasal 72"
+        ],
+        "extractive_preview": "(1) Penyusunan Rancangan Peraturan Perundang- undangan dilakukan sesuai dengan teknik penyusunan Peraturan Perundang-undangan. (1a) Penyusunan Rancangan Peraturan Perundang- undangan sebagaimana dimaksud pada ayat (1) dapat menggunakan meto",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "number": "72",
+      "chapter": null,
+      "section": "Bagian Ketujuh",
+      "pages": [
+        7,
+        8
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/72",
+      "text": "(1) Rancangan Undang-Undang yang telah disetujui bersama oleh DPR dan Presiden disampaikan oleh pimpinan DPR kepada Presiden untuk disahkan menjadi Undang-Undang. (1a) Dalam hal Rancangan Undang-Undang yang telah disetujui bersama oleh DPR dan Presiden sebagaimana dimaksud pada ayat (1) masih terdapat kesalahan teknis penulisan, dilakukan perbaikan oleh pimpinan alat kelengkapan DPR yang membahas Rancangan Undang-Undang tersebut dan Pemerintah yang diwakili oleh kementerian yang membahas Rancangan Undang-Undang tersebut. (1b) Hasil perbaikan sebagaimana dimaksud pada ayat (1a) harus mendapatkan persetujuan dari pimpinan alat kelengkapan DPR yang membahas Rancangan Undang-Undang tersebut dan wakil dari Pemerintah yang membahas Rancangan Undang-Undang tersebut. (2) Perbaikan dan penyampaian Rancangan Undang- Undang sebagaimana dimaksud pada ayat (1) sampai dengan ayat (1b) dilakukan dalam jangka waktu paling lama 7 (tujuh) hari terhitung sejak tanggal persetujuan bersama. 9. Ketentuan Pasal 73 diubah sehingga berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Rancangan Undang-Undang yang telah disetujui bersama oleh DPR dan Presiden disampaikan oleh pimpinan DPR kepada Presiden untuk disahkan menjadi Undang-Undang."
+        },
+        {
+          "number": "1a",
+          "kind": "ayat",
+          "text": "(1a) Dalam hal Rancangan Undang-Undang yang telah disetujui bersama oleh DPR dan Presiden sebagaimana dimaksud pada ayat (1) masih terdapat kesalahan teknis penulisan, dilakukan perbaikan oleh pimpinan alat kelengkapan DPR yang membahas Rancangan Undang-Undang tersebut dan Pemerintah yang diwakili oleh kementerian yang membahas Rancangan Undang-Undang tersebut."
+        },
+        {
+          "number": "1b",
+          "kind": "ayat",
+          "text": "(1b) Hasil perbaikan sebagaimana dimaksud pada ayat (1a) harus mendapatkan persetujuan dari pimpinan alat kelengkapan DPR yang membahas Rancangan Undang-Undang tersebut dan wakil dari Pemerintah yang membahas Rancangan Undang-Undang tersebut."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Perbaikan dan penyampaian Rancangan Undang- Undang sebagaimana dimaksud pada ayat (1) sampai dengan ayat (1b) dilakukan dalam jangka waktu paling lama 7 (tujuh) hari terhitung sejak tanggal persetujuan bersama. 9. Ketentuan Pasal 73 diubah sehingga berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [
+          "obligation"
+        ],
+        "actors": [
+          "pemerintah",
+          "menteri",
+          "presiden"
+        ],
+        "references": [
+          "Pasal 73"
+        ],
+        "extractive_preview": "(1) Rancangan Undang-Undang yang telah disetujui bersama oleh DPR dan Presiden disampaikan oleh pimpinan DPR kepada Presiden untuk disahkan menjadi Undang-Undang. (1a) Dalam hal Rancangan Undang-Undang yang telah disetujui bersama oleh DPR ",
+        "exceptions_detected": true
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          7,
+          8
+        ]
+      }
+    },
+    {
+      "number": "73",
+      "chapter": null,
+      "section": "Bagian Ketujuh",
+      "pages": [
+        8,
+        9
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/73",
+      "text": "(1) Dalam hal Rancangan Undang-Undang yang telah disampaikan oleh pimpinan DPR kepada Presiden sebagaimana dimaksud dalam Pasal 72 masih ditemukan kesalahan teknis penulisan, kementerian yang menyelenggarakan urusan pemerintahan di bidang kesekretariatan negara bersama dengan kementerian yang membahas Rancangan Undang-Undang tersebut melakukan perbaikan dengan melibatkan pimpinan alat kelengkapan DPR yang membahas Rancangan Undang-Undang tersebut. (2) Rancangan Undang-Undang sebagaimana dimaksud dalam Pasal 72 atau Rancangan Undang-Undang sebagaimana dimaksud pada ayat (1) disahkan oleh Presiden dengan membubuhkan tanda tangan dalam jangka waktu paling lama 30 (tiga puluh) hari terhitung sejak Rancangan Undang-Undang tersebut disetujui bersama oleh DPR dan Presiden. (3) Dalam hal Rancangan Undang-Undang sebagaimana dimaksud pada ayat (2) tidak ditandatangani oleh Presiden dalam waktu paling lama 30 (tiga puluh) hari terhitung sejak Rancangan Undang-Undang tersebut disetujui bersama, Rancangan Undang-Undang tersebut sah menjadi Undang-Undang dan wajib diundangkan. (4) Dalam hal sahnya Rancangan Undang-Undang sebagaimana dimaksud pada ayat (3), kalimat pengesahannya berbunyi: Undang-Undang ini dinyatakan sah berdasarkan ketentuan Pasal 20 ayat (5) Undang-Undang Dasar Negara Republik Indonesia Tahun 1945. (5) Kalimat pengesahan yang berbunyi sebagaimana dimaksud pada ayat (4) harus dibubuhkan pada halaman terakhir Undang-Undang sebelum pengundangan naskah Undang-Undang ke dalam Lembaran Negara Republik Indonesia. 10. Penjelasan Pasal 78 diubah sebagaimana tercantum dalam penjelasan. 11. Ketentuan Pasal 85 diubah sehingga berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Dalam hal Rancangan Undang-Undang yang telah disampaikan oleh pimpinan DPR kepada Presiden sebagaimana dimaksud dalam Pasal 72 masih ditemukan kesalahan teknis penulisan, kementerian yang menyelenggarakan urusan pemerintahan di bidang kesekretariatan negara bersama dengan kementerian yang membahas Rancangan Undang-Undang tersebut melakukan perbaikan dengan melibatkan pimpinan alat kelengkapan DPR yang membahas Rancangan Undang-Undang tersebut."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Rancangan Undang-Undang sebagaimana dimaksud dalam Pasal 72 atau Rancangan Undang-Undang sebagaimana dimaksud pada ayat (1) disahkan oleh Presiden dengan membubuhkan tanda tangan dalam jangka waktu paling lama 30 (tiga puluh) hari terhitung sejak Rancangan Undang-Undang tersebut disetujui bersama oleh DPR dan Presiden."
+        },
+        {
+          "number": "3",
+          "kind": "ayat",
+          "text": "(3) Dalam hal Rancangan Undang-Undang sebagaimana dimaksud pada ayat (2) tidak ditandatangani oleh Presiden dalam waktu paling lama 30 (tiga puluh) hari terhitung sejak Rancangan Undang-Undang tersebut disetujui bersama, Rancangan Undang-Undang tersebut sah menjadi Undang-Undang dan wajib diundangkan."
+        },
+        {
+          "number": "4",
+          "kind": "ayat",
+          "text": "(4) Dalam hal sahnya Rancangan Undang-Undang sebagaimana dimaksud pada ayat (3), kalimat pengesahannya berbunyi: Undang-Undang ini dinyatakan sah berdasarkan ketentuan Pasal 20 ayat (5) Undang-Undang Dasar Negara Republik Indonesia Tahun 1945."
+        },
+        {
+          "number": "5",
+          "kind": "ayat",
+          "text": "(5) Kalimat pengesahan yang berbunyi sebagaimana dimaksud pada ayat (4) harus dibubuhkan pada halaman terakhir Undang-Undang sebelum pengundangan naskah Undang-Undang ke dalam Lembaran Negara Republik Indonesia. 10. Penjelasan Pasal 78 diubah sebagaimana tercantum dalam penjelasan. 11. Ketentuan Pasal 85 diubah sehingga berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [
+          "obligation"
+        ],
+        "actors": [
+          "pemerintah",
+          "menteri",
+          "presiden"
+        ],
+        "references": [
+          "Pasal 72",
+          "Pasal 20 ayat (5)",
+          "Pasal 78",
+          "Pasal 85"
+        ],
+        "extractive_preview": "(1) Dalam hal Rancangan Undang-Undang yang telah disampaikan oleh pimpinan DPR kepada Presiden sebagaimana dimaksud dalam Pasal 72 masih ditemukan kesalahan teknis penulisan, kementerian yang menyelenggarakan urusan pemerintahan di bidang k",
+        "exceptions_detected": true
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          8,
+          9
+        ]
+      }
+    },
+    {
+      "number": "85",
+      "chapter": null,
+      "section": "Bagian Ketujuh",
+      "pages": [
+        9,
+        10
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/85",
+      "text": "(1) Pengundangan Peraturan Perundang-undangan dalam Lembaran Negara Republik Indonesia sebagaimana dimaksud dalam Pasal 82 huruf a sampai dengan huruf c dilaksanakan oleh menteri yang menyelenggarakan urusan pemerintahan di bidang kesekretariatan negara. (2) Pengundangan Peraturan Perundang-undangan dalam Lembaran Negara Republik Indonesia sebagaimana dimaksud dalam Pasal 82 huruf d dan Berita Negara Republik Indonesia sebagaimana dimaksud dalam Pasal 83 dilaksanakan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang- undangan. 12. Penjelasan Pasal 95 diubah sebagaimana tercantum dalam penjelasan. 13. Ketentuan ayat (3) Pasal 95A diubah dan di antara ayat (3) dan ayat (4) disisipkan 2 (dua) ayat, yakni ayat (3a) dan ayat (3b), serta penjelasan ayat (2) dan ayat (4) Pasal 95A diubah sehingga Pasal 95A berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Pengundangan Peraturan Perundang-undangan dalam Lembaran Negara Republik Indonesia sebagaimana dimaksud dalam Pasal 82 huruf a sampai dengan huruf c dilaksanakan oleh menteri yang menyelenggarakan urusan pemerintahan di bidang kesekretariatan negara."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Pengundangan Peraturan Perundang-undangan dalam Lembaran Negara Republik Indonesia sebagaimana dimaksud dalam Pasal 82 huruf d dan Berita Negara Republik Indonesia sebagaimana dimaksud dalam Pasal 83 dilaksanakan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang- undangan. 12. Penjelasan Pasal 95 diubah sebagaimana tercantum dalam penjelasan. 13. Ketentuan ayat (3) Pasal 95A diubah dan di antara ayat (3) dan ayat (4) disisipkan 2 (dua) ayat, yakni ayat"
+        },
+        {
+          "number": "3a",
+          "kind": "ayat",
+          "text": "(3a) dan ayat (3b), serta penjelasan ayat (2) dan ayat"
+        },
+        {
+          "number": "4",
+          "kind": "ayat",
+          "text": "(4) Pasal 95A diubah sehingga Pasal 95A berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [],
+        "actors": [
+          "pemerintah",
+          "menteri"
+        ],
+        "references": [
+          "Pasal 82",
+          "Pasal 83",
+          "Pasal 95",
+          "Pasal 95A"
+        ],
+        "extractive_preview": "(1) Pengundangan Peraturan Perundang-undangan dalam Lembaran Negara Republik Indonesia sebagaimana dimaksud dalam Pasal 82 huruf a sampai dengan huruf c dilaksanakan oleh menteri yang menyelenggarakan urusan pemerintahan di bidang kesekreta",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          9,
+          10
+        ]
+      }
+    },
+    {
+      "number": "95A",
+      "chapter": null,
+      "section": "Bagian Ketujuh",
+      "pages": [
+        10,
+        11
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/95A",
+      "text": "(1) Pemantauan dan Peninjauan terhadap Undang- Undang dilakukan setelah Undang-Undang berlaku. (2) Pemantauan dan Peninjauan terhadap Undang- Undang sebagaimana dimaksud pada ayat (1) dilaksanakan oleh DPR, DPD, dan Pemerintah. (3) Pemantauan dan Peninjauan terhadap Undang- Undang oleh DPR sebagaimana dimaksud pada ayat (2) dikoordinasikan oleh alat kelengkapan yang khusus menangani bidang legislasi. (3a) Pemantauan dan Peninjauan terhadap Undang- Undang oleh DPD sebagaimana dimaksud pada ayat (2) dikoordinasikan oleh alat kelengkapan yang khusus menangani bidang perancangan Undang-Undang. (3b) Pemantauan dan Peninjauan terhadap Undang- Undang oleh Pemerintah sebagaimana dimaksud pada ayat (2) dikoordinasikan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan dengan melibatkan menteri atau kepala lembaga yang terkait. (4) Hasil dari Pemantauan dan Peninjauan terhadap Undang-Undang sebagaimana dimaksud pada ayat (2) dapat menjadi usul dalam penyusunan Prolegnas. 14. Ketentuan Pasal 96 diubah sehingga berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Pemantauan dan Peninjauan terhadap Undang- Undang dilakukan setelah Undang-Undang berlaku."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Pemantauan dan Peninjauan terhadap Undang- Undang sebagaimana dimaksud pada ayat (1) dilaksanakan oleh DPR, DPD, dan Pemerintah."
+        },
+        {
+          "number": "3",
+          "kind": "ayat",
+          "text": "(3) Pemantauan dan Peninjauan terhadap Undang- Undang oleh DPR sebagaimana dimaksud pada ayat (2) dikoordinasikan oleh alat kelengkapan yang khusus menangani bidang legislasi."
+        },
+        {
+          "number": "3a",
+          "kind": "ayat",
+          "text": "(3a) Pemantauan dan Peninjauan terhadap Undang- Undang oleh DPD sebagaimana dimaksud pada ayat (2) dikoordinasikan oleh alat kelengkapan yang khusus menangani bidang perancangan Undang-Undang."
+        },
+        {
+          "number": "3b",
+          "kind": "ayat",
+          "text": "(3b) Pemantauan dan Peninjauan terhadap Undang- Undang oleh Pemerintah sebagaimana dimaksud pada ayat (2) dikoordinasikan oleh menteri atau kepala lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan dengan melibatkan menteri atau kepala lembaga yang terkait."
+        },
+        {
+          "number": "4",
+          "kind": "ayat",
+          "text": "(4) Hasil dari Pemantauan dan Peninjauan terhadap Undang-Undang sebagaimana dimaksud pada ayat (2) dapat menjadi usul dalam penyusunan Prolegnas. 14. Ketentuan Pasal 96 diubah sehingga berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [
+          "permission"
+        ],
+        "actors": [
+          "pemerintah",
+          "menteri"
+        ],
+        "references": [
+          "Pasal 96"
+        ],
+        "extractive_preview": "(1) Pemantauan dan Peninjauan terhadap Undang- Undang dilakukan setelah Undang-Undang berlaku. (2) Pemantauan dan Peninjauan terhadap Undang- Undang sebagaimana dimaksud pada ayat (1) dilaksanakan oleh DPR, DPD, dan Pemerintah. (3) Pemantau",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          10,
+          11
+        ]
+      }
+    },
+    {
+      "number": "96",
+      "chapter": null,
+      "section": "Bagian Ketujuh",
+      "pages": [
+        11,
+        12
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/96",
+      "text": "(1) Masyarakat berhak memberikan masukan secara lisan dan/atau tertulis dalam setiap tahapan Pembentukan Peraturan Perundang-undangan. (2) Pemberian masukan masyarakat sebagaimana dimaksud pada ayat (1) dilakukan secara daring dan/atau luring. (3) Masyarakat sebagaimana dimaksud pada ayat (1) merupakan orang perseorangan atau kelompok orang yang terdampak langsung dan/atau mempunyai kepentingan atas materi muatan Rancangan Peraturan Perundang-undangan. (4) Untuk memudahkan masyarakat dalam memberikan masukan sebagaimana dimaksud pada ayat (1), setiap Naskah Akademik dan/atau Rancangan Peraturan Perundang-undangan, dapat diakses dengan mudah oleh masyarakat. (5) Dalam melaksanakan hak sebagaimana dimaksud pada ayat (1), pembentuk Peraturan Perundang-undangan menginformasikan kepada masyarakat tentang Pembentukan Peraturan Perundang-undangan. (6) Untuk memenuhi hak sebagaimana dimaksud pada ayat (1), pembentuk Peraturan Perundang- undangan dapat melakukan kegiatan konsultasi publik melalui: a. rapat dengar pendapat umum; b. kunjungan kerja; c. seminar, lokakarya, diskusi; dan/atau d. kegiatan konsultasi publik lainnya. (7) Hasil kegiatan konsultasi publik sebagaimana dimaksud pada ayat (6) menjadi bahan pertimbangan dalam perencanaan, penyusunan, dan pembahasan Rancangan Peraturan Perundang-undangan. (8) Pembentuk Peraturan Perundang-undangan dapat menjelaskan kepada masyarakat mengenai hasil pembahasan masukan masyarakat sebagaimana dimaksud pada ayat (1). (9) Ketentuan lebih lanjut mengenai partisipasi masyarakat sebagaimana dimaksud pada ayat (1) sampai dengan ayat (8) diatur dalam Peraturan DPR, Peraturan DPD, dan Peraturan Presiden. 15. Di antara Pasal 97 dan Pasal 98 disisipkan 4 (empat) pasal, yakni Pasal 97A, Pasal 97B, Pasal 97C, dan Pasal 97D sehingga berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Masyarakat berhak memberikan masukan secara lisan dan/atau tertulis dalam setiap tahapan Pembentukan Peraturan Perundang-undangan."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Pemberian masukan masyarakat sebagaimana dimaksud pada ayat (1) dilakukan secara daring dan/atau luring."
+        },
+        {
+          "number": "3",
+          "kind": "ayat",
+          "text": "(3) Masyarakat sebagaimana dimaksud pada ayat (1) merupakan orang perseorangan atau kelompok orang yang terdampak langsung dan/atau mempunyai kepentingan atas materi muatan Rancangan Peraturan Perundang-undangan."
+        },
+        {
+          "number": "4",
+          "kind": "ayat",
+          "text": "(4) Untuk memudahkan masyarakat dalam memberikan masukan sebagaimana dimaksud pada ayat (1), setiap Naskah Akademik dan/atau Rancangan Peraturan Perundang-undangan, dapat diakses dengan mudah oleh masyarakat."
+        },
+        {
+          "number": "5",
+          "kind": "ayat",
+          "text": "(5) Dalam melaksanakan hak sebagaimana dimaksud pada ayat (1), pembentuk Peraturan Perundang-undangan menginformasikan kepada masyarakat tentang Pembentukan Peraturan Perundang-undangan."
+        },
+        {
+          "number": "6",
+          "kind": "ayat",
+          "text": "(6) Untuk memenuhi hak sebagaimana dimaksud pada ayat (1), pembentuk Peraturan Perundang- undangan dapat melakukan kegiatan konsultasi publik melalui: a. rapat dengar pendapat umum; b. kunjungan kerja; c. seminar, lokakarya, diskusi; dan/atau d. kegiatan konsultasi publik lainnya."
+        },
+        {
+          "number": "7",
+          "kind": "ayat",
+          "text": "(7) Hasil kegiatan konsultasi publik sebagaimana dimaksud pada ayat (6) menjadi bahan pertimbangan dalam perencanaan, penyusunan, dan pembahasan Rancangan Peraturan Perundang-undangan."
+        },
+        {
+          "number": "8",
+          "kind": "ayat",
+          "text": "(8) Pembentuk Peraturan Perundang-undangan dapat menjelaskan kepada masyarakat mengenai hasil pembahasan masukan masyarakat sebagaimana dimaksud pada ayat (1)."
+        },
+        {
+          "number": "9",
+          "kind": "ayat",
+          "text": "(9) Ketentuan lebih lanjut mengenai partisipasi masyarakat sebagaimana dimaksud pada ayat (1) sampai dengan ayat (8) diatur dalam Peraturan DPR, Peraturan DPD, dan Peraturan Presiden. 15. Di antara Pasal 97 dan Pasal 98 disisipkan 4 (empat) pasal, yakni Pasal 97A, Pasal 97B, Pasal 97C, dan Pasal 97D sehingga berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [
+        {
+          "letter": "a",
+          "text": "rapat dengar pendapat umum;"
+        },
+        {
+          "letter": "b",
+          "text": "kunjungan kerja;"
+        },
+        {
+          "letter": "c",
+          "text": "seminar, lokakarya, diskusi; dan/atau"
+        },
+        {
+          "letter": "d",
+          "text": "kegiatan konsultasi publik lainnya. (7) Hasil kegiatan konsultasi publik sebagaimana dimaksud pada ayat (6) menjadi bahan pertimbangan dalam perencanaan, penyusunan, dan pembahasan Rancangan Peraturan Perundang-undangan. (8) Pembentuk Peraturan Perundang-undangan dapat menjelaskan kepada masyarakat mengenai hasil pembahasan masukan masyarakat sebagaimana dimaksud pada ayat (1). (9) Ketentuan lebih lanjut mengenai partisipasi masyarakat sebagaimana dimaksud pada ayat (1) sampai dengan ayat (8) diatur dalam Peraturan DPR, Peraturan DPD, dan Peraturan Presiden. 15. Di antara Pasal 97 dan Pasal 98 disisipkan 4 (empat) pasal, yakni Pasal 97A, Pasal 97B, Pasal 97C, dan Pasal 97D sehingga berbunyi sebagai berikut:"
+        }
+      ],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "akses_layanan",
+          "partisipasi",
+          "informasi",
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [
+          "permission"
+        ],
+        "actors": [
+          "masyarakat",
+          "presiden"
+        ],
+        "references": [
+          "Pasal 97",
+          "Pasal 98",
+          "Pasal 97A",
+          "Pasal 97B",
+          "Pasal 97C",
+          "Pasal 97D"
+        ],
+        "extractive_preview": "(1) Masyarakat berhak memberikan masukan secara lisan dan/atau tertulis dalam setiap tahapan Pembentukan Peraturan Perundang-undangan. (2) Pemberian masukan masyarakat sebagaimana dimaksud pada ayat (1) dilakukan secara daring dan/atau luri",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          11,
+          12
+        ]
+      }
+    },
+    {
+      "number": "97A",
+      "chapter": null,
+      "section": "Bagian Ketujuh",
+      "pages": [
+        12
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/97A",
+      "text": "Materi muatan yang diatur dalam Peraturan Perundang-undangan yang menggunakan metode omnibus hanya dapat diubah dan/atau dicabut dengan mengubah dan/atau mencabut Peraturan Perundang-undangan tersebut.",
+      "paragraphs": [],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [
+          "permission"
+        ],
+        "actors": [],
+        "references": [],
+        "extractive_preview": "Materi muatan yang diatur dalam Peraturan Perundang-undangan yang menggunakan metode omnibus hanya dapat diubah dan/atau dicabut dengan mengubah dan/atau mencabut Peraturan Perundang-undangan tersebut.",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          12
+        ]
+      }
+    },
+    {
+      "number": "97B",
+      "chapter": null,
+      "section": "Bagian Ketujuh",
+      "pages": [
+        12,
+        13
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/97B",
+      "text": "(1) Pembentukan Peraturan Perundang-undangan dapat dilakukan secara elektronik. (2) Pembubuhan tanda tangan dalam setiap tahapan Pembentukan Peraturan Perundang-undangan mulai dari perencanaan sampai dengan pengundangan dapat menggunakan tanda tangan elektronik. (3) Tanda tangan elektronik sebagaimana dimaksud pada ayat (2) harus tersertifikasi sesuai dengan ketentuan Peraturan Perundang-undangan. (4) Peraturan Perundang-undangan yang dibentuk secara elektronik sebagaimana dimaksud pada ayat (1) berkekuatan hukum sama dengan Peraturan Perundang-undangan yang dibentuk dalam bentuk cetak. (5) Peraturan Perundang-undangan yang ditandatangani dengan tanda tangan elektronik sebagaimana dimaksud pada ayat (2) berkekuatan hukum sama dengan Peraturan Perundang-undangan yang ditandatangani secara nonelektronik. (6) Ketentuan lebih lanjut mengenai tata cara Pembentukan Peraturan Perundang-undangan secara elektronik sebagaimana dimaksud pada ayat (1) diatur dalam Peraturan DPR, Peraturan DPD, dan Peraturan Presiden.",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Pembentukan Peraturan Perundang-undangan dapat dilakukan secara elektronik."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Pembubuhan tanda tangan dalam setiap tahapan Pembentukan Peraturan Perundang-undangan mulai dari perencanaan sampai dengan pengundangan dapat menggunakan tanda tangan elektronik."
+        },
+        {
+          "number": "3",
+          "kind": "ayat",
+          "text": "(3) Tanda tangan elektronik sebagaimana dimaksud pada ayat (2) harus tersertifikasi sesuai dengan ketentuan Peraturan Perundang-undangan."
+        },
+        {
+          "number": "4",
+          "kind": "ayat",
+          "text": "(4) Peraturan Perundang-undangan yang dibentuk secara elektronik sebagaimana dimaksud pada ayat (1) berkekuatan hukum sama dengan Peraturan Perundang-undangan yang dibentuk dalam bentuk cetak."
+        },
+        {
+          "number": "5",
+          "kind": "ayat",
+          "text": "(5) Peraturan Perundang-undangan yang ditandatangani dengan tanda tangan elektronik sebagaimana dimaksud pada ayat (2) berkekuatan hukum sama dengan Peraturan Perundang-undangan yang ditandatangani secara nonelektronik."
+        },
+        {
+          "number": "6",
+          "kind": "ayat",
+          "text": "(6) Ketentuan lebih lanjut mengenai tata cara Pembentukan Peraturan Perundang-undangan secara elektronik sebagaimana dimaksud pada ayat (1) diatur dalam Peraturan DPR, Peraturan DPD, dan Peraturan Presiden."
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "informasi",
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [
+          "obligation",
+          "permission"
+        ],
+        "actors": [
+          "presiden"
+        ],
+        "references": [],
+        "extractive_preview": "(1) Pembentukan Peraturan Perundang-undangan dapat dilakukan secara elektronik. (2) Pembubuhan tanda tangan dalam setiap tahapan Pembentukan Peraturan Perundang-undangan mulai dari perencanaan sampai dengan pengundangan dapat menggunakan ta",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          12,
+          13
+        ]
+      }
+    },
+    {
+      "number": "97C",
+      "chapter": null,
+      "section": "Bagian Ketujuh",
+      "pages": [
+        13
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/97C",
+      "text": "Selain jenis dan hierarki Peraturan Perundang- undangan yang telah diatur dalam Pasal 46 ayat (2), Pasal 47 ayat (3), Pasal 48 ayat (1), Pasal 54 ayat (2), Pasal 55 ayat (2), dan Pasal 58, kementerian atau lembaga yang menyelenggarakan urusan pemerintahan di bidang Pembentukan Peraturan Perundang-undangan melakukan analisis dan evaluasi Peraturan Perundang-undangan.",
+      "paragraphs": [],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [],
+        "actors": [
+          "pemerintah",
+          "menteri"
+        ],
+        "references": [
+          "Pasal 46 ayat (2)",
+          "Pasal 47 ayat (3)",
+          "Pasal 48 ayat (1)",
+          "Pasal 54 ayat (2)",
+          "Pasal 55 ayat (2)",
+          "Pasal 58"
+        ],
+        "extractive_preview": "Selain jenis dan hierarki Peraturan Perundang- undangan yang telah diatur dalam Pasal 46 ayat (2), Pasal 47 ayat (3), Pasal 48 ayat (1), Pasal 54 ayat (2), Pasal 55 ayat (2), dan Pasal 58, kementerian atau lembaga yang menyelenggarakan urus",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          13
+        ]
+      }
+    },
+    {
+      "number": "97D",
+      "chapter": null,
+      "section": "Bagian Ketujuh",
+      "pages": [
+        13,
+        14
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/97D",
+      "text": "Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Daerah Provinsi sebagaimana dimaksud dalam Pasal 58 dan Rancangan Peraturan Daerah Kabupaten/Kota sebagaimana dimaksud dalam Pasal 63 berlaku mutatis mutandis terhadap pengharmonisasian, pembulatan, dan pemantapan konsepsi rancangan peraturan kepala daerah Provinsi dan rancangan peraturan kepala daerah Kabupaten/Kota. 16. Di antara ayat (1) dan ayat (2) Pasal 98 disisipkan 1 (satu) ayat, yakni ayat (1a) sehingga Pasal 98 berbunyi sebagai berikut:",
+      "paragraphs": [],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [],
+        "actors": [],
+        "references": [
+          "Pasal 58",
+          "Pasal 63",
+          "Pasal 98"
+        ],
+        "extractive_preview": "Pengharmonisasian, pembulatan, dan pemantapan konsepsi Rancangan Peraturan Daerah Provinsi sebagaimana dimaksud dalam Pasal 58 dan Rancangan Peraturan Daerah Kabupaten/Kota sebagaimana dimaksud dalam Pasal 63 berlaku mutatis mutandis terhad",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          13,
+          14
+        ]
+      }
+    },
+    {
+      "number": "98",
+      "chapter": null,
+      "section": "Bagian Ketujuh",
+      "pages": [
+        14
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/98",
+      "text": "(1) Setiap tahapan Pembentukan Peraturan Perundang-undangan mengikutsertakan Perancang Peraturan Perundang-undangan. (1a) Selain Perancang Peraturan Perundang-undangan sebagaimana dimaksud pada ayat (1), Pembentukan Peraturan Perundang-undangan dapat mengikutsertakan analis hukum sesuai dengan kebutuhan. (2) Ketentuan mengenai keikutsertaan dan pembinaan Perancang Peraturan Perundang- undangan sebagaimana dimaksud pada ayat (1) diatur dengan Peraturan Pemerintah. 17. Ketentuan Pasal 99 diubah sehingga berbunyi sebagai berikut:",
+      "paragraphs": [
+        {
+          "number": "1",
+          "kind": "ayat",
+          "text": "(1) Setiap tahapan Pembentukan Peraturan Perundang-undangan mengikutsertakan Perancang Peraturan Perundang-undangan."
+        },
+        {
+          "number": "1a",
+          "kind": "ayat",
+          "text": "(1a) Selain Perancang Peraturan Perundang-undangan sebagaimana dimaksud pada ayat (1), Pembentukan Peraturan Perundang-undangan dapat mengikutsertakan analis hukum sesuai dengan kebutuhan."
+        },
+        {
+          "number": "2",
+          "kind": "ayat",
+          "text": "(2) Ketentuan mengenai keikutsertaan dan pembinaan Perancang Peraturan Perundang- undangan sebagaimana dimaksud pada ayat (1) diatur dengan Peraturan Pemerintah. 17. Ketentuan Pasal 99 diubah sehingga berbunyi sebagai berikut:"
+        }
+      ],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "partisipasi",
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [
+          "permission"
+        ],
+        "actors": [
+          "pemerintah"
+        ],
+        "references": [
+          "Pasal 99"
+        ],
+        "extractive_preview": "(1) Setiap tahapan Pembentukan Peraturan Perundang-undangan mengikutsertakan Perancang Peraturan Perundang-undangan. (1a) Selain Perancang Peraturan Perundang-undangan sebagaimana dimaksud pada ayat (1), Pembentukan Peraturan Perundang-unda",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          14
+        ]
+      }
+    },
+    {
+      "number": "99",
+      "chapter": null,
+      "section": "Bagian Ketujuh",
+      "pages": [
+        14,
+        15
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/99",
+      "text": "Selain Perancang Peraturan Perundang-undangan sebagaimana dimaksud dalam Pasal 98 ayat (1), tahapan pembentukan Undang-Undang, Peraturan Daerah Provinsi, dan Peraturan Daerah Kabupaten/Kota mengikutsertakan analis legislatif dan tenaga ahli. 18. Ketentuan huruf D Bab II sebagaimana tercantum dalam Lampiran I Undang-Undang Nomor 12 Tahun 2011 tentang Pembentukan Peraturan Perundang- undangan sebagaimana telah diubah dengan Undang- Undang Nomor 15 Tahun 2019 tentang Perubahan atas Undang-Undang Nomor 12 Tahun 2011 tentang Pembentukan Peraturan Perundang-undangan diubah, sehingga menjadi sebagaimana tercantum dalam Lampiran I yang merupakan bagian tidak terpisahkan dari Undang-Undang ini. 19. Ketentuan angka 2, angka 3, angka 4, angka 5, angka 6, angka 7, angka 9, angka 10, angka 19, angka 31, angka 33, angka 77, angka 98, angka 104, angka 111, angka 158, angka 176, angka 180, angka 188, dan angka 190 Lampiran II Undang-Undang Nomor 12 Tahun 2011 tentang Pembentukan Peraturan Perundang-undangan sebagaimana telah diubah dengan Undang-Undang Nomor 15 Tahun 2019 tentang Perubahan atas Undang-Undang Nomor 12 Tahun 2011 tentang Pembentukan Peraturan Perundang-undangan diubah dan disisipkan angka 2a, angka 3a, angka 4a, angka 27a, angka 27b, angka 41a, angka 41b, angka 41c, angka 41d, angka 66a, angka 69a, angka 109a, angka 111a, angka 111b, angka 111c, angka 111d, angka 111e, angka 111f, angka 111g, angka 111h, angka 111i, angka 111j, angka 111k, angka 189a, angka 190a, angka 190b, angka 233a, angka 233b, angka 234a, angka 236a, angka 236b, angka 236c, angka 256a, angka 270a, angka 270b, angka 270c, angka 284a, serta ditambahkan Bab IV huruf M dan huruf N sehingga menjadi sebagaimana tercantum dalam Lampiran II yang merupakan bagian tidak terpisahkan dari Undang-Undang ini.",
+      "paragraphs": [],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [
+          "partisipasi",
+          "pembentukan_regulasi"
+        ],
+        "norm_types": [],
+        "actors": [],
+        "references": [
+          "Pasal 98 ayat (1)"
+        ],
+        "extractive_preview": "Selain Perancang Peraturan Perundang-undangan sebagaimana dimaksud dalam Pasal 98 ayat (1), tahapan pembentukan Undang-Undang, Peraturan Daerah Provinsi, dan Peraturan Daerah Kabupaten/Kota mengikutsertakan analis legislatif dan tenaga ahli",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          14,
+          15
+        ]
+      }
+    },
+    {
+      "number": "II",
+      "chapter": null,
+      "section": "Bagian Ketujuh",
+      "pages": [
+        15,
+        16
+      ],
+      "id": "uu-13-2022@bdcdf76cb1b0/pasal/II",
+      "text": "Undang-Undang ini mulai berlaku pada tanggal diundangkan.",
+      "paragraphs": [],
+      "letters": [],
+      "enrichment": {
+        "method": "deterministic_rules_v1",
+        "review_status": "unreviewed",
+        "topics": [],
+        "norm_types": [],
+        "actors": [],
+        "references": [],
+        "extractive_preview": "Undang-Undang ini mulai berlaku pada tanggal diundangkan.",
+        "exceptions_detected": false
+      },
+      "legal_status": "not_consolidated",
+      "target_regulation_id": "uu-12-2011",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu13-2022.pdf",
+        "raw_file": "raw/uu13-2022.pdf",
+        "sha256": "bdcdf76cb1b023b098963b525493063899a71f02bb43ae119347b3ddd1ca9e95",
+        "pages": [
+          15,
+          16
+        ]
+      }
+    }
+  ]
+}

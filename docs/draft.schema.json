@@ -1,0 +1,74 @@
+{
+  "$defs": {
+    "Article": {
+      "properties": {
+        "number": {
+          "maxLength": 8,
+          "pattern": "^\\d+[A-Z]?$",
+          "title": "Number",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 12000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "number",
+        "text"
+      ],
+      "title": "Article",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "title": {
+      "maxLength": 300,
+      "minLength": 3,
+      "title": "Title",
+      "type": "string"
+    },
+    "regulation_type": {
+      "default": "PP",
+      "enum": [
+        "UU",
+        "PP",
+        "PERPRES",
+        "PERDA_PROV",
+        "PERDA_KAB",
+        "PERMEN"
+      ],
+      "title": "Regulation Type",
+      "type": "string"
+    },
+    "preamble": {
+      "default": "",
+      "maxLength": 10000,
+      "title": "Preamble",
+      "type": "string"
+    },
+    "articles": {
+      "items": {
+        "$ref": "#/$defs/Article"
+      },
+      "maxItems": 100,
+      "minItems": 1,
+      "title": "Articles",
+      "type": "array"
+    },
+    "scope": {
+      "default": "Layanan publik digital",
+      "maxLength": 1000,
+      "title": "Scope",
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "articles"
+  ],
+  "title": "DraftInput",
+  "type": "object"
+}

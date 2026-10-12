@@ -1,0 +1,68 @@
+{
+  "$defs": {
+    "Assumptions": {
+      "properties": {
+        "population": {
+          "default": 1000,
+          "maximum": 10000000,
+          "minimum": 1,
+          "title": "Population",
+          "type": "integer"
+        },
+        "digital_access_pct": {
+          "default": 70,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Digital Access Pct",
+          "type": "number"
+        },
+        "assisted_success_pct": {
+          "default": 80,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Assisted Success Pct",
+          "type": "number"
+        },
+        "digital_cost": {
+          "default": 20000,
+          "maximum": 100000000,
+          "minimum": 0,
+          "title": "Digital Cost",
+          "type": "number"
+        },
+        "assisted_cost": {
+          "default": 50000,
+          "maximum": 100000000,
+          "minimum": 0,
+          "title": "Assisted Cost",
+          "type": "number"
+        },
+        "staff_capacity": {
+          "default": 40,
+          "maximum": 100000,
+          "minimum": 1,
+          "title": "Staff Capacity",
+          "type": "integer"
+        }
+      },
+      "title": "Assumptions",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "alternative_text": {
+      "maxLength": 100000,
+      "minLength": 10,
+      "title": "Alternative Text",
+      "type": "string"
+    },
+    "assumptions": {
+      "$ref": "#/$defs/Assumptions"
+    }
+  },
+  "required": [
+    "alternative_text"
+  ],
+  "title": "SimulationRequest",
+  "type": "object"
+}
