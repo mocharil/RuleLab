@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <linearGradient id="shieldGrad" x1="3" y1="2" x2="21" y2="22" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fef3c7"/>
+      <stop offset="100%" stop-color="#fde68a"/>
+    </linearGradient>
+    <linearGradient id="shieldBorder" x1="3" y1="2" x2="21" y2="22" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield Backing -->
+  <path d="M12 2.5l7 3v6.5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V5.5l7-3Z" fill="url(#shieldGrad)" stroke="url(#shieldBorder)" stroke-width="1.75" stroke-linejoin="round"/>
+  <!-- Inner Rim -->
+  <path d="M12 5.5l4.5 2v4c0 3.3-2.3 5.8-4.5 7-2.2-1.2-4.5-3.7-4.5-7v-4l4.5-2Z" fill="#ffffff" fill-opacity="0.6"/>
+  <!-- Checkmark -->
+  <path d="M9.5 12l2 2 3.5-4" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <linearGradient id="setGrad" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#64748b"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <!-- Sliders / Controls -->
+  <path d="M4 6h9M17 6h3" stroke="url(#setGrad)" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="15" cy="6" r="2.5" fill="#ffffff" stroke="#334155" stroke-width="1.75"/>
+  <path d="M4 12h3M11 12h9" stroke="url(#setGrad)" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="9" cy="12" r="2.5" fill="#ffffff" stroke="#334155" stroke-width="1.75"/>
+  <path d="M4 18h11M19 18h1" stroke="url(#setGrad)" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="17" cy="18" r="2.5" fill="#ffffff" stroke="#334155" stroke-width="1.75"/>
+</svg>

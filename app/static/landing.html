@@ -1,18 +1,785 @@
 <!doctype html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#b42338"><title>RuleLab · Rancang aturan dengan konteks</title><meta name="description" content="Workspace regulasi Indonesia untuk menyusun naskah, menelusuri sumber hukum, dan mengeksplorasi dampak kebijakan."><link rel="icon" href="/static/brand/rulelab-logo-manrope-v2.png"><link rel="preload" href="/static/fonts/Manrope.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="/static/design.css"></head>
-<body class="landing-page"><a class="skip-link" href="#landing-main">Langsung ke konten</a>
-<header class="landing-nav"><a class="brand" href="/" aria-label="RuleLab"><span class="brand-icon" aria-hidden="true"></span><div>RuleLab</div></a><nav class="landing-links" aria-label="Navigasi halaman awal"><a href="#fitur">Ruang kerja</a><a href="#cara-kerja">Cara kerja</a><a href="#sumber">Sumber hukum</a></nav><a class="btn primary" href="/workspace">Buka workspace <span aria-hidden="true">↗</span></a></header>
-<main id="landing-main">
-<section class="landing-hero"><div><div class="eyebrow">PERANCANGAN REGULASI INDONESIA</div><h1>Rancang aturan.<br><em>Pahami dampaknya.</em></h1><p>Susun rancangan, telusuri landasan hukum, dan uji dampaknya sebelum mengambil keputusan.</p><div class="actions"><a class="btn primary" href="/workspace">Buka workspace <span aria-hidden="true">→</span></a><a class="btn" href="/workspace?view=social">Lihat simulasi persona</a></div></div>
-<figure class="landing-source-figure"><div class="source-paper"><img src="/static/art/uu-12-2011-source.webp" alt="Halaman pertama naskah sumber UU 12 Tahun 2011 tentang Pembentukan Peraturan Perundang-undangan" width="744" height="1053" fetchpriority="high"></div><figcaption><div><b>UU 12 Tahun 2011</b><span>Pembentukan Peraturan Perundang-undangan</span></div><a href="/workspace?view=gallery">Baca di galeri ↗</a></figcaption></figure></section>
-<div class="trust-row" id="sumber"><p class="landing-access-note">Demo tersedia · Tanpa login · Review manusia tetap diperlukan</p><div><b>Naskah dan sumber resmi</b><span>Kutipan pasal dengan asal dokumen dan jejak ekstraksi.</span></div><div><b>Versi yang dapat ditelusuri</b><span>Hasil analisis terikat pada snapshot rancangan.</span></div><div><b>Perspektif untuk dipertimbangkan</b><span>Skenario asumsi dan opini persona sintetis.</span></div></div>
-<section id="fitur"><div class="section-heading"><h2>Naskah, landasan, dan dampak.</h2></div><div class="landing-features taste-features">
-<a class="feature-card" href="/workspace?view=editor"><svg width="22" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 2H6v20h14V8zM14 2v6h6M8 12h8M8 16h6"/></svg><h3>Editor rancangan</h3><p>Tulis atau impor pasal. Jalankan review, uji dampak, dan lihat opini agen langsung di samping naskah. Ekspor hasilnya ke DOCX.</p><span class="feature-link">Buka editor <span aria-hidden="true">→</span></span></a>
-<a class="feature-card" href="/workspace?view=analysis"><svg width="22" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 3 8 4v6c0 4-8 8-8 8s-8-4-8-8V7zM8 12l3 3 5-6"/></svg><h3>Review berbasis sumber</h3><p>Periksa potensi konflik beserta hierarki, konteks waktu, dan kutipan. Tinjau interpretasi alternatif sebelum mengubah suatu pasal.</p><span class="feature-link">Lihat pemeriksaan <span aria-hidden="true">→</span></span></a>
-<a class="feature-card" href="/workspace?view=social"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="4" r="2"/><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><path d="M12 6v5l-7 4m7-4 7 4"/></svg><h3>Simulasi lintas perspektif</h3><p>Lima persona membaca, berpendapat, dan saling menanggapi. Klik node untuk memahami alasan, balasan, dan usulan mitigasinya.</p><span class="feature-link">Jelajahi simulasi <span aria-hidden="true">→</span></span></a>
-</div></section>
-<section class="landing-agents"><div><h2>Ikuti pekerjaan agen.<br>Tinjau hasilnya sendiri.</h2><p>Koordinator menyusun rencana. Agen menelusuri sumber, memeriksa naskah, dan membandingkan skenario. Anda dapat melihat aktivitas, kutipan, serta hasil setiap langkah.</p><a class="btn" href="/workspace?view=agents">Lihat operasi agen <span aria-hidden="true">→</span></a></div><ol><li><span>01</span><div><b>Penelusuran hukum</b><small>Pasal sumber, versi, dan provenance.</small></div></li><li><span>02</span><div><b>Review legal</b><small>Hierarki, kewenangan, dan interpretasi.</small></div></li><li><span>03</span><div><b>Analisis dampak</b><small>Akses layanan, biaya, dan mitigasi.</small></div></li><li><span>04</span><div><b>Review manusia</b><small>Keputusan dan revisi tetap di tangan perancang.</small></div></li></ol></section>
-<section id="cara-kerja" class="landing-how"><div><h2>Mulai dari naskah.<br>Lanjutkan dengan konteks.</h2></div><ol><li><b>Susun atau impor rancangan</b><span>Mulai dari dokumen Anda, brief, atau draft contoh.</span></li><li><b>Periksa sumber dan uji skenario</b><span>Telusuri potensi konflik, dampak asumsi, dan reaksi persona.</span></li><li><b>Tinjau, revisi, dan ekspor</b><span>Simpan catatan keputusan dan ekspor naskah untuk tindak lanjut.</span></li></ol></section>
-<p class="landing-disclosure">Corpus contoh terbatas dan belum terkonsolidasi. Status hukum sumber perlu diverifikasi. Simulasi merupakan eksplorasi asumsi dan opini sintetis, bukan prediksi empiris atau pengganti partisipasi publik.</p>
-</main><footer class="landing-footer"><a class="brand" href="/">RuleLab</a><span>Pendukung perancangan dan review regulasi Indonesia.</span><a href="/workspace">Buka workspace <span aria-hidden="true">→</span></a></footer>
-</body></html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#b42338">
+  <title>RuleLab · Rancang aturan dengan konteks</title>
+  <meta name="description" content="Workspace regulasi Indonesia untuk menyusun naskah, menelusuri sumber hukum, dan mengeksplorasi dampak kebijakan.">
+  <link rel="icon" href="/static/brand/rulelab-logo-manrope-v2.png">
+  <link rel="preload" href="/static/fonts/Manrope.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="/static/design.css">
+  <link rel="stylesheet" href="/static/landing.css">
+  <script src="/static/landing.js" defer></script>
+</head>
+<body class="landing-page">
+  <a class="skip-link" href="#landing-main">Langsung ke konten</a>
+
+  <!-- FIXED FLOATING NAVBAR DOCK -->
+  <div class="landing-nav-dock" id="landing-nav-dock">
+    <header class="landing-nav" id="main-landing-nav">
+      <a class="brand" href="/" aria-label="RuleLab">
+        <span class="brand-icon" aria-hidden="true"></span>
+        <div>RuleLab</div>
+      </a>
+      <nav class="landing-links" aria-label="Navigasi halaman awal">
+        <a href="#fitur">Ruang kerja</a>
+        <a href="#agen">Operasi agen</a>
+        <a href="#cara-kerja">Cara kerja</a>
+        <a href="#sumber">Sumber hukum</a>
+      </nav>
+      <a class="btn primary nav-cta-btn" href="/workspace">Buka workspace <span aria-hidden="true">↗</span></a>
+    </header>
+  </div>
+
+  <main id="landing-main">
+    <!-- HERO SECTION (UPGRADED) -->
+    <section class="landing-hero hero-upgraded">
+      <div class="hero-content-col">
+        <!-- Live Announcement Pill -->
+        <a class="hero-announcement-chip" href="#agen">
+          <span class="announcement-pulse-dot" aria-hidden="true"></span>
+          <span class="announcement-tag">RuleLab 2.0</span>
+          <span class="announcement-divider" aria-hidden="true">/</span>
+          <span class="announcement-title">AI Copilot Regulasi &amp; Simulasi Dampak Publik</span>
+          <svg class="announcement-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+
+        <h1 class="hero-main-title">
+          Rancang aturan presisi.<br>
+          <span class="hero-gradient-text">Pahami dampaknya</span> sebelum disahkan.
+        </h1>
+        <p class="hero-lead-text">Workspace regulasi Indonesia yang memadukan penyusunan naskah perundang-undangan, verifikasi kepatuhan hierarki UU 12/2011, serta simulasi respon 5 persona masyarakat secara real-time.</p>
+        
+        <!-- Hero Key Value Badges -->
+        <div class="hero-value-pills">
+          <div class="hero-pill-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Hierarki UU 12/2011</span>
+          </div>
+          <div class="hero-pill-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Audit Lembaran Negara</span>
+          </div>
+          <div class="hero-pill-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>5 Persona Netizen &amp; UMKM</span>
+          </div>
+        </div>
+
+        <div class="actions hero-actions-row">
+          <a class="btn primary magic-shimmer-btn hero-primary-cta" href="/workspace">
+            <span>Mulai Rancang di Workspace</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a class="btn hero-secondary-cta" href="#fitur">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            <span>Coba Simulasi Interaktif</span>
+          </a>
+        </div>
+
+        <div class="hero-trust-tagline">
+          <span class="live-dot" aria-hidden="true"></span>
+          <span>100% Berbasis Naskah Resmi · Tanpa Login · Buka di Browser</span>
+        </div>
+      </div>
+
+      <!-- HERO RIGHT: LIVE AI LEGAL DOSSIER CARD -->
+      <div class="hero-dossier-wrapper">
+        <div class="hero-dossier-card">
+          <!-- Animated Scanning Laser Line -->
+          <div class="hero-scan-line" aria-hidden="true"></div>
+
+          <!-- Floating Badge Top Right -->
+          <div class="hero-floating-badge badge-top-right">
+            <div class="badge-icon-box green">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            </div>
+            <div class="badge-info">
+              <span class="badge-sub">HIERARKI PUU</span>
+              <b>Asas Lex Superior Valid</b>
+            </div>
+          </div>
+
+          <!-- Floating Badge Bottom Left -->
+          <div class="hero-floating-badge badge-bottom-left">
+            <div class="badge-icon-box purple">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div class="badge-info">
+              <span class="badge-sub">SIMULASI PUBLIK</span>
+              <b>5 Persona Siap Uji</b>
+            </div>
+          </div>
+
+          <!-- Official Document Paper -->
+          <div class="source-paper dossier-paper">
+            <img src="/static/art/uu-12-2011-source.webp" alt="Halaman pertama naskah sumber UU 12 Tahun 2011 tentang Pembentukan Peraturan Perundang-undangan" width="744" height="1053" fetchpriority="high">
+          </div>
+
+          <figcaption class="dossier-meta-footer">
+            <div class="dossier-meta-text">
+              <b>UU 12 Tahun 2011</b>
+              <span>Lembaran Negara RI Tahun 2011 No. 82 · TLN 5234</span>
+            </div>
+            <a class="dossier-gallery-link" href="/workspace?view=gallery">
+              <span>Buka di galeri</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+            </a>
+          </figcaption>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST ROW (UPGRADED WITH CRISP SVG ICONS) -->
+    <div class="trust-row trust-row-upgraded" id="sumber">
+      <p class="landing-access-note">Demo tersedia · Tanpa login · Review manusia tetap diperlukan</p>
+      
+      <div class="trust-card-item">
+        <div class="trust-icon-box icon-emerald">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <path d="M9 15l2 2 4-4"></path>
+          </svg>
+        </div>
+        <div class="trust-card-text">
+          <b>Naskah dan sumber resmi</b>
+          <span>Kutipan pasal dengan asal dokumen Lembaran Negara dan jejak ekstraksi.</span>
+        </div>
+      </div>
+
+      <div class="trust-card-item">
+        <div class="trust-icon-box icon-crimson">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="18" r="3"></circle>
+            <circle cx="6" cy="6" r="3"></circle>
+            <path d="M6 9v12"></path>
+            <path d="M18 15a9 9 0 0 0-9-9H6"></path>
+          </svg>
+        </div>
+        <div class="trust-card-text">
+          <b>Versi yang dapat ditelusuri</b>
+          <span>Hasil analisis dan opini persona terikat permanen pada snapshot rancangan.</span>
+        </div>
+      </div>
+
+      <div class="trust-card-item">
+        <div class="trust-icon-box icon-blue">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <div class="trust-card-text">
+          <b>Perspektif untuk dipertimbangkan</b>
+          <span>Skenario simulasi dampak dan respon persona sintetis multi-latar.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FITUR UTAMA & INTERAKTIF (Bento Showcase) -->
+    <section id="fitur">
+      <div class="section-heading">
+        <div class="section-eyebrow"><span class="live-dot" aria-hidden="true"></span> SIMULASI FITUR INTERAKTIF</div>
+        <h2>Naskah, landasan, dan dampak.</h2>
+        <p class="section-subtext">Uji coba langsung editor regulasi, verifikasi sumber hukum, dan simulasi persona interaktif di bawah ini.</p>
+      </div>
+
+      <div class="landing-features taste-features">
+        
+        <!-- CARD 1: EDITOR RANCANGAN (Tall Card) -->
+        <article class="feature-card taste-interactive" aria-label="Demo Editor Rancangan">
+          <div class="feature-visual-banner">
+            <img src="/static/art/legal-editor-preview.png" alt="Visualisasi Editor Draf Regulasi dan Diff AI" class="feature-banner-img" fetchpriority="high">
+            <div class="banner-overlay-chip">
+              <span class="live-dot" aria-hidden="true"></span>
+              <span>AI Studio &amp; Redline Diff</span>
+            </div>
+          </div>
+
+          <div class="editor-mockup" id="editor-mockup">
+            <div class="mockup-topbar">
+              <div class="mockup-doc-meta">
+                <span class="meta-doc-svg" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </span>
+                <span>RPP_Layanan_Digital_2026.docx</span>
+                <span class="doc-badge">v2.1 Tersimpan</span>
+              </div>
+              <div class="mockup-tabs" role="tablist" aria-label="Mode pratinjau editor">
+                <button type="button" class="mockup-tab-btn" data-editor-tab="clean" role="tab" aria-selected="false">Naskah Asli</button>
+                <button type="button" class="mockup-tab-btn active" data-editor-tab="review" role="tab" aria-selected="true">
+                  Review AI <span class="tab-pill">1 Isu</span>
+                </button>
+                <button type="button" class="mockup-tab-btn" data-editor-tab="diff" role="tab" aria-selected="false">Diff Perubahan</button>
+                <button type="button" class="mockup-tab-btn" data-editor-tab="visual" role="tab" aria-selected="false">Visual Alur</button>
+              </div>
+            </div>
+
+            <div class="mockup-body">
+              <!-- View 1: Clean Pane -->
+              <div class="editor-pane" id="pane-clean" hidden>
+                <div class="legal-article-header">
+                  <span class="article-title">Pasal 4</span>
+                  <span class="article-subject">Penyelenggaraan Sistem Layanan Elektronik</span>
+                </div>
+                <div class="legal-article-content">
+                  <p><strong>(1)</strong> Pelayanan administrasi perizinan diselenggarakan secara elektronik melalui satu portal terpadu nasional.</p>
+                  <p><strong>(2)</strong> Pemohon wajib mengunggah seluruh dokumen persyaratan dalam format digital melalui aplikasi sistem elektronik.</p>
+                </div>
+                <div class="finding-hint" style="margin-top:14px;">💡 Naskah awal sebelum uji harmonisasi terhadap regulasi pelayanan publik dan disabilitas.</div>
+              </div>
+
+              <!-- View 2: Review AI Pane (Default) -->
+              <div class="editor-pane active" id="pane-review">
+                <div class="legal-article-header">
+                  <span class="article-title">Pasal 4</span>
+                  <span class="article-subject">Penyelenggaraan Sistem Layanan Elektronik</span>
+                </div>
+                <div class="legal-article-content">
+                  <p><strong>(1)</strong> Pelayanan administrasi perizinan diselenggarakan secara elektronik melalui satu portal terpadu nasional.</p>
+                  <p><strong>(2)</strong> Pemohon <mark class="hl-warning-interactive" tabindex="0" role="button" aria-label="Sorotan isu potensi diskriminasi">wajib mengunggah seluruh dokumen persyaratan dalam format digital</mark> melalui aplikasi sistem elektronik.</p>
+                </div>
+                
+                <div class="ai-finding-card">
+                  <div class="finding-header">
+                    <span class="finding-tag">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                      Potensi Benturan Norma (Pasal 4 ayat 2)
+                    </span>
+                    <span class="finding-ref">Rujukan: UU 25/2009 & UU 8/2016</span>
+                  </div>
+                  <p class="finding-desc">
+                    Kewajiban mutlak format digital berpotensi mengecualikan warga di wilayah 3T tanpa sinyal internet dan pemohon disabilitas tanpa format aksesibel.
+                  </p>
+                  <div class="finding-actions">
+                    <button type="button" class="btn-mockup-primary" id="btn-apply-suggestion">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                      Terapkan Perbaikan Klausul ⚡
+                    </button>
+                    <span class="finding-hint">Klik tombol untuk melihat simulasi perbaikan otomatis</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- View 3: Diff Pane -->
+              <div class="editor-pane" id="pane-diff" hidden>
+                <div class="legal-article-header">
+                  <span class="article-title">Pasal 4 (Revisi Disetujui)</span>
+                  <span class="article-subject">Usulan Redaksional Inklusif</span>
+                </div>
+                <div class="legal-article-content diff-content">
+                  <p><strong>(1)</strong> Pelayanan administrasi perizinan diselenggarakan secara elektronik melalui satu portal terpadu nasional.</p>
+                  <p><strong>(2)</strong> Pemohon 
+                    <del>wajib mengunggah seluruh dokumen persyaratan dalam format digital</del> 
+                    <ins>dapat mengajukan secara elektronik atau melalui loket pendampingan luring bagi daerah dengan kendala infrastruktur dan penyandang disabilitas</ins> 
+                    melalui aplikasi sistem elektronik.
+                  </p>
+                </div>
+                <div class="diff-summary-card">
+                  <div class="diff-status">
+                    <span aria-hidden="true">✔</span>
+                    <span>Asas kemudahan & keadilan terpenuhi · Selaras UU Pelayanan Publik</span>
+                  </div>
+                  <button type="button" class="btn-mockup-ghost" id="btn-reset-diff">Ulangi Uji Coba ↺</button>
+                </div>
+              </div>
+
+              <!-- View 4: Visual Flow Pane -->
+              <div class="editor-pane" id="pane-visual" hidden>
+                <div class="visual-pane-wrapper">
+                  <img src="/static/art/legal-editor-preview.png" alt="Visualisasi Perancangan Digital" class="pane-visual-img">
+                  <div class="pane-visual-caption">
+                    <b>Alur Kerja Terpadu:</b> Deteksi Pasal → Uji Hierarki PUU → Usulan Redaksional Inklusif → Persetujuan Reviewer → Ekspor DOCX Resmi.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-info">
+            <div class="feature-info-header">
+              <span class="feature-info-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6v20h14V8zM14 2v6h6M8 12h8M8 16h6"/></svg>
+              </span>
+              <h3>Editor rancangan</h3>
+            </div>
+            <p>Tulis atau impor pasal. Jalankan review, uji dampak, dan lihat opini agen langsung di samping naskah. Ekspor hasilnya ke naskah resmi DOCX.</p>
+            <div class="feature-badges">
+              <span class="feature-badge-chip">Analisis Pasal Real-Time</span>
+              <span class="feature-badge-chip">Diff Redlining</span>
+              <span class="feature-badge-chip">Ekspor DOCX Resmi</span>
+            </div>
+            <a class="feature-link" href="/workspace?view=editor">Buka editor rancangan <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+
+        <!-- CARD 2: REVIEW BERBASIS SUMBER -->
+        <article class="feature-card taste-interactive" aria-label="Demo Review Berbasis Sumber">
+          <div class="feature-visual-banner mini">
+            <img src="/static/art/legal-source-preview.png" alt="Visualisasi Hierarki UU 12/2011 dan Buku Hukum" class="feature-banner-img" loading="lazy">
+            <div class="banner-overlay-chip">
+              <span class="live-dot" aria-hidden="true"></span>
+              <span>Hierarki Norma UU 12/2011</span>
+            </div>
+          </div>
+
+          <div class="source-review-widget" id="source-review-widget">
+            <div class="source-pills-row" role="tablist" aria-label="Pilih regulasi rujukan">
+              <button type="button" class="source-check-pill active" data-source-key="hierarchy">
+                <span class="status-symbol">✓</span> Hierarki UU 12/2011
+              </button>
+              <button type="button" class="source-check-pill" data-source-key="harmony">
+                <span class="status-symbol">⚠️</span> Asas UU 25/2009
+              </button>
+              <button type="button" class="source-check-pill" data-source-key="disability">
+                <span class="status-symbol">ℹ</span> Inklusi UU 8/2016
+              </button>
+            </div>
+
+            <div class="source-card-view">
+              <div class="source-card-header">
+                <span class="source-doc-title">
+                  <span aria-hidden="true">📜</span> UU No. 12 Tahun 2011 (Pasal 7 ayat 2)
+                </span>
+                <span class="source-verdict-badge valid">Hierarki Selaras</span>
+              </div>
+              <blockquote class="source-quote-box">
+                “Kekuatan hukum Peraturan Perundang-undangan adalah sesuai dengan hierarki sebagaimana dimaksud pada ayat (1)... materi muatan Peraturan Pemerintah tidak boleh melampaui delegasi UU.”
+              </blockquote>
+              <div class="source-card-footer">
+                <span class="source-provenance-text">Corpus Resmi Lembaran Negara RI · Terverifikasi</span>
+                <button type="button" class="btn-copy-quote">Salin Kutipan</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-info">
+            <div class="feature-info-header">
+              <span class="feature-info-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 8 4v6c0 4-8 8-8 8s-8-4-8-8V7zM8 12l3 3 5-6"/></svg>
+              </span>
+              <h3>Review berbasis sumber</h3>
+            </div>
+            <p>Periksa potensi konflik beserta hierarki, konteks waktu, dan kutipan. Tinjau interpretasi alternatif sebelum mengubah suatu pasal.</p>
+            <div class="feature-badges">
+              <span class="feature-badge-chip">Hierarki UU 12/2011</span>
+              <span class="feature-badge-chip">Pengecekan Waktu Berlaku</span>
+              <span class="feature-badge-chip">Jejak Provenance</span>
+            </div>
+            <a class="feature-link" href="/workspace?view=analysis">Lihat pemeriksaan sumber <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+
+        <!-- CARD 3: SIMULASI LINTAS PERSPEKTIF -->
+        <article class="feature-card taste-interactive" aria-label="Demo Simulasi Persona">
+          <div class="feature-visual-banner mini">
+            <img src="/static/art/civic-personas-preview.png" alt="Visualisasi Jejaring Persona Masyarakat dan Opini Netizen" class="feature-banner-img" loading="lazy">
+            <div class="banner-overlay-chip">
+              <span class="live-dot" aria-hidden="true"></span>
+              <span>5 Persona &amp; Multi-Putaran</span>
+            </div>
+          </div>
+
+          <div class="persona-simulator-widget" id="persona-simulator-widget">
+            <div class="personas-avatar-nav" role="tablist" aria-label="Pilih persona masyarakat">
+              <button type="button" class="persona-avatar-btn active" data-pid="sari" aria-label="Persona Sari">
+                <span class="avatar-circle">SR</span>
+                <span class="avatar-btn-name">Sari</span>
+              </button>
+              <button type="button" class="persona-avatar-btn" data-pid="nadia" aria-label="Persona Nadia">
+                <span class="avatar-circle">ND</span>
+                <span class="avatar-btn-name">Nadia</span>
+              </button>
+              <button type="button" class="persona-avatar-btn" data-pid="raka" aria-label="Persona Raka">
+                <span class="avatar-circle">RK</span>
+                <span class="avatar-btn-name">Raka</span>
+              </button>
+              <button type="button" class="persona-avatar-btn" data-pid="bima" aria-label="Persona Bima">
+                <span class="avatar-circle">BM</span>
+                <span class="avatar-btn-name">Bima</span>
+              </button>
+              <button type="button" class="persona-avatar-btn" data-pid="dewi" aria-label="Persona Dewi">
+                <span class="avatar-circle">DW</span>
+                <span class="avatar-btn-name">Dewi</span>
+              </button>
+            </div>
+
+            <div class="persona-speech-box">
+              <div class="persona-meta-bar">
+                <div class="persona-identity">
+                  <span class="persona-current-name">Sari</span>
+                  <span class="persona-current-role">· Warga Rural (Wilayah 3T)</span>
+                </div>
+                <span class="stance-badge concern">Perhatian (Concern)</span>
+              </div>
+              <p class="persona-dialogue-text">
+                “Di desa kami jaringan listrik dan sinyal seluler sering padam berhari-hari. Kalau izin dan bantuan hanya lewat portal aplikasi, urusan warga pasti macet total.”
+              </p>
+              <div class="persona-subbar">
+                <span>Respon Sintetis Terkalibrasi</span>
+                <div class="round-toggle-group">
+                  <button type="button" class="round-btn active" data-round="1">Putaran 1: Reaksi</button>
+                  <button type="button" class="round-btn" data-round="2">Putaran 2: Tanggapan</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-info">
+            <div class="feature-info-header">
+              <span class="feature-info-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="4" r="2"/><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><path d="M12 6v5l-7 4m7-4 7 4"/></svg>
+              </span>
+              <h3>Simulasi lintas perspektif</h3>
+            </div>
+            <p>Lima persona membaca, berpendapat, dan saling menanggapi. Klik persona untuk memahami alasan, balasan, dan usulan mitigasinya.</p>
+            <div class="feature-badges">
+              <span class="feature-badge-chip">5 Profil Masyarakat</span>
+              <span class="feature-badge-chip">3 Putaran Dialog</span>
+              <span class="feature-badge-chip">Mitigasi Kebijakan</span>
+            </div>
+            <a class="feature-link" href="/workspace?view=social">Jelajahi simulasi persona <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- MAGIC UI: AGENTS ORCHESTRATION PIPELINE -->
+    <section class="landing-agents magic-agents-section" id="agen">
+      <div class="magic-section-header">
+        <div class="section-eyebrow">
+          <span class="live-dot" aria-hidden="true"></span>
+          ORKESTRASI MULTI-AGEN AI
+        </div>
+        <h2>Ikuti alur kerja agen.<br><em>Tinjau telemetri &amp; eksekusi secara real-time.</em></h2>
+        <p>Koordinator menyusun rencana eksekusi dan mendelegasikan tugas ke agen spesialis secara otonom. Pantau alur komunikasi data antar-agen dan verifikasi hasil analisisnya langsung di terminal monitor.</p>
+        <div class="magic-agents-cta-row">
+          <a class="btn primary magic-shimmer-btn" href="/workspace?view=agents">
+            <span>Buka Operasi Agen di Workspace</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+          <div class="agent-autoplay-indicator" id="agent-autoplay-toggle" role="button" tabindex="0" title="Klik untuk menjeda atau melanjutkan simulasi otomatis">
+            <span class="pulse-ring"></span>
+            <span class="autoplay-label">▶ Simulasi Otomatis Berjalan (4s)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAGIC UI COMMAND CENTER CONTAINER -->
+      <div class="magic-command-center">
+        <!-- Magic Animated Border Beam -->
+        <div class="magic-border-beam" aria-hidden="true"></div>
+        <!-- Dot Matrix Background -->
+        <div class="magic-dot-pattern" aria-hidden="true"></div>
+
+        <!-- TOP: ANIMATED CONNECTING BEAMS FLOW -->
+        <div class="agent-network-flow" aria-label="Visualisasi alur komunikasi antar-agen">
+          <div class="agent-node-badge active" data-step="1" role="button" tabindex="0">
+            <div class="node-icon-wrapper icon-retrieval">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                <path d="M11 8v6M8 11h6"></path>
+              </svg>
+            </div>
+            <div class="node-info">
+              <span class="node-tag">AGEN 01</span>
+              <b>Retrieval Agent</b>
+            </div>
+          </div>
+
+          <div class="beam-connector" aria-hidden="true">
+            <svg viewBox="0 0 100 20" preserveAspectRatio="none">
+              <line x1="0" y1="10" x2="100" y2="10" class="beam-track" />
+              <line x1="0" y1="10" x2="100" y2="10" class="beam-pulse beam-1" />
+            </svg>
+          </div>
+
+          <div class="agent-node-badge" data-step="2" role="button" tabindex="0">
+            <div class="node-icon-wrapper icon-legal">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3v18"></path>
+                <path d="m3 7 4 8H3L7 7"></path>
+                <path d="m17 7 4 8h-8l4-8"></path>
+                <path d="M6 7h12"></path>
+              </svg>
+            </div>
+            <div class="node-info">
+              <span class="node-tag">AGEN 02</span>
+              <b>Legal Reviewer</b>
+            </div>
+          </div>
+
+          <div class="beam-connector" aria-hidden="true">
+            <svg viewBox="0 0 100 20" preserveAspectRatio="none">
+              <line x1="0" y1="10" x2="100" y2="10" class="beam-track" />
+              <line x1="0" y1="10" x2="100" y2="10" class="beam-pulse beam-2" />
+            </svg>
+          </div>
+
+          <div class="agent-node-badge" data-step="3" role="button" tabindex="0">
+            <div class="node-icon-wrapper icon-social">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <div class="node-info">
+              <span class="node-tag">AGEN 03</span>
+              <b>Social Simulator</b>
+            </div>
+          </div>
+
+          <div class="beam-connector" aria-hidden="true">
+            <svg viewBox="0 0 100 20" preserveAspectRatio="none">
+              <line x1="0" y1="10" x2="100" y2="10" class="beam-track" />
+              <line x1="0" y1="10" x2="100" y2="10" class="beam-pulse beam-3" />
+            </svg>
+          </div>
+
+          <div class="agent-node-badge" data-step="4" role="button" tabindex="0">
+            <div class="node-icon-wrapper icon-human">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+            </div>
+            <div class="node-info">
+              <span class="node-tag">TAHAP 04</span>
+              <b>Human Reviewer</b>
+            </div>
+          </div>
+        </div>
+
+        <!-- MAIN BODY: INTERACTIVE STEPS + TERMINAL CONSOLE -->
+        <div class="magic-command-body">
+          <!-- Left Steps Column -->
+          <div class="magic-steps-col">
+            <div class="interactive-agent-steps" role="tablist">
+              <!-- Step 1 -->
+              <div class="agent-step-item active" data-step="1" role="tab" tabindex="0">
+                <div class="step-progress-fill"></div>
+                <div class="step-num-badge">01</div>
+                <div class="step-content">
+                  <div class="step-title-row">
+                    <b>Penelusuran Hukum &amp; Provenance</b>
+                    <span class="step-status-chip running">Running</span>
+                  </div>
+                  <small>Memindai 6 regulasi, 406 pasal, dan pencocokan metadata Lembaran Negara.</small>
+                  <div class="step-meta-chips">
+                    <span>RAG Hybrid</span>
+                    <span>BM25 + Sqlite</span>
+                    <span>118ms</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="agent-step-item" data-step="2" role="tab" tabindex="0">
+                <div class="step-progress-fill"></div>
+                <div class="step-num-badge">02</div>
+                <div class="step-content">
+                  <div class="step-title-row">
+                    <b>Review Legal &amp; Uji Hierarki</b>
+                    <span class="step-status-chip pending">Antrean</span>
+                  </div>
+                  <small>Menguji keselarasan asas UU 12/2011, delegasi wewenang, dan asas pembentukan.</small>
+                  <div class="step-meta-chips">
+                    <span>Norm-Checking</span>
+                    <span>Asas PUU</span>
+                    <span>1 Isu Dideteksi</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="agent-step-item" data-step="3" role="tab" tabindex="0">
+                <div class="step-progress-fill"></div>
+                <div class="step-num-badge">03</div>
+                <div class="step-content">
+                  <div class="step-title-row">
+                    <b>Simulasi Dampak Persona Publik</b>
+                    <span class="step-status-chip pending">Antrean</span>
+                  </div>
+                  <small>Eksplorasi reaksi 5 persona masyarakat majemuk dalam 3 putaran dialog konstruktif.</small>
+                  <div class="step-meta-chips">
+                    <span>5 Warga Netizen</span>
+                    <span>Multi-Putaran</span>
+                    <span>Biaya APBN</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 4 -->
+              <div class="agent-step-item" data-step="4" role="tab" tabindex="0">
+                <div class="step-progress-fill"></div>
+                <div class="step-num-badge">04</div>
+                <div class="step-content">
+                  <div class="step-title-row">
+                    <b>Review Manusia &amp; Ekspor Resmi</b>
+                    <span class="step-status-chip pending">Siap</span>
+                  </div>
+                  <small>Verifikasi akhir oleh perancang hukum dan ekspor naskah resmi Microsoft Word (.docx).</small>
+                  <div class="step-meta-chips">
+                    <span>Human-in-the-Loop</span>
+                    <span>Snapshot Terikat</span>
+                    <span>Ekspor DOCX</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Console Column -->
+          <div class="magic-console-col">
+            <div class="agent-console-mockup" aria-label="Terminal status kerja agen">
+              <div class="console-topbar">
+                <div class="console-left-controls">
+                  <div class="console-dots">
+                    <span class="console-dot red"></span>
+                    <span class="console-dot yellow"></span>
+                    <span class="console-dot green"></span>
+                  </div>
+                  <span class="console-label">rulelab-agent-coordinator :: live</span>
+                </div>
+                <div class="console-view-tabs" role="tablist">
+                  <button type="button" class="console-tab-btn active" data-console-tab="stream">Live Stream</button>
+                  <button type="button" class="console-tab-btn" data-console-tab="telemetry">Telemetry</button>
+                </div>
+              </div>
+
+              <div class="console-body" id="agent-console-output">
+                <!-- Dynamically populated by landing.js -->
+              </div>
+
+              <div class="console-footer-bar">
+                <span class="footer-state"><span class="pulse-dot-green"></span> Agen aktif &amp; memproses draf</span>
+                <span class="footer-shortcut">Klik tahap 01-04 untuk inspeksi manual</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAGIC UI: CARA KERJA 3-STEP SPOTLIGHT BENTO -->
+    <section id="cara-kerja" class="landing-how magic-how-section">
+      <div class="section-heading centered">
+        <div class="section-eyebrow"><span class="live-dot" aria-hidden="true"></span> ALUR KERJA TERPADU</div>
+        <h2>Mulai dari naskah.<br><em>Lanjutkan dengan konteks hukum.</em></h2>
+        <p class="section-subtext">Tiga langkah terintegrasi dari penyusunan draf awal hingga naskah siap harmonisasi antar-kementerian.</p>
+      </div>
+
+      <div class="magic-how-grid">
+        <!-- Card 1 -->
+        <div class="magic-how-card" data-step-card="1">
+          <div class="card-glow-bg" aria-hidden="true"></div>
+          <div class="card-watermark-num">01</div>
+          <div class="card-step-badge">
+            <span class="step-pill">Tahap 1</span>
+            <span class="step-sub">Input &amp; Ekstraksi</span>
+          </div>
+          <div class="card-step-icon icon-emerald-box" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <h3>Susun atau impor rancangan</h3>
+          <p>Mulai dari dokumen naskah Microsoft Word (.docx), file teks, brief kebijakan, atau gunakan draf contoh regulasi pelayanan publik.</p>
+          
+          <div class="micro-widget-preview">
+            <div class="doc-chip" role="button" tabindex="0" title="Klik untuk simulasi pemindaian">
+              <span class="doc-icon-svg" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              </span>
+              <div class="doc-details">
+                <b>RPP_Layanan_Digital.docx</b>
+                <small>Terurai menjadi 12 pasal terstruktur</small>
+              </div>
+              <span class="doc-status-ok">✔ Parsed</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="magic-how-card" data-step-card="2">
+          <div class="card-glow-bg" aria-hidden="true"></div>
+          <div class="card-watermark-num">02</div>
+          <div class="card-step-badge">
+            <span class="step-pill">Tahap 2</span>
+            <span class="step-sub">Uji &amp; Harmonisasi</span>
+          </div>
+          <div class="card-step-icon icon-crimson-box" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <path d="m9 12 2 2 4-4"></path>
+            </svg>
+          </div>
+          <h3>Periksa sumber &amp; uji skenario</h3>
+          <p>Telusuri potensi konflik hierarki norma UU 12/2011, telaah alternatif asas hukum dengan rujukan Lembaran Negara, dan uji respon 5 persona masyarakat.</p>
+          
+          <div class="micro-widget-preview">
+            <div class="metric-dual-chip">
+              <div class="m-chip green">
+                <span class="m-dot"></span>
+                <span>Hierarki PUU Terverifikasi (UU 12/2011)</span>
+              </div>
+              <div class="m-chip amber">
+                <span class="m-dot"></span>
+                <span>5 Persona Warga Netizen Siap Reaksi</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="magic-how-card" data-step-card="3">
+          <div class="card-glow-bg" aria-hidden="true"></div>
+          <div class="card-watermark-num">03</div>
+          <div class="card-step-badge">
+            <span class="step-pill">Tahap 3</span>
+            <span class="step-sub">Persetujuan &amp; Output</span>
+          </div>
+          <div class="card-step-icon icon-blue-box" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </div>
+          <h3>Tinjau, revisi &amp; ekspor</h3>
+          <p>Simpan catatan keputusan reviewer, terapkan rekomendasi redaksional yang inklusif, dan ekspor naskah resmi siap tanda tangan untuk pembahasan.</p>
+          
+          <div class="micro-widget-preview">
+            <div class="export-preview-chip" role="button" tabindex="0" title="Klik untuk simulasi pengunduhan">
+              <span class="exp-icon-svg" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </span>
+              <span>Unduh Naskah Resmi (.docx) + Risalah Telaah</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="landing-disclosure">Corpus contoh terbatas dan belum terkonsolidasi. Status hukum sumber perlu diverifikasi. Simulasi merupakan eksplorasi asumsi dan opini sintetis, bukan prediksi empiris atau pengganti partisipasi publik resmi.</p>
+  </main>
+
+  <footer class="landing-footer">
+    <a class="brand" href="/">RuleLab</a>
+    <span>Platform perancangan dan review regulasi cerdas Indonesia.</span>
+    <a href="/workspace">Buka workspace <span aria-hidden="true">→</span></a>
+  </footer>
+</body>
+</html>

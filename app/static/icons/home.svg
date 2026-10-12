@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <linearGradient id="homeGrad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="homeAccent" x1="10" y1="10" x2="21" y2="21" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#2563eb" stop-opacity="0.15"/>
+    </linearGradient>
+  </defs>
+  <rect x="3" y="3" width="7.5" height="7.5" rx="2.5" fill="url(#homeGrad)"/>
+  <rect x="13.5" y="3" width="7.5" height="7.5" rx="2.5" fill="url(#homeGrad)" fill-opacity="0.5"/>
+  <rect x="3" y="13.5" width="7.5" height="7.5" rx="2.5" fill="url(#homeGrad)" fill-opacity="0.5"/>
+  <rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2.5" fill="url(#homeGrad)"/>
+  <circle cx="17.25" cy="17.25" r="1.5" fill="#ffffff"/>
+  <circle cx="6.75" cy="6.75" r="1.5" fill="#ffffff"/>
+</svg>

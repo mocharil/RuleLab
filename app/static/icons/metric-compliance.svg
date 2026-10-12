@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="mCompGrad" x1="4" y1="3" x2="28" y2="29" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fffbeb"/>
+      <stop offset="100%" stop-color="#fef3c7"/>
+    </linearGradient>
+    <linearGradient id="mGoldRim" x1="4" y1="3" x2="28" y2="29" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+  </defs>
+  <!-- Polished Shield -->
+  <path d="M16 3l11 4.5v9c0 7-5.5 12-11 13.5-5.5-1.5-11-6.5-11-13.5v-9L16 3Z" fill="url(#mCompGrad)" stroke="url(#mGoldRim)" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Inner Rim -->
+  <path d="M16 7l7 3v6c0 4.5-3.5 8-7 9.5-3.5-1.5-7-5-7-9.5v-6l7-3Z" fill="#ffffff" fill-opacity="0.6"/>
+  <!-- Bold Check Badge -->
+  <path d="M12 16.5l3 3 5.5-6" stroke="#b45309" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

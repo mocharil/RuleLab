@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <linearGradient id="histGrad" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+  </defs>
+  <!-- Clock track circle -->
+  <circle cx="12" cy="12" r="8.5" stroke="#bae6fd" stroke-width="2"/>
+  <!-- Audit counter-clockwise arc -->
+  <path d="M12 3.5a8.5 8.5 0 1 1-6 2.5" stroke="url(#histGrad)" stroke-width="2.25" stroke-linecap="round"/>
+  <!-- Arrowhead -->
+  <path d="M5.5 2v4.5H10" stroke="url(#histGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Clock hands -->
+  <path d="M12 7.5v4.5l3 2" stroke="#0369a1" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="12" cy="12" r="1.5" fill="#0284c7"/>
+</svg>

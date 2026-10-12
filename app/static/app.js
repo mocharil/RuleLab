@@ -79,9 +79,55 @@ function analysis(){const r=last('analysis'),p=r?.payload;return head('PEMERIKSA
 function draftText(){return S.draft.articles.map(a=>'Pasal '+a.number+'\n'+a.text).join('\n\n');}
 function defaultAlt(){return S.draft.articles.map(a=>'Pasal '+a.number+'\n'+(a.number==='2'?'(1) Permohonan dapat diajukan melalui aplikasi digital atau kanal pendampingan.\n(2) Penyelenggara menyediakan bantuan dan akomodasi yang layak bagi pemohon yang mengalami hambatan akses.':a.text)).join('\n\n');}
 function simulation(){const r=last('simulation'),p=r?.payload,ass=S.simAss||p?.assumptions||defaultAssumptions;if(!S.alt)S.alt=defaultAlt();const fields=[['population','Jumlah pemohon','orang'],['digital_access_pct','Mampu mengakses digital','%'],['assisted_success_pct','Keberhasilan bantuan','%'],['digital_cost','Biaya layanan digital','Rp / layanan berhasil'],['assisted_cost','Biaya layanan bantuan','Rp / layanan berhasil'],['staff_capacity','Kapasitas pendampingan','pemohon / hari petugas']];return head('LAB DAMPAK KEBIJAKAN','Simulasi dampak','Bandingkan akses dan biaya pada dua rancangan dengan asumsi yang Anda tentukan.',btn('Forum netizen ↗','go-social')+btn('Jalankan simulasi ◎','simulate','',true))+steps(2)+demoNote()+`${r&&stale(r)?'<div class="note">Hasil ini berasal dari versi lama. Jalankan simulasi ulang.</div>':''}<div class="sim-layout"><section class="panel assumptions"><div class="panel-head"><h2>Asumsi skenario</h2><span class="tag">Input pengguna</span></div><div class="panel-body">${assumptionInputs(ass)}<p class="help-text">Angka awal adalah asumsi contoh. Ganti dengan data lapangan untuk evaluasi kebijakan.</p></div></section><div><section class="panel"><div class="panel-head"><h2>Alternatif B · Rancangan pembanding</h2>${btn('Salin draft saat ini','copy')}</div><div class="panel-body"><textarea id="alternative" rows="9" aria-label="Teks alternatif B">${E(S.alt)}</textarea><p class="micro">Alternatif A menggunakan draft tersimpan. B dapat diedit sebelum simulasi.</p></div></section>${!p?`<section class="panel empty" style="margin-top:18px"><h2>Pahami pilihan dan dampaknya.</h2><p>Hitung akses dan biaya dari asumsi, lalu tinjau empat perspektif pemangku kepentingan.</p>${btn('Bandingkan skenario','simulate','',true)}</section>`:`<div class="scenario-grid" style="margin-top:18px">${['A','B'].map(k=>`<section class="scenario ${k==='B'?'b':''}"><div class="eyebrow">ALTERNATIF ${k}</div><h3>${k==='A'?'Draft saat simulasi':'Teks pembanding'}</h3><div class="number">${p[k].access_pct}%</div><div class="micro">Akses dalam model asumsi</div><div class="bar"><span style="width:${p[k].access_pct}%"></span></div><dl>${[['Pemohon terlayani',fmt(p[k].served)],['Belum terlayani',fmt(p[k].unserved)],['Biaya variabel',rup(p[k].cost)],['Hari kerja petugas',fmt(p[k].staff_days)],['Kanal bantuan terdeteksi',p.assistance_detection[k]?'Ya':'Tidak']].map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl></section>`).join('')}</div><div class="delta-banner"><div><b>${p.delta.served>=0?'+':''}${fmt(p.delta.served)}</b><small>PEMOHON TERLAYANI</small></div><div><b>${p.delta.access_points} poin</b><small>PERUBAHAN AKSES</small></div><div><b>${rup(p.delta.cost)}</b><small>PERUBAHAN BIAYA</small></div></div><div class="persona-grid">${p.stakeholders.map(s=>`<section class="persona"><h3>${E(s.stakeholder)}</h3>${[['MANFAAT',s.benefits],['RISIKO',s.risks],['MITIGASI',s.mitigations]].map(([k,v])=>`<strong>${k}</strong><ul>${v.map(x=>`<li>${E(x)}</li>`).join('')}</ul>`).join('')}<details><summary>Validasi & sumber</summary>${limitations(s.questions_to_validate)}${p.evidence.filter(a=>s.evidence_ids.includes(a.id)).map(source).join('')}</details></section>`).join('')}</div><section class="panel"><div class="panel-head"><h2>Sensitivitas akses digital</h2><span class="micro">Asumsi ±10 poin</span></div><table><thead><tr><th>Akses digital input</th><th>Akses A</th><th>Akses B</th></tr></thead><tbody>${p.sensitivity.map(x=>`<tr><td>${x.digital_access_pct}%</td><td>${x.A}%</td><td>${x.B}%</td></tr>`).join('')}</tbody></table><div class="panel-body"><p class="inline-code">${E(p.A.formula)}</p>${limitations(p.limitations)}<div class="actions">${btn('Tinjau & terapkan alternatif B','apply-alt',stale(r)?'disabled':'',true)}${btn('Catatan reviewer','review',`data-run="${r.id}"`)}</div></div></section>`}</div></div>`;}
-function corpus(){return head('SUMBER HUKUM','Pustaka regulasi','Cari pasal, periksa naskah resmi, atau bandingkan dua sumber hukum.',btn('Bandingkan pasal','compare','',true))+`${corpusOverview()}<div class="note demo-note"><span class="tag">Snapshot</span><span>Naskah asli dan perubahan disimpan terpisah. Status hukum terkonsolidasi masih perlu diverifikasi.</span></div><form id="search-form" class="searchbar"><div class="search-field">${icon('search')}<input id="search-q" value="${E(S.searchQuery)}" aria-label="Cari pasal" placeholder="Cari isi pasal, topik, atau frasa hukum…"></div><button type="submit" class="btn primary">Cari sumber</button>${S.results!==null?btn('Reset','reset'):''}</form>`+(S.results!==null?`<p class="micro">${S.results.length} hasil untuk “${E(S.searchQuery)}”</p>${S.results.length?S.results.map(source).join(''):'<div class="panel empty"><h2>Belum menemukan pasal yang sesuai</h2><p>Coba frasa yang lebih singkat atau topik terkait.</p></div>'}`:`<div class="library-grid">${S.corpus.filter(d=>S.lawFilter==='all'||d.metadata.type===S.lawFilter).map(d=>`<article class="law-card"><div class="law-document" aria-hidden="true">${icon('file')}</div><div><div class="law-type"><b class="law-code">${E(d.metadata.type)} ${d.metadata.number}/${d.metadata.year}</b><span class="tag">${E(d.metadata.version_kind)}</span></div><h2>${E(d.metadata.title)}</h2><div class="law-meta">${d.quality.article_count} pasal/blok · ${d.quality.ocr_needed_pages.length} halaman perlu OCR</div><p class="micro">Versi ${E(d.version_id)} · Diambil ${new Date(d.provenance.retrieved_at).toLocaleDateString('id-ID')}</p></div><div class="actions">${btn('Lihat pasal','law',`data-id="${E(d.id)}"`)}${btn('JSON','law-json',`data-id="${E(d.id)}"`)}${btn('Naskah asli','raw',`data-id="${E(d.id)}"`)}</div></article>`).join('')}</div>`);}
+function corpus(){
+  const allFiltered = S.corpus.filter(d => S.lawFilter === 'all' || d.metadata.type === S.lawFilter);
+  const perPage = 5;
+  const total = allFiltered.length;
+  const totalPages = Math.ceil(total / perPage) || 1;
+  const page = Math.min(Math.max(1, S.corpusPage || 1), totalPages);
+  const start = (page - 1) * perPage;
+  const paginated = allFiltered.slice(start, start + perPage);
+
+  const paginationHTML = total > perPage ? `
+    <div class="library-pagination">
+      <span class="pagination-info">Menampilkan <strong>${start + 1}–${Math.min(start + perPage, total)}</strong> dari <strong>${total}</strong> regulasi</span>
+      <div class="pagination-controls">
+        <button type="button" class="btn-page-nav" data-action="corpus-page" data-page="${page - 1}" ${page <= 1 ? 'disabled' : ''}>
+          ← Sebelumnya
+        </button>
+        <div class="page-numbers">
+          ${Array.from({ length: totalPages }, (_, i) => i + 1).map(p => `
+            <button type="button" class="btn-page-num ${p === page ? 'active' : ''}" data-action="corpus-page" data-page="${p}">${p}</button>
+          `).join('')}
+        </div>
+        <button type="button" class="btn-page-nav" data-action="corpus-page" data-page="${page + 1}" ${page >= totalPages ? 'disabled' : ''}>
+          Berikutnya →
+        </button>
+      </div>
+    </div>` : '';
+
+  return head('SUMBER HUKUM','Pustaka regulasi','Cari pasal, periksa naskah resmi, atau bandingkan dua sumber hukum.',btn('Bandingkan pasal','compare','',true))
+  + `${corpusOverview()}<div class="note demo-note"><span class="tag">Snapshot</span><span>Naskah asli dan perubahan disimpan terpisah. Status hukum terkonsolidasi masih perlu diverifikasi.</span></div><form id="search-form" class="searchbar"><div class="search-field">${icon('search')}<input id="search-q" value="${E(S.searchQuery)}" aria-label="Cari pasal" placeholder="Cari isi pasal, topik, atau frasa hukum…"></div><button type="submit" class="btn primary">Cari sumber</button>${S.results!==null?btn('Reset','reset'):''}</form>`
+  + (S.results!==null
+      ? `<p class="micro">${S.results.length} hasil untuk “${E(S.searchQuery)}”</p>${S.results.length?S.results.map(source).join(''):'<div class="panel empty"><h2>Belum menemukan pasal yang sesuai</h2><p>Coba frasa yang lebih singkat atau topik terkait.</p></div>'}`
+      : `<div class="library-grid">${paginated.map(d=>`<article class="law-card"><div class="law-document" aria-hidden="true">${icon('file')}</div><div class="law-main"><div class="law-type"><b class="law-code">${E(d.metadata.type)} ${d.metadata.number}/${d.metadata.year}</b><span class="tag ${d.metadata.version_kind==='original'?'tag-original':'tag-amend'}">${E(d.metadata.version_kind==='original'?'Naskah Asli':d.metadata.version_kind)}</span></div><h2 class="law-title">${E(d.metadata.title)}</h2><div class="law-meta"><span><strong>${d.quality.article_count}</strong> pasal/blok</span><span>·</span><span>${d.quality.ocr_needed_pages.length?d.quality.ocr_needed_pages.length+' halaman perlu OCR':'Format digital bersih'}</span></div><p class="micro">Versi ${E(d.version_id)} · Diambil ${new Date(d.provenance.retrieved_at).toLocaleDateString('id-ID')}</p></div><div class="actions law-card-actions"><button type="button" class="btn-law-primary" data-action="law" data-id="${E(d.id)}"><span class="btn-icon">${icon('book',14)}</span><span>Lihat pasal</span><span class="btn-arrow">↗</span></button><div class="law-util-group"><button type="button" class="btn-law-secondary" data-action="law-json" data-id="${E(d.id)}" title="Unduh JSON metadata dan pasal"><span class="btn-icon">${icon('download',12)}</span><span>JSON</span></button><button type="button" class="btn-law-secondary" data-action="raw" data-id="${E(d.id)}" title="Unduh naskah asli PDF/HTML"><span class="btn-icon">${icon('file',12)}</span><span>Naskah asli</span></button></div></div></article>`).join('')}</div>${paginationHTML}`);
+}
 function history(){const rows=S.runs.filter(r=>S.historyFilter==='all'||r.kind===S.historyFilter);return head('KEPUTUSAN YANG DAPAT DITELUSURI','Riwayat & review','Telusuri versi naskah, hasil analisis, dan catatan keputusan reviewer.',btn('Lihat versi draft','versions'))+`${historyOverview()}<section class="panel history-timeline"><div class="panel-head"><h2>Analisis & simulasi</h2><span class="pill">Draft v${S.draft.revision}</span></div>${rows.length?rows.map(r=>`<div class="history-row"><span class="timeline-dot" aria-hidden="true">${icon(r.kind==='analysis'?'shield':r.kind==='social'?'network':'chart')}</span><div><h3>${r.kind==='analysis'?'Pemeriksaan konflik':r.kind==='social'?'Forum netizen sintetis':'Simulasi dampak'} · v${r.revision}</h3><div class="micro">${new Date(r.created_at).toLocaleString('id-ID')} · ${E(r.payload.provider.mode)} · ${E(label(r.review_status))}</div><p class="help-text">${E(r.review_notes)}</p></div><div class="actions"><span class="pill ${stale(r)?'amber':'green'}">${stale(r)?'Draft berubah':'Versi sesuai'}</span>${btn('Lihat hasil','run-detail',`data-run="${r.id}"`)}${btn('Review','review',`data-run="${r.id}"`)}</div></div>`).join(''):'<div class="empty">Belum ada hasil untuk pilihan ini. Mulai dengan pemeriksaan atau simulasi rancangan.</div>'}</section>`;}
-function modal(title,body,footer=''){ $('#modal-content').innerHTML=`<div class="modal-head"><h2>${title}</h2>${btn('✕','close','aria-label="Tutup"')}</div>${body}<div class="modal-foot">${footer}</div>`;if(!$('#modal').open)$('#modal').showModal();}
+function modal(title,body,footer=''){
+  const foot = footer || btn('Tutup','close');
+  $('#modal-content').innerHTML = `
+    <div class="modal-head">
+      <h2>${title}</h2>
+      ${btn('✕','close','aria-label="Tutup" class="modal-close-btn"')}
+    </div>
+    <div class="modal-body-scroll">
+      ${body}
+    </div>
+    <div class="modal-foot">
+      ${foot}
+    </div>`;
+  if(!$('#modal').open)$('#modal').showModal();
+}
 const close=()=>$('#modal').close();
 function tokenModal(){modal('Akses workspace','<label for="token">Token server</label><input id="token" type="password" autocomplete="off">',btn('Masuk','token','',true));}
 async function settings(){
@@ -115,8 +161,38 @@ simulate:async()=>{const assumptions=readAssumptions();const alternative=$('#alt
 'apply-alt':()=>{const r=last('simulation');if(S.dirty||stale(r))throw Error('Simulasi berasal dari versi lama.');modal('Tinjau alternatif B',`<div class="note">Teks yang diterapkan adalah alternatif B yang telah disimulasikan. Lakukan pemeriksaan konflik setelah revisi.</div><div class="quote" style="max-height:400px">${E(r.payload.alternative_text)}</div>`,btn('Batal','close')+btn('Terapkan versi baru','confirm-alt','',true));},
 'confirm-alt':async()=>{if(S.dirty||stale(last('simulation')))throw Error('Draft berubah. Jalankan simulasi ulang.');const text=last('simulation').payload.alternative_text,m=[...text.matchAll(/^[ \t]*Pasal[ \t]+(\d+[A-Z]?)[ \t]*$/gm)];if(!m.length)throw Error('Gunakan heading Pasal 1, Pasal 2 pada baris tersendiri.');const articles=m.map((x,i)=>({number:x[1],text:text.slice(x.index+x[0].length,i+1<m.length?m[i+1].index:text.length).trim()}));S.draft=await api('/drafts/'+S.draft.id,'PUT',{...S.draft,articles,expected_revision:S.draft.revision});close();S.dirty=false;await refresh();S.alt='';S.view='editor';render();toast('Alternatif diterapkan. Jalankan pemeriksaan kembali.');},
 export:async()=>{await save();await download('/drafts/'+S.draft.id+'/export','rulelab-draft.docx');render();},report:()=>download('/drafts/'+S.draft.id+'/export?format=report','rulelab-review.docx'),
-law:async el=>{const d=await api('/corpus/'+el.dataset.id);modal(E(d.metadata.type)+' '+d.metadata.number+'/'+d.metadata.year,`<h3>${E(d.metadata.title)}</h3><div class="note">${E(d.metadata.status_note)}</div>${d.metadata.source_issues?limitations(d.metadata.source_issues):''}<p class="micro">SHA256 ${E(d.provenance.sha256)}</p>${d.articles.map(a=>`<details class="source-details"><summary>Pasal ${E(a.number)} <span class="tag">${E(a.enrichment.topics.join(', '))}</span></summary><div class="quote">${E(a.text)}</div><p class="micro">${a.pages.length?'Halaman '+a.pages.join(', '):'HTML'} · ${a.paragraphs.length} ayat/definisi terdeteksi</p></details>`).join('')}`);},
-'law-json':el=>download('/corpus/'+el.dataset.id+'/json',el.dataset.id+'.json'),raw:el=>download('/corpus/'+el.dataset.id+'/raw',S.corpus.find(d=>d.id===el.dataset.id).provenance.raw_file.split('/').at(-1)),reset:()=>{S.results=null;S.searchQuery='';render();},
+law:async el=>{
+  const d=await api('/corpus/'+el.dataset.id);
+  modal(E(d.metadata.type)+' '+d.metadata.number+'/'+d.metadata.year,
+    `<div class="modal-law-doc-header">
+       <div class="modal-law-badge"><span class="tag ${d.metadata.version_kind==='original'?'tag-original':'tag-amend'}">${E(d.metadata.version_kind==='original'?'Naskah Asli':d.metadata.version_kind)}</span></div>
+       <h3 class="modal-law-title">${E(d.metadata.title)}</h3>
+       <div class="note ${d.metadata.status_note?.includes('Perlu')?'amber':'green'}">${E(d.metadata.status_note)}</div>
+       ${d.metadata.source_issues?limitations(d.metadata.source_issues):''}
+       <p class="micro">Versi ${E(d.version_id)} · SHA256 ${E(d.provenance.sha256)} · Diambil ${new Date(d.provenance.retrieved_at).toLocaleDateString('id-ID')}</p>
+     </div>
+     <div class="modal-law-articles">
+       <div class="modal-articles-header">
+         <strong>Daftar Pasal & Ketentuan (${d.articles.length} Pasal/Blok)</strong>
+         <span class="micro">Ketentuan terstruktur hasil ekstraksi</span>
+       </div>
+       <div class="modal-articles-list">
+         ${d.articles.map(a=>`
+           <details class="source-details modal-article-card" open>
+             <summary>
+               <span class="modal-article-num">Pasal ${E(a.number)}</span>
+               <span class="modal-article-topics">${a.enrichment.topics.map(t=>`<span class="tag">${E(t)}</span>`).join(' ')}</span>
+             </summary>
+             <div class="quote">${E(a.text)}</div>
+             <p class="micro">${a.pages.length?'Halaman '+a.pages.join(', '):'Format HTML'} · ${a.paragraphs.length} ayat/definisi terdeteksi</p>
+           </details>
+         `).join('')}
+       </div>
+     </div>`,
+    btn('Tutup','close')
+  );
+},
+'law-json':el=>download('/corpus/'+el.dataset.id+'/json',el.dataset.id+'.json'),raw:el=>download('/corpus/'+el.dataset.id+'/raw',S.corpus.find(d=>d.id===el.dataset.id).provenance.raw_file.split('/').at(-1)),reset:()=>{S.results=null;S.searchQuery='';S.corpusPage=1;render();},
 compare:async()=>{modal('Bandingkan dua pasal',`<div class="note">Demo menyediakan perbandingan sumber dan hierarki. Gemini menganalisis potensi konflik pada dua pasal yang dipilih.</div><div class="form-grid">${['left','right'].map(k=>`<div><label>Sumber ${k==='left'?'A':'B'}</label><select id="cmp-${k}" data-cmp="${k}">${S.corpus.map(d=>`<option value="${d.id}">${E(d.metadata.type)} ${d.metadata.number}/${d.metadata.year}</option>`).join('')}</select><label style="margin-top:10px">Pasal</label><select id="art-${k}"></select></div>`).join('')}</div><div id="compare-result"></div>`,btn('Bandingkan','run-compare','',true));$('#cmp-left').value='pp-96-2012';$('#cmp-right').value='uu-25-2009';await Promise.all(['left','right'].map(compareSelectors));},
 'run-compare':async()=>{const r=await api('/compare','POST',{left_id:$('#cmp-left').value,right_id:$('#cmp-right').value,left_article:$('#art-left').value,right_article:$('#art-right').value});$('#compare-result').innerHTML=`<div class="relation">${E(r.hierarchy_relation)}</div><div class="comparison">${[r.left,r.right].map(a=>`<div><h3>${E(a.regulation_label)} · Pasal ${E(a.number)}</h3><div class="quote">${E(a.text)}</div><a class="micro" href="${E(a.source.url)}" target="_blank" rel="noopener">Sumber resmi ↗</a></div>`).join('')}</div><p class="help-text">${E(r.summary)}</p>${r.findings.map(f=>`<div class="note"><b>${E(f.title)}</b><br>${E(f.reasoning)}<br>${E(f.counterargument)}</div>`).join('')}${limitations(r.limitations)}`;},
 review:el=>modal('Catatan reviewer',`<p class="help-text">Review manusia dicatat untuk tindak lanjut, bukan penetapan keabsahan hukum.</p><label for="review-status">Status</label><select id="review-status"><option value="needs_review" ${S.runs.find(r=>r.id===el.dataset.run)?.review_status==='needs_review'?'selected':''}>Masih perlu review</option><option value="reviewed_with_notes" ${S.runs.find(r=>r.id===el.dataset.run)?.review_status==='reviewed_with_notes'?'selected':''}>Ditinjau dengan catatan</option></select><label for="review-notes" style="margin-top:15px">Catatan</label><textarea id="review-notes" rows="5" placeholder="Sumber yang diverifikasi, interpretasi dan tindak lanjut…">${E(S.runs.find(r=>r.id===el.dataset.run)?.review_notes||'')}</textarea>`,btn('Simpan catatan','save-review',`data-run="${el.dataset.run}"`,true)),
@@ -166,10 +242,224 @@ function findingFilters(p){return `<div class="section-toolbar"><div><h2>Temuan 
 function corpusOverview(){return `<div class="collection-overview"><div><span class="eyebrow">KOLEKSI SUMBER</span><strong>${S.status.regulations}<small>regulasi resmi</small></strong></div><div><strong>${S.status.articles}<small>pasal / blok terstruktur</small></strong></div><div><strong>${S.corpus.reduce((n,d)=>n+d.quality.ocr_needed_pages.length,0)}<small>halaman perlu OCR</small></strong></div></div>${S.results===null?filterBar('laws',[['all','Semua sumber',S.corpus.length],...Array.from(new Set(S.corpus.map(d=>d.metadata.type))).map(t=>[t,t,S.corpus.filter(d=>d.metadata.type===t).length])],S.lawFilter):''}`;}
 function historyOverview(){return `<div class="review-overview"><div><span class="eyebrow">JEJAK KEPUTUSAN</span><h2>${S.runs.length} proses tersimpan</h2><p>Setiap hasil terikat pada versi draft saat dijalankan.</p></div><div class="review-count"><b>${S.runs.filter(r=>r.review_status==='reviewed_with_notes').length}</b><span>dengan catatan review</span></div><div class="review-count"><b>${S.runs.filter(r=>r.review_status==='needs_review').length}</b><span>menunggu review</span></div></div>${filterBar('history',[['all','Semua',S.runs.length],['analysis','Pemeriksaan',S.runs.filter(r=>r.kind==='analysis').length],['simulation','Simulasi',S.runs.filter(r=>r.kind==='simulation').length],['social','Forum netizen',S.runs.filter(r=>r.kind==='social').length]],S.historyFilter)}`;}
 actions['filter-findings']=el=>{S.findingFilter=el.dataset.filter;render();};
-actions['filter-laws']=el=>{S.lawFilter=el.dataset.filter;render();};
+actions['filter-laws']=el=>{S.lawFilter=el.dataset.filter;S.corpusPage=1;render();};
+actions['corpus-page']=el=>{S.corpusPage=Number(el.dataset.page);render();document.querySelector('.library-grid')?.scrollIntoView({behavior:'smooth',block:'start'});};
+actions['toggle-assistant']=()=>{S.gallery.chatFolded=!S.gallery.chatFolded;render();};
 actions['filter-history']=el=>{S.historyFilter=el.dataset.filter;render();};
 actions['open-studio']=()=>{collect();S.studioTab='impact';render();document.querySelector('.studio-panel').scrollIntoView({behavior:'instant',block:'start'});document.querySelector('#tab-impact').focus({preventScroll:true});};
-actions['run-detail']=el=>{const r=S.runs.find(x=>x.id===el.dataset.run),p=r.payload;if(r.kind==='social'){modal('Forum sintetis · v'+r.revision,`<div class="note">${stale(r)?'Versi lama.':'Snapshot sesuai draft.'} ${E(p.provider.mode)}</div>${['A','B'].map(k=>`<h3>Skenario ${k}</h3>${p.scenarios[k].comments.map(c=>`<details><summary>${E(c.name)} · Putaran ${c.round} · ${E(c.stance)}</summary><p>${E(c.comment)}</p><p>${E(c.rationale)}</p><p>Usulan: ${E(c.proposal)}</p><p>Balasan: ${E(c.reply_to||'Tidak ada')}</p></details>`).join('')}`).join('')}${limitations(p.limitations)}`,btn('Tutup','close'));return;}modal('Hasil '+(r.kind==='analysis'?'pemeriksaan':'simulasi')+' · v'+r.revision,`<div class="note">${stale(r)?'Hasil dari versi lama.':'Versi sesuai draft tersimpan.'} ${E(label(r.review_status))}</div>${r.kind==='analysis'?`<p>${E(p.summary)}</p>${p.findings.map(f=>`<details class="source-details"><summary>Pasal ${E(f.article_number)} · ${E(f.title)}</summary><p>${E(f.reasoning)}</p><div class="quote">${E(f.proposed_text)}</div>${f.evidence.map(source).join('')}</details>`).join('')}`:`<div class="impact-mini-grid">${['A','B'].map(k=>`<div class="impact-mini"><small>ALTERNATIF ${k}</small><strong>${p[k].access_pct}%</strong><span>${p[k].served} terlayani</span><span>${rup(p[k].cost)}</span></div>`).join('')}</div><p class="micro">Hasil model berdasarkan asumsi saat proses dijalankan.</p>${p.stakeholders.map(x=>`<details class="source-details"><summary>${E(x.stakeholder)}</summary>${limitations(x.risks)}${limitations(x.mitigations)}</details>`).join('')}`}<h3>Catatan reviewer</h3><p>${E(r.review_notes||'Belum ada catatan.')}</p>${limitations(p.limitations)}`,btn('Tutup','close'));};
+function renderSocialModalBody(r, p) {
+  const personas = {
+    sari: { name: 'Sari', role: 'Warga Pedesaan', issue: 'Akses & Jaringan', avatar: 'SA', cls: 'persona-sari' },
+    nadia: { name: 'Nadia', role: 'Kelompok Rentan', issue: 'Aksesibilitas Digital', avatar: 'NA', cls: 'persona-nadia' },
+    bima: { name: 'Bima', role: 'Petugas Layanan', issue: 'Kapasitas Operasional', avatar: 'BI', cls: 'persona-bima' },
+    raka: { name: 'Raka', role: 'Pelaku Usaha UMKM', issue: 'Kejelasan Regulasi', avatar: 'RA', cls: 'persona-raka' },
+    dewi: { name: 'Dewi', role: 'Pemerhati Anggaran', issue: 'Efisiensi Biaya', avatar: 'DE', cls: 'persona-dewi' }
+  };
+  const stances = {
+    concern: { label: 'Keberatan', icon: '⚠️', cls: 'stance-concern' },
+    conditional: { label: 'Bersyarat', icon: '⚡', cls: 'stance-conditional' },
+    support: { label: 'Mendukung', icon: '✓', cls: 'stance-support' },
+    uncertain: { label: 'Belum pasti', icon: '·', cls: 'stance-uncertain' }
+  };
+
+  const getStats = k => {
+    const list = p.scenarios[k]?.comments || [];
+    const conc = list.filter(c => c.stance === 'concern').length;
+    const cond = list.filter(c => c.stance === 'conditional').length;
+    const supp = list.filter(c => c.stance === 'support').length;
+    return { conc, cond, supp, total: list.length };
+  };
+
+  const statsA = getStats('A');
+  const statsB = getStats('B');
+
+  const renderScenarioContent = (k, active) => {
+    const comments = p.scenarios[k]?.comments || [];
+    return `<div class="modal-scenario-content" data-scenario="${k}" style="display:${active ? 'block' : 'none'}">
+      <div class="modal-scenario-toolbar">
+        <div class="round-filters">
+          <span class="filter-label">Filter Putaran:</span>
+          <button type="button" class="round-pill active" data-modal-round="all">Semua (${comments.length})</button>
+          <button type="button" class="round-pill" data-modal-round="1">Putaran 1 · Reaksi Awal (${comments.filter(c => c.round === 1).length})</button>
+          <button type="button" class="round-pill" data-modal-round="2">Putaran 2 · Respons (${comments.filter(c => c.round === 2).length})</button>
+          <button type="button" class="round-pill" data-modal-round="3">Putaran 3 · Refleksi (${comments.filter(c => c.round === 3).length})</button>
+        </div>
+      </div>
+      <div class="persona-cards-list">
+        ${comments.map(c => {
+          const meta = personas[c.persona_id] || { name: c.name, role: 'Persona Sintetis', issue: c.issue || 'Umum', avatar: c.name.slice(0, 2).toUpperCase(), cls: 'persona-default' };
+          const st = stances[c.stance] || { label: c.stance, icon: '·', cls: 'stance-neutral' };
+          const targetComment = c.reply_to ? comments.find(x => x.id === c.reply_to) : null;
+          return `<div class="persona-card" data-round="${c.round}">
+            <div class="persona-card-header">
+              <div class="persona-info">
+                <span class="persona-avatar-badge ${meta.cls}">${meta.avatar}</span>
+                <div>
+                  <div class="persona-name-row">
+                    <strong class="persona-name">${E(c.name)}</strong>
+                    <span class="persona-issue-tag">${E(meta.role)} · ${E(meta.issue)}</span>
+                  </div>
+                  <span class="persona-round-label">Putaran ${c.round} · ${c.round === 1 ? 'Reaksi Pertama' : c.round === 2 ? 'Tanggapan & Diskusi' : 'Refleksi Akhir'}</span>
+                </div>
+              </div>
+              <div class="persona-stance-badge ${st.cls}">
+                <span class="stance-icon">${st.icon}</span>
+                <span>${st.label}</span>
+              </div>
+            </div>
+            <div class="persona-card-body">
+              <div class="persona-comment-box">
+                <span class="quote-symbol">“</span>
+                <p class="persona-comment-text">${E(c.comment)}</p>
+              </div>
+              ${c.rationale ? `<div class="persona-rationale-row">
+                <span class="row-label">Alasan & Pertimbangan:</span>
+                <p>${E(c.rationale)}</p>
+              </div>` : ''}
+              ${c.proposal ? `<div class="persona-proposal-row">
+                <span class="proposal-icon">💡</span>
+                <div>
+                  <span class="proposal-label">Usulan Solusi:</span>
+                  <p>${E(c.proposal)}</p>
+                </div>
+              </div>` : ''}
+              ${targetComment ? `<div class="persona-reply-row">
+                <span class="reply-arrow">↳</span>
+                <span>Menanggapi <strong>${E(targetComment.name)}</strong> (Putaran ${targetComment.round}): “${E(targetComment.comment.slice(0, 110))}…”</span>
+              </div>` : ''}
+              ${(c.evidence_ids && c.evidence_ids.length) ? `<div class="persona-evidence-row">
+                <span class="evidence-icon">📜</span>
+                <span class="evidence-text">Rujukan hukum: ${c.evidence_ids.map(id => `<code class="evidence-chip">${E(id.split('@')[0])}</code>`).join(' ')}</span>
+              </div>` : ''}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  };
+
+  return `<div class="social-modal-container">
+    <div class="social-modal-banner">
+      <div class="social-modal-meta">
+        <span class="pill ${stale(r) ? 'amber' : 'green'}">${stale(r) ? 'Versi Lama' : 'Sesuai Draft v' + r.revision}</span>
+        <span class="pill">${p.provider.mode === 'live' ? '⚡ AI Live (Gemini)' : '⚙️ Template Demo'}</span>
+        <span class="social-modal-count">5 Persona Sintetis · 3 Putaran Evaluasi</span>
+      </div>
+      <p class="social-modal-disclaimer">Snapshot rekaman reaksi persona sintetis untuk menguji alternatif naskah kebijakan. Reaksi adalah inferensi model AI, bukan survei empiris opini masyarakat nyata.</p>
+    </div>
+
+    <div class="modal-scenario-switcher" role="tablist">
+      <button type="button" class="scenario-tab-btn active" data-modal-scenario="A">
+        <span class="tab-title">Skenario A · Draft Awal (v${r.revision})</span>
+        <span class="tab-counts">
+          ${statsA.conc ? `<span class="count-tag concern">${statsA.conc} Keberatan</span>` : ''}
+          ${statsA.cond ? `<span class="count-tag conditional">${statsA.cond} Bersyarat</span>` : ''}
+          ${statsA.supp ? `<span class="count-tag support">${statsA.supp} Mendukung</span>` : ''}
+        </span>
+      </button>
+      <button type="button" class="scenario-tab-btn" data-modal-scenario="B">
+        <span class="tab-title">Skenario B · Alternatif Pembanding</span>
+        <span class="tab-counts">
+          ${statsB.conc ? `<span class="count-tag concern">${statsB.conc} Keberatan</span>` : ''}
+          ${statsB.cond ? `<span class="count-tag conditional">${statsB.cond} Bersyarat</span>` : ''}
+          ${statsB.supp ? `<span class="count-tag support">${statsB.supp} Mendukung</span>` : ''}
+        </span>
+      </button>
+    </div>
+
+    ${renderScenarioContent('A', true)}
+    ${renderScenarioContent('B', false)}
+
+    <details class="social-modal-limitations">
+      <summary>Batasan & Catatan Metodologi Simulasi</summary>
+      ${limitations(p.limitations || [])}
+    </details>
+  </div>`;
+}
+
+function renderAnalysisModalBody(r, p) {
+  const sevMeta = {
+    high: { label: 'Tinggi', icon: '⛔', cls: 'sev-high' },
+    medium: { label: 'Sedang', icon: '⚠️', cls: 'sev-medium' },
+    low: { label: 'Rendah', icon: 'ℹ️', cls: 'sev-low' }
+  };
+  return `<div class="analysis-modal-container">
+    <div class="modal-status-banner">
+      <span class="pill ${stale(r) ? 'amber' : 'green'}">${stale(r) ? 'Versi Lama' : 'Sesuai Draft Tersimpan'}</span>
+      <span class="pill">${E(label(r.review_status))}</span>
+    </div>
+    <div class="analysis-summary-card">
+      <span class="analysis-summary-icon">📋</span>
+      <p>${E(p.summary)}</p>
+    </div>
+    <div class="analysis-findings-list">
+      ${p.findings.map(f => {
+        const sm = sevMeta[f.severity] || { label: f.severity || 'Temuan', icon: '•', cls: 'sev-medium' };
+        return `<div class="finding-modal-card">
+          <div class="finding-modal-head">
+            <div>
+              <strong class="finding-pasal">Pasal ${E(f.article_number)}</strong>
+              <span class="finding-title">${E(f.title)}</span>
+            </div>
+            <span class="severity-pill ${sm.cls}">${sm.icon} ${sm.label}</span>
+          </div>
+          <p class="finding-reasoning">${E(f.reasoning)}</p>
+          ${f.proposed_text ? `<div class="finding-proposed-box">
+            <span class="box-label">Usulan Redaksional:</span>
+            <div class="quote">${E(f.proposed_text)}</div>
+          </div>` : ''}
+          ${(f.evidence && f.evidence.length) ? `<details class="finding-evidence-disclosure">
+            <summary>Rujukan Regulasi (${f.evidence.length} Sumber)</summary>
+            ${f.evidence.map(source).join('')}
+          </details>` : ''}
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="reviewer-notes-section">
+      <h3>Catatan Reviewer</h3>
+      <p>${E(r.review_notes || 'Belum ada catatan.')}</p>
+    </div>
+    ${limitations(p.limitations || [])}
+  </div>`;
+}
+
+actions['run-detail']=el=>{
+  const r=S.runs.find(x=>x.id===el.dataset.run),p=r.payload;
+  if(r.kind==='social'){
+    modal('Forum sintetis · v'+r.revision, renderSocialModalBody(r, p), btn('Tutup','close'));
+    return;
+  }
+  if(r.kind==='analysis'){
+    modal('Hasil pemeriksaan · v'+r.revision, renderAnalysisModalBody(r, p), btn('Tutup','close'));
+    return;
+  }
+  modal('Hasil simulasi · v'+r.revision,
+    `<div class="note">${stale(r)?'Hasil dari versi lama.':'Versi sesuai draft tersimpan.'} ${E(label(r.review_status))}</div><div class="impact-mini-grid">${['A','B'].map(k=>`<div class="impact-mini"><small>ALTERNATIF ${k}</small><strong>${p[k].access_pct}%</strong><span>${p[k].served} terlayani</span><span>${rup(p[k].cost)}</span></div>`).join('')}</div><p class="micro">Hasil model berdasarkan asumsi saat proses dijalankan.</p>${p.stakeholders.map(x=>`<details class="source-details"><summary>${E(x.stakeholder)}</summary>${limitations(x.risks)}${limitations(x.mitigations)}</details>`).join('')}<h3>Catatan reviewer</h3><p>${E(r.review_notes||'Belum ada catatan.')}</p>${limitations(p.limitations)}`,
+    btn('Tutup','close')
+  );
+};
+
+document.addEventListener('click', e => {
+  const scTab = e.target.closest('[data-modal-scenario]');
+  if (scTab) {
+    const sc = scTab.dataset.modalScenario;
+    document.querySelectorAll('[data-modal-scenario]').forEach(b => b.classList.toggle('active', b === scTab));
+    document.querySelectorAll('.modal-scenario-content').forEach(panel => {
+      panel.style.display = panel.dataset.scenario === sc ? 'block' : 'none';
+    });
+    return;
+  }
+  const roundPill = e.target.closest('[data-modal-round]');
+  if (roundPill) {
+    const r = roundPill.dataset.modalRound;
+    const parent = roundPill.closest('.modal-scenario-content');
+    parent.querySelectorAll('[data-modal-round]').forEach(b => b.classList.toggle('active', b === roundPill));
+    parent.querySelectorAll('.persona-card').forEach(card => {
+      card.style.display = (r === 'all' || card.dataset.round === r) ? 'block' : 'none';
+    });
+    return;
+  }
+});
 
 async function watchAgents(){
  clearTimeout(agentTimer);

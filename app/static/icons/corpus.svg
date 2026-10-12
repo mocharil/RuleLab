@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <linearGradient id="corpGrad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+  </defs>
+  <!-- Pediment triangle roof -->
+  <path d="M3 7l9-4.5L21 7H3Z" fill="url(#corpGrad)"/>
+  <!-- Architrave beam -->
+  <rect x="2.5" y="7.5" width="19" height="2" rx="0.5" fill="#065f46"/>
+  <!-- Columns -->
+  <rect x="4.5" y="10" width="2.5" height="9" rx="0.75" fill="url(#corpGrad)"/>
+  <rect x="9" y="10" width="2.5" height="9" rx="0.75" fill="url(#corpGrad)"/>
+  <rect x="13" y="10" width="2.5" height="9" rx="0.75" fill="url(#corpGrad)"/>
+  <rect x="17.25" y="10" width="2.5" height="9" rx="0.75" fill="url(#corpGrad)"/>
+  <!-- Plinth podium base -->
+  <rect x="2" y="19.5" width="20" height="2.5" rx="0.75" fill="#065f46"/>
+</svg>
