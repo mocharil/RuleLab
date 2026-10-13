@@ -360,6 +360,66 @@
         "version_note": "Baca bersama UU 15/2019 dan UU 13/2022; bukan sertifikasi lengkap hukum terkini."
       },
       "review_required": true
+    },
+    {
+      "id": "statute_structure",
+      "title": "Kerangka anatomi peraturan",
+      "instruction": "Kerangka peraturan perundang-undangan terdiri atas: Judul, Pembukaan, Batang Tubuh, Penutup, Penjelasan (jika ada), dan Lampiran (jika ada). Peraturan perundang-undangan tidak langsung melompat ke pasal, melainkan wajib memuat pembukaan resmi.",
+      "classification": "drafting_technique",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu12-2011lmp2.pdf",
+        "locator": "Lampiran II Bab I angka 1-4",
+        "raw_file": "data/raw/uu12-2011lmp2.pdf",
+        "sha256": "ae7f0561561a38d45d3046aa4fea307a923ea42e995337d199e0767f119c7bb6",
+        "source_version": "2011",
+        "version_note": "Baca bersama UU 15/2019 dan UU 13/2022; bukan sertifikasi lengkap hukum terkini."
+      },
+      "review_required": true
+    },
+    {
+      "id": "preamble_elements",
+      "title": "Konsiderans Menimbang dan Dasar Hukum Mengingat",
+      "instruction": "Konsiderans diawali kata 'Menimbang:' memuat alasan filosofis, sosiologis, dan yuridis dengan butir a, b, c. Dasar hukum diawali kata 'Mengingat:' memuat landasan konstitusional UUD 1945 dan peraturan pendelegasi secara hierarkis dan kronologis dengan angka 1, 2.",
+      "classification": "drafting_technique",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu12-2011lmp2.pdf",
+        "locator": "Lampiran II Bab I angka 14-49",
+        "raw_file": "data/raw/uu12-2011lmp2.pdf",
+        "sha256": "ae7f0561561a38d45d3046aa4fea307a923ea42e995337d199e0767f119c7bb6",
+        "source_version": "2011",
+        "version_note": "Baca bersama UU 15/2019 dan UU 13/2022; bukan sertifikasi lengkap hukum terkini."
+      },
+      "review_required": true
+    },
+    {
+      "id": "enacting_clause",
+      "title": "Diktum dan Persetujuan Bersama",
+      "instruction": "Diktum terdiri atas kata MEMUTUSKAN: dan Menetapkan:. UU dan Perda memuat klausul 'Dengan Persetujuan Bersama DPR/DPRD dan Presiden/Kepala Daerah'. PP, Perpres, dan Permen tidak memakai klausul persetujuan bersama karena produk eksekutif.",
+      "classification": "drafting_technique",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu12-2011lmp2.pdf",
+        "locator": "Lampiran II Bab I angka 50-58",
+        "raw_file": "data/raw/uu12-2011lmp2.pdf",
+        "sha256": "ae7f0561561a38d45d3046aa4fea307a923ea42e995337d199e0767f119c7bb6",
+        "source_version": "2011",
+        "version_note": "Baca bersama UU 15/2019 dan UU 13/2022; bukan sertifikasi lengkap hukum terkini."
+      },
+      "review_required": true
+    },
+    {
+      "id": "article_subdivisions",
+      "title": "Pasal, Ayat, dan Rincian Tabulasi",
+      "instruction": "Pasal merupakan satuan aturan memuat satu norma pokok. Bila dirinci, menggunakan Ayat dengan angka Arab bertanda kurung: (1), (2). Rincian unsur di bawah ayat menggunakan huruf abjad kecil: a., b. diakhiri titik koma, dilanjutkan angka 1., 2., lalu a), b). Kata sambung hanya di akhir butir kedua terakhir.",
+      "classification": "drafting_technique",
+      "source": {
+        "url": "https://peraturan.go.id/files/uu12-2011lmp2.pdf",
+        "locator": "Lampiran II Bab I angka 77-94",
+        "raw_file": "data/raw/uu12-2011lmp2.pdf",
+        "sha256": "ae7f0561561a38d45d3046aa4fea307a923ea42e995337d199e0767f119c7bb6",
+        "source_version": "2011",
+        "version_note": "Baca bersama UU 15/2019 dan UU 13/2022; bukan sertifikasi lengkap hukum terkini."
+      },
+      "review_required": true
     }
   ]
 }

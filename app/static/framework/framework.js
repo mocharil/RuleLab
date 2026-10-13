@@ -12734,8 +12734,7 @@ const VE = Gt("X", [
 ]), LE = [
   ["editor", "Editor rancangan", pl],
   ["analysis", "Pemeriksaan konflik", ro],
-  ["simulation", "Simulasi dampak", TE],
-  ["social", "Forum netizen AI", ld],
+  ["simulation", "Simulasi dampak & publik", TE],
   ["gallery", "Galeri dokumen", Af],
   ["corpus", "Pustaka regulasi", Af],
   ["history", "Riwayat & review", CE],
@@ -12766,8 +12765,8 @@ function BE() {
       /* @__PURE__ */ T.jsx(ME, { size: 18, "aria-hidden": "true" }),
       /* @__PURE__ */ T.jsx("span", { className: "home-label", children: "Ringkasan" })
     ] }),
-    /* @__PURE__ */ T.jsx("nav", { id: "nav", "aria-label": "Navigasi utama", children: LE.map(([n, i, s], r) => /* @__PURE__ */ T.jsxs("div", { className: r === 4 ? "nav-section-start" : "nav-item", children: [
-      r === 4 && /* @__PURE__ */ T.jsx("div", { className: "nav-label", children: "SUMBER & AKTIVITAS" }),
+    /* @__PURE__ */ T.jsx("nav", { id: "nav", "aria-label": "Navigasi utama", children: LE.map(([n, i, s], r) => /* @__PURE__ */ T.jsxs("div", { className: r === 3 ? "nav-section-start" : "nav-item", children: [
+      r === 3 && /* @__PURE__ */ T.jsx("div", { className: "nav-label", children: "SUMBER & AKTIVITAS" }),
       /* @__PURE__ */ T.jsxs(hE, { children: [
         /* @__PURE__ */ T.jsx(mE, { asChild: !0, children: /* @__PURE__ */ T.jsxs("button", { "data-view": n, "aria-label": i, children: [
           /* @__PURE__ */ T.jsx("span", { className: "nav-icon", "aria-hidden": "true", children: /* @__PURE__ */ T.jsx(s, { size: 18 }) }),
@@ -16230,8 +16229,7 @@ const U2 = [
   ["home", "Ringkasan workspace", "Mulai dari tujuan kebijakan"],
   ["editor", "Editor rancangan", "Susun pasal dan ekspor DOCX"],
   ["analysis", "Pemeriksaan konflik", "Telusuri sumber dan interpretasi"],
-  ["simulation", "Simulasi dampak", "Bandingkan asumsi A dan B"],
-  ["social", "Forum netizen AI", "Opini dan interaksi persona sintetis"],
+  ["simulation", "Simulasi dampak & forum publik", "Bandingkan asumsi A/B dan reaksi persona netizen AI"],
   ["corpus", "Pustaka regulasi", "Cari pasal dan dokumen resmi"],
   ["gallery", "Galeri dokumen", "Baca dokumen dan tanyakan maknanya kepada bot"],
   ["history", "Riwayat & review", "Versi dan catatan reviewer"],

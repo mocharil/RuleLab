@@ -9,14 +9,28 @@ def export_docx(draft,runs,report=False):
  style=document.styles['Normal'];style.font.name='Times New Roman';style.font.size=Pt(12);style.paragraph_format.space_after=Pt(7)
  header=s.header.paragraphs[0];header.text='RULELAB  /  DRAF UNTUK REVIEW';header.style='Caption'
  p=document.add_paragraph('RANCANGAN '+draft['regulation_type']);p.alignment=WD_ALIGN_PARAGRAPH.CENTER;p.runs[0].bold=True
+ p=document.add_paragraph('TENTANG');p.alignment=WD_ALIGN_PARAGRAPH.CENTER
  p=document.add_paragraph(draft['title'].upper());p.alignment=WD_ALIGN_PARAGRAPH.CENTER;p.runs[0].bold=True
- document.add_paragraph(f"Versi rancangan {draft['revision']} • Belum disahkan • Perlu review ahli hukum",style='Caption')
- if draft.get('preamble'):document.add_paragraph(draft['preamble'])
- document.add_paragraph('Ruang lingkup: '+draft.get('scope',''))
+ cap=document.add_paragraph(f"Versi rancangan {draft['revision']} • Belum disahkan • Perlu review ahli hukum",style='Caption');cap.alignment=WD_ALIGN_PARAGRAPH.CENTER
+ if draft.get('preamble'):
+  for raw_line in draft['preamble'].splitlines():
+   line=raw_line.strip()
+   if not line:
+    continue
+   p=document.add_paragraph(line)
+   if any(k in line.upper() for k in ['DENGAN RAHMAT TUHAN', 'PRESIDEN REPUBLIK', 'GUBERNUR ', 'BUPATI ', 'WALIKOTA ', 'MEMUTUSKAN:', 'DENGAN PERSETUJUAN BERSAMA', 'DEWAN PERWAKILAN RAKYAT']):
+    p.alignment=WD_ALIGN_PARAGRAPH.CENTER
+    if p.runs: p.runs[0].bold=True
+   elif line.startswith(('Menimbang:', 'Mengingat:', 'Menetapkan:')):
+    if p.runs: p.runs[0].bold=True
  for a in draft['articles']:
   h=document.add_paragraph('Pasal '+a['number']);h.alignment=WD_ALIGN_PARAGRAPH.CENTER;h.runs[0].bold=True
   for line in a['text'].splitlines():
-   if line.strip():document.add_paragraph(line.strip())
+   t=line.strip()
+   if t:
+    p=document.add_paragraph(t)
+    if t.startswith(('(', 'a.', 'b.', 'c.', 'd.', 'e.', 'f.', '1.', '2.', '3.')):
+     p.paragraph_format.left_indent=Cm(0.7)
  if report:
   document.add_page_break();document.add_heading('Lampiran review RuleLab',0)
   document.add_paragraph('Laporan AI pendukung review, bukan penetapan keabsahan hukum. Hanya analisis pada versi rancangan ini yang dilampirkan.')

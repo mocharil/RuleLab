@@ -80,8 +80,11 @@ def legal_changes():return {'current_law_verified':False,'candidates':legal.chan
 @app.get('/api/status')
 def status(request:Request):
  regs=store.regulations()
+ draft_items=store.list_drafts()
+ active_draft=store.get_draft(draft_items[0]['id']) if draft_items else None
+ active_personas=social.get_personas_for_draft(active_draft)
  return {'principal':request.state.principal,'agent_runtime':{'enabled':True,'mode':'bounded_specialists','max_concurrency':settings.max_agent_jobs},'deployment_mode':settings.deployment_mode,'provider':settings.provider,'model':settings.model if settings.provider!='demo' else None,'search_backend':settings.search_backend,
-  'regulations':len(regs),'articles':sum(len(d['articles']) for d in regs),'social_personas':social.PERSONAS,
+  'regulations':len(regs),'articles':sum(len(d['articles']) for d in regs),'social_personas':active_personas,'domain':social.detect_domain(active_draft),
   'credential_configured':bool(settings.api_key) if settings.provider=='gemini' else bool(settings.credentials_path or settings.project) if settings.provider=='vertex' else False,
   'corpus_notice':'Snapshot asli. Belum terkonsolidasi dan belum diverifikasi status berlaku.'}
 @app.get('/api/readiness')
@@ -91,11 +94,15 @@ async def readiness_probe(request:Request):
  if request.state.principal['role']!='admin':raise HTTPException(403,'Uji integrasi hanya tersedia untuk admin workspace.')
  return await readiness.probe()
 @app.get('/api/drafts')
-def drafts():return store.list_drafts()
+def drafts():
+ items=store.list_drafts()
+ return [{**d, 'domain': social.detect_domain(d), 'personas': social.get_personas_for_draft(d)} for d in items]
 @app.post('/api/drafts',status_code=201)
 def create(body:DraftInput):return store.create_draft(body.model_dump())
 @app.get('/api/drafts/{id}')
-def get_draft(id:str):return store.get_draft(id)
+def get_draft(id:str):
+ draft=store.get_draft(id)
+ return {**draft, 'domain': social.detect_domain(draft), 'personas': social.get_personas_for_draft(draft)}
 @app.put('/api/drafts/{id}')
 def save(id:str,body:SaveDraft):return store.save_draft(id,body.model_dump(exclude={'expected_revision'}),body.expected_revision)
 @app.get('/api/drafts/{id}/history')

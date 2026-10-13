@@ -32,7 +32,7 @@ def snapshot():
       '49/3':{'text':'Ayat ketiga lama.','status':'original'}}}
 
 def test_rulebook_provenance_and_classification():
-    pack=legal.rulebook();assert len(pack['rules'])==24;assert not pack['current_law_certified']
+    pack=legal.rulebook();assert len(pack['rules'])==28;assert not pack['current_law_certified']
     for rule in pack['rules']:
         if rule['source']:
             src=rule['source'];assert hashlib.sha256((ROOT/src['raw_file']).read_bytes()).hexdigest()==src['sha256']
@@ -133,7 +133,7 @@ def test_rulebook_in_actual_provider_payload(monkeypatch):
     assert legal.rulebook()['version'] in system;assert '[change_unit;' in system;assert '[authority;' in system
 
 def test_api_date_and_guide(client):
-    assert len(client.get('/api/legal/guide').json()['rules'])==24
+    assert len(client.get('/api/legal/guide').json()['rules'])==28
     draft=client.get('/api/drafts').json()[0]
     response=client.post('/api/drafts/'+draft['id']+'/analyze',json={'as_of_date':'2000-01-01'})
     assert response.status_code==200

@@ -31,13 +31,13 @@ describe("framework components",()=>{
   });
   it("sidebar provides labelled destinations and folding control",()=>{
     const {container}=render(<Sidebar/>);
-    expect(container.querySelectorAll("#nav [data-view]")).toHaveLength(8);
+    expect(container.querySelectorAll("#nav [data-view]")).toHaveLength(7);
     expect(screen.getByRole("button",{name:"Lipat sidebar"})).toBeTruthy();
-    expect(screen.getByRole("button",{name:"Forum netizen AI"})).toBeTruthy();
+    expect(screen.getByRole("button",{name:"Simulasi dampak & publik"})).toBeTruthy();
     expect(screen.getByRole("button",{name:"Galeri dokumen"})).toBeTruthy();
   });
   it("searches menus and delegates navigation to the established save-aware control",async()=>{
-    const target=document.createElement("button");target.dataset.view="social";const clicked=vi.fn();target.onclick=clicked;document.body.append(target);
+    const target=document.createElement("button");target.dataset.view="simulation";const clicked=vi.fn();target.onclick=clicked;document.body.append(target);
     render(<CommandMenu/>);fireEvent.click(screen.getByRole("button",{name:"Navigasi cepat"}));
     const input=screen.getByRole("combobox",{name:"Cari menu"});fireEvent.change(input,{target:{value:"netizen"}});
     expect(screen.getByRole("dialog")).toBeTruthy();fireEvent.keyDown(input,{key:"Enter"});

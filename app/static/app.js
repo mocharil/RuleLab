@@ -11,9 +11,10 @@ const $=s=>document.querySelector(s), E=(v='')=>String(v).replace(/[&<>"']/g,c=>
 const labels={high:'Tinggi',medium:'Sedang',low:'Rendah',potential_vertical_conflict:'Potensi konflik vertikal',potential_horizontal_conflict:'Potensi konflik setara',ambiguity:'Ambiguitas',implementation_risk:'Risiko pelaksanaan',coverage_gap:'Konteks belum lengkap',potential_only:'Indikasi awal',requires_review:'Perlu review',temporal:'Waktu dan versi',scope:'Ruang lingkup',authority:'Kewenangan',exceptions:'Pengecualian',alternative_interpretation:'Interpretasi alternatif',binding_statute:'Norma undang-undang',drafting_technique:'Teknik penyusunan',engineering_guardrail:'Protokol aplikasi',needs_review:'Perlu review',reviewed_with_notes:'Direview dengan catatan'};
 const label=v=>labels[v]||v;
 const fmt=n=>new Intl.NumberFormat('id-ID').format(n), rup=n=>'Rp '+fmt(n);
-const names={home:'Ringkasan workspace',editor:'Editor rancangan',analysis:'Pemeriksaan konflik',simulation:'Simulasi dampak',corpus:'Pustaka regulasi',gallery:'Galeri dokumen',history:'Riwayat & review',social:'Forum netizen AI',agents:'Operasi agen'};
-let S={view:new URLSearchParams(location.search).get('view')||'home',draft:null,drafts:[],runs:[],corpus:[],status:{},gallery:{query:'',type:'all',doc:null,articleNumber:null,scopeId:'',question:'',turns:[]},dirty:false,alt:'',simAss:null,studioTab:'impact',results:null,searchQuery:'',findingFilter:'all',lawFilter:'all',historyFilter:'all',jobs:[],asOf:new Date().toISOString().slice(0,10)},timer,agentTimer;
-const actionIcons={new:'plus',add:'plus',generate:'file',import:'upload',export:'download',report:'download',save:'save',analyze:'shield','analyze-inline':'shield',simulate:'chart','open-studio':'chart','go-social':'network','start-agent':'network',compare:'compare',copy:'copy','back-editor':'back',close:'close','legal-guide':'book','refresh-agents':'refresh',raw:'download','law-json':'download',versions:'clock',review:'shield','run-detail':'file'};
+const names={home:'Ringkasan workspace',editor:'Editor rancangan',analysis:'Pemeriksaan konflik',simulation:'Simulasi dampak & publik',corpus:'Pustaka regulasi',gallery:'Galeri dokumen',history:'Riwayat & review',social:'Simulasi dampak & publik',agents:'Operasi agen'};
+const _urlP=new URLSearchParams(location.search), _initV=_urlP.get('view')||'home';
+let S={view:_initV==='social'?'simulation':_initV,simSection:_initV==='social'?'social':(_urlP.get('sub')||'projection'),draft:null,drafts:[],runs:[],corpus:[],status:{},gallery:{query:'',type:'all',doc:null,articleNumber:null,scopeId:'',question:'',turns:[]},dirty:false,alt:'',simAss:null,studioTab:'impact',results:null,searchQuery:'',findingFilter:'all',lawFilter:'all',historyFilter:'all',jobs:[],asOf:new Date().toISOString().slice(0,10)},timer,agentTimer;
+const actionIcons={new:'plus',add:'plus',generate:'file',import:'upload',export:'download',report:'download',save:'save',analyze:'shield','analyze-inline':'shield',simulate:'chart','sim-section':'chart','open-studio':'chart','go-social':'network','start-agent':'network',compare:'compare',copy:'copy','back-editor':'back',close:'close','legal-guide':'book','refresh-agents':'refresh',raw:'download','law-json':'download',versions:'clock',review:'shield','run-detail':'file','template-preamble':'sparkles'};
 const btn=(text,action,extra='',primary=false)=>`<button class="btn ${primary?'primary':''}" data-action="${action}" ${extra}>${actionIcons[action]?icon(actionIcons[action]):''}${text.replace(/[◎✧↑↗↓→✕+]/g,'').trim()}</button>`;
 function toast(text,error=false){$('#toast').textContent=text;$('#toast').className=error?'error':'';$('#toast').style.display='block';clearTimeout(timer);timer=setTimeout(()=>$('#toast').style.display='none',7000);}
 function requestError(detail){
@@ -56,7 +57,7 @@ function head(k,title,desc,buttons=''){return `<div class="page-heading"><div><d
 function steps(){return '';}
 function demoNote(){return S.status.provider==='demo'?'<div class="note demo-note"><span class="tag">Demo</span><span>Hasil memakai aturan dan template lokal. Simulasi angka dihitung dari asumsi Anda.</span></div>':'';}
 function source(a){return `<details class="source-details"><summary>${E(a.regulation_label)} · Pasal ${E(a.number)} <span class="tag">Snapshot sumber</span></summary><p class="micro" style="margin-top:8px">${E(a.hierarchy_relation||a.legal_status)}</p><div class="quote">${E(a.text)}</div><a href="${E(a.source.url)}" target="_blank" rel="noopener">Sumber resmi ↗</a><div class="micro">${a.pages.length?'Halaman '+a.pages.join(', '):'HTML'} · SHA256 ${E(a.source.sha256.slice(0,16))}…</div></details>`;}
-function render(){document.body.classList.toggle('control-room',S.view==='social');const views={home,editor,analysis,simulation,corpus,gallery:()=>galleryPage(S,E,icon),history,social:()=>socialPage(),agents:()=>agentWorkspace(S,E,btn)};$('#crumb').textContent=names[S.view];document.querySelectorAll('#nav button,.workspace-home-link').forEach(x=>{const active=x.dataset.view===S.view;x.classList.toggle('active',active);if(active)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current');});disposePageComponents();$('#main').innerHTML=(views[S.view]||home)();renderFrameworkComponents(S);enhanceWorkspace(S);enhanceDesign(S);updateSocial(S);agentControls();
+function render(){document.body.classList.toggle('control-room',S.view==='simulation'&&S.simSection==='social');const views={home,editor,analysis,simulation,corpus,gallery:()=>galleryPage(S,E,icon),history,social:()=>simulation(),agents:()=>agentWorkspace(S,E,btn)};$('#crumb').textContent=names[S.view];document.querySelectorAll('#nav button,.workspace-home-link').forEach(x=>{const active=x.dataset.view===S.view||(S.view==='simulation'&&x.dataset.view==='simulation');x.classList.toggle('active',active);if(active)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current');});disposePageComponents();$('#main').innerHTML=(views[S.view]||home)();renderFrameworkComponents(S);enhanceWorkspace(S);enhanceDesign(S);updateSocial(S);agentControls();
  const role=S.status.principal?.role;
  if(role==='viewer'||role==='reviewer'){
   const blocked=new Set(['new','create','generate','run-generate','save','add','remove','analyze','analyze-inline','simulate','apply','apply-alt','confirm-alt','import','run-import','start-agent','cancel-agent']);
@@ -70,15 +71,149 @@ function editor(){
  return head('PERANCANGAN','Editor rancangan','Sunting naskah dan tinjau sumber, dampak, serta reaksi persona di panel asisten.',`<button class="btn" data-ux="focus-editor" aria-pressed="false">${icon('focus')}Fokus menulis</button>`+btn('Impor','import')+btn('Ekspor DOCX','export')+btn('Simpan','save','',true))+`
  <div class="editor-layout"><section class="panel document-panel"><div class="panel-head"><select id="draft-select" class="draft-selector" aria-label="Pilih rancangan">${S.drafts.map(x=>`<option value="${E(x.id)}" ${x.id===d.id?'selected':''}>${E(x.title)}</option>`).join('')}</select><span id="save-state" class="draft-status ${S.dirty?'dirty':''}">${S.dirty?'Belum disimpan':'Tersimpan · v'+d.revision}</span></div>
  <div class="document-header"><span class="pill">DRAF UNTUK REVIEW</span><div class="doc-type">RANCANGAN <select id="reg-type" aria-label="Jenis peraturan">${['UU','PP','PERPRES','PERDA_PROV','PERDA_KAB','PERMEN'].map(t=>`<option ${t===d.regulation_type?'selected':''}>${t}</option>`).join('')}</select></div><input id="draft-title" aria-label="Judul rancangan" value="${E(d.title)}"><div class="micro">Indonesia · ${d.articles.length} pasal · Versi ${d.revision}</div></div>
+
+ <div class="preamble-editor-card">
+  <div class="preamble-header">
+   <div>
+    <span class="preamble-badge">PEMBUKAAN REGULASI (UU 12/2011)</span>
+    <h3 class="preamble-title">Konsiderans (Menimbang), Dasar Hukum (Mengingat), & Diktum</h3>
+    <p class="micro">Peraturan Indonesia wajib memuat pembukaan resmi, pertimbangan, dan dasar hukum sebelum batang tubuh.</p>
+   </div>
+   <div class="preamble-actions">
+    <button class="btn btn-sm btn-preamble-tpl" data-action="template-preamble" type="button" title="Sisipkan format baku Lampiran II UU 12/2011">${icon('sparkles')} Format Baku ${d.regulation_type}</button>
+   </div>
+  </div>
+  <textarea id="preamble" class="preamble-textarea" aria-label="Pembukaan, Menimbang, dan Mengingat" placeholder="DENGAN RAHMAT TUHAN YANG MAHA ESA...&#10;Menimbang: ...&#10;Mengingat: ...&#10;MEMUTUSKAN:&#10;Menetapkan: ...">${E(d.preamble)}</textarea>
+ </div>
+
  <div class="document-outline" aria-label="Navigasi pasal"><span class="micro">DAFTAR PASAL</span>${d.articles.map((a,i)=>`<button data-action="jump-article" data-index="${i}">Pasal ${E(a.number)}</button>`).join('')}</div>
+
+ <div class="article-tip-badge">
+  <span class="article-tip-icon">${icon('book')}</span>
+  <div><strong>Kaidah Batang Tubuh:</strong> Setiap <strong>Pasal</strong> memuat norma pokok. Bila dirinci lebih dari 1 norma, gunakan penomoran <strong>Ayat (1), (2)</strong>, serta rincian huruf <strong>a., b.</strong> (diakhiri titik koma) dan angka <strong>1., 2.</strong></div>
+ </div>
+
  <div class="article-list">${d.articles.map((a,i)=>`<article id="article-${i}" class="article-card ${warn.has(a.number)?'warn':''}"><div class="article-top"><div class="article-number">Pasal <input data-number="${i}" value="${E(a.number)}" aria-label="Nomor pasal ${i+1}"></div><div class="actions">${warn.has(a.number)?'<span class="tag medium">Perlu review</span>':''}<button class="text-button" data-action="remove" data-index="${i}">Hapus pasal</button></div></div><textarea data-article="${i}" aria-label="Isi pasal ${E(a.number)}">${E(a.text)}</textarea></article>`).join('')}<div class="actions">${btn('Tambah pasal','add')}${btn('Simpan naskah','save','',true)}</div></div>
- <div class="scope-fields"><div><label for="scope">Ruang lingkup</label><input id="scope" value="${E(d.scope)}"></div><details><summary>Konsiderans & catatan perancangan</summary><textarea id="preamble" aria-label="Konsiderans">${E(d.preamble)}</textarea></details></div></section>
+ <div class="scope-fields"><div><label for="scope">Ruang lingkup & catatan perancangan</label><input id="scope" value="${E(d.scope)}"></div></div></section>
  ${studioPanel({state:S,analysis:r,simulation:last('simulation'),alternative:S.alt||defaultAlt(),escape:E,button:btn,source,legalValidation,socialPanel:()=>socialShell(true),agentPanel:()=>agentPanel(S,E,btn)})}</div>`;
 }
 function analysis(){const r=last('analysis'),p=r?.payload;return head('PEMERIKSAAN BERBASIS SUMBER','Pemeriksaan konflik','Tinjau hierarki, kutipan sumber, dan interpretasi alternatif pada setiap temuan.',btn('Periksa ulang ✧','analyze','',true)+btn('Laporan DOCX ↗','report'))+steps(1)+`<div class="note analysis-settings"><label for="legal-date">Analisis pada tanggal</label> <input id="legal-date" type="date" value="${E(S.asOf)}" style="width:170px;display:inline-block"> <span class="micro">Versi & status sumber diperiksa terhadap tanggal ini.</span></div>`+demoNote()+(!r?`<section class="panel empty"><h2>Mulai dari satu pemeriksaan.</h2><p>Ambil sumber terkait dan tinjau setiap temuan beserta interpretasi alternatif.</p>${btn('Periksa rancangan','analyze','',true)}</section>`:`${stale(r)?`<div class="note">Draft berubah ke v${S.draft.revision}. Hasil ini dari v${r.revision}. Periksa ulang sebelum menerapkan usulan.</div>`:''}<div class="metrics">${[['POTENSI MASALAH',p.findings.length,'Perlu review, bukan putusan'],['SUMBER DITINJAU',p.coverage.retrieved_articles,'Pasal dan konteks terkait'],['VERSI RANCANGAN',r.revision,stale(r)?'Hasil lama':'Sesuai draft']].map(([k,v,t])=>`<div class="metric"><small>${k}</small><div class="value">${v}</div><small>${t}</small></div>`).join('')}</div><p class="help-text">${E(p.summary)}</p>${p.legal_context?`<div class="note">Pedoman ${E(p.legal_context.rulebook_version)} · Tanggal ${E(p.legal_context.as_of_date)} · ${p.legal_context.pending_changes.length} kandidat perubahan terkait, belum diterapkan. ${E(p.legal_context.notice)}</div>`:""}${findingFilters(p)}${p.findings.length?p.findings.map((f,i)=>({f,i})).filter(({f})=>S.findingFilter==='all'||f.severity===S.findingFilter).map(({f,i})=>`<article class="finding"><div class="finding-head"><span class="tag ${f.severity}">${E(label(f.severity))}</span><h2>${E(f.title)}</h2><span class="pill">Pasal ${E(f.article_number)}</span></div><div class="finding-body"><p>${E(f.reasoning)}</p><div class="two-cols"><div><div class="quote-label">RANCANGAN · V${r.revision}</div><div class="quote">${E(f.original_text)}</div></div><div><div class="quote-label">USULAN UNTUK DITINJAU</div><div class="quote">${E(f.proposed_text)}</div></div></div>${f.evidence.map(source).join('')}${legalValidation(f)}<details style="margin-top:15px"><summary>Interpretasi alternatif & pertanyaan review</summary><p style="margin-top:10px">${E(f.counterargument)}</p>${limitations(f.review_questions)}</details><div class="finding-bottom" data-category="${E(f.category)}"><span class="micro">${E(label(f.category))} · Perlu review ahli</span>${btn('Terapkan usulan ke draft','apply',`data-index="${i}" ${stale(r)?'disabled':''}`,true)}</div></div></article>`).join(''):'<div class="note green">Tidak ada pola masalah terdeteksi. Ini tidak membuktikan draft bebas konflik.</div>'}<section class="panel"><div class="panel-body"><h3>Batasan pemeriksaan</h3>${limitations(p.limitations)}<div class="actions">${btn('Catatan reviewer','review',`data-run="${r.id}"`)}${btn('Lanjut ke simulasi →','go-sim','',true)}<span class="micro">${E(label(r.review_status))}</span></div>${r.review_notes?`<p class="help-text">${E(r.review_notes)}</p>`:''}</div></section>`);}
 function draftText(){return S.draft.articles.map(a=>'Pasal '+a.number+'\n'+a.text).join('\n\n');}
 function defaultAlt(){return S.draft.articles.map(a=>'Pasal '+a.number+'\n'+(a.number==='2'?'(1) Permohonan dapat diajukan melalui aplikasi digital atau kanal pendampingan.\n(2) Penyelenggara menyediakan bantuan dan akomodasi yang layak bagi pemohon yang mengalami hambatan akses.':a.text)).join('\n\n');}
-function simulation(){const r=last('simulation'),p=r?.payload,ass=S.simAss||p?.assumptions||defaultAssumptions;if(!S.alt)S.alt=defaultAlt();const fields=[['population','Jumlah pemohon','orang'],['digital_access_pct','Mampu mengakses digital','%'],['assisted_success_pct','Keberhasilan bantuan','%'],['digital_cost','Biaya layanan digital','Rp / layanan berhasil'],['assisted_cost','Biaya layanan bantuan','Rp / layanan berhasil'],['staff_capacity','Kapasitas pendampingan','pemohon / hari petugas']];return head('LAB DAMPAK KEBIJAKAN','Simulasi dampak','Bandingkan akses dan biaya pada dua rancangan dengan asumsi yang Anda tentukan.',btn('Forum netizen ↗','go-social')+btn('Jalankan simulasi ◎','simulate','',true))+steps(2)+demoNote()+`${r&&stale(r)?'<div class="note">Hasil ini berasal dari versi lama. Jalankan simulasi ulang.</div>':''}<div class="sim-layout"><section class="panel assumptions"><div class="panel-head"><h2>Asumsi skenario</h2><span class="tag">Input pengguna</span></div><div class="panel-body">${assumptionInputs(ass)}<p class="help-text">Angka awal adalah asumsi contoh. Ganti dengan data lapangan untuk evaluasi kebijakan.</p></div></section><div><section class="panel"><div class="panel-head"><h2>Alternatif B · Rancangan pembanding</h2>${btn('Salin draft saat ini','copy')}</div><div class="panel-body"><textarea id="alternative" rows="9" aria-label="Teks alternatif B">${E(S.alt)}</textarea><p class="micro">Alternatif A menggunakan draft tersimpan. B dapat diedit sebelum simulasi.</p></div></section>${!p?`<section class="panel empty" style="margin-top:18px"><h2>Pahami pilihan dan dampaknya.</h2><p>Hitung akses dan biaya dari asumsi, lalu tinjau empat perspektif pemangku kepentingan.</p>${btn('Bandingkan skenario','simulate','',true)}</section>`:`<div class="scenario-grid" style="margin-top:18px">${['A','B'].map(k=>`<section class="scenario ${k==='B'?'b':''}"><div class="eyebrow">ALTERNATIF ${k}</div><h3>${k==='A'?'Draft saat simulasi':'Teks pembanding'}</h3><div class="number">${p[k].access_pct}%</div><div class="micro">Akses dalam model asumsi</div><div class="bar"><span style="width:${p[k].access_pct}%"></span></div><dl>${[['Pemohon terlayani',fmt(p[k].served)],['Belum terlayani',fmt(p[k].unserved)],['Biaya variabel',rup(p[k].cost)],['Hari kerja petugas',fmt(p[k].staff_days)],['Kanal bantuan terdeteksi',p.assistance_detection[k]?'Ya':'Tidak']].map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl></section>`).join('')}</div><div class="delta-banner"><div><b>${p.delta.served>=0?'+':''}${fmt(p.delta.served)}</b><small>PEMOHON TERLAYANI</small></div><div><b>${p.delta.access_points} poin</b><small>PERUBAHAN AKSES</small></div><div><b>${rup(p.delta.cost)}</b><small>PERUBAHAN BIAYA</small></div></div><div class="persona-grid">${p.stakeholders.map(s=>`<section class="persona"><h3>${E(s.stakeholder)}</h3>${[['MANFAAT',s.benefits],['RISIKO',s.risks],['MITIGASI',s.mitigations]].map(([k,v])=>`<strong>${k}</strong><ul>${v.map(x=>`<li>${E(x)}</li>`).join('')}</ul>`).join('')}<details><summary>Validasi & sumber</summary>${limitations(s.questions_to_validate)}${p.evidence.filter(a=>s.evidence_ids.includes(a.id)).map(source).join('')}</details></section>`).join('')}</div><section class="panel"><div class="panel-head"><h2>Sensitivitas akses digital</h2><span class="micro">Asumsi ±10 poin</span></div><table><thead><tr><th>Akses digital input</th><th>Akses A</th><th>Akses B</th></tr></thead><tbody>${p.sensitivity.map(x=>`<tr><td>${x.digital_access_pct}%</td><td>${x.A}%</td><td>${x.B}%</td></tr>`).join('')}</tbody></table><div class="panel-body"><p class="inline-code">${E(p.A.formula)}</p>${limitations(p.limitations)}<div class="actions">${btn('Tinjau & terapkan alternatif B','apply-alt',stale(r)?'disabled':'',true)}${btn('Catatan reviewer','review',`data-run="${r.id}"`)}</div></div></section>`}</div></div>`;}
+function simulation(){
+  const r=last('simulation'),p=r?.payload,ass=S.simAss||p?.assumptions||defaultAssumptions;
+  if(!S.alt)S.alt=defaultAlt();
+  if(!S.simSection)S.simSection='projection';
+  const personas = S.draft?.personas || S.status?.social_personas || [
+    {id:'sari_desa',name:'Sari',role:'Warga Pedesaan 3T',background:'Warga pedesaan tanpa akses internet stabil',goal:'Membutuhkan kanal bantuan fisik atau offline'},
+    {id:'nadia_disabilitas',name:'Nadia',role:'Disabilitas Tunanetra',background:'Penyandang disabilitas tunanetra',goal:'Memastikan aplikasi ramah screen-reader dan ada pendampingan'},
+    {id:'bima_loket',name:'Bima',role:'Petugas Loket',background:'Petugas loket pelayanan terpadu',goal:'Kapasitas kerja realistis tanpa overload antrean'},
+    {id:'raka_umkm',name:'Raka',role:'Pelaku UMKM',background:'Pelaku UMKM informal',goal:'Proses pengajuan cepat tanpa syarat berbelit'},
+    {id:'dewi_anggaran',name:'Dewi',role:'Pengelola Anggaran',background:'Pengelola anggaran daerah/instansi',goal:'Efisiensi fiskal dan alokasi bantuan tepat sasaran'}
+  ];
+
+  const subNav=`<div class="sim-unified-nav" role="tablist" aria-label="Navigasi Simulasi dan Forum Publik">
+    <button type="button" class="sim-unified-tab ${S.simSection==='projection'?'active':''}" data-action="sim-section" data-section="projection" role="tab" aria-selected="${S.simSection==='projection'}">
+      <span class="tab-icon">${icon('chart', 16)}</span>
+      <span>Proyeksi Skenario A/B</span>
+      <span class="tab-badge">Kuantitatif</span>
+    </button>
+    <button type="button" class="sim-unified-tab ${S.simSection==='social'?'active':''}" data-action="sim-section" data-section="social" role="tab" aria-selected="${S.simSection==='social'}">
+      <span class="tab-icon">${icon('network', 16)}</span>
+      <span>Forum Netizen & Persona AI</span>
+      <span class="tab-badge">Kualitatif</span>
+    </button>
+    <button type="button" class="sim-unified-tab ${S.simSection==='unified'?'active':''}" data-action="sim-section" data-section="unified" role="tab" aria-selected="${S.simSection==='unified'}">
+      <span class="tab-icon">${icon('shield', 16)}</span>
+      <span>Tinjauan Terpadu</span>
+      <span class="tab-badge">Sintesis</span>
+    </button>
+  </div>`;
+
+  let body='';
+  if(S.simSection==='social'){
+    body=`<div class="social-context-banner">
+      <div class="context-banner-left">
+        <span class="context-tag">KONTEKS SKENARIO AKTIF</span>
+        <h3>Uji Penerimaan Warga: Draft A vs Alternatif B</h3>
+        <p>Persona merespons perubahan permodelan akses <strong>${p?p.A.access_pct:70}% → ${p?p.B.access_pct:94}%</strong> dan ketersediaan opsi bantuan non-digital.</p>
+      </div>
+      <div class="context-banner-right">
+        <div class="context-metric"><small>AKSES A</small><strong>${p?p.A.access_pct:70}%</strong></div>
+        <div class="context-arrow">→</div>
+        <div class="context-metric highlight"><small>AKSES B</small><strong>${p?p.B.access_pct:94}%</strong></div>
+        <button type="button" class="btn-context-sim" data-action="sim-section" data-section="projection">${icon('chart',14)} Ubah Asumsi Angka</button>
+      </div>
+    </div>
+    ${socialShell()}
+    <details class="panel social-data" style="margin-top:16px"><summary>Tinjau rancangan B & parameter asumsi</summary><label for="alternative">Alternatif B</label><textarea id="alternative" rows="6">${E(S.alt)}</textarea>${assumptionInputs(ass)}<p class="micro">A memakai draft tersimpan. B memakai alternatif di atas. Persona mengevaluasi pasal-pasal ini.</p></details>`;
+  } else if(S.simSection==='unified'){
+    body=`<div class="unified-synthesis-layout">
+      <div class="synthesis-header-grid">
+        <div class="synthesis-card quant-card">
+          <div class="card-eyebrow"><span class="dot-red"></span>DIMENSI KUANTITATIF (AKSES & BIAYA)</div>
+          <h2>Proyeksi Dampak Lapangan</h2>
+          <div class="synthesis-stats">
+            <div class="stat-box"><span class="label">Peningkatan Akses</span><strong class="text-green">+${p?p.delta.access_points:24} poin</strong><small>${p?p.A.access_pct:70}% → ${p?p.B.access_pct:94}%</small></div>
+            <div class="stat-box"><span class="label">Pemohon Terlayani</span><strong class="text-green">+${p?fmt(p.delta.served):'240'} orang</strong><small>Sasaran ${p?fmt(p.assumptions.population):'1.000'} pemohon</small></div>
+            <div class="stat-box"><span class="label">Beban Biaya Variabel</span><strong class="text-amber">+${p?rup(p.delta.cost):'Rp 12.000.000'}</strong><small>Pendampingan inklusif</small></div>
+          </div>
+          <p class="card-desc">Penyediaan alternatif kanal bantuan fisik (Alternatif B) terbukti menutup celah akses bagi masyarakat yang tidak memiliki sarana digital mandiri.</p>
+          <button type="button" class="btn text-btn" data-action="sim-section" data-section="projection">Tinjau rincian sensitivitas & formula →</button>
+        </div>
+        <div class="synthesis-card qual-card">
+          <div class="card-eyebrow"><span class="dot-blue"></span>DIMENSI KUALITATIF (RESPON PUBLIK)</div>
+          <h2>Sentimen Netizen & Stakeholder AI</h2>
+          <div class="synthesis-persona-summary">
+            ${(() => {
+              const lastSocialRun = S.runs.find(x => x.kind === 'social');
+              const activeComments = lastSocialRun?.payload?.scenarios?.B?.comments || [];
+              const latestOpinions = Object.fromEntries(activeComments.map(c => [c.persona_id, c]));
+              return personas.slice(0, 6).map(pers => {
+                const op = latestOpinions[pers.id];
+                const stance = op ? op.stance : (pers.issue === 'cost' ? 'conditional' : 'support');
+                const stanceLabel = stance === 'support' ? 'Mendukung B' : stance === 'concern' ? 'Keberatan' : 'Bersyarat';
+                const stanceClass = stance === 'support' ? 'tag-support' : stance === 'concern' ? 'tag-concern' : 'tag-conditional';
+                const commentSnippet = op ? op.comment : pers.goal;
+                return `<div class="persona-row"><span class="avatar">${E(pers.name.slice(0, 2).toUpperCase())}</span><div class="p-info"><strong>${E(pers.name)} (${E(pers.role || pers.name)})</strong><span class="${stanceClass}">${stanceLabel}</span></div><p>${E(commentSnippet)}</p></div>`;
+              }).join('');
+            })()}
+          </div>
+          <button type="button" class="btn text-btn" data-action="sim-section" data-section="social">Buka simulasi diskusi graf & balasan →</button>
+        </div>
+      </div>
+      <div class="policy-matrix-card">
+        <div class="matrix-head">
+          <div class="matrix-title"><span class="matrix-badge">MATRIKS KEPUTUSAN REGULASI</span><h3>Rekomendasi Kebijakan & Rencana Mitigasi</h3></div>
+          <div class="matrix-actions">${p?btn('Terapkan Alternatif B ke Draft','apply-alt',stale(r)?'disabled':'',true):''}${btn('Catatan reviewer','review',`data-run="${r?.id||''}"`)}</div>
+        </div>
+        <div class="matrix-grid">
+          <div class="matrix-col">
+            <h4>Kelebihan Skenario Alternatif B</h4>
+            <ul>
+              <li>Aksesibilitas melonjak signifikan ke 94% (memenuhi asas kemudahan akses UU 25/2009).</li>
+              <li>Menjamin perlindungan hak penyandang disabilitas sesuai UU 8/2016.</li>
+              <li>Mayoritas persona netizen AI memberikan respon positif dan dukungan terarah.</li>
+            </ul>
+          </div>
+          <div class="matrix-col">
+            <h4>Mitigasi Beban Anggaran & Operasional</h4>
+            <ul>
+              <li>Fokuskan bantuan fisik tatap muka hanya bagi pemohon dengan hambatan terverifikasi.</li>
+              <li>Terapkan rotasi layanan terpadu keliling untuk mengoptimalkan hari kerja staf pendamping.</li>
+              <li>Perkuat self-service digital bagi 70% masyarakat yang sudah memiliki literasi digital baik.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  } else {
+    // projection tab
+    body=`${r&&stale(r)?'<div class="note">Hasil ini berasal dari versi lama. Jalankan simulasi ulang.</div>':''}<div class="sim-layout"><section class="panel assumptions"><div class="panel-head"><h2>Asumsi skenario</h2><span class="tag">Input pengguna</span></div><div class="panel-body">${assumptionInputs(ass)}<p class="help-text">Angka awal adalah asumsi contoh. Ganti dengan data lapangan untuk evaluasi kebijakan.</p></div></section><div><section class="panel"><div class="panel-head"><h2>Alternatif B · Rancangan pembanding</h2>${btn('Salin draft saat ini','copy')}</div><div class="panel-body"><textarea id="alternative" rows="9" aria-label="Teks alternatif B">${E(S.alt)}</textarea><p class="micro">Alternatif A menggunakan draft tersimpan. B dapat diedit sebelum simulasi.</p></div></section>${!p?`<section class="panel empty" style="margin-top:18px"><h2>Pahami pilihan dan dampaknya.</h2><p>Hitung akses dan biaya dari asumsi, lalu tinjau perspektif pemangku kepentingan dan reaksi warga.</p>${btn('Bandingkan skenario','simulate','',true)}</section>`:`<div class="scenario-grid" style="margin-top:18px">${['A','B'].map(k=>`<section class="scenario ${k==='B'?'b':''}"><div class="eyebrow">ALTERNATIF ${k}</div><h3>${k==='A'?'Draft saat simulasi':'Teks pembanding'}</h3><div class="number">${p[k].access_pct}%</div><div class="micro">Akses dalam model asumsi</div><div class="bar"><span style="width:${p[k].access_pct}%"></span></div><dl>${[['Pemohon terlayani',fmt(p[k].served)],['Belum terlayani',fmt(p[k].unserved)],['Biaya variabel',rup(p[k].cost)],['Hari kerja petugas',fmt(p[k].staff_days)],['Kanal bantuan terdeteksi',p.assistance_detection[k]?'Ya':'Tidak']].map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl></section>`).join('')}</div><div class="delta-banner"><div><b>${p.delta.served>=0?'+':''}${fmt(p.delta.served)}</b><small>PEMOHON TERLAYANI</small></div><div><b>${p.delta.access_points} poin</b><small>PERUBAHAN AKSES</small></div><div><b>${rup(p.delta.cost)}</b><small>PERUBAHAN BIAYA</small></div></div><div class="netizen-bridge-card"><div class="bridge-header"><div class="bridge-title-group"><span class="bridge-icon">${icon('network',18)}</span><div><h3>Uji Penerimaan Persona Warga & Stakeholder AI (${personas.length} Agen)</h3><p>Bagaimana respon masyarakat, pengusaha, buruh/nelayan, dan aparatur terhadap Alternatif B ini?</p></div></div><button type="button" class="btn-bridge-nav" data-action="sim-section" data-section="social"><span>Buka Forum Netizen Interaktif</span><span class="arrow">→</span></button></div><div class="bridge-persona-grid">${personas.map(pers=>`<div class="bridge-persona-item"><div class="bridge-persona-avatar">${E(pers.name.slice(0,2).toUpperCase())}</div><div class="bridge-persona-info"><strong>${E(pers.name)}</strong><span class="bridge-role">${E(pers.role||'')}</span><span class="bridge-bg">${E(pers.background)}</span><span class="bridge-goal">${E(pers.goal||'')}</span></div></div>`).join('')}</div></div><div class="persona-grid">${p.stakeholders.map(s=>`<section class="persona"><h3>${E(s.stakeholder)}</h3>${[['MANFAAT',s.benefits],['RISIKO',s.risks],['MITIGASI',s.mitigations]].map(([k,v])=>`<strong>${k}</strong><ul>${v.map(x=>`<li>${E(x)}</li>`).join('')}</ul>`).join('')}<details><summary>Validasi & sumber</summary>${limitations(s.questions_to_validate)}${p.evidence.filter(a=>s.evidence_ids.includes(a.id)).map(source).join('')}</details></section>`).join('')}</div><section class="panel"><div class="panel-head"><h2>Sensitivitas akses digital</h2><span class="micro">Asumsi ±10 poin</span></div><table><thead><tr><th>Akses digital input</th><th>Akses A</th><th>Akses B</th></tr></thead><tbody>${p.sensitivity.map(x=>`<tr><td>${x.digital_access_pct}%</td><td>${x.A}%</td><td>${x.B}%</td></tr>`).join('')}</tbody></table><div class="panel-body"><p class="inline-code">${E(p.A.formula)}</p>${limitations(p.limitations)}<div class="actions">${btn('Tinjau & terapkan alternatif B','apply-alt',stale(r)?'disabled':'',true)}${btn('Catatan reviewer','review',`data-run="${r.id}"`)}</div></div></section>`}</div></div>`;
+  }
+
+  return head('LAB KEBIJAKAN & UJI PUBLIK TERPADU','Simulasi dampak & publik','Bandingkan proyeksi kuantitatif skenario A/B dan respon persona netizen AI secara terpadu.',btn('Jalankan simulasi ◎','simulate','',!p)+`<button class="btn" data-action="start-agent" data-intent="social">${icon('network')}Kumpulkan opini netizen</button>`+(p?btn('Tinjau & terapkan B','apply-alt',stale(r)?'disabled':'',true):''))+steps(2)+subNav+demoNote()+body;
+}
 function corpus(){
   const allFiltered = S.corpus.filter(d => S.lawFilter === 'all' || d.metadata.type === S.lawFilter);
   const perPage = 5;
@@ -114,11 +249,11 @@ function corpus(){
 }
 function history(){const rows=S.runs.filter(r=>S.historyFilter==='all'||r.kind===S.historyFilter);return head('KEPUTUSAN YANG DAPAT DITELUSURI','Riwayat & review','Telusuri versi naskah, hasil analisis, dan catatan keputusan reviewer.',btn('Lihat versi draft','versions'))+`${historyOverview()}<section class="panel history-timeline"><div class="panel-head"><h2>Analisis & simulasi</h2><span class="pill">Draft v${S.draft.revision}</span></div>${rows.length?rows.map(r=>`<div class="history-row"><span class="timeline-dot" aria-hidden="true">${icon(r.kind==='analysis'?'shield':r.kind==='social'?'network':'chart')}</span><div><h3>${r.kind==='analysis'?'Pemeriksaan konflik':r.kind==='social'?'Forum netizen sintetis':'Simulasi dampak'} · v${r.revision}</h3><div class="micro">${new Date(r.created_at).toLocaleString('id-ID')} · ${E(r.payload.provider.mode)} · ${E(label(r.review_status))}</div><p class="help-text">${E(r.review_notes)}</p></div><div class="actions"><span class="pill ${stale(r)?'amber':'green'}">${stale(r)?'Draft berubah':'Versi sesuai'}</span>${btn('Lihat hasil','run-detail',`data-run="${r.id}"`)}${btn('Review','review',`data-run="${r.id}"`)}</div></div>`).join(''):'<div class="empty">Belum ada hasil untuk pilihan ini. Mulai dengan pemeriksaan atau simulasi rancangan.</div>'}</section>`;}
 function modal(title,body,footer=''){
-  const foot = footer || btn('Tutup','close');
+  const foot = footer || `<button type="button" class="btn" data-action="close">Tutup</button>`;
   $('#modal-content').innerHTML = `
     <div class="modal-head">
       <h2>${title}</h2>
-      ${btn('✕','close','aria-label="Tutup" class="modal-close-btn"')}
+      <button type="button" class="btn modal-close-btn" data-action="close" aria-label="Tutup">✕</button>
     </div>
     <div class="modal-body-scroll">
       ${body}
@@ -145,13 +280,48 @@ function collect(){if(S.view!=='editor')return;Object.assign(S.draft,{title:$('#
 async function save(){collect();if(!S.dirty)return;S.draft=await api('/drafts/'+S.draft.id,'PUT',{...S.draft,expected_revision:S.draft.revision});S.dirty=false;const status=$('#save-state');if(status){status.textContent='Tersimpan · v'+S.draft.revision;status.classList.remove('dirty');}S.drafts=await api('/drafts');}
 async function refresh(){S.drafts=await api('/drafts');S.jobs=await api('/drafts/'+S.draft.id+'/agent-jobs');S.runs=await api('/drafts/'+S.draft.id+'/runs');}
 async function select(id){await save();S.draft=await api('/drafts/'+id);S.alt='';S.simAss=null;S.runs=await api('/drafts/'+id+'/runs');S.dirty=false;S.jobs=await api('/drafts/'+id+'/agent-jobs');render();watchAgents();}
-async function view(v){await save();S.view=v;render();}
+async function view(v){await save();if(v==='social'){S.view='simulation';S.simSection='social';}else{S.view=v;if(v==='simulation'&&!S.simSection)S.simSection='projection';}try{window.history?.pushState?.(null,'','/workspace?view='+S.view+(S.view==='simulation'&&S.simSection!=='projection'?'&sub='+S.simSection:''));}catch(_){}render();}
 async function download(path,name){const t=sessionStorage.getItem('rulelab_token');const r=await fetch('/api'+path,{headers:t?{Authorization:'Bearer '+t}:{}});if(!r.ok)throw Error('Download gagal. Periksa token dan dokumen.');const u=URL.createObjectURL(await r.blob()),a=document.createElement('a');a.href=u;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500);}
 async function compareSelectors(k){const d=await api('/corpus/'+$('#cmp-'+k).value);$('#art-'+k).innerHTML=d.articles.map(a=>`<option value="${E(a.number)}">Pasal ${E(a.number)}</option>`).join('');}
 const actions={close,'open-settings':settings,'retry-init':()=>{disposePageComponents();$('#main').innerHTML=skeleton();return init();},'legal-guide':showLegalGuide,token:async()=>{sessionStorage.setItem('rulelab_token',$('#token').value);close();await init();},
-new:async()=>{await save();modal('Rancangan baru','<label for="new-title">Judul</label><input id="new-title" placeholder="Layanan Publik Digital"><label for="new-type" style="margin-top:15px">Jenis</label><select id="new-type"><option>PP</option><option>UU</option><option>PERPRES</option><option>PERMEN</option></select>',btn('Buat rancangan','create','',true));},
-create:async()=>{const d=await api('/drafts','POST',{title:$('#new-title').value,regulation_type:$('#new-type').value,scope:'',preamble:'Rancangan untuk review.',articles:[{number:'1',text:'Tuliskan ketentuan di sini.'}]});close();S.drafts=await api('/drafts');await select(d.id);S.view='editor';render();},
-generate:()=>modal('Dari brief menjadi draft',`<p class="help-text">Jelaskan tujuan, kelompok sasaran, ruang lingkup dan kendala.</p><label for="brief">Brief kebijakan</label><textarea id="brief" rows="6" placeholder="Buat layanan digital yang tetap dapat diakses warga tanpa internet…"></textarea><label for="generate-type">Jenis peraturan</label><select id="generate-type"><option>PP</option><option>UU</option><option>PERPRES</option><option>PERMEN</option></select>${demoNote()}`,btn('Buat draft ✧','run-generate','',true)),
+new:async()=>{await save();modal('Rancangan baru','<label for="new-title">Judul</label><input id="new-title" placeholder="Layanan Publik Digital"><label for="new-type" style="margin-top:15px">Jenis</label><select id="new-type"><option>PP</option><option>UU</option><option>PERPRES</option><option>PERDA_PROV</option><option>PERDA_KAB</option><option>PERMEN</option></select>',btn('Buat rancangan','create','',true));},
+create:async()=>{
+ const type=$('#new-type').value;
+ const title=($('#new-title').value.trim()||'Rancangan Peraturan Baru');
+ const preambles={
+  UU:`DENGAN RAHMAT TUHAN YANG MAHA ESA\n\nPRESIDEN REPUBLIK INDONESIA,\n\nMenimbang:\na. bahwa untuk mewujudkan tujuan bernegara dan menjamin kepastian hukum terkait ${title};\nb. bahwa peraturan perundang-undangan saat ini belum mencakup perkembangan kebutuhan masyarakat;\nc. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a dan huruf b, perlu membentuk Undang-Undang tentang ${title};\n\nMengingat:\n1. Pasal 20, Pasal 21 Undang-Undang Dasar Negara Republik Indonesia Tahun 1945;\n\nDengan Persetujuan Bersama\nDEWAN PERWAKILAN RAKYAT REPUBLIK INDONESIA\ndan\nPRESIDEN REPUBLIK INDONESIA\n\nMEMUTUSKAN:\nMenetapkan: UNDANG-UNDANG TENTANG ${title.toUpperCase()}.`,
+  PP:`DENGAN RAHMAT TUHAN YANG MAHA ESA\n\nPRESIDEN REPUBLIK INDONESIA,\n\nMenimbang:\na. bahwa untuk melaksanakan ketentuan mengenai tata kelola ${title};\nb. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a, perlu menetapkan Peraturan Pemerintah tentang ${title};\n\nMengingat:\n1. Pasal 5 ayat (2) Undang-Undang Dasar Negara Republik Indonesia Tahun 1945;\n2. Undang-Undang Nomor 25 Tahun 2009 tentang Pelayanan Publik;\n\nMEMUTUSKAN:\nMenetapkan: PERATURAN PEMERINTAH TENTANG ${title.toUpperCase()}.`,
+  PERPRES:`DENGAN RAHMAT TUHAN YANG MAHA ESA\n\nPRESIDEN REPUBLIK INDONESIA,\n\nMenimbang:\na. bahwa dalam rangka optimalisasi kebijakan dan peningkatan efektivitas ${title};\nb. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a, perlu menetapkan Peraturan Presiden tentang ${title};\n\nMengingat:\n1. Pasal 4 ayat (1) Undang-Undang Dasar Negara Republik Indonesia Tahun 1945;\n\nMEMUTUSKAN:\nMenetapkan: PERATURAN PRESIDEN TENTANG ${title.toUpperCase()}.`,
+  PERDA_PROV:`DENGAN RAHMAT TUHAN YANG MAHA ESA\n\nGUBERNUR [NAMA PROVINSI],\n\nMenimbang:\na. bahwa untuk melaksanakan kewenangan otonomi daerah provinsi dalam urusan ${title};\nb. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a, perlu menetapkan Peraturan Daerah tentang ${title};\n\nMengingat:\n1. Pasal 18 ayat (6) Undang-Undang Dasar Negara Republik Indonesia Tahun 1945;\n2. Undang-Undang Nomor 23 Tahun 2014 tentang Pemerintahan Daerah;\n\nDengan Persetujuan Bersama\nDEWAN PERWAKILAN RAKYAT DAERAH PROVINSI [NAMA PROVINSI]\ndan\nGUBERNUR [NAMA PROVINSI]\n\nMEMUTUSKAN:\nMenetapkan: PERATURAN DAERAH TENTANG ${title.toUpperCase()}.`,
+  PERDA_KAB:`DENGAN RAHMAT TUHAN YANG MAHA ESA\n\nBUPATI/WALIKOTA [NAMA KABUPATEN/KOTA],\n\nMenimbang:\na. bahwa untuk melaksanakan kewenangan otonomi daerah kabupaten/kota terkait ${title};\nb. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a, perlu menetapkan Peraturan Daerah tentang ${title};\n\nMengingat:\n1. Pasal 18 ayat (6) Undang-Undang Dasar Negara Republik Indonesia Tahun 1945;\n2. Undang-Undang Nomor 23 Tahun 2014 tentang Pemerintahan Daerah;\n\nDengan Persetujuan Bersama\nDEWAN PERWAKILAN RAKYAT DAERAH KABUPATEN/KOTA [NAMA KABUPATEN/KOTA]\ndan\nBUPATI/WALIKOTA [NAMA KABUPATEN/KOTA]\n\nMEMUTUSKAN:\nMenetapkan: PERATURAN DAERAH TENTANG ${title.toUpperCase()}.`,
+  PERMEN:`DENGAN RAHMAT TUHAN YANG MAHA ESA\n\nMENTERI [NAMA KEMENTERIAN] REPUBLIK INDONESIA,\n\nMenimbang:\na. bahwa untuk melaksanakan pedoman teknis dan tata laksana ${title};\nb. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a, perlu menetapkan Peraturan Menteri tentang ${title};\n\nMengingat:\n1. Undang-Undang Nomor 39 Tahun 2008 tentang Kementerian Negara;\n\nMEMUTUSKAN:\nMenetapkan: PERATURAN MENTERI [NAMA KEMENTERIAN] TENTANG ${title.toUpperCase()}.`
+ };
+ const d=await api('/drafts','POST',{title,regulation_type:type,scope:'',preamble:preambles[type]||preambles.PP,articles:[{number:'1',text:'(1) Ketentuan umum dan ruang lingkup pelayanan publik.\n(2) Ketentuan teknis operasional lebih lanjut.'}]});
+ close();S.drafts=await api('/drafts');await select(d.id);S.view='editor';render();
+},
+'template-preamble':()=>{
+ collect();
+ const type=$('#reg-type')?.value||S.draft.regulation_type;
+ const title=($('#draft-title')?.value||S.draft.title||'Layanan Publik').trim();
+ const preambles={
+  UU:`DENGAN RAHMAT TUHAN YANG MAHA ESA\n\nPRESIDEN REPUBLIK INDONESIA,\n\nMenimbang:\na. bahwa untuk mewujudkan tujuan bernegara dan menjamin kepastian hukum serta keadilan sosial bagi seluruh rakyat Indonesia terkait ${title};\nb. bahwa peraturan perundang-undangan yang ada saat ini belum mencakup perkembangan dan kebutuhan hukum masyarakat dalam penyelenggaraan ${title};\nc. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a dan huruf b, perlu membentuk Undang-Undang tentang ${title};\n\nMengingat:\n1. Pasal 20, Pasal 21, dan Pasal 28C Undang-Undang Dasar Negara Republik Indonesia Tahun 1945;\n\nDengan Persetujuan Bersama\nDEWAN PERWAKILAN RAKYAT REPUBLIK INDONESIA\ndan\nPRESIDEN REPUBLIK INDONESIA\n\nMEMUTUSKAN:\nMenetapkan: UNDANG-UNDANG TENTANG ${title.toUpperCase()}.`,
+  PP:`DENGAN RAHMAT TUHAN YANG MAHA ESA\n\nPRESIDEN REPUBLIK INDONESIA,\n\nMenimbang:\na. bahwa untuk melaksanakan ketentuan mengenai tata kelola dan standar ${title} sebagaimana diamanatkan peraturan perundang-undangan;\nb. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a, perlu menetapkan Peraturan Pemerintah tentang ${title};\n\nMengingat:\n1. Pasal 5 ayat (2) Undang-Undang Dasar Negara Republik Indonesia Tahun 1945;\n2. Undang-Undang Nomor 25 Tahun 2009 tentang Pelayanan Publik (Lembaran Negara Republik Indonesia Tahun 2009 Nomor 112, Tambahan Lembaran Negara Republik Indonesia Nomor 5038);\n\nMEMUTUSKAN:\nMenetapkan: PERATURAN PEMERINTAH TENTANG ${title.toUpperCase()}.`,
+  PERPRES:`DENGAN RAHMAT TUHAN YANG MAHA ESA\n\nPRESIDEN REPUBLIK INDONESIA,\n\nMenimbang:\na. bahwa dalam rangka optimalisasi kebijakan, percepatan, dan keterpaduan tata kelola ${title};\nb. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a, perlu menetapkan Peraturan Presiden tentang ${title};\n\nMengingat:\n1. Pasal 4 ayat (1) Undang-Undang Dasar Negara Republik Indonesia Tahun 1945;\n\nMEMUTUSKAN:\nMenetapkan: PERATURAN PRESIDEN TENTANG ${title.toUpperCase()}.`,
+  PERDA_PROV:`DENGAN RAHMAT TUHAN YANG MAHA ESA\n\nGUBERNUR [NAMA PROVINSI],\n\nMenimbang:\na. bahwa untuk melaksanakan urusan pemerintahan konkuren yang menjadi kewenangan provinsi dalam rangka optimalisasi ${title};\nb. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a, perlu menetapkan Peraturan Daerah tentang ${title};\n\nMengingat:\n1. Pasal 18 ayat (6) Undang-Undang Dasar Negara Republik Indonesia Tahun 1945;\n2. Undang-Undang Nomor 23 Tahun 2014 tentang Pemerintahan Daerah;\n\nDengan Persetujuan Bersama\nDEWAN PERWAKILAN RAKYAT DAERAH PROVINSI [NAMA PROVINSI]\ndan\nGUBERNUR [NAMA PROVINSI]\n\nMEMUTUSKAN:\nMenetapkan: PERATURAN DAERAH TENTANG ${title.toUpperCase()}.`,
+  PERDA_KAB:`DENGAN RAHMAT TUHAN YANG MAHA ESA\n\nBUPATI/WALIKOTA [NAMA KABUPATEN/KOTA],\n\nMenimbang:\na. bahwa untuk melaksanakan kewenangan otonomi daerah kabupaten/kota serta meningkatkan pelayanan kepada masyarakat terkait ${title};\nb. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a, perlu menetapkan Peraturan Daerah tentang ${title};\n\nMengingat:\n1. Pasal 18 ayat (6) Undang-Undang Dasar Negara Republik Indonesia Tahun 1945;\n2. Undang-Undang Nomor 23 Tahun 2014 tentang Pemerintahan Daerah;\n\nDengan Persetujuan Bersama\nDEWAN PERWAKILAN RAKYAT DAERAH KABUPATEN/KOTA [NAMA KABUPATEN/KOTA]\ndan\nBUPATI/WALIKOTA [NAMA KABUPATEN/KOTA]\n\nMEMUTUSKAN:\nMenetapkan: PERATURAN DAERAH TENTANG ${title.toUpperCase()}.`,
+  PERMEN:`DENGAN RAHMAT TUHAN YANG MAHA ESA\n\nMENTERI [NAMA KEMENTERIAN] REPUBLIK INDONESIA,\n\nMenimbang:\na. bahwa untuk melaksanakan ketentuan peraturan perundang-undangan dan mengatur pedoman teknis mengenai ${title};\nb. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a, perlu menetapkan Peraturan Menteri tentang ${title};\n\nMengingat:\n1. Undang-Undang Nomor 39 Tahun 2008 tentang Kementerian Negara;\n\nMEMUTUSKAN:\nMenetapkan: PERATURAN MENTERI [NAMA KEMENTERIAN] TENTANG ${title.toUpperCase()}.`
+ };
+ const val=preambles[type]||preambles.PP;
+ const area=$('#preamble');
+ if(area){
+  area.value=val;
+  S.draft.preamble=val;
+  S.dirty=true;
+  const x=$('#save-state');if(x){x.textContent='Belum disimpan';x.classList.add('dirty');}
+  toast('Format baku '+type+' (Menimbang & Mengingat) disisipkan.');
+ }
+},
+generate:()=>modal('Dari brief menjadi draft',`<p class="help-text">Jelaskan tujuan, kelompok sasaran, ruang lingkup dan kendala.</p><label for="brief">Brief kebijakan</label><textarea id="brief" rows="6" placeholder="Buat layanan digital yang tetap dapat diakses warga tanpa internet…"></textarea><label for="generate-type">Jenis peraturan</label><select id="generate-type"><option>PP</option><option>UU</option><option>PERPRES</option><option>PERDA_PROV</option><option>PERDA_KAB</option><option>PERMEN</option></select>${demoNote()}`,btn('Buat draft ✧','run-generate','',true)),
 'run-generate':async()=>{await save();toast('Mengambil konteks dan menyusun rancangan…');const r=await api('/generate','POST',{brief:$('#brief').value,regulation_type:$('#generate-type').value});close();S.drafts=await api('/drafts');await select(r.draft.id);S.view='editor';render();toast('Draft awal tersedia. Tinjau dan lengkapi landasan hukumnya.');},
 save:async()=>{await save();render();toast('Draft tersimpan.');},add:()=>{collect();S.draft.articles.push({number:String(Math.max(...S.draft.articles.map(a=>parseInt(a.number)))+1),text:''});S.dirty=true;render();},remove:el=>{if(S.draft.articles.length===1)throw Error('Minimal satu pasal diperlukan.');collect();S.draft.articles.splice(Number(el.dataset.index),1);S.dirty=true;render();},
 analyze:async()=>{await save();toast('Memeriksa draft dan mengambil sumber terkait…');await api('/drafts/'+S.draft.id+'/analyze','POST',{as_of_date:$('#legal-date')?.value||S.asOf});await refresh();S.view='analysis';render();toast('Pemeriksaan selesai. Tinjau sumber dan usulan.');},
@@ -248,13 +418,21 @@ actions['toggle-assistant']=()=>{S.gallery.chatFolded=!S.gallery.chatFolded;rend
 actions['filter-history']=el=>{S.historyFilter=el.dataset.filter;render();};
 actions['open-studio']=()=>{collect();S.studioTab='impact';render();document.querySelector('.studio-panel').scrollIntoView({behavior:'instant',block:'start'});document.querySelector('#tab-impact').focus({preventScroll:true});};
 function renderSocialModalBody(r, p) {
-  const personas = {
+  const payloadPersonas = Object.fromEntries((p.personas || []).map(x => [x.id, {
+    name: x.name,
+    role: x.role || 'Stakeholder',
+    issue: x.issue || 'Umum',
+    avatar: x.name.slice(0, 2).toUpperCase(),
+    cls: 'persona-' + x.id
+  }]));
+  const defaultMap = {
     sari: { name: 'Sari', role: 'Warga Pedesaan', issue: 'Akses & Jaringan', avatar: 'SA', cls: 'persona-sari' },
     nadia: { name: 'Nadia', role: 'Kelompok Rentan', issue: 'Aksesibilitas Digital', avatar: 'NA', cls: 'persona-nadia' },
     bima: { name: 'Bima', role: 'Petugas Layanan', issue: 'Kapasitas Operasional', avatar: 'BI', cls: 'persona-bima' },
     raka: { name: 'Raka', role: 'Pelaku Usaha UMKM', issue: 'Kejelasan Regulasi', avatar: 'RA', cls: 'persona-raka' },
     dewi: { name: 'Dewi', role: 'Pemerhati Anggaran', issue: 'Efisiensi Biaya', avatar: 'DE', cls: 'persona-dewi' }
   };
+  const personas = { ...defaultMap, ...payloadPersonas };
   const stances = {
     concern: { label: 'Keberatan', icon: '⚠️', cls: 'stance-concern' },
     conditional: { label: 'Bersyarat', icon: '⚡', cls: 'stance-conditional' },
@@ -492,8 +670,10 @@ function agentControls(){
  document.querySelectorAll('#main [data-action=start-agent]').forEach(el=>{el.disabled=active||role==='viewer'||role==='reviewer';if(active)el.title='Tunggu atau batalkan proses aktif sebelum memulai proses baru.';});
 }
 
-function socialPage(){if(!S.alt)S.alt=defaultAlt();return head('RULELAB / POLICY INTELLIGENCE','Forum netizen AI','Jelajahi reaksi lima persona sintetis terhadap rancangan A dan alternatif B.',btn('Kembali ke editor','back-editor'))+socialShell()+`<details class="panel social-data"><summary>Siapkan rancangan B & data asumsi</summary><label for="alternative">Alternatif B</label><textarea id="alternative" rows="6">${E(S.alt)}</textarea>${assumptionInputs(S.simAss||defaultAssumptions)}<p class="micro">A memakai seluruh pasal draft tersimpan. B memakai teks di atas. Angka adalah input skenario pengguna.</p></details>`;}
-actions['go-social']=()=>view('social');
+function socialPage(){S.simSection='social';return simulation();}
+actions['go-social']=()=>{S.view='simulation';S.simSection='social';render();};
+actions['go-sim']=()=>{S.view='simulation';S.simSection='projection';render();};
+actions['sim-section']=el=>{S.simSection=el.dataset.section||'projection';render();};
 actions['back-editor']=()=>view('editor');
 
 actions['probe-ai']=async()=>{const result=await api('/readiness/probe','POST',{});await settings();toast(result.detail,!result.ready);};

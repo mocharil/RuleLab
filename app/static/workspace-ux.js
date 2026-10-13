@@ -15,11 +15,11 @@ const GUIDES={
   ['Jalankan pemeriksaan','Ambil sumber terkait untuk naskah tersimpan melalui tombol pemeriksaan.','.page-heading .actions'],
   ['Tinjau alasan','Buka kutipan sumber, validasi dan interpretasi alternatif pada temuan. Jika belum ada hasil, jalankan pemeriksaan dahulu.','.finding'],
   ['Terapkan dengan review','Usulan hanya dapat diterapkan bila versi analisis sesuai dengan draft. Simpan catatan reviewer setelah meninjau.','.finding-bottom']]},
- simulation:{title:'Pisahkan asumsi dari hasil model',intro:'Bandingkan A dan B dengan jumlah pemohon, biaya, dan kapasitas yang Anda tentukan.',steps:[
-  ['Isi asumsi','Nilai awal adalah contoh. Gunakan data wilayah sasaran untuk evaluasi yang lebih relevan.','.assumptions'],
-  ['Siapkan pembanding','A memakai draft tersimpan. Tulis alternatif B yang ingin dibandingkan.','#alternative'],
-  ['Bandingkan','Jalankan simulasi untuk melihat akses, biaya dan perspektif stakeholder.','.page-heading .actions'],
-  ['Uji sensitivitas','Tinjau sensitivitas dan batasan hasil. Forum netizen menyediakan interaksi persona yang terpisah dari model angka.','.scenario-grid']]},
+ simulation:{title:'Proyeksi dampak dan eksplorasi reaksi publik',intro:'Bandingkan akses, biaya, dan dengarkan tanggapan persona netizen AI dalam satu layar terpadu.',steps:[
+  ['Isi asumsi & skenario','Tentukan parameter pemohon dan siapkan Alternatif B.','.assumptions'],
+  ['Bandingkan angka','Jalankan simulasi untuk melihat perubahan akses dan biaya.','.scenario-grid'],
+  ['Eksplorasi netizen AI','Tinjau peta jejaring persona, opini multi-putaran, dan sentimen warga.','.social-launch'],
+  ['Tinjau & terapkan','Evaluasi mitigasi stakeholder dan terapkan alternatif terbaik ke draft.','.page-heading .actions']]},
  social:{title:'Eksplorasi opini, balasan, dan mitigasi',intro:'Persona sintetis membaca naskah, saling menanggapi, dan menghasilkan opini yang bisa ditelusuri.',steps:[
   ['Kumpulkan opini','Siapkan B dan klik Kumpulkan opini agen. Demo memakai template; live memakai Gemini/Vertex.','.social-launch'],
   ['Jelajahi node','Klik persona untuk opini terbaru, satelit 1/2/3 untuk komentar spesifik, atau node hukum untuk sumber.','.social-network'],

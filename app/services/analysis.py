@@ -87,11 +87,103 @@ async def analyze(draft,evidence_override=None,as_of=None):
   f['evidence']=[{**e,'hierarchy_relation':relation(draft['regulation_type'],e['regulation_type'])} for e in evidence if e['id'] in f['evidence_ids']]
  return {**output,'legal_context':legal_context,'provider':provider,'evidence':evidence,'coverage':{'draft_articles':len(draft['articles']),'retrieved_articles':len(evidence),'corpus_regulations':len(store.regulations()),'current_law_verified':False}}
 
+def default_preamble(title: str, reg_type: str) -> str:
+ t = title.strip() or 'Layanan Publik'
+ tu = t.upper()
+ if reg_type == 'UU':
+  return (
+   "DENGAN RAHMAT TUHAN YANG MAHA ESA\n\n"
+   "PRESIDEN REPUBLIK INDONESIA,\n\n"
+   "Menimbang:\n"
+   f"a. bahwa untuk mewujudkan tujuan bernegara dan menjamin kepastian hukum serta keadilan sosial bagi seluruh rakyat Indonesia terkait {t};\n"
+   f"b. bahwa peraturan perundang-undangan yang ada saat ini belum mencakup perkembangan dan kebutuhan hukum masyarakat dalam penyelenggaraan {t};\n"
+   f"c. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a dan huruf b, perlu membentuk Undang-Undang tentang {t};\n\n"
+   "Mengingat:\n"
+   "1. Pasal 20, Pasal 21, dan Pasal 28C Undang-Undang Dasar Negara Republik Indonesia Tahun 1945;\n\n"
+   "Dengan Persetujuan Bersama\n"
+   "DEWAN PERWAKILAN RAKYAT REPUBLIK INDONESIA\n"
+   "dan\n"
+   "PRESIDEN REPUBLIK INDONESIA\n\n"
+   "MEMUTUSKAN:\n"
+   f"Menetapkan: UNDANG-UNDANG TENTANG {tu}."
+  )
+ if reg_type == 'PP':
+  return (
+   "DENGAN RAHMAT TUHAN YANG MAHA ESA\n\n"
+   "PRESIDEN REPUBLIK INDONESIA,\n\n"
+   "Menimbang:\n"
+   f"a. bahwa untuk melaksanakan ketentuan mengenai tata kelola dan standar {t} sebagaimana diamanatkan peraturan perundang-undangan;\n"
+   f"b. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a, perlu menetapkan Peraturan Pemerintah tentang {t};\n\n"
+   "Mengingat:\n"
+   "1. Pasal 5 ayat (2) Undang-Undang Dasar Negara Republik Indonesia Tahun 1945;\n"
+   "2. Undang-Undang Nomor 25 Tahun 2009 tentang Pelayanan Publik (Lembaran Negara Republik Indonesia Tahun 2009 Nomor 112, Tambahan Lembaran Negara Republik Indonesia Nomor 5038);\n\n"
+   "MEMUTUSKAN:\n"
+   f"Menetapkan: PERATURAN PEMERINTAH TENTANG {tu}."
+  )
+ if reg_type == 'PERPRES':
+  return (
+   "DENGAN RAHMAT TUHAN YANG MAHA ESA\n\n"
+   "PRESIDEN REPUBLIK INDONESIA,\n\n"
+   "Menimbang:\n"
+   f"a. bahwa dalam rangka optimalisasi kebijakan, percepatan, dan keterpaduan tata kelola {t};\n"
+   f"b. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a, perlu menetapkan Peraturan Presiden tentang {t};\n\n"
+   "Mengingat:\n"
+   "1. Pasal 4 ayat (1) Undang-Undang Dasar Negara Republik Indonesia Tahun 1945;\n\n"
+   "MEMUTUSKAN:\n"
+   f"Menetapkan: PERATURAN PRESIDEN TENTANG {tu}."
+  )
+ if reg_type == 'PERDA_PROV':
+  return (
+   "DENGAN RAHMAT TUHAN YANG MAHA ESA\n\n"
+   "GUBERNUR [NAMA PROVINSI],\n\n"
+   "Menimbang:\n"
+   f"a. bahwa untuk melaksanakan urusan pemerintahan konkuren yang menjadi kewenangan provinsi dalam rangka optimalisasi {t};\n"
+   f"b. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a, perlu menetapkan Peraturan Daerah tentang {t};\n\n"
+   "Mengingat:\n"
+   "1. Pasal 18 ayat (6) Undang-Undang Dasar Negara Republik Indonesia Tahun 1945;\n"
+   "2. Undang-Undang Nomor 23 Tahun 2014 tentang Pemerintahan Daerah;\n\n"
+   "Dengan Persetujuan Bersama\n"
+   "DEWAN PERWAKILAN RAKYAT DAERAH PROVINSI [NAMA PROVINSI]\n"
+   "dan\n"
+   "GUBERNUR [NAMA PROVINSI]\n\n"
+   "MEMUTUSKAN:\n"
+   f"Menetapkan: PERATURAN DAERAH TENTANG {tu}."
+  )
+ if reg_type == 'PERDA_KAB':
+  return (
+   "DENGAN RAHMAT TUHAN YANG MAHA ESA\n\n"
+   "BUPATI/WALIKOTA [NAMA KABUPATEN/KOTA],\n\n"
+   "Menimbang:\n"
+   f"a. bahwa untuk melaksanakan kewenangan otonomi daerah kabupaten/kota serta meningkatkan pelayanan kepada masyarakat terkait {t};\n"
+   f"b. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a, perlu menetapkan Peraturan Daerah tentang {t};\n\n"
+   "Mengingat:\n"
+   "1. Pasal 18 ayat (6) Undang-Undang Dasar Negara Republik Indonesia Tahun 1945;\n"
+   "2. Undang-Undang Nomor 23 Tahun 2014 tentang Pemerintahan Daerah;\n\n"
+   "Dengan Persetujuan Bersama\n"
+   "DEWAN PERWAKILAN RAKYAT DAERAH KABUPATEN/KOTA [NAMA KABUPATEN/KOTA]\n"
+   "dan\n"
+   "BUPATI/WALIKOTA [NAMA KABUPATEN/KOTA]\n\n"
+   "MEMUTUSKAN:\n"
+   f"Menetapkan: PERATURAN DAERAH TENTANG {tu}."
+  )
+ return (
+  "DENGAN RAHMAT TUHAN YANG MAHA ESA\n\n"
+  "MENTERI [NAMA KEMENTERIAN] REPUBLIK INDONESIA,\n\n"
+  "Menimbang:\n"
+  f"a. bahwa untuk melaksanakan ketentuan peraturan perundang-undangan dan mengatur pedoman teknis mengenai {t};\n"
+  f"b. bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a, perlu menetapkan Peraturan Menteri tentang {t};\n\n"
+  "Mengingat:\n"
+  "1. Undang-Undang Nomor 39 Tahun 2008 tentang Kementerian Negara;\n\n"
+  "MEMUTUSKAN:\n"
+  f"Menetapkan: PERATURAN MENTERI [NAMA KEMENTERIAN] TENTANG {tu}."
+ )
+
 async def generate_draft(brief,regulation_type):
  evidence=await retrieval.context(brief)
  if settings.provider=='demo':
-  payload={'title':brief[:100],'regulation_type':regulation_type,'scope':brief,
-   'preamble':'Rancangan awal simulasi. Landasan filosofis, sosiologis, yuridis serta kewenangan perlu dilengkapi melalui review.',
+  title_clean = brief[:100].strip() or 'Layanan Publik Digital yang Inklusif'
+  payload={'title':title_clean,'regulation_type':regulation_type,'scope':brief,
+   'preamble':default_preamble(title_clean, regulation_type),
    'articles':[{'number':'1','text':'Layanan dalam rancangan ini adalah layanan administrasi publik yang termasuk dalam kewenangan penyelenggara.'},
     {'number':'2','text':'(1) Penyelenggara menyediakan layanan melalui kanal digital dan kanal pendampingan.\n(2) Pemohon yang mengalami hambatan akses memperoleh bantuan dan akomodasi yang layak.'},
     {'number':'3','text':'Standar pelayanan disusun dengan melibatkan masyarakat dan pihak terkait serta memperhatikan kemampuan penyelenggara dan kondisi lingkungan.'},
@@ -99,7 +191,8 @@ async def generate_draft(brief,regulation_type):
     {'number':'5','text':'Pelaksanaan layanan dilakukan bertahap berdasarkan evaluasi kesiapan, dengan pemantauan dampak dan evaluasi berkala.'}]}
   provider={'mode':'demo','provider':'template','model':None}
  else:
-  payload,provider=await ai.generate('Buat rancangan awal 5 sampai 8 pasal berdasarkan brief dan sumber yang tersedia. regulation_type harus sama dengan permintaan. Jangan mengarang nomor regulasi, tanggal pengesahan, atau pejabat. Isi preamble dengan catatan aspek yang masih perlu dilengkapi.',
+  payload,provider=await ai.generate(
+   'Buat rancangan awal 5 sampai 8 pasal berdasarkan brief dan sumber yang tersedia. regulation_type harus sama dengan permintaan. Wajib susun bagian pembukaan (preamble) sesuai format baku Lampiran II UU 12/2011: diawali DENGAN RAHMAT TUHAN YANG MAHA ESA, frasa jabatan pembentuk peraturan, konsiderans Menimbang (butir a, b, c), dasar hukum Mengingat (angka 1, 2), klausul Dengan Persetujuan Bersama (jika UU/Perda), dan diktum MEMUTUSKAN: Menetapkan:. Batang tubuh memuat pasal dengan nomor ayat bertanda kurung (1), (2) dan rincian huruf a., b., c.',
    {'brief':brief,'regulation_type':regulation_type,'evidence':retrieval.evidence_payload(evidence),'legal_context':legal.context(regulation_type,evidence)},DraftInput)
   payload['regulation_type']=regulation_type
  return {'draft':DraftInput.model_validate(payload).model_dump(),'provider':provider,'evidence':evidence}
