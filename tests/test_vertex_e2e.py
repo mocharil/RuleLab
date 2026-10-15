@@ -34,7 +34,7 @@ def test_vertex_contract_end_to_end(tmp_path,monkeypatch):
         return httpx.Response(200,json={'candidates':[{'finishReason':'STOP','content':{'parts':[{'text':json.dumps(output)}]}}],'usageMetadata':{'totalTokenCount':1}})
     monkeypatch.setattr(ai.httpx,'AsyncClient',lambda **kwargs:original(transport=httpx.MockTransport(provider),**kwargs))
     checks=verify_full(timeout=10)
-    assert len(checks)>=16 and len([schema for schema in seen if 'stance' in schema])==48
+    assert len(checks)>=16 and len([schema for schema in seen if 'stance' in schema])==192
     assert any(check['feature']=='Impor DOCX round trip' for check in checks)
     assert ai._auth_cache['project']=='unit-project'
     ai.reset_auth_cache()

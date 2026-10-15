@@ -52,9 +52,9 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
       assert.equal(await page.locator('body').getAttribute('data-view'), view);
     };
     await page.goto(origin); await page.waitForSelector('.landing-hero'); await capture('landing-desktop', true);
-    const views = ['home', 'editor', 'analysis', 'simulation', 'social', 'corpus', 'gallery', 'history', 'agents'];
+    const views = ['home', 'data', 'editor', 'analysis', 'simulation', 'library', 'history', 'agents'];
     for (const view of views) { await navigate(view); await capture(view + '-desktop'); checks.push(view + ' desktop capture'); }
-    await navigate('gallery');
+    await navigate('library');
     await page.locator('[data-action="gallery-open"][data-id="uu-25-2009"]').click();
     await page.waitForFunction(()=>!document.querySelector('#main').inert&&document.querySelector('#gallery-article'));
     await page.locator('#gallery-article').selectOption('4');
@@ -69,7 +69,7 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
     await page.locator('[data-ux="focus-editor"]').click();
     assert.equal(await page.locator('.studio-side').isVisible(), false); await capture('editor-focus');
     await page.locator('[data-ux="focus-editor"]').click(); await page.locator('#sidebar-toggle').click();
-    await page.locator('[aria-label="Navigasi cepat"]').click(); await page.waitForSelector('.fx-command-content'); await capture('command-menu'); await page.keyboard.press('Escape');
+    await page.locator('[aria-label="Quick navigation"]').click(); await page.waitForSelector('.fx-command-content'); await capture('command-menu'); await page.keyboard.press('Escape');
     await page.locator('#menu-help').click(); await page.waitForSelector('#guide-dialog[open]'); await capture('menu-guide'); await page.keyboard.press('Escape');
     await navigate('social');
     assert.equal(await page.locator('.social-node').count(), 5); assert.equal(await page.locator('.social-post').count(), 15);

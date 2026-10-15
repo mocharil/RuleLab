@@ -1,0 +1,11 @@
+{
+  "publisher": "Badan Informasi Geospasial",
+  "service": "STIG/Batas_Provinsi",
+  "source_url": "https://geoservices.big.go.id/gis/rest/services/STIG/Batas_Provinsi/MapServer/0",
+  "retrieved_on": "2026-10-13",
+  "coordinate_reference": "EPSG:4326",
+  "province_count": 38,
+  "processing": "GeoJSON query maxAllowableOffset=0.015; koordinat 2D dibulatkan 4 desimal untuk tampilan. Bukan peta untuk penetapan batas.",
+  "source_sha256": "1acaa657c40f32097a875109b88b979fd6752a54051541b1fd0f859a736f1659",
+  "asset_sha256": "9887e5ee7ca8d58e59f07fe5ab355dcd5dd7694a68c41533e83a833157d20e30"
+}

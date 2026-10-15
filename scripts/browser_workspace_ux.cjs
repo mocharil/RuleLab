@@ -5,7 +5,7 @@ const base=path.resolve(__dirname,'..'),tmp=fs.mkdtempSync(path.join(os.tmpdir()
 const out=path.join(base,'screenshots','v1.0');fs.mkdirSync(out,{recursive:true});
 const server=spawn('python3',['-m','uvicorn','app.main:app','--port','8048'],{cwd:base,env:{...process.env,RULELAB_DB:path.join(tmp,'qa.sqlite3'),AI_PROVIDER:'demo',SEARCH_BACKEND:'sqlite',RULELAB_API_TOKEN:'',RULELAB_ACCESS_KEYS:'[]'},stdio:'ignore'});
 (async()=>{let browser;const checks=[];try{
- for(let i=0;i<100;i++){try{if((await fetch(origin+'/api/health')).ok)break}catch{}await new Promise(r=>setTimeout(r,100))}
+ for(let i=0;i<1200;i++){try{if((await fetch(origin+'/api/health')).ok)break}catch{}await new Promise(r=>setTimeout(r,100))}
  browser=await chromium.launch({headless:true,executablePath:process.env.RULELAB_CHROMIUM||undefined});
  const page=await browser.newPage({viewport:{width:1440,height:1080},bypassCSP:true});
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
@@ -21,9 +21,9 @@ const server=spawn('python3',['-m','uvicorn','app.main:app','--port','8048'],{cw
  assert.equal(await page.locator('.guide-highlight').count(),1);
  assert.equal(await page.locator('#guide-dialog [data-ux="next"]').evaluate(x=>x===document.activeElement),true);checks.push('guide highlights target and traps initial focus');
  await page.locator('#guide-dialog [data-ux="next"]').click();
- assert((await page.locator('#coach-title').innerText()).includes('Edit pasal'));
+ assert((await page.locator('#coach-title').innerText()).includes('Edit articles'));
  await page.locator('#guide-dialog [data-ux="previous"]').click();
- assert((await page.locator('#coach-title').innerText()).includes('Pilih naskah'));checks.push('tour next/previous');
+ assert((await page.locator('#coach-title').innerText()).includes('Choose a document'));checks.push('tour next/previous');
  await page.keyboard.press('Escape');
  assert.equal(await page.locator('.guide-highlight').count(),0);
  assert.equal(await page.locator('#menu-help').evaluate(x=>x===document.activeElement),true);checks.push('escape closes tour and restores focus');

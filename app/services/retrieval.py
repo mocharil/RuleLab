@@ -48,12 +48,12 @@ async def elastic_search(query,limit=12,regulation_id=None):
  result=[]
  for id,score in sorted(scores.items(),key=lambda x:-x[1])[:limit]:
   try:result.append({**store.article(id),'retrieval_score':round(score,6),'retrieval_method':'elasticsearch_bm25_vector_rrf'})
-  except KeyError:raise ValueError('Indeks Elasticsearch berbeda dari corpus lokal. Jalankan reindex.')
+  except KeyError:raise ValueError('The Elasticsearch index differs from the local corpus. Run a reindex.')
  return result
 
 async def search(query,limit=12,regulation_id=None):
  if settings.search_backend=='elasticsearch':return await elastic_search(query,limit,regulation_id)
- if settings.search_backend!='sqlite':raise ValueError('SEARCH_BACKEND harus sqlite atau elasticsearch')
+ if settings.search_backend!='sqlite':raise ValueError('SEARCH_BACKEND must be sqlite or elasticsearch')
  return sqlite_search(query,limit,regulation_id)
 
 async def context(query,limit=14):

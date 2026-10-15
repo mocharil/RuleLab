@@ -28,39 +28,39 @@ def signature():
 def inspect():
     checks=[]
     def add(key,label,status,detail):checks.append({'key':key,'label':label,'status':status,'detail':detail})
-    add('provider','Provider AI','passed' if settings.provider in {'demo','gemini','vertex'} else 'failed',settings.provider)
+    add('provider','AI provider','passed' if settings.provider in {'demo','gemini','vertex'} else 'failed',settings.provider)
     if settings.provider=='vertex':
         if settings.credentials_path:
             try:
                 info=service_account_info((ROOT/Path(settings.credentials_path).expanduser()).resolve())
-                add('credentials','Service account','passed','Format SA valid; token dan IAM belum diuji.')
+                add('credentials','Service account','passed','SA format valid; token and IAM not tested yet.')
                 project=settings.project or info['project_id']
             except CredentialError as exc:
                 add('credentials','Service account','failed',str(exc));project=settings.project
         else:
-            add('credentials','Application Default Credentials','pending','Uji koneksi untuk memeriksa ADC pada server.');project=settings.project
-        add('project','Project Google Cloud','passed' if project else 'pending',project or 'Akan diinfer dari ADC saat uji koneksi.')
+            add('credentials','Application Default Credentials','pending','Run the connection test to check ADC on the server.');project=settings.project
+        add('project','Google Cloud project','passed' if project else 'pending',project or 'Will be inferred from ADC during the connection test.')
     elif settings.provider=='gemini':
-        add('credentials','Gemini API key','passed' if settings.api_key else 'failed','Tersedia di server.' if settings.api_key else 'GEMINI_API_KEY belum dikonfigurasi.');project=None
+        add('credentials','Gemini API key','passed' if settings.api_key else 'failed','Available on the server.' if settings.api_key else 'GEMINI_API_KEY is not configured.');project=None
     else:
-        add('credentials','Mode demo','passed','Template lokal; tidak memanggil layanan LLM.');project=None
+        add('credentials','Demo mode','passed','Local templates; no LLM service is called.');project=None
     try:
         regulations=store.regulations()
         with store.db() as connection:
             count=connection.execute('SELECT COUNT(*) FROM articles').fetchone()[0]
             fts=connection.execute('SELECT COUNT(*) FROM article_search').fetchone()[0]
-        add('corpus','Corpus dan indeks lokal','passed' if count and count==fts else 'failed',f'{len(regulations)} regulasi · {count} pasal/blok · {fts} entri FTS.')
+        add('corpus','Corpus and local index','passed' if count and count==fts else 'failed',f'{len(regulations)} regulations · {count} articles/blocks · {fts} FTS entries.')
         missing=[doc['id'] for doc in regulations if not (ROOT/'data'/doc['provenance']['raw_file']).is_file()]
-        add('sources','Naskah sumber','failed' if missing else 'passed','File sumber belum tersedia.' if missing else 'Naskah asli tersedia untuk penelusuran.')
+        add('sources','Source documents','failed' if missing else 'passed','Source files not available yet.' if missing else 'Original texts available for tracing.')
     except Exception:
-        add('corpus','Database lokal','failed','Database atau corpus tidak dapat dibaca. Periksa folder data dan izin tulis.')
+        add('corpus','Local database','failed','The database or corpus cannot be read. Check the data folder and write permissions.')
     add('search','Retrieval','passed' if settings.search_backend=='sqlite' else 'pending' if settings.search_backend=='elasticsearch' else 'failed',
-        'SQLite BM25 siap; embedding tidak diperlukan.' if settings.search_backend=='sqlite' else 'Elasticsearch dan embedding diperiksa saat uji koneksi.' if settings.search_backend=='elasticsearch' else 'SEARCH_BACKEND tidak valid.')
+        'SQLite BM25 ready; embeddings not needed.' if settings.search_backend=='sqlite' else 'Elasticsearch and embeddings are checked during the connection test.' if settings.search_backend=='elasticsearch' else 'Invalid SEARCH_BACKEND.')
     recent=_last_probe['result'] if _last_probe and _last_probe['signature']==signature() else None
     return {'provider':settings.provider,'model':None if settings.provider=='demo' else settings.model,'project':project,
             'location':settings.location,'embedding_location':settings.embedding_location,'search_backend':settings.search_backend,
             'local_ready':not any(check['status']=='failed' for check in checks),'live_ready':recent['ready'] if recent else None,
-            'checks':checks,'last_probe':recent,'notice':'Pemeriksaan lokal tidak membuktikan akses IAM, billing, kuota, atau ketersediaan model live.'}
+            'checks':checks,'last_probe':recent,'notice':'Local checks do not prove IAM access, billing, quota or live model availability.'}
 
 
 async def validate_elastic_index():
@@ -69,9 +69,9 @@ async def validate_elastic_index():
   mapping=response.json().get(settings.elastic_index,{}).get('mappings',{})
   metadata=mapping.get('_meta',{}).get('rulelab',{})
   expected={'corpus_sha':hashlib.sha256((ROOT/'data/corpus.json').read_bytes()).hexdigest(),'model':settings.embedding_model,'dimensions':settings.embedding_dimensions,'provider':settings.provider,'location':settings.embedding_location}
-  if any(metadata.get(key)!=value for key,value in expected.items()):raise ai.AIError('Indeks Elasticsearch belum sesuai corpus/model saat ini. Jalankan scripts/index_elasticsearch.py sebelum mengaktifkan retrieval.','retrieval')
+  if any(metadata.get(key)!=value for key,value in expected.items()):raise ai.AIError('The Elasticsearch index does not match the current corpus/model. Run scripts/index_elasticsearch.py before enabling retrieval.','retrieval')
   count=await client.get('/'+settings.elastic_index+'/_count');count.raise_for_status()
-  if count.json()['count']!=sum(len(doc['articles']) for doc in store.regulations()):raise ai.AIError('Jumlah dokumen indeks berbeda dari corpus. Gunakan indeks baru lalu indeksasi ulang.','retrieval')
+  if count.json()['count']!=sum(len(doc['articles']) for doc in store.regulations()):raise ai.AIError('Index document count differs from the corpus. Use a new index and re-index.','retrieval')
 
 
 async def probe():
@@ -80,21 +80,21 @@ async def probe():
             'model':None if settings.provider=='demo' else settings.model,'steps':[]}
     local=inspect()
     if not local['local_ready']:
-        result.update(error_code='configuration',detail='Perbaiki pemeriksaan lokal yang gagal sebelum uji koneksi.')
+        result.update(error_code='configuration',detail='Fix the failing local checks before the connection test.')
     elif settings.provider=='demo':
-        result.update(ready=True,live=False,detail='Mode demo siap. Tidak ada koneksi LLM yang diuji.')
+        result.update(ready=True,live=False,detail='Demo mode ready. No LLM connection tested.')
     else:
         try:
             if settings.search_backend=='elasticsearch':await validate_elastic_index()
             output,meta=await ai.generate('Uji koneksi. Kembalikan status ok sesuai schema.',{},ConnectionOutput,max_output_tokens=4096,legal_guide=False)
-            result['steps'].append({'label':'Autentikasi & structured output','status':'passed','provider':meta['provider'],'model':meta['model']})
+            result['steps'].append({'label':'Authentication & structured output','status':'passed','provider':meta['provider'],'model':meta['model']})
             hits=await retrieval.search('pelayanan publik')
-            if not hits:raise ai.AIError('Retrieval tidak menemukan corpus contoh. Periksa indeks.','retrieval')
-            result['steps'].append({'label':'Retrieval sumber','status':'passed','sources':len(hits),'backend':settings.search_backend})
-            result.update(ready=True,live=True,detail='Koneksi model, output JSON dan retrieval berhasil diuji.')
+            if not hits:raise ai.AIError('Retrieval did not find the sample corpus. Check the index.','retrieval')
+            result['steps'].append({'label':'Source retrieval','status':'passed','sources':len(hits),'backend':settings.search_backend})
+            result.update(ready=True,live=True,detail='Model connection, JSON output and retrieval tested successfully.')
         except ai.AIError as exc:
             result.update(error_code=exc.code,detail=str(exc),retryable=exc.retryable)
         except Exception:
-            result.update(error_code='retrieval',detail='Indeks pencarian belum siap. Periksa koneksi, dimensi, dan jalankan indeksasi Elasticsearch.')
+            result.update(error_code='retrieval',detail='The search index is not ready. Check the connection and dimensions, then run Elasticsearch indexing.')
     _last_probe={'signature':signature(),'result':result}
     return result

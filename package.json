@@ -6,7 +6,13 @@
     "frontend:build": "npm --prefix frontend run build",
     "frontend:test": "npm --prefix frontend test",
     "screenshots": "node scripts/capture_ui.cjs",
-    "test:dom": "node scripts/dom_workspace_ux.cjs"
+    "test:dom": "node scripts/dom_workspace_ux.cjs",
+    "test:demo": "node scripts/browser_demo.cjs",
+    "test:forms-network": "node scripts/browser_drafting_network.cjs",
+    "test:studio": "node scripts/browser_studio.cjs",
+    "test:library": "node scripts/browser_library.cjs",
+    "test:collection": "node scripts/browser_collection.cjs",
+    "test:activity": "node scripts/browser_activity.cjs"
   },
   "devDependencies": {
     "playwright": "1.51.1"

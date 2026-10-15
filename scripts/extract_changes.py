@@ -9,7 +9,7 @@ ROOT=Path(__file__).resolve().parents[1]
 def extract():
     events=[]
     for rid in ('uu-15-2019','uu-13-2022'):
-        doc=json.loads((ROOT/'data/enriched'/f'{rid}.json').read_text())
+        doc=json.loads((ROOT/'data/enriched'/f'{rid}.json').read_text(encoding='utf-8'))
         pages=[re.sub(r'\s+',' ',p.get_text()).strip() for p in fitz.open(ROOT/'data'/doc['provenance']['raw_file'])]
         offsets=[];text=''
         for page in pages:offsets.append(len(text));text+=page+' '
@@ -46,6 +46,6 @@ def extract():
               'method':'limited_regex_from_original_pdf',
               'limitations':['Instruksi belum direview; target ayat/teks pengganti/tanggal perlu verifikasi.',
                 'Parser tidak lengkap untuk perubahan frasa, lampiran scan, penghapusan, pencabutan, omnibus, atau putusan.']})
-    (ROOT/'data/legal/change_candidates.json').write_text(json.dumps(events,ensure_ascii=False,indent=2)+'\n')
+    (ROOT/'data/legal/change_candidates.json').write_text(json.dumps(events,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(f'{len(events)} pending change instructions; none applied.')
 if __name__=='__main__':extract()

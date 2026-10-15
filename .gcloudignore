@@ -1,0 +1,21 @@
+# Files excluded from `gcloud run deploy --source .` uploads.
+# Secrets must never be uploaded: the Cloud Run service account provides credentials (ADC).
+.env
+gemini_sa.json
+*service-account*.json
+credentials/
+.git/
+.venv/
+__pycache__/
+.pytest_cache/
+node_modules/
+frontend/node_modules/
+*.sqlite*
+artifacts/
+demo/
+deck/
+screenshots/
+artifacts_pptx_media/
+*.pptx
+*.png
+!app/static/**/*.png

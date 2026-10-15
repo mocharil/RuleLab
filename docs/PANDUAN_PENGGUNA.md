@@ -1,6 +1,6 @@
 # Panduan penggunaan RuleLab 1.3
 
-RuleLab membantu Anda membaca sumber hukum Indonesia, menyusun rancangan, memeriksa potensi konflik, dan mengeksplorasi dampaknya. Panduan ini mencakup sembilan menu serta skenario tes sebelum demo hackathon.
+RuleLab membantu Anda membaca sumber hukum Indonesia, menyusun rancangan, memeriksa potensi konflik, dan mengeksplorasi dampaknya. Panduan ini mencakup lima menu utama serta skenario tes sebelum demo hackathon.
 
 ## 1. Jalankan aplikasi
 
@@ -30,20 +30,32 @@ Data awal sudah tersedia: enam regulasi, 406 pasal/blok, naskah asli, hasil ekst
 | Menu | Kegunaan |
 | --- | --- |
 | Ringkasan | Pilih rancangan, buat atau generate draft, lihat antrean review dan sumber. |
-| Editor rancangan | Sunting pasal, simpan versi, dan gunakan asisten dalam satu layar. |
-| Pemeriksaan konflik | Tinjau temuan, kutipan, hierarki, usulan revisi dan interpretasi alternatif. |
-| Simulasi dampak | Bandingkan akses dan biaya skenario A/B berdasarkan asumsi input. |
-| Forum netizen AI | Jelajahi network opini persona sintetis dan balasan antar-agent. |
-| Galeri dokumen | Lihat koleksi, baca pasal dan tanyakan maknanya kepada bot. |
-| Pustaka regulasi | Cari isi pasal serta bandingkan dua sumber. |
-| Riwayat & review | Periksa hasil lama, versi draft dan catatan reviewer. |
-| Operasi agen | Jalankan cakupan review/dampak dan telusuri status serta hasil tool. |
+| Studio kebijakan | Satu alur Rancang naskah → Periksa sumber → Uji dampak, termasuk forum persona dan tinjauan terpadu. |
+| Dashboard data | Jumlah koleksi, peta wilayah, filter jenis/tahun dan antrean unggahan/JDIH. |
+| Pustaka hukum | Cari dokumen atau isi pasal, baca sumber, tanyakan ke asisten, dan bandingkan dua pasal. |
+| Aktivitas | Tab Hasil & review untuk hasil/versi/catatan; tab Proses agen untuk brief dan jejak eksekusi. |
+
+**Studio kebijakan** menggabungkan Editor, Pemeriksaan konflik dan Simulasi. Pilih tahap pada tiga kartu di atas area kerja. Perubahan naskah disimpan sebelum berpindah; jika penyimpanan gagal, Anda tetap berada di tahap Rancang dengan input yang sama. Label tahap memperlihatkan versi naskah dan hasil tersimpan, termasuk hasil lama setelah naskah berubah. Gunakan tahap Uji dampak untuk proyeksi A/B, forum persona atau tinjauan terpadu.
+
+URL utama adalah `http://127.0.0.1:8000/workspace?view=studio`. Tahap tersimpan pada parameter `stage`; tautan lama Editor/Analisis/Simulasi tetap membuka tahap yang sesuai. Sidebar Studio melanjutkan tahap terakhir yang Anda buka. Menu cepat tetap mengenali kata “editor”, “analisis”, “simulasi” dan “netizen”.
+
+**Aktivitas** menyatukan Riwayat & review dan Operasi agen. Pilih tab Hasil & review atau Proses agen; kartu ringkasan memperlihatkan jumlah hasil tersimpan, kebutuhan review, catatan dan proses aktif. Angka mengikuti rancangan terpilih dan diperbarui ketika proses agen selesai. Cakupan tugas, alternatif B, asumsi dan filter tetap tersedia saat berpindah tab dalam sesi. URL `view=activity&tab=results` atau `tab=agents` dapat dibuka kembali; tautan lama tetap bekerja. Sidebar melanjutkan tab terakhir.
 
 Lipat sidebar lewat ikon di kiri atas. **Menu cepat** atau Ctrl+K / Cmd+K membantu navigasi. Tombol **?** pada header membuka panduan interaktif untuk menu aktif. **Panduan pengguna** membuka dokumen ini di tab baru. Perpindahan menu menyimpan perubahan draft; tombol Simpan mencatat versi secara eksplisit.
 
-## 3. Galeri dokumen dan bot belajar
+## Dashboard data dan peta koleksi
 
-1. Buka **Galeri dokumen** pada sidebar, atau http://127.0.0.1:8000/workspace?view=gallery.
+Buka **Dashboard data** pada sidebar atau melalui peta di landing page. Pilih jenis, tahun dan makna distribusi: wilayah penerbit, cakupan pengaturan atau wilayah disebut. Peraturan nasional ditampilkan terpisah; wilayah tanpa data tetap mempunyai angka nol. Pilih provinsi lewat peta/dropdown, lalu kabupaten/kota dari daftar bila metadata tersedia. Klik dokumen untuk membukanya di Pustaka hukum.
+
+**Unggah sumber** menyimpan PDF/DOCX/TXT/JSON untuk pemeriksaan, menampilkan cuplikan ekstraksi dan menyediakan unduh file. **Tambah tautan JDIH** mencatat URL pemerintah ke antrean pengambilan; tautan belum otomatis diunduh. Pilih lapisan **Antrean sumber** untuk melihat sebarannya. Antrean belum masuk korpus analisis dan tidak tampil pada statistik publik. **Impor rancangan saya** membuka alur editor. Detail cakupan: `docs/DATA_DASHBOARD.md`.
+
+## 3. Pustaka hukum dan asisten belajar
+
+Gunakan tab **Koleksi dokumen** untuk mencari judul/nomor/tahun dan membaca naskah. Tab **Cari isi pasal** menelusuri frasa pada seluruh sumber. Hasil pasal mempunyai tombol **Baca dalam dokumen** dan **Tanyakan pasal ini**. Tombol **Bandingkan pasal** tersedia pada header kedua tab. Dokumen, pertanyaan dan percakapan tetap tersedia saat berpindah tab.
+
+Tautan lama `view=gallery` dan `view=corpus` tetap membuka Pustaka hukum; URL aktif menggunakan `view=library`. Dokumen/pasal terpilih tercatat pada URL sehingga bisa dibuka kembali setelah reload.
+
+1. Buka **Pustaka hukum** pada sidebar, atau http://127.0.0.1:8000/workspace?view=library.
 2. Cari judul, nomor/tahun seperti `UU 25 tahun 2009`, atau pilih jenis UU/PP.
 3. Klik kartu dokumen. Reader menampilkan judul, tanggal pengundangan, versi sumber, pasal/blok hasil ekstraksi dan kebutuhan OCR. Dokumen yang dipilih menjadi konteks bot.
 4. Pilih **Baca pasal / blok**, misalnya Pasal 4. Baca kutipan hasil ekstraksi. **Naskah asli** mengunduh sumber; **JSON enriched** mengunduh metadata, pasal dan provenance; **Halaman sumber** membuka situs asal.
@@ -71,17 +83,17 @@ Jika model gagal, pertanyaan tetap tersimpan di input; **Coba lagi** mengembalik
 
 ## 4. Susun rancangan di editor
 
-1. Dari Ringkasan pilih **Rancangan baru**, atau **Generate** lalu masukkan brief yang cukup jelas, jenis peraturan dan tujuan kebijakan.
+1. Dari Ringkasan pilih **Rancangan baru**. Pilih satu dari 15 jenis, naskah baru atau perubahan, isi identitas serta landasan dan klik **Preview naskah**. Tinjau bentuknya, lalu **Buat rancangan**. **Generate** menerima brief untuk draft awal berbantuan AI.
 2. Isi judul, jenis, ruang lingkup dan konsiderans. Tulis setiap ketentuan pada pasal terpisah; nomor pasal harus unik.
-3. Gunakan daftar pasal untuk berpindah, tambah/hapus pasal sesuai kebutuhan, lalu **Simpan**.
+3. Gunakan daftar pasal untuk berpindah dan edit Bab/Pasal. Naskah perubahan tetap mempunyai Pasal I/II; edit norma pengganti di dalam Pasal I. Buka **Identitas, penutup, penjelasan & lampiran** untuk melengkapi format, lalu **Simpan**. Bagian ini ikut diekspor ke DOCX.
 4. Buka tab asisten **Review**, **Sumber**, **Simulasi**, **Netizen** atau **Agen** tanpa meninggalkan editor.
 5. Mode **Fokus menulis** menyembunyikan asisten sementara. Input tidak hilang ketika sidebar dilipat atau tab asisten diganti.
 
-Impor menerima TXT, JSON DraftInput, DOCX atau PDF berteks sampai 10 MB. Pada TXT/DOCX, heading `Pasal 1` berada pada baris tersendiri. PDF scan membutuhkan OCR sebelum diimpor. Rancangan pengguna terpisah dari corpus sumber: impor draft tidak otomatis menambah dokumen ke Galeri.
+Impor menerima TXT, JSON DraftInput, DOCX atau PDF berteks sampai 10 MB. Pada TXT/DOCX, heading `Pasal 1` berada pada baris tersendiri. PDF scan membutuhkan OCR sebelum diimpor. Rancangan pengguna terpisah dari corpus sumber: impor draft tidak otomatis menambah dokumen ke Pustaka hukum.
 
 ## 5. Review potensi konflik
 
-Klik **Periksa** dari editor atau menu Pemeriksaan konflik. Sesuaikan tanggal analisis bila ingin memeriksa batas waktu sumber.
+Buka **Studio kebijakan → Periksa sumber**, atau gunakan tab Review pada asisten rancangan. Sesuaikan tanggal analisis bila ingin memeriksa batas waktu sumber.
 
 Tinjau alasan temuan, teks rancangan, usulan perubahan, kutipan, hierarki, pemeriksaan legal dan interpretasi alternatif. Buka sumber sebelum mengambil keputusan. **Terapkan usulan** membuat versi baru; hasil dari versi lama tidak dapat diterapkan sampai pemeriksaan ulang dilakukan. Gunakan catatan reviewer untuk menyimpan verifikasi dan tindak lanjut.
 
@@ -89,7 +101,7 @@ Hasil kosong tidak membuktikan draft bebas konflik. Hubungan UU/PP adalah titik 
 
 ## 6. Simulasi dampak A/B
 
-A menggunakan draft tersimpan. Tulis alternatif B dan isi jumlah pemohon, akses digital, keberhasilan bantuan, biaya layanan serta kapasitas petugas. Klik **Jalankan simulasi** dari tab editor atau menu Simulasi dampak.
+A menggunakan draft tersimpan. Tulis alternatif B dan isi jumlah pemohon, akses digital, keberhasilan bantuan, biaya layanan serta kapasitas petugas. Klik **Jalankan simulasi** dari asisten rancangan atau **Studio kebijakan → Uji dampak**.
 
 Angka akses dan biaya dihitung dari asumsi input; narasi stakeholder berasal dari provider yang aktif. Periksa sensitivitas dan asumsi tersimpan sebelum membandingkan hasil. Input awal adalah contoh, bukan data survei Indonesia. Jika draft diubah, jalankan kembali simulasi agar hasil sesuai versi terbaru.
 
@@ -97,7 +109,7 @@ Angka akses dan biaya dihitung dari asumsi input; narasi stakeholder berasal dar
 
 Siapkan alternatif B dan jalankan **Kumpulkan opini agen** di tab Netizen/editor atau Forum netizen AI.
 
-Lima persona memiliki latar berbeda: warga rural, penyandang disabilitas, petugas layanan, pelaku UMKM dan pengelola anggaran. Setiap skenario A/B menjalankan tiga putaran; total 30 reaksi. Persona dapat menanggapi komentar dari putaran sebelumnya pada skenario yang sama.
+Pilih 8, 16, 24 atau 32 agen dan 2–5 putaran sebelum menjalankan dua skenario A/B. Default 24 agen × 4 putaran menghasilkan 192 respons; maksimum 32 × 5 menghasilkan 320. Profil sintetis mengikuti sektor naskah. Persona dapat menanggapi komentar yang tersedia dari putaran sebelumnya pada skenario yang sama. Gunakan pencarian nama/peran, filter isu/lapisan, zoom, fullscreen dan replay untuk menelusuri network.
 
 - Klik node persona untuk opini terbaru.
 - Klik node opini putaran 1/2/3 untuk komentar tepat pada putaran tersebut.
@@ -106,15 +118,15 @@ Lima persona memiliki latar berbeda: warga rural, penyandang disabilitas, petuga
 - Pilih A/B, filter putaran, pan/zoom atau reset tampilan.
 - Replay memperagakan urutan yang telah dicatat; replay tidak memanggil LLM baru. Jeda replay bukan pembatalan job server.
 
-Pendapat ini sintetis, bukan komentar netizen nyata atau prediksi statistik opini publik. Demo memakai template; live menggunakan Gemini. Proses social memakai sekitar 31 panggilan generasi, sehingga dapat lebih lama daripada review tunggal.
+Pendapat ini sintetis, bukan komentar netizen nyata atau prediksi statistik opini publik. Demo memakai template; live menggunakan Gemini. Proses social memakai jumlah agen × putaran × dua skenario panggilan persona, ditambah planner, sehingga dapat lebih lama daripada review tunggal.
 
-## 8. Pustaka, agen, riwayat dan ekspor
+## 8. Aktivitas dan ekspor
 
-**Pustaka regulasi:** cari frasa isi pasal, buka naskah/JSON, lalu pilih dua pasal pada **Bandingkan pasal**. Mode live menambahkan analisis AI; demo hanya perbandingan sumber dan hubungan hierarki awal.
+**Pustaka hukum:** buka tab Cari isi pasal untuk mencari frasa, buka naskah/JSON, lalu pilih dua pasal pada **Bandingkan pasal**. Mode live menambahkan analisis AI; demo hanya perbandingan sumber dan hubungan hierarki awal.
 
-**Operasi agen:** pilih cakupan yang diperlukan, isi pembanding/asumsi, mulai job dan buka trace tool. Status queued/running/completed/failed/cancelled disimpan pada workspace. Pembatalan tersedia sesuai izin/pemilik. Agen menyusun hasil review, bukan otomatis menerapkan revisi naskah.
+**Aktivitas → Proses agen:** pilih cakupan yang diperlukan, isi pembanding/asumsi, mulai job dan buka trace tool. Status queued/running/completed/failed/cancelled disimpan pada workspace. Pembatalan tersedia sesuai izin/pemilik. Agen menyusun hasil review, bukan otomatis menerapkan revisi naskah.
 
-**Riwayat & review:** hasil terikat pada versi saat dijalankan. Filter jenis proses, buka rincian, tambah catatan reviewer dan lihat versi naskah. Label versi lama berarti draft sudah berubah.
+**Aktivitas → Hasil & review:** hasil terikat pada versi saat dijalankan. Filter jenis proses, buka rincian, tambah catatan reviewer dan lihat versi naskah. Label versi lama berarti draft sudah berubah.
 
 **Ekspor DOCX:** draft DOCX berisi rancangan tersimpan. Laporan DOCX berisi hasil review/simulasi yang tersedia serta batasannya. Periksa dokumen hasil ekspor sebelum digunakan. Ekspor bukan penerbitan UU resmi.
 
@@ -124,7 +136,7 @@ Gunakan mode demo terlebih dahulu untuk memeriksa alur, lalu ulangi dengan Gemin
 
 | Tes | Langkah | Hasil yang diharapkan |
 | --- | --- | --- |
-| Koleksi | Buka Galeri | Enam dokumen dan jumlah 406 pasal/blok pada paket awal. |
+| Koleksi | Buka Pustaka hukum | Enam dokumen dan jumlah 406 pasal/blok pada paket awal. |
 | Filter | Pilih PP | Satu PP pada dataset awal. |
 | Reader | Pilih UU 25/2009, Pasal 4 | Teks pasal dan akses naskah asli/JSON tampil. |
 | Bot dikenal | Tanya arti UU 25/2009 | Demo: cuplikan; live: penjelasan dengan kutipan. |
@@ -136,7 +148,7 @@ Gunakan mode demo terlebih dahulu untuk memeriksa alur, lalu ulangi dengan Gemin
 | Draft | Edit satu pasal, simpan | Versi tersimpan bertambah dan riwayat dapat dibuka. |
 | Review | Periksa, edit draft, coba usulan lama | Usulan lama dinonaktifkan sampai diperiksa ulang. |
 | A/B | Ubah asumsi dan jalankan simulasi | Angka mengikuti asumsi tersimpan; label tidak menyebut data empiris. |
-| Netizen | Jalankan job social, pilih A/B | 15 reaksi per skenario, node opini dapat diklik. |
+| Netizen | Jalankan job social, pilih A/B | Jumlah agen × putaran respons per skenario, node opini dapat diklik. |
 | Ekspor | Ekspor draft dan laporan DOCX | File dapat dibuka; draft dapat diimpor kembali. |
 
 Kesalahan validasi ditampilkan di dekat field yang perlu diperbaiki. Pesan menetap sampai input tersebut diubah; nilai yang Anda tulis tetap tersimpan.

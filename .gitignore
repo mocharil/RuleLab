@@ -8,3 +8,7 @@ artifacts/
 node_modules/
 gemini_sa.json
 "gemini_sa.json"
+
+# Generated demo-video output and scratch
+demo/video/out/
+demo/video/audio/

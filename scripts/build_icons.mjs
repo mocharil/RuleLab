@@ -4,8 +4,10 @@ import path from 'node:path';
 import vm from 'node:vm';
 import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const mapping={file:'file-text',plus:'plus',save:'save',download:'download',upload:'upload',arrow:'arrow-right',back:'arrow-left',close:'x',shield:'scan-search',chart:'chart-no-axes-combined',network:'network',search:'search',copy:'copy',book:'book-open',chevron:'chevron-right',compare:'git-compare-arrows',focus:'focus',clock:'history',refresh:'refresh-cw'};
+const mapping={file:'file-text',plus:'plus',save:'save',download:'download',upload:'upload',arrow:'arrow-right',back:'arrow-left',close:'x',shield:'scan-search',chart:'chart-no-axes-combined',network:'network',search:'search',copy:'copy',book:'book-open',chevron:'chevron-right',compare:'git-compare-arrows',focus:'focus',clock:'history',refresh:'refresh-cw',check:'check',down:'chevron-down',sparkles:'sparkles'};
 const nodes={};
+Object.assign(mapping,{pen:'file-pen-line',settings:'settings-2',message:'messages-square',users:'users-round',play:'play',pause:'pause',layout:'layout-dashboard',help:'circle-help',route:'route'});
+Object.assign(mapping,{map:'map',pin:'map-pin',globe:'globe',layers:'layers',database:'database',landmark:'landmark',scale:'scale',files:'files',calendar:'calendar-days',link:'link-2',scan:'scan-text',compass:'compass',zoomIn:'zoom-in',zoomOut:'zoom-out',tree:'list-tree',tag:'tag',verified:'circle-check',attention:'circle-alert',fileCheck:'file-check-2',fileSearch:'file-search',fish:'fish',health:'heart-pulse',leaf:'leaf',coins:'hand-coins',accessibility:'accessibility',reviewer:'user-round-check'});
 for(const [name,file] of Object.entries(mapping)){
  const code=fs.readFileSync(path.join(root,'frontend/node_modules/lucide-react/dist/esm/icons',file+'.js'),'utf8');
  const match=code.match(/createLucideIcon\("[^"]+",\s*(\[[\s\S]*?\])\s*\);/);

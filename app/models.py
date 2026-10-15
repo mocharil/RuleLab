@@ -1,21 +1,47 @@
+import re
 from typing import Literal
 from datetime import date
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
-RegType=Literal['UU','PP','PERPRES','PERDA_PROV','PERDA_KAB','PERMEN']
+RegType=Literal['UU','PP','PERPRES','PERDA_PROV','PERDA_KAB','PERMEN','PERPPU','PERGUB','PERBUP','PERWALI','PER_LEMBAGA','PERDES','PERKADES','PERDPRD_PROV','PERDPRD_KAB']
 class Article(BaseModel):
- number: str = Field(pattern=r'^\d+[A-Z]?$', max_length=8)
+ number: str = Field(pattern=r'^(?:\d+[A-Z]?|I|II)$', max_length=8)
  text: str = Field(min_length=1,max_length=12000)
+ chapter: str = Field(default='',max_length=160)
+ @field_validator('number',mode='before')
+ @classmethod
+ def strip_pasal_prefix(cls,v):
+  # Vertex drops the schema pattern, so Gemini often writes "Pasal 1"; keep only the number.
+  return re.sub(r'^\s*pasal\s+','',v,flags=re.I).strip() if isinstance(v,str) else v
+class DraftingMetadata(BaseModel):
+ form: Literal['new','amendment'] = 'new'
+ region: str = Field(default='',max_length=100)
+ local_level: Literal['kabupaten','kota'] = 'kabupaten'
+ institution: str = Field(default='',max_length=140)
+ legislative_origin: Literal['DPR','PRESIDEN','DPD'] = 'DPR'
+ year: int = Field(default_factory=lambda:date.today().year,ge=1945,le=2100)
+ number: str = Field(default='',max_length=40)
+ place: str = Field(default='',max_length=100)
+ include_transition: bool = False
+ include_explanation: bool = False
+ include_attachment: bool = False
 class DraftInput(BaseModel):
  title: str = Field(min_length=3,max_length=300)
  regulation_type: RegType = 'PP'
  preamble: str = Field(default='',max_length=10000)
  articles: list[Article] = Field(min_length=1,max_length=100)
  scope: str = Field(default='Layanan publik digital',max_length=1000)
+ document_heading: str = Field(default='',max_length=1200)
+ closing: str = Field(default='',max_length=4000)
+ explanation: str = Field(default='',max_length=10000)
+ attachments: str = Field(default='',max_length=10000)
+ drafting: DraftingMetadata | None = None
+ template_source_ids: list[str] = Field(default_factory=list,max_length=10)
  @model_validator(mode='after')
  def unique_numbers(self):
-  if len({a.number for a in self.articles})!=len(self.articles):raise ValueError('Nomor pasal harus unik')
-  if sum(len(a.text) for a in self.articles)>100000:raise ValueError('Draft terlalu panjang untuk MVP')
+  if len({a.number for a in self.articles})!=len(self.articles):raise ValueError('Article numbers must be unique')
+  if self.drafting and self.drafting.form=='amendment' and [a.number for a in self.articles]!=['I','II']:raise ValueError('An amendment must contain Pasal I and Pasal II')
+  if sum(len(a.text) for a in self.articles)>100000:raise ValueError('The draft is too long for this MVP')
   return self
 class SaveDraft(DraftInput):
  expected_revision: int = Field(ge=1)
@@ -28,11 +54,11 @@ class EvidenceQuote(BaseModel):
  evidence_id: str
  quote: str = Field(min_length=1,max_length=12000)
 class LegalChecks(BaseModel):
- temporal: str = 'belum diverifikasi'
- scope: str = 'belum diverifikasi'
- authority: str = 'belum diverifikasi'
- exceptions: str = 'belum diverifikasi'
- alternative_interpretation: str = 'belum diverifikasi'
+ temporal: str = 'not verified'
+ scope: str = 'not verified'
+ authority: str = 'not verified'
+ exceptions: str = 'not verified'
+ alternative_interpretation: str = 'not verified'
 class Finding(BaseModel):
  article_number: str
  category: Literal['potential_vertical_conflict','potential_horizontal_conflict','ambiguity','implementation_risk','coverage_gap']
@@ -83,3 +109,7 @@ class CompareRequest(BaseModel):
  right_id: str
  left_article: str
  right_article: str
+
+class SocialOptions(BaseModel):
+ persona_count: Literal[8,16,24,32] = 24
+ rounds: int = Field(default=4,ge=2,le=5)

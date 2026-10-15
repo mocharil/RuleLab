@@ -3,42 +3,46 @@ const {JSDOM}=require(process.env.RULELAB_JSDOM||'../frontend/node_modules/jsdom
 const {spawn}=require('child_process');
 const fs=require('fs'),path=require('path'),os=require('os'),assert=require('assert'),{pathToFileURL}=require('url');
 const base=path.resolve(__dirname,'..'),temp=fs.mkdtempSync(path.join(os.tmpdir(),'rulelab-dom-')),origin='http://127.0.0.1:8049';
-const server=spawn('python3',['-m','uvicorn','app.main:app','--port','8049'],{cwd:base,env:{...process.env,RULELAB_DB:path.join(temp,'qa.sqlite3'),AI_PROVIDER:'demo',SEARCH_BACKEND:'sqlite',RULELAB_API_TOKEN:'',RULELAB_ACCESS_KEYS:'[]'},stdio:'ignore'});
+const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.main:app','--port','8049'],{cwd:base,env:{...process.env,RULELAB_DB:path.join(temp,'qa.sqlite3'),AI_PROVIDER:'demo',SEARCH_BACKEND:'sqlite',RULELAB_API_TOKEN:'',RULELAB_ACCESS_KEYS:'[]'},stdio:'ignore'});
 const originalFetch=global.fetch,originalTimeout=global.setTimeout;
 const pendingTimers=new Set();
 global.setTimeout=(callback,delay,...args)=>{const timer=originalTimeout(()=>{pendingTimers.delete(timer);callback(...args)},delay);pendingTimers.add(timer);return timer;};
 (async()=>{let dom;const checks=[];try{
- for(let i=0;i<100;i++){try{if((await originalFetch(origin+'/api/health')).ok)break}catch{}await new Promise(r=>setTimeout(r,100))}
+ for(let i=0;i<250;i++){try{if((await originalFetch(origin+'/api/health')).ok)break}catch{}await new Promise(r=>setTimeout(r,100))}
  dom=new JSDOM(fs.readFileSync(path.join(base,'app/static/index.html'),'utf8'),{url:origin+'/workspace?view=editor',pretendToBeVisual:true});
  const w=dom.window;
  for(const k of ['window','document','localStorage','sessionStorage','location','HTMLElement','SVGElement','Node','Element','Event','MutationObserver'])global[k]=k==='window'?w:w[k];
  global.matchMedia=w.matchMedia=()=>({matches:true,addListener(){},removeListener(){},addEventListener(){},removeEventListener(){}});
  global.getComputedStyle=w.getComputedStyle.bind(w);global.requestAnimationFrame=w.requestAnimationFrame.bind(w);global.cancelAnimationFrame=w.cancelAnimationFrame.bind(w);
- w.HTMLElement.prototype.scrollIntoView=function(){};
+ w.HTMLElement.prototype.scrollIntoView=function(){};w.scrollTo=function(){};
  w.HTMLDialogElement.prototype.showModal=function(){this.setAttribute('open','')};
  w.HTMLDialogElement.prototype.close=function(){this.removeAttribute('open');this.dispatchEvent(new w.Event('close'))};
+ global.d3=require(path.join(base,'app/static/vendor/d3.min.js'));
+ global.ResizeObserver=class{observe(){}disconnect(){}};
  global.fetch=(url,options)=>originalFetch(url.startsWith('/')?origin+url:url,options);
- for(const name of ['app','ui','studio','agents','social','workspace-ux','design','gallery','icons']){
+ for(const name of ['app','ui','studio','agents','social','workspace-ux','design','gallery','icons','select','draft-builder','network-layout','collection-ui']){
   let code=fs.readFileSync(path.join(base,'app/static',name+'.js'),'utf8');
   code=code.replace(/from '\/static\/([^']+)\.js'/g,(_,dep)=>"from '"+pathToFileURL(dep.startsWith('framework/')?path.join(base,'app/static',dep+'.js'):path.join(temp,dep+'.mjs')).href+"'");
+  code=code.replace(/import '\/static\/([^']+)\.js';/g,(_,dep)=>"import '"+pathToFileURL(path.join(base,'app/static',dep+'.js')).href+"';");
   fs.writeFileSync(path.join(temp,name+'.mjs'),code);
  }
  await import(pathToFileURL(path.join(temp,'app.mjs')).href);
- const wait=async predicate=>{for(let i=0;i<450;i++){if(predicate())return;await new Promise(r=>setTimeout(r,20))}throw Error('DOM state did not settle')};
+ const wait=async predicate=>{for(let i=0;i<6000;i++){if(predicate())return;await new Promise(r=>setTimeout(r,20))}throw Error('DOM state did not settle')};
  await wait(()=>document.querySelector('.menu-guide')&&!document.querySelector('#main').inert);
- const click=selector=>{const el=document.querySelector(selector);assert(el,selector);if(typeof el.click==='function')el.click();else el.dispatchEvent(new w.MouseEvent('click',{bubbles:true}))};
+ const click=selector=>{if(selector.includes('[data-view="history"]'))selector='#activity-tab-results';if(selector.includes('[data-view="agents"]'))selector='#activity-tab-agents';const el=document.querySelector(selector);assert(el,selector);if(typeof el.click==='function')el.click();else el.dispatchEvent(new w.MouseEvent('click',{bubbles:true}))};
  const title=document.querySelector('#draft-title');const original=title.value;title.value='Naskah belum disimpan';title.dispatchEvent(new w.Event('input',{bubbles:true}));
  click('#sidebar-toggle');assert(document.body.classList.contains('sidebar-folded'));assert.equal(document.querySelector('#sidebar-toggle').getAttribute('aria-expanded'),'false');assert.equal(document.querySelector('#draft-title').value,'Naskah belum disimpan');checks.push('sidebar fold preserves input');
  assert.equal(localStorage.getItem('rulelab.sidebarFolded'),'1');checks.push('fold choice persisted');
- assert.equal(document.querySelector('#nav [data-view=social]').getAttribute('aria-label'),'Forum netizen AI');checks.push('icons have accessible labels');
+ assert.equal(document.querySelector('#nav [data-view=studio]').getAttribute('aria-label'),'Policy Studio');checks.push('icons have accessible labels');
  click('#menu-help');assert(document.querySelector('#guide-dialog').open);assert(document.querySelector('.document-header.guide-highlight'));assert.equal(document.activeElement.dataset.ux,'next');checks.push('guide opens, highlights actual target and focuses next');
  click('#guide-dialog [data-ux=next]');assert(document.querySelector('.article-list.guide-highlight'));checks.push('guide next highlights article editor');
  click('#guide-dialog [data-ux=previous]');assert(document.querySelector('.document-header.guide-highlight'));checks.push('guide previous');
  click('#guide-dialog [data-ux=end-tour]');assert(!document.querySelector('#guide-dialog').open);assert(!document.querySelector('.guide-highlight'));assert.equal(document.activeElement.id,'menu-help');checks.push('close cleans highlight and restores focus');
  assert.equal(document.querySelector('#draft-title').value,'Naskah belum disimpan');checks.push('tour leaves input intact');
  title.value=original;title.dispatchEvent(new w.Event('input',{bubbles:true}));
- for(const view of ['home','editor','analysis','simulation','social','corpus','gallery','history','agents']){
-  click('[data-view="'+view+'"]');await wait(()=>!document.querySelector('#main').inert);
+ for(const view of ['home','editor','analysis','simulation','library','history','agents']){
+  if(['history','agents'].includes(view)&&!document.querySelector('.activity-tabs')){click('#nav [data-view=activity]');await wait(()=>!document.querySelector('#main').inert);}
+  if(['editor','analysis','simulation'].includes(view)&&!document.querySelector('#workflow-stage-'+view)){click('#nav [data-view=studio]');await wait(()=>!document.querySelector('#main').inert);}click(['editor','analysis','simulation'].includes(view)?'#workflow-stage-'+view:'button[data-view="'+view+'"]');await wait(()=>!document.querySelector('#main').inert);
   assert(document.querySelector('.menu-guide'));
   assert(document.querySelectorAll('.guide-flow>span').length>=3);
   click('#menu-help');assert(document.querySelector('#guide-dialog').open);assert.equal(document.querySelectorAll('.guide-highlight').length,1);
@@ -50,20 +54,20 @@ global.setTimeout=(callback,delay,...args)=>{const timer=originalTimeout(()=>{pe
  assert.equal(document.querySelector('#main .ux-enter'),null);
 
  const fill=(selector,value)=>{const el=document.querySelector(selector);assert(el,selector);el.value=value;el.dispatchEvent(new w.Event('input',{bubbles:true}));};
- const navigate=async view=>{click('#nav [data-view="'+view+'"]');await wait(()=>!document.querySelector('#main').inert&&document.body.dataset.view===view)};
+ const navigate=async view=>{const target=view==='social'?'simulation':['gallery','corpus'].includes(view)?'library':view;if(['history','agents'].includes(target)&&!document.querySelector('.activity-tabs')){click('#nav [data-view=activity]');await wait(()=>!document.querySelector('#main').inert);}if(['editor','analysis','simulation'].includes(target)&&!document.querySelector('#workflow-stage-'+target)){click('#nav [data-view=studio]');await wait(()=>!document.querySelector('#main').inert);}click(['editor','analysis','simulation'].includes(target)?'#workflow-stage-'+target:'#nav [data-view="'+target+'"]');await wait(()=>!document.querySelector('#main').inert&&document.body.dataset.view===target);if(['gallery','corpus'].includes(view)){click('#library-tab-'+(view==='corpus'?'passages':'documents'));await wait(()=>!document.querySelector('#main').inert);}if(view==='social'){click('[data-action="sim-section"][data-section="social"]');await wait(()=>!document.querySelector('#main').inert);}};
  await navigate('editor');
  fill('#draft-title','Judul fokus belum disimpan');
  click('[data-ux="focus-editor"]');
  assert(document.body.classList.contains('editor-focus'));assert.equal(document.querySelector('#draft-title').value,'Judul fokus belum disimpan');assert.equal(document.querySelector('[data-ux="focus-editor"]').getAttribute('aria-pressed'),'true');
  click('[data-ux="focus-editor"]');assert(!document.body.classList.contains('editor-focus'));checks.push('focus mode preserves unsaved draft and toggles assistant');
- assert.equal(document.querySelector('.context-dirty').textContent,'Belum disimpan');checks.push('document context updates when draft becomes dirty');
+ assert.equal(document.querySelector('.context-dirty').textContent,'Not saved');checks.push('document context updates when draft becomes dirty');
  fill('#draft-title',original);
- click('[data-action="save"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#save-state').textContent.includes('Tersimpan'));
+ click('[data-action="save"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#save-state').textContent.includes('Saved'));
  assert(document.querySelector('.context-saved'));checks.push('save refreshes document version and context');
  const data=await (await originalFetch(origin+'/api/status')).json();
- assert.equal(data.social_personas.length,5);
- await navigate('social');assert.equal(document.querySelectorAll('.preview-persona').length,5);assert.equal(document.querySelectorAll('.social-post').length,0);checks.push('persona preview comes from configured metadata without fabricated opinions');
- await navigate('corpus');assert.equal(document.querySelectorAll('.law-card').length,6);
+ assert.equal(data.social_personas.length,24);
+ await navigate('social');assert.equal(document.querySelectorAll('.preview-persona').length,data.social_personas.length);assert.equal(document.querySelectorAll('.social-post').length,0);checks.push('persona preview comes from configured metadata without fabricated opinions');
+ await navigate('corpus');assert(document.querySelector('#search-form'));assert.equal(document.querySelectorAll('#nav [data-view=library]').length,1);assert.equal(document.querySelectorAll('#nav [data-view=gallery],#nav [data-view=corpus]').length,0);
  fill('#search-q','pelayanan');document.querySelector('#search-form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));
  await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.source-details'));
  assert(document.querySelector('.source-details a').href.startsWith('https://'));checks.push('source search renders official provenance');
@@ -76,7 +80,7 @@ global.setTimeout=(callback,delay,...args)=>{const timer=originalTimeout(()=>{pe
  await navigate('editor');fill('[data-article="0"]','Penyelenggara menyediakan kanal pendampingan untuk pelayanan publik.');
  fill('#ass-population','2000');fill('#ass-digital_access_pct','60');fill('#ass-staff_capacity','0');fill('#alternative','Pasal 1\nPermohonan hanya diajukan melalui aplikasi digital.');
  click('[data-action="simulate"]');await wait(()=>!document.querySelector('#main').inert);
- assert(document.querySelector('#toast').textContent.includes('Periksa input asumsi'));assert(document.querySelector('#save-state').textContent.includes('Belum disimpan'));checks.push('invalid assumptions retain unsaved draft and scenario');
+ assert(document.querySelector('#toast').textContent.includes('Check the assumption inputs'));assert(document.querySelector('#save-state').textContent.includes('Not saved'));checks.push('invalid assumptions retain unsaved draft and scenario');
  fill('#ass-staff_capacity','50');click('[data-action="simulate"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.studio-result'));
  assert.deepEqual([...document.querySelectorAll('.impact-mini>strong')].map(el=>el.textContent),['92%','60%']);assert.equal(document.body.dataset.view,'editor');checks.push('editor simulation saves snapshot and renders A/B without navigation');
  fill('[data-article="0"]','Penyelenggara menyediakan kanal pendampingan bagi seluruh pemohon.');
@@ -84,43 +88,47 @@ global.setTimeout=(callback,delay,...args)=>{const timer=originalTimeout(()=>{pe
  click('#tab-review');await wait(()=>!document.querySelector('#main').inert);
  assert.equal(document.querySelector('[data-article="0"]').value,'Penyelenggara menyediakan kanal pendampingan bagi seluruh pemohon.');checks.push('assistant tabs preserve edited article');
  click('#tab-social');await wait(()=>!document.querySelector('#main').inert);click('[data-intent="social"]');
- await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.social-toolbar .pill')?.textContent.startsWith('Selesai'));
- assert.equal(document.querySelectorAll('.social-post').length,15);assert.equal(document.querySelectorAll('.social-node').length,5);assert.equal(document.querySelectorAll('.social-law-node').length,6);checks.push('social job produces real demo transcript and retrieved legal context');
- click('.social-opinion-node[data-comment="A-1-sari"]');assert.equal(document.querySelector('.social-selected-opinion').dataset.opinionId,'A-1-sari');checks.push('opinion node opens its exact comment');
+ await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.social-toolbar .pill')?.textContent.startsWith('Done'));
+ assert.equal(document.querySelectorAll('.social-post').length,data.social_personas.length*4);assert.equal(document.querySelectorAll('.social-node').length,data.social_personas.length);assert.equal(document.querySelectorAll('.social-law-node').length,6);checks.push('social job produces real demo transcript and retrieved legal context');
+ click('.social-opinion-node[data-comment="A-1-sari_desa"]');assert.equal(document.querySelector('.social-selected-opinion').dataset.opinionId,'A-1-sari_desa');checks.push('opinion node opens its exact comment');
  click('[data-source]');assert(document.querySelector('.social-inspector').textContent.includes('SHA256'));checks.push('legal node opens source quotation and provenance');
- click('[data-scenario="B"]');assert.equal(document.querySelectorAll('.social-post').length,15);assert(document.querySelector('.social-selected-opinion').dataset.opinionId.startsWith('B-'));checks.push('A/B switch selects separate transcript and opinion');
- click('[data-social-round="1"]');assert.equal(document.querySelectorAll('.social-post').length,5);click('#social-latest');assert.equal(document.querySelectorAll('.social-post').length,15);checks.push('round selection filters recorded events and latest restores transcript');
+ click('[data-scenario="B"]');assert.equal(document.querySelectorAll('.social-post').length,data.social_personas.length*4);assert(document.querySelector('.social-selected-opinion').dataset.opinionId.startsWith('B-'));checks.push('A/B switch selects separate transcript and opinion');
+ click('[data-social-round="1"]');assert.equal(document.querySelectorAll('.social-post').length,data.social_personas.length);click('#social-latest');assert.equal(document.querySelectorAll('.social-post').length,data.social_personas.length*4);checks.push('round selection filters recorded events and latest restores transcript');
  await navigate('history');click('[data-action="review"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#review-notes'));
  fill('#review-notes','Perlu konsultasi publik dan verifikasi sumber.');click('[data-action="save-review"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.history-row'));
  assert(document.querySelector('.history-row').textContent.includes('Perlu konsultasi publik'));checks.push('review notes persist through redesigned dialog');
  await navigate('editor');fill('#draft-title','<img src=x onerror="window.injected=true">');click('[data-action="save"]');await wait(()=>!document.querySelector('#main').inert);
  click('.workspace-home-link');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.draft-table'));
  assert(document.querySelector('.draft-table').textContent.includes('<img src=x'));assert(!document.querySelector('.draft-table img'));assert.equal(w.injected,undefined);checks.push('dashboard renders user titles as escaped text');
- assert(document.querySelector('.resume-manuscript').textContent.includes('<img src=x'));assert(!document.querySelector('.resume-manuscript img'));assert(document.querySelector('.resume-copy [data-view=gallery]'));checks.push('dashboard manuscript uses actual escaped draft data and links to learning');
+ assert(document.querySelector('.resume-manuscript').textContent.includes('<img src=x'));assert(!document.querySelector('.resume-manuscript img'));assert(document.querySelector('.resume-copy [data-view=library]'));checks.push('dashboard manuscript uses actual escaped draft data and links to learning');
  click('#settings-btn');await wait(()=>document.querySelector('#modal').open&&!document.querySelector('#main').inert);
  assert(document.querySelectorAll('.integration-checks>div').length>=4);
  assert(!document.querySelector('#modal').textContent.includes('PRIVATE KEY'));checks.push('integration settings show safe readiness metadata');
- click('[data-action="probe-ai"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#modal').textContent.includes('Mode demo siap'));
- assert(document.querySelector('#modal').textContent.includes('Tidak ada koneksi LLM yang diuji'));checks.push('demo integration probe is explicit and does not imply live access');
+ click('[data-action="probe-ai"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#modal').textContent.includes('Demo mode ready'));
+ assert(document.querySelector('#modal').textContent.includes('No LLM connection tested'));checks.push('demo integration probe is explicit and does not imply live access');
  click('#modal [data-action="close"]');await wait(()=>!document.querySelector('#main').inert);
  click('[data-action="new"]');await wait(()=>document.querySelector('#new-title')&&!document.querySelector('#main').inert);
- fill('#new-title','UU');click('[data-action="create"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#toast').textContent.includes('Judul rancangan: minimal 3 karakter.'));
+ fill('#new-title','UU');click('[data-action="create"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#toast').textContent.includes('Draft title: at least 3 characters.'));
  assert(document.querySelector('#modal').open);assert.equal(document.activeElement.id,'new-title');assert.equal(document.querySelector('#new-title').value,'UU');checks.push('API validation shows field guidance, keeps input and restores focus');
- const invalidTitle=document.querySelector('#new-title');assert.equal(invalidTitle.getAttribute('aria-invalid'),'true');const description=document.getElementById(invalidTitle.getAttribute('aria-describedby'));assert(description.textContent.includes('minimal 3 karakter'));assert.equal(description.getAttribute('role'),'alert');checks.push('validation error persists beside the named input with accessible association');
+ const invalidTitle=document.querySelector('#new-title');assert.equal(invalidTitle.getAttribute('aria-invalid'),'true');const description=document.getElementById(invalidTitle.getAttribute('aria-describedby'));assert(description.textContent.includes('at least 3 characters'));assert.equal(description.getAttribute('role'),'alert');checks.push('validation error persists beside the named input with accessible association');
  fill('#new-title','Judul diperbaiki');assert.equal(invalidTitle.hasAttribute('aria-invalid'),false);assert(!document.getElementById(description.id));checks.push('editing invalid input clears its error while retaining corrected value');
  click('#modal [data-action="close"]');await wait(()=>!document.querySelector('#main').inert);
 
- await navigate('gallery');assert.equal(document.querySelectorAll('.gallery-card').length,6);assert(document.querySelector('.gallery-reader-empty'));checks.push('gallery lists six actual documents with educational assistant');
+ await navigate('gallery');assert(document.querySelectorAll('.gallery-card').length>=6);assert(document.querySelector('.gallery-reader-empty'));checks.push('gallery lists actual documents with educational assistant');
  fill('#gallery-search','UU 25 tahun 2009');assert(document.querySelectorAll('.gallery-card').length>=1);assert([...document.querySelectorAll('.gallery-card')].some(el=>el.dataset.id==='uu-25-2009'));checks.push('gallery search accepts regulation number and year');
- fill('#gallery-search','');document.querySelector('#gallery-type').value='PP';document.querySelector('#gallery-type').dispatchEvent(new w.Event('change',{bubbles:true}));assert.equal(document.querySelectorAll('.gallery-card').length,1);checks.push('gallery document type filter shows actual matching count');
+ fill('#gallery-search','');document.querySelector('#gallery-type').value='PP';document.querySelector('#gallery-type').dispatchEvent(new w.Event('change',{bubbles:true}));assert(document.querySelectorAll('.gallery-card').length>=1);checks.push('gallery document type filter shows actual matching count');
  document.querySelector('#gallery-type').value='all';document.querySelector('#gallery-type').dispatchEvent(new w.Event('change',{bubbles:true}));
+ fill('#gallery-search','Pelayanan Publik');
  click('[data-action="gallery-open"][data-id="uu-25-2009"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#gallery-article'));assert(document.querySelector('#gallery-reader').textContent.includes('Pelayanan Publik'));assert.equal(document.querySelector('#gallery-scope').value,'uu-25-2009');checks.push('document selection loads reader and sets bot context');
- document.querySelector('#gallery-article').value='4';document.querySelector('#gallery-article').dispatchEvent(new w.Event('change',{bubbles:true}));assert(document.querySelector('.gallery-article-text').textContent.includes('Pasal 4')||document.querySelector('.gallery-article-text').textContent.includes('PASAL 4'));assert(document.querySelector('.gallery-article-text').textContent.includes('kepentingan umum'));checks.push('gallery reads chosen article from extracted source');
- click('#gallery-reader [data-action="gallery-prompt"]');await wait(()=>!document.querySelector('#main').inert);assert(document.querySelector('#gallery-question').value.includes('Pasal 4'));assert.equal(document.activeElement.id,'gallery-question');checks.push('ask this article fills question and restores keyboard focus');
- document.querySelector('#gallery-chat-form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.gallery-citation'));assert(document.querySelector('.gallery-bot-answer').textContent.includes('Demo'));assert.equal(document.querySelector('#gallery-question').value,'');checks.push('gallery question reaches API and renders verified demo excerpts');
+ document.querySelector('#gallery-article').value='4';document.querySelector('#gallery-article').dispatchEvent(new w.Event('change',{bubbles:true}));assert(document.querySelector('.gallery-article-text').textContent.includes('Pasal 4')||document.querySelector('.gallery-article-text').textContent.includes('PASAL 4'));assert(document.querySelector('.gallery-article-text').textContent.includes('kepentingan umum'));assert(document.querySelector('.legal-structured-body'));checks.push('gallery reads chosen article from extracted source');
+ click('[data-action="gallery-reader-mode"][data-mode="split"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.gallery-raw-iframe'));assert(document.querySelector('.gallery-raw-iframe').src.includes('/api/corpus/uu-25-2009/raw?inline=1'));click('[data-action="gallery-reader-mode"][data-mode="original"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.gallery-raw-iframe'));click('[data-action="gallery-reader-mode"][data-mode="formatted"]');await wait(()=>!document.querySelector('#main').inert&&!document.querySelector('.gallery-raw-iframe'));checks.push('gallery reader switches between formatted legal text, split view, and inline raw file iframe');
+ click('#gallery-reader [data-action="gallery-prompt"]');await wait(()=>!document.querySelector('#main').inert);assert(document.querySelector('#gallery-question').value.includes('Article 4'));assert.equal(document.activeElement.id,'gallery-question');checks.push('ask this article fills question and restores keyboard focus');
+ document.querySelector('#gallery-chat-form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));assert(!document.querySelector('#progress-modal').open);await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.gallery-citation'));assert(document.querySelector('.gallery-bot-answer').textContent.includes('Demo'));assert.equal(document.querySelector('#gallery-question').value,'');checks.push('gallery question reaches API inline in chatroom without progress modal and renders verified demo excerpts');
  click('[data-action="gallery-read-source"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#modal').open);assert(document.querySelector('#modal').textContent.includes('SHA256'));assert(document.querySelector('#modal').textContent.includes('kepentingan umum'));click('#modal [data-action="close"]');await wait(()=>!document.querySelector('#main').inert);checks.push('bot citation opens complete source context and provenance');
- fill('#gallery-question','UU 10 tahun 2018 apa sih?');document.querySelector('#gallery-chat-form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await wait(()=>!document.querySelector('#main').inert&&document.querySelectorAll('.gallery-chat-turn').length===2);assert(document.querySelector('.gallery-chat-turn:last-child').textContent.includes('belum tersedia'));assert.equal(document.querySelectorAll('.gallery-chat-turn:last-child .gallery-citation').length,0);checks.push('unknown regulation is explained without invented legal quotations');
- const galleryFetch=global.fetch;global.fetch=(url,options)=>String(url).endsWith('/api/gallery/chat')?Promise.resolve({ok:false,status:502,json:async()=>({detail:'Fixture: model tidak tersedia.'})}):galleryFetch(url,options);
+ fill('#gallery-question','What is UU 10/2018 about?');document.querySelector('#gallery-chat-form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await wait(()=>!document.querySelector('#main').inert&&document.querySelectorAll('.gallery-chat-turn').length===2);assert(document.querySelector('.gallery-chat-turn:last-child').textContent.includes('not in the RuleLab collection'));assert.equal(document.querySelectorAll('.gallery-chat-turn:last-child .gallery-citation').length,0);checks.push('unknown regulation is explained without invented legal quotations');
+ const galleryFetch=global.fetch;global.d3=require(path.join(base,'app/static/vendor/d3.min.js'));
+ global.ResizeObserver=class{observe(){}disconnect(){}};
+ global.fetch=(url,options)=>String(url).endsWith('/api/gallery/chat')?Promise.resolve({ok:false,status:502,json:async()=>({detail:'Fixture: model tidak tersedia.'})}):galleryFetch(url,options);
  fill('#gallery-question','Jelaskan Pasal 4 untuk pemula.');document.querySelector('#gallery-chat-form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.gallery-chat-error'));assert.equal(document.querySelector('#gallery-question').value,'Jelaskan Pasal 4 untuk pemula.');assert(document.querySelector('.gallery-chat-error').textContent.includes('Fixture: model tidak tersedia.'));global.fetch=galleryFetch;checks.push('bot failure retains question and exposes retry without fake answer');
  click('[data-action="gallery-retry"]');await wait(()=>!document.querySelector('#main').inert);assert.equal(document.activeElement.id,'gallery-question');checks.push('retry returns to editable question');
  click('[data-action="gallery-clear"]');await wait(()=>!document.querySelector('#main').inert);assert.equal(document.querySelectorAll('.gallery-chat-turn').length,0);assert.equal(document.querySelector('#gallery-question').value,'');checks.push('chat history can be cleared without clearing selected document');

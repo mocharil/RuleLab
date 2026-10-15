@@ -3,7 +3,7 @@ from __future__ import annotations
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
-import hashlib,json,sqlite3,uuid
+import hashlib,json,sqlite3,time,uuid
 from app.config import ROOT,settings
 
 class RevisionConflict(Exception):pass
@@ -12,8 +12,16 @@ def now():return datetime.now(timezone.utc).isoformat()
 
 def connect():
  c=sqlite3.connect(settings.db_path,timeout=15)
- c.row_factory=sqlite3.Row;c.execute('PRAGMA foreign_keys=ON');c.execute('PRAGMA busy_timeout=15000')
+ c.row_factory=sqlite3.Row;c.execute('PRAGMA foreign_keys=ON');c.execute('PRAGMA busy_timeout=15000');c.execute('PRAGMA synchronous=NORMAL')
  return c
+def retry_locked(fn,*args,attempts=8,**kwargs):
+ """Retry a database call while another writer (e.g. a corpus ingest) holds the lock."""
+ for attempt in range(attempts):
+  try:return fn(*args,**kwargs)
+  except sqlite3.OperationalError as exc:
+   if attempt==attempts-1 or not any(s in str(exc).lower() for s in ('locked','busy')):raise
+   time.sleep(min(0.5*(attempt+1),3))
+
 @contextmanager
 def db():
  c=connect()
@@ -26,7 +34,13 @@ def db():
  finally:
   c.close()
 
+_cache_db=None
+_regs_cache=None
+_arts_cache=None
+
 def initialize():
+ global _cache_db,_regs_cache,_arts_cache
+ _cache_db=None;_regs_cache=None;_arts_cache=None
  settings.db_path.parent.mkdir(parents=True,exist_ok=True)
  with db() as c:
   c.executescript('''
@@ -57,6 +71,7 @@ def initialize():
      {'number':'2','text':'(1) Permohonan hanya dapat diajukan melalui aplikasi digital.\n(2) Pemohon yang tidak memiliki akses internet tidak dapat mengajukan permohonan.'},
      {'number':'3','text':'Pengaduan masyarakat tidak perlu ditanggapi oleh penyelenggara.'},
      {'number':'4','text':'Peraturan ini berlaku sejak ditetapkan tanpa masa transisi.'}]},connection=c)
+ _ensure_corpus_cache()
 
 def create_draft(payload,connection=None):
  id=uuid.uuid4().hex;timestamp=now();raw=json.dumps(payload,ensure_ascii=False)
@@ -70,7 +85,7 @@ def create_draft(payload,connection=None):
 def get_draft(id,connection=None):
  def read(c):
   r=c.execute('SELECT * FROM drafts WHERE id=?',(id,)).fetchone()
-  if not r:raise KeyError('Rancangan tidak ditemukan')
+  if not r:raise KeyError('Draft not found')
   return {'id':r['id'],'revision':r['revision'],'updated_at':r['updated_at'],**json.loads(r['payload'])}
  if connection:return read(connection)
  with db() as c:return read(c)
@@ -79,22 +94,34 @@ def save_draft(id,payload,expected):
  timestamp=now();raw=json.dumps(payload,ensure_ascii=False)
  with db() as c:
   row=c.execute('UPDATE drafts SET payload=?,revision=revision+1,updated_at=? WHERE id=? AND revision=?',(raw,timestamp,id,expected))
-  if row.rowcount!=1:raise RevisionConflict('Draft sudah berubah. Muat ulang sebelum menyimpan.')
+  if row.rowcount!=1:raise RevisionConflict('The draft has changed. Reload before saving.')
   c.execute('INSERT INTO revisions VALUES (?,?,?,?)',(id,expected+1,raw,timestamp))
  return get_draft(id)
 
 def list_drafts():
  with db() as c:return [{'id':r['id'],'revision':r['revision'],'updated_at':r['updated_at'],**json.loads(r['payload'])} for r in c.execute('SELECT * FROM drafts ORDER BY updated_at DESC')]
 
+def _ensure_corpus_cache():
+ global _cache_db,_regs_cache,_arts_cache
+ path=str(settings.db_path)
+ if _cache_db==path and _regs_cache is not None and _arts_cache is not None:return
+ with db() as c:
+  regs=sorted([json.loads(r['payload']) for r in c.execute('SELECT payload FROM regulations')],key=lambda d:(0 if d['quality']['article_count']>0 else 1,d['metadata']['hierarchy_rank'] if d['metadata']['hierarchy_rank'] is not None else 99,d['id']))
+  reg_map={d['id']:d for d in regs}
+  arts={}
+  for r in c.execute('SELECT id,payload,regulation_id FROM articles'):
+   d=reg_map[r['regulation_id']]
+   arts[r['id']]={**json.loads(r['payload']),'regulation_id':d['id'],'regulation_label':f"{d['metadata']['type']} {d['metadata']['number']}/{d['metadata']['year']}",'regulation_type':d['metadata']['type'],'hierarchy_rank':d['metadata']['hierarchy_rank'],'version_kind':d['metadata']['version_kind'],'promulgated_on':d['metadata']['promulgated_on']}
+ _cache_db=path;_regs_cache=regs;_arts_cache=arts
+
 def regulations():
- with db() as c:return [json.loads(r['payload']) for r in c.execute('SELECT payload FROM regulations ORDER BY id')]
+ _ensure_corpus_cache()
+ return _regs_cache
 
 def article(id):
- with db() as c:
-  r=c.execute('SELECT payload,regulation_id FROM articles WHERE id=?',(id,)).fetchone()
-  if not r:raise KeyError('Pasal tidak ditemukan')
-  d=json.loads(c.execute('SELECT payload FROM regulations WHERE id=?',(r['regulation_id'],)).fetchone()['payload'])
-  return {**json.loads(r['payload']),'regulation_id':d['id'],'regulation_label':f"{d['metadata']['type']} {d['metadata']['number']}/{d['metadata']['year']}",'regulation_type':d['metadata']['type'],'hierarchy_rank':d['metadata']['hierarchy_rank'],'version_kind':d['metadata']['version_kind'],'promulgated_on':d['metadata']['promulgated_on']}
+ _ensure_corpus_cache()
+ if id not in _arts_cache:raise KeyError('Article not found')
+ return dict(_arts_cache[id])
 
 def add_run(draft,kind,payload):
  id=uuid.uuid4().hex
@@ -104,7 +131,7 @@ def add_run(draft,kind,payload):
 def get_run(id):
  with db() as c:
   r=c.execute('SELECT * FROM runs WHERE id=?',(id,)).fetchone()
-  if not r:raise KeyError('Analisis tidak ditemukan')
+  if not r:raise KeyError('Analysis not found')
   return {**dict(r),'payload':json.loads(r['payload'])}
 
 def runs(draft_id):

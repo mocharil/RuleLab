@@ -3,7 +3,11 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 ROOT=Path(__file__).resolve().parents[1]
-load_dotenv(ROOT/'.env')
+# .env is authoritative for provider credentials, but explicitly set RULELAB_* variables
+# (e.g. RULELAB_DB for an isolated test database) must not be silently replaced by it.
+_explicit={k:v for k,v in os.environ.items() if k.startswith('RULELAB_')}
+load_dotenv(ROOT/'.env',override=os.getenv('AI_PROVIDER')!='demo')
+os.environ.update(_explicit)
 
 @dataclass
 class Settings:

@@ -1,77 +1,77 @@
 import {icon} from '/static/design.js';
 const E=(v='')=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const GUIDES={
- home:{title:'Mulai dari tujuan kebijakan',intro:'Pilih rancangan atau mulai dari brief. Setiap hasil tetap terikat pada versi naskah.',steps:[
-  ['Pilih pekerjaan','Buka rancangan yang sudah ada atau buat rancangan baru.','.home-grid'],
-  ['Kenali alurnya','Susun naskah, review legal, lalu uji dampak dan reaksi persona.','.home-banner'],
-  ['Lanjutkan rancangan','Daftar ini membuka naskah tersimpan, bukan salinan baru.','.home-bottom']]},
- editor:{title:'Susun, review, dan simulasi dalam satu layar',intro:'Tulis pasal di kiri. Gunakan tab asisten di kanan untuk review dan uji dampak.',steps:[
-  ['Pilih naskah','Pilih rancangan yang ingin dikerjakan. Judul dan jenis peraturan dapat diedit.','.document-header'],
-  ['Edit pasal','Setiap perubahan ditandai belum disimpan. Simpan sebelum membagikan atau meninjau versi terbaru.','.article-list'],
-  ['Gunakan asisten','Tab Simulasi, Review, Sumber, Netizen dan Agents tetap berada di samping naskah.','.studio-tabs'],
-  ['Simpan dan ekspor','Simpan perubahan atau ekspor DOCX untuk review manusia.','.page-heading .actions']]},
- analysis:{title:'Telusuri temuan sampai ke sumbernya',intro:'Potensi konflik perlu ditinjau bersama kutipan, versi hukum, dan interpretasi alternatif.',steps:[
-  ['Tetapkan tanggal','Tanggal analisis memengaruhi konteks versi dan perubahan peraturan.','#legal-date'],
-  ['Jalankan pemeriksaan','Ambil sumber terkait untuk naskah tersimpan melalui tombol pemeriksaan.','.page-heading .actions'],
-  ['Tinjau alasan','Buka kutipan sumber, validasi dan interpretasi alternatif pada temuan. Jika belum ada hasil, jalankan pemeriksaan dahulu.','.finding'],
-  ['Terapkan dengan review','Usulan hanya dapat diterapkan bila versi analisis sesuai dengan draft. Simpan catatan reviewer setelah meninjau.','.finding-bottom']]},
- simulation:{title:'Proyeksi dampak dan eksplorasi reaksi publik',intro:'Bandingkan akses, biaya, dan dengarkan tanggapan persona netizen AI dalam satu layar terpadu.',steps:[
-  ['Isi asumsi & skenario','Tentukan parameter pemohon dan siapkan Alternatif B.','.assumptions'],
-  ['Bandingkan angka','Jalankan simulasi untuk melihat perubahan akses dan biaya.','.scenario-grid'],
-  ['Eksplorasi netizen AI','Tinjau peta jejaring persona, opini multi-putaran, dan sentimen warga.','.social-launch'],
-  ['Tinjau & terapkan','Evaluasi mitigasi stakeholder dan terapkan alternatif terbaik ke draft.','.page-heading .actions']]},
- social:{title:'Eksplorasi opini, balasan, dan mitigasi',intro:'Persona sintetis membaca naskah, saling menanggapi, dan menghasilkan opini yang bisa ditelusuri.',steps:[
-  ['Kumpulkan opini','Siapkan B dan klik Kumpulkan opini agen. Demo memakai template; live memakai Gemini/Vertex.','.social-launch'],
-  ['Jelajahi node','Klik persona untuk opini terbaru, satelit 1/2/3 untuk komentar spesifik, atau node hukum untuk sumber.','.social-network'],
-  ['Baca konteks','Inspector memperlihatkan opini, alasan, balasan dan usulan. Tidak ada klaim mewakili opini publik nyata.','.social-inspector'],
-  ['Bandingkan dan replay','Pilih A/B, putaran atau replay. Replay tidak memanggil AI lagi; jeda visual tidak membatalkan proses server.','.social-toolbar']]},
- gallery:{title:'Baca, tanyakan, dan telusuri sumber',intro:'Galeri menampilkan koleksi nyata. Bot memakai pasal hasil retrieval dan tidak menjelaskan dokumen yang belum tersedia.',steps:[
-  ['Temukan dokumen','Cari judul, nomor atau tahun dan gunakan filter jenis.','#gallery-search'],
-  ['Baca pasal','Pilih kartu, kemudian pilih pasal. Naskah asli dan JSON tersedia di reader.','#gallery-reader'],
-  ['Tanyakan maknanya','Pilih konteks dokumen atau seluruh koleksi, lalu tulis pertanyaan. Demo hanya cuplikan; live memberikan penjelasan Gemini.','#gallery-chat-form'],
-  ['Periksa rujukan','Buka kutipan dan konteks pasal. Percakapan disimpan hanya pada sesi halaman dan bisa dihapus.','.gallery-chat']]},
- corpus:{title:'Dari pasal ke dokumen resmi',intro:'Cari dan bandingkan sumber. Corpus contoh belum memastikan status hukum terkonsolidasi.',steps:[
-  ['Cari konteks','Gunakan kata kunci topik atau isi pasal untuk menemukan sumber terkait.','#search-form'],
-  ['Buka regulasi','Kartu regulasi memuat sumber, jumlah pasal dan catatan ekstraksi.','.library-grid'],
-  ['Periksa dokumen asli','Buka naskah asli atau JSON hasil enrichment untuk memverifikasi kutipan dan provenance.','.law-card .actions'],
-  ['Bandingkan pasal','Pilih dua pasal untuk meninjau hubungan hierarki dan potensi konflik dengan konteksnya.','.page-heading .actions']]},
- history:{title:'Jejak keputusan yang dapat diperiksa',intro:'Riwayat menyimpan hasil pada versi saat dijalankan beserta catatan reviewer.',steps:[
-  ['Pilih hasil','Filter pemeriksaan, simulasi dan forum netizen untuk menemukan proses yang dibutuhkan.','.filter-bar'],
-  ['Periksa versinya','Status versi menunjukkan apakah draft sudah berubah setelah hasil dibuat.','.history-timeline'],
-  ['Tinjau dan catat','Lihat hasil proses atau tambahkan catatan review. Catatan tidak mengesahkan suatu hukum.','.history-row .actions'],
-  ['Buka versi naskah','Lihat versi draft untuk menelusuri perubahan pasal.','.page-heading .actions']]},
- agents:{title:'Ikuti eksekusi, sumber, dan hasilnya',intro:'Koordinator menjalankan tool terbatas. Aktivitas tersimpan tanpa menerapkan perubahan naskah otomatis.',steps:[
-  ['Pilih cakupan','Pilih review legal, dampak atau keduanya. Isi pembanding dan asumsi yang diperlukan.','.mission-panel'],
-  ['Mulai proses','Jalankan agen pada snapshot versi draft. Hindari membuat proses lain ketika tugas masih aktif.','[data-action="start-agent"]'],
-  ['Telusuri aktivitas','Jejak proses memuat langkah, sumber, status dan hasil. Gagal atau terinterupsi tidak diganti hasil demo.','#agent-live'],
-  ['Tinjau hasil','Buka keluaran dan riwayat proses. Pembatalan tersedia bagi pemilik atau admin.','.agent-job-history']]}
+ data:{title:'Get to know the collection and data spread',intro:'Numbers come from the application’s collection. New uploads and links are recorded in a separate queue.',steps:[
+  ['Collection size','Unique regulations, documents/versions and articles/blocks are counted from the available data.','.collection-stats'],
+  ['Choose distribution meaning','Distinguish issuing region, regulated coverage and mentioned locations. Click a province or use the region picker.','.collection-map-panel'],
+  ['Explore sources','Choose a document to open the gallery and read its source articles.','.collection-documents'],
+  ['Add data','Upload sources or record JDIH links. The queue shows review and OCR status.','.collection-intake']]},
+ home:{title:'Start from the policy goal',intro:'Choose a draft or start from a brief. Every result stays bound to a document version.',steps:[
+  ['Choose a task','Open an existing draft or create a new one.','.home-grid'],
+  ['Kenali alurnya','Draft the document, run a legal review, then test impact and persona reactions.','.home-banner'],
+  ['Continue a draft','This list opens saved documents, not new copies.','.home-bottom']]},
+ editor:{title:'Draft, review and simulate on one screen',intro:'Write articles on the left. Use the assistant tabs on the right for review and impact tests.',steps:[
+  ['Choose a document','Choose the draft you want to work on. Title and regulation type can be edited.','.document-header'],
+  ['Edit articles','Every change is marked as unsaved. Save before sharing or reviewing the latest version.','.article-list'],
+  ['Use the assistant','The Simulation, Review, Sources, Public and Agents tabs stay next to the document.','.studio-tabs'],
+  ['Save and export','Save changes or export DOCX for human review.','.page-heading .actions']]},
+ analysis:{title:'Trace findings back to their source',intro:'Potential conflicts must be reviewed together with quotes, legal versions and alternative interpretations.',steps:[
+  ['Set the date','The analysis date affects the version context and regulatory amendments.','#legal-date'],
+  ['Run a check','Retrieve related sources for the saved document with the check button.','.page-heading .actions'],
+  ['Review reasoning','Open source quotes, validation and alternative interpretations on findings. If there are no results yet, run a check first.','.finding'],
+  ['Apply with review','A proposal can only be applied when the analysis version matches the draft. Save reviewer notes after reviewing.','.finding-bottom']]},
+ simulation:{title:'Impact projection and public reaction exploration',intro:'Compare access and cost, and hear AI persona reactions on one unified screen.',steps:[
+  ['Fill in assumptions & scenario','Set applicant parameters and prepare Alternative B.','.assumptions'],
+  ['Compare numbers','Run the simulation to see changes in access and cost.','.scenario-grid'],
+  ['AI public exploration','Review the persona network map, multi-round opinions and citizen sentiment.','.social-launch'],
+  ['Review & apply','Evaluate stakeholder mitigations and apply the best alternative to the draft.','.page-heading .actions']]},
+ social:{title:'Explore opinions, replies and mitigations',intro:'Synthetic personas read the document, reply to each other and produce traceable opinions.',steps:[
+  ['Collect opinions','Prepare B and click Collect opinions. Demo uses templates; live uses Gemini/Vertex.','.social-launch'],
+  ['Jelajahi node','Click a persona for its latest opinion, satellites 1/2/3 for a specific comment, or a legal node for its source.','.social-network'],
+  ['Baca konteks','The inspector shows opinions, reasoning, replies and proposals. It makes no claim to represent real public opinion.','.social-inspector'],
+  ['Compare and replay','Choose A/B, a round or replay. Replay does not call the AI again; pausing the visual does not cancel the server run.','.social-toolbar']]},
+ library:{title:'Find, read, ask about and compare sources',intro:'One library for the document collection and article search. Reader and conversation stay in place when you switch tabs.',steps:[
+  ['Choose how to explore','Document collection searches titles/numbers/years. Article search looks for phrases across all sources.','.library-tabs'],
+  ['Baca konteks','Choose a document or open a search result to read articles and their source trail.','#gallery-reader'],
+  ['Ask what it means','The assistant uses the context you choose and quotes from the collection. Demo mode shows excerpts only.','#gallery-chat-form'],
+  ['Compare articles','Choose two sources and their articles to review the hierarchy and how the norms relate.','[data-action="compare"]']]},
+ history:{title:'A decision trail you can audit',intro:'The Results & review tab in Activity keeps results for the version they ran on, together with reviewer notes.',steps:[
+  ['Choose a result','Filter checks, simulations and public forums to find the run you need.','.filter-bar'],
+  ['Check the version','Version status shows whether the draft changed after a result was created.','.history-timeline'],
+  ['Review and record','View run results or add review notes. Notes do not enact any law.','.history-row .actions'],
+  ['Open document versions','Open draft versions to trace article changes.','.page-heading .actions']]},
+ agents:{title:'Follow execution, sources and results',intro:'The Agent runs tab in Activity uses a coordinator that runs bounded tools. Activity is recorded without applying document changes automatically.',steps:[
+  ['Choose scope','Choose legal review, impact or both. Fill in the comparison text and assumptions needed.','.mission-panel'],
+  ['Start run','Run agents on a draft version snapshot. Avoid starting another run while a task is still active.','[data-action="start-agent"]'],
+  ['Trace activity','The run trace contains steps, sources, status and results. Failed or interrupted runs are never replaced by demo results.','#agent-live'],
+  ['Review results','Open outputs and run history. Cancelling is available to the owner or an admin.','.agent-job-history']]}
 };
 let context,step=0,trigger,lastView,highlight;
 const storage={get(k){try{return localStorage.getItem(k)}catch{return null}},set(k,v){try{localStorage.setItem(k,v)}catch{}}};
 function applySidebar(folded){
  document.body.classList.toggle('sidebar-folded',folded);
  const toggle=document.querySelector('#sidebar-toggle');if(!toggle)return;
- toggle.setAttribute('aria-expanded',String(!folded));toggle.setAttribute('aria-label',folded?'Perluas sidebar':'Lipat sidebar');toggle.title=folded?'Perluas sidebar':'Lipat sidebar';
+ toggle.setAttribute('aria-expanded',String(!folded));toggle.setAttribute('aria-label',folded?'Perluas sidebar':'Collapse sidebar');toggle.title=folded?'Perluas sidebar':'Collapse sidebar';
  storage.set('rulelab.sidebarFolded',folded?'1':'0');
 }
 export function enhanceWorkspace(state){
  context=state;const guide=GUIDES[state.view]||GUIDES.home,main=document.querySelector('#main');
  const intro=document.createElement('details');intro.className='menu-guide';intro.id='page-guide';
- intro.innerHTML='<summary><span class="guide-symbol" aria-hidden="true">'+icon('book')+'</span><span><b>'+E(guide.title)+'</b><small>Panduan cepat untuk menu ini</small></span><span class="guide-expand" aria-hidden="true">⌄</span></summary><div class="guide-content"><p>'+E(guide.intro)+'</p><div class="guide-flow">'+guide.steps.map(([title],i)=>'<span><em>0'+(i+1)+'</em>'+E(title)+'</span>').join('')+'</div><button class="btn" data-ux="tour">Mulai panduan interaktif ↗</button></div>';
+ intro.innerHTML='<summary><span class="guide-symbol" aria-hidden="true">'+icon('book')+'</span><span><b>'+E(guide.title)+'</b><small>Quick guide for this menu</small></span><span class="guide-expand" aria-hidden="true">⌄</span></summary><div class="guide-content"><p>'+E(guide.intro)+'</p><div class="guide-flow">'+guide.steps.map(([title],i)=>'<span><em>0'+(i+1)+'</em>'+E(title)+'</span>').join('')+'</div><button class="btn" data-ux="tour">Start interactive guide ↗</button></div>';
  main.append(intro);
  if(lastView!==state.view){main.classList.remove('ux-enter');void main.offsetWidth;main.classList.add('ux-enter');lastView=state.view;}
  document.querySelectorAll('#nav [data-view]').forEach(el=>{const name=el.querySelector('.nav-title')?.textContent;el.setAttribute('aria-label',name);if(document.body.classList.contains('framework-ready'))el.removeAttribute('title');else el.title=name;});
- const topHelp=document.querySelector('#menu-help');if(topHelp){topHelp.title='Panduan '+guide.title;topHelp.setAttribute('aria-label','Buka panduan menu '+guide.title);}
+ const topHelp=document.querySelector('#menu-help');if(topHelp){topHelp.title='Guide '+guide.title;topHelp.setAttribute('aria-label','Open menu guide '+guide.title);}
  if(document.querySelector('#guide-dialog')?.open)showStep();
 }
 function clearHighlight(){highlight?.classList.remove('guide-highlight');highlight=null;}
 function showStep(){
  clearHighlight();const g=GUIDES[context.view]||GUIDES.home;let [title,copy,selector]=g.steps[step];
- if(context.view==='editor'&&document.body.classList.contains('editor-focus')&&selector==='.studio-tabs'){selector='[data-ux="focus-editor"]';title='Tampilkan asisten saat diperlukan';copy='Mode fokus menyembunyikan asisten. Tutup panduan lalu klik Tampilkan asisten untuk membuka review, simulasi dan opini persona di samping naskah.';}
+ if(context.view==='editor'&&document.body.classList.contains('editor-focus')&&selector==='.studio-tabs'){selector='[data-ux="focus-editor"]';title='Show the assistant when needed';copy='Focus mode hides the assistant. Close the guide, then click Show assistant to open review, simulation and persona opinions next to the document.';}
  highlight=document.querySelector('#main '+selector)||document.querySelector('#main .page-heading,#main .home-banner');
  highlight?.classList.add('guide-highlight');
  if(highlight)highlight.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth'});
- const dialog=document.querySelector('#guide-dialog');dialog.innerHTML='<div class="coach-top"><span class="eyebrow">PANDUAN · '+(step+1)+' / '+g.steps.length+'</span><button data-ux="end-tour" aria-label="Tutup panduan">×</button></div><div class="coach-illustration" aria-hidden="true"><span>0'+(step+1)+'</span><i></i><i></i><i></i></div><h2 id="coach-title">'+E(title)+'</h2><p>'+E(copy)+'</p><div class="coach-dots">'+g.steps.map((_,i)=>'<span class="'+(i===step?'current':'')+'"></span>').join('')+'</div><div class="coach-actions"><button class="btn" data-ux="previous" '+(step===0?'disabled':'')+'>← Sebelumnya</button><button class="btn primary" data-ux="next">'+(step===g.steps.length-1?'Selesai':'Selanjutnya →')+'</button></div>';
+ const dialog=document.querySelector('#guide-dialog');dialog.innerHTML='<div class="coach-top"><span class="eyebrow">GUIDE · '+(step+1)+' / '+g.steps.length+'</span><button data-ux="end-tour" aria-label="Close guide">×</button></div><div class="coach-illustration" aria-hidden="true"><span>0'+(step+1)+'</span><i></i><i></i><i></i></div><h2 id="coach-title">'+E(title)+'</h2><p>'+E(copy)+'</p><div class="coach-dots">'+g.steps.map((_,i)=>'<span class="'+(i===step?'current':'')+'"></span>').join('')+'</div><div class="coach-actions"><button class="btn" data-ux="previous" '+(step===0?'disabled':'')+'>← Previous</button><button class="btn primary" data-ux="next">'+(step===g.steps.length-1?'Done':'Selanjutnya →')+'</button></div>';
  dialog.querySelector('[data-ux=next]').focus({preventScroll:true});
 }
 export function initializeWorkspaceUX(){

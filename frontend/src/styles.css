@@ -2,3 +2,12 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 @source "./";
 /* Product tokens and component appearance are defined once in /static/design.css. */
+.number-ticker {
+  position: relative;
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+.number-ticker-visual::before {
+  content: attr(data-ticker-value);
+}
+

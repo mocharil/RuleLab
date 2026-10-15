@@ -1,0 +1,82 @@
+const {chromium}=require('playwright');
+const {spawn}=require('node:child_process');
+const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'..'),tmp=fs.mkdtempSync(path.join(os.tmpdir(),'rulelab-forms-'));
+const out=path.join(root,'artifacts','forms-network');fs.mkdirSync(out,{recursive:true});
+const origin='http://127.0.0.1:8058';
+const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.main:app','--port','8058'],{cwd:root,env:{...process.env,AI_PROVIDER:'demo',SEARCH_BACKEND:'sqlite',RULELAB_DB:path.join(tmp,'db.sqlite'),RULELAB_API_TOKEN:'',RULELAB_ACCESS_KEYS:'[]'},stdio:'ignore'});
+(async()=>{let browser,page;const errors=[],checks=[];
+ try{
+  for(let i=0;i<1200;i++){try{if((await fetch(origin+'/api/health')).ok)break;}catch{}await new Promise(r=>setTimeout(r,100));}
+  browser=await chromium.launch({headless:true});page=await browser.newPage({viewport:{width:1600,height:1100},bypassCSP:true,acceptDownloads:true});page.on('pageerror',e=>errors.push(e.message));
+  const settled=()=>page.waitForFunction(()=>document.querySelector('#main')?.getAttribute('aria-busy')==='false');
+  const click=async selector=>{await page.locator(selector).first().click();await settled();};
+  const choose=async(id,value)=>{const text=await page.locator('#'+id).evaluate((el,value)=>[...el.options].find(o=>o.value===value).text,value);await page.locator('#'+id+'-trigger').click();const popup=page.locator('.rl-select-popup:popover-open');if(await popup.locator('input').isVisible())await popup.locator('input').fill(text);await popup.getByRole('option',{name:text,exact:true}).click();await settled();};
+  const screenshot=async name=>{await page.evaluate(()=>document.fonts.ready);await page.screenshot({path:path.join(out,name+'.png'),animations:'disabled'});};
+  const fits=async label=>assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),label+' overflows');
+  await page.goto(origin+'/workspace');await page.waitForSelector('.home-banner');await settled();
+  await click('[data-action="new"]');
+  assert.equal(await page.locator('#new-type option').count(),15);
+  await choose('new-type','PERDA_KAB');await choose('builder-level','kota');
+  await page.locator('#new-title').fill('Pelayanan Publik Digital yang Inklusif');await page.locator('#builder-region').fill('Bandung');await page.locator('#builder-place').fill('Bandung');
+  await page.locator('#builder-transition').check();await page.locator('#builder-explanation').check();await page.locator('#builder-attachment').check();
+  await click('[data-action="preview-draft"]');
+  const paper=await page.locator('.builder-paper').textContent();
+  assert(paper.includes('PERATURAN DAERAH KOTA BANDUNG')&&paper.includes('WALI KOTA BANDUNG')&&paper.includes('LEMBARAN DAERAH KOTA BANDUNG')&&paper.includes('BAB IV'));
+  await screenshot('guided-perda-preview');checks.push('15-type catalog, city Perda identity, chapters, closing, explanation and attachments');
+  await page.locator('#builder-region').fill('Surabaya');assert((await page.locator('#builder-preview-status').textContent()).includes('preview again'));
+  await click('[data-action="preview-draft"]');assert((await page.locator('.builder-paper').textContent()).includes('SURABAYA'));
+  await click('[data-action="create"]');
+  assert.equal(await page.locator('[data-article]').count(),4);assert.equal(await page.locator('[data-chapter]').count(),4);
+  await page.locator('.document-format-fields summary').click();
+  assert((await page.locator('#draft-closing').inputValue()).includes('WALI KOTA SURABAYA'));
+  await page.locator('#draft-explanation').fill('I. UMUM\nNaskah ini menjelaskan layanan inklusif.');await click('[data-action="save"]');
+  const download=page.waitForEvent('download');await click('[data-action="export"]');await(await download).saveAs(path.join(out,'perda-preview.docx'));checks.push('save/restore structured metadata and actual DOCX export');
+  await click('#workflow-stage-simulation');await click('[data-section="social"]');
+  assert.equal(await page.locator('.preview-persona').count(),24);
+  await choose('social-persona-count','32');await choose('social-round-count','5');
+  assert.equal(await page.locator('.preview-persona').count(),32);
+  assert((await page.locator('.social-configuration').textContent()).includes('320 A/B responses'));
+  await click('.social-launch [data-action="start-agent"]');
+  await page.waitForFunction(()=>document.querySelector('.social-toolbar .pill')?.textContent.startsWith('Done'),null,{timeout:60000});
+  assert.equal(await page.locator('.social-node').count(),32);assert.equal(await page.locator('.social-opinion-node').count(),160);
+  assert.equal(await page.locator('.social-post').count(),160);
+  assert.equal(await page.locator('.network-cluster').count(),6);
+  assert(await page.locator('.social-edge').count()>32);checks.push('32 agents, 5 rounds, 320 actual A/B responses and source-backed reply graph');
+  const graph=page.locator('#social-live .social-network > svg');
+  await page.locator('#social-live .social-network').scrollIntoViewIfNeeded();await screenshot('network-32-agents');
+  await choose('network-layer','connections');assert(await page.locator('.social-opinion-node').evaluateAll(nodes=>nodes.every(node=>getComputedStyle(node).display==='none')));
+  await choose('network-layer','all');assert(await page.locator('.social-opinion-node').evaluateAll(nodes=>nodes.every(node=>getComputedStyle(node).display!=='none')));
+  await choose('network-issue','cost');assert.equal(await page.locator('.social-node:not(.network-muted):not([data-issue="cost"])').count(),0);
+  await choose('network-issue','all');await page.locator('#network-search').fill('Sari');
+  assert.equal(await page.locator('.social-node:not(.network-muted)').count(),1);
+  await page.locator('#network-search').fill('');
+  const before=await graph.getAttribute('viewBox');await click('[data-zoom="in"]');assert.notEqual(await graph.getAttribute('viewBox'),before);
+  await click('[data-zoom="reset"]');assert.equal(await graph.getAttribute('viewBox'),before);
+  await click('[data-network-expand]');await page.waitForSelector('#network-dialog[open]');assert.equal(await page.locator('#network-dialog .social-node').count(),32);
+  assert(await page.locator('#network-dialog').evaluate(el=>{const r=el.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight&&r.left>=0&&r.right<=innerWidth;}));await screenshot('network-expanded');
+  await page.locator('#network-dialog [data-person="sari_desa"]').click();assert.equal(await page.locator('#network-dialog').evaluate(el=>el.open),false);
+  assert((await page.locator('.social-inspector').textContent()).includes('Sari'));
+  await page.locator('#social-live .social-opinion-node[data-comment="A-1-sari_desa"]').click();assert.equal(await page.locator('.social-selected-opinion').getAttribute('data-opinion-id'),'A-1-sari_desa');
+  await click('[data-scenario="B"]');assert.equal(await page.locator('.social-post').count(),160);
+  await click('[data-social-round="2"]');assert.equal(await page.locator('.social-post').count(),64);
+  await click('#social-latest');assert.equal(await page.locator('.social-post').count(),160);
+  checks.push('search/issue/layer filters, zoom/reset, fullscreen and exact opinion replay');
+  for(const width of [360,390,768,1440]){
+   await page.setViewportSize({width,height:1000});await fits('forum '+width);
+   if(width===390){await page.locator('#social-live .social-network').scrollIntoViewIfNeeded();await screenshot('network-mobile');}
+  }
+  await page.setViewportSize({width:1440,height:1100});await click('#workflow-stage-editor');await click('#tab-social');await fits('compact editor social');
+  await screenshot('editor-network');
+  await click('.workspace-home-link');await click('[data-action="new"]');await choose('new-type','PERPPU');await choose('builder-form','amendment');
+  await page.locator('#new-title').fill('Perubahan atas Ketentuan Pelayanan Publik');await click('[data-action="preview-draft"]');
+  const amendment=await page.locator('.builder-paper').textContent();assert(amendment.includes('Pasal I')&&amendment.includes('Pasal II')&&!amendment.includes('Persetujuan Bersama'));
+  await screenshot('perppu-amendment-preview');
+  await page.setViewportSize({width:390,height:1000});await fits('builder mobile');await screenshot('builder-mobile');
+  await click('[data-action="create"]');assert.deepEqual(await page.locator('[data-number]').evaluateAll(el=>el.map(x=>x.value)),['I','II']);
+  assert.equal(await page.locator('[data-action="add"]').isDisabled(),true);assert.equal(await page.locator('[data-action="remove"]:enabled').count(),0);
+  await click('[data-action="save"]');checks.push('amendment Pasal I/II and compact/mobile layouts');
+  assert.deepEqual(errors,[]);console.log(JSON.stringify({status:'passed',checks,screenshots:out},null,2));
+ }catch(error){if(page)await page.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});console.error(error);process.exitCode=1;}
+ finally{await browser?.close();server.kill();}
+})();

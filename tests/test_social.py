@@ -3,13 +3,13 @@ from io import BytesIO
 import pytest
 from docx import Document
 from app.config import settings
-from app.models import Assumptions
+from app.models import Assumptions, SocialOptions
 from app import store
 from app.services import social, agents, ai, export
 
 def test_demo_social_rounds_are_bound_to_snapshot(client):
     draft = client.get('/api/drafts').json()[0]
-    req = agents.JobRequest(intent='social', expected_revision=draft['revision'],
+    req = agents.JobRequest(intent='social', expected_revision=draft['revision'], social_options=SocialOptions(persona_count=8,rounds=3),
                            alternative_text='Pasal 2\nPelayanan menyediakan kanal pendampingan.')
     job_id, _ = agents.create(draft['id'], req, 'editor', 'social')
     asyncio.run(agents.execute(job_id))
@@ -30,7 +30,7 @@ def test_demo_social_rounds_are_bound_to_snapshot(client):
     assert store.get_draft(draft['id'])['revision'] == draft['revision']
     assert len([e for e in job['events'] if e['tool'] == 'social_reaction' and e['status'] == 'completed']) == 48
     data = export.export_docx(draft, [run], report=True)
-    assert 'Forum netizen sintetis' in '\n'.join(x.text for x in Document(BytesIO(data)).paragraphs)
+    assert 'Synthetic public forum' in '\n'.join(x.text for x in Document(BytesIO(data)).paragraphs)
 
 def test_live_personas_receive_prior_context_and_scenario_isolation(client, monkeypatch):
     monkeypatch.setattr(settings, 'provider', 'gemini')
@@ -46,7 +46,7 @@ def test_live_personas_receive_prior_context_and_scenario_isolation(client, monk
     monkeypatch.setattr(ai, 'generate', fake)
     draft = client.get('/api/drafts').json()[0]
     events = []
-    p = asyncio.run(social.simulate(draft, 'Alternatif dengan kanal bantuan.', Assumptions().model_dump(), [], lambda *e: events.append(e)))
+    p = asyncio.run(social.simulate(draft, 'Alternatif dengan kanal bantuan.', Assumptions().model_dump(), [], lambda *e: events.append(e), {'persona_count':8,'rounds':3}))
     assert len(calls) == 48 and p['provider']['mode'] == 'live'
     for data in calls:
         assert len(data['previous_comments']) == 8 * (data['round'] - 1)
@@ -65,7 +65,7 @@ def test_invalid_live_sources_or_reply_rejected(client, monkeypatch, invalid):
     monkeypatch.setattr(ai, 'generate', fake)
     draft = client.get('/api/drafts').json()[0]
     with pytest.raises(ai.AIError):
-        asyncio.run(social.simulate(draft, 'Alternatif pelayanan publik.', Assumptions().model_dump(), [], lambda *e: None))
+        asyncio.run(social.simulate(draft, 'Alternatif pelayanan publik.', Assumptions().model_dump(), [], lambda *e: None, {'persona_count':8,'rounds':3}))
 
 def test_live_failure_preserves_partial_events_no_demo_fallback(client, monkeypatch):
     draft = client.get('/api/drafts').json()[0]
@@ -90,16 +90,16 @@ def test_cancellation_stops_all_persona_tasks(client, monkeypatch):
     monkeypatch.setattr(ai, 'generate', slow)
     draft = client.get('/api/drafts').json()[0]
     async def run():
-        t = asyncio.create_task(social.simulate(draft, 'Alternatif pelayanan publik.', Assumptions().model_dump(), [], lambda *e: None))
+        t = asyncio.create_task(social.simulate(draft, 'Alternatif pelayanan publik.', Assumptions().model_dump(), [], lambda *e: None, {'persona_count':8,'rounds':3}))
         for _ in range(30):
             await asyncio.sleep(.001)
-            if len(started) == 8:
+            if len(started) == settings.ai_concurrency:
                 break
         t.cancel()
         with pytest.raises(asyncio.CancelledError):
             await t
     asyncio.run(run())
-    assert len(started) == 8 and set(stopped) == set(started)
+    assert len(started) == settings.ai_concurrency and set(stopped) == set(started)
 
 def test_aggregation_only_counts_latest_reactions():
     comments = [{'id': 'old', 'persona_id': 'sari', 'stance': 'concern', 'issue': 'access'},
@@ -118,7 +118,7 @@ def test_persona_timeout_is_terminal_and_cancels_siblings(client, monkeypatch):
     events = []
     draft = client.get('/api/drafts').json()[0]
     with pytest.raises(TimeoutError):
-        asyncio.run(social.simulate(draft, 'Alternatif pelayanan publik.', Assumptions().model_dump(), [], lambda *e: events.append(e)))
+        asyncio.run(social.simulate(draft, 'Alternatif pelayanan publik.', Assumptions().model_dump(), [], lambda *e: events.append(e), {'persona_count':8,'rounds':3}))
     assert not any(e[1] == 'social_reaction' and e[2] == 'completed' for e in events)
     terminal = [e for e in events if e[1] == 'social_reaction' and e[2] in {'failed', 'cancelled'}]
     assert len(terminal) == 8
@@ -130,7 +130,7 @@ def test_domain_persona_adaptation():
     }
     assert social.detect_domain(labor_draft) == 'labor'
     labor_personas = social.get_personas_for_draft(labor_draft)
-    assert len(labor_personas) == 8
+    assert len(labor_personas) == 24
     persona_names = [p['name'] for p in labor_personas]
     assert any('Buruh' in n or 'Wahyu' in n for n in persona_names)
     assert any('APINDO' in n or 'Hartono' in n for n in persona_names)
@@ -142,7 +142,7 @@ def test_domain_persona_adaptation():
     }
     assert social.detect_domain(maritime_draft) == 'maritime'
     maritime_personas = social.get_personas_for_draft(maritime_draft)
-    assert len(maritime_personas) == 8
+    assert len(maritime_personas) == 24
     m_names = [p['name'] for p in maritime_personas]
     assert any('Nelayan' in n or 'Rusli' in n for n in m_names)
     assert any('Kapal Tangkap' in n or 'Edward' in n for n in m_names)

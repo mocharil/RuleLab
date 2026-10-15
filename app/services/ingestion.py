@@ -24,7 +24,7 @@ def sha256(data: bytes) -> str:
  return hashlib.sha256(data).hexdigest()
 
 def clean_line(line: str) -> str:
- s = line.strip().replace('\u00ad', '').replace('\x02', '')
+ s = line.strip().replace('\u00ad', '').replace('\x02', '').replace('\u201c', '"').replace('\u201d', '"')
  if re.fullmatch(r'(?:www\..*|\d{4},\s*No\..*|-?\s*\d+\s*-?|SK\s*No.*)', s):
   return ''
  return s
@@ -42,7 +42,7 @@ def enrich(text: str) -> dict:
 def extract_file(path: Path) -> dict:
  data = path.read_bytes()
  pages = []
- if data.startswith(b'%PDF'):
+ if data.lstrip().startswith(b'%PDF'):
   with fitz.open(stream=data, filetype='pdf') as pdf:
    for i, page in enumerate(pdf):
     pages.append({'page': i+1, 'text': page.get_text(sort=True), 'extraction_method': 'pdf_text',
@@ -122,12 +122,12 @@ def structure(meta: dict, extracted: dict, retrieved_at: str, raw_filename: str,
  return {'schema_version': '1.0', 'id': meta['id'], 'version_id': version_id,
   'metadata': {**meta, 'hierarchy_rank': HIERARCHY.get(meta['type']), 'jurisdiction': 'Indonesia', 'language': 'id',
    'dates_method': 'curated_from_source', 'status_as_of': None,
-   'status_note': 'Snapshot naskah asli, bukan konsolidasi hukum berlaku. Perubahan dan putusan pengadilan belum diverifikasi menyeluruh.'},
+   'status_note': 'Original text snapshot, not the consolidated law in force. Amendments and court rulings are not fully verified.'},
   'provenance': {'source_url': actual_url, 'source_page': meta['source_page'], 'retrieved_at': retrieved_at,
    'sha256': extracted['sha256'], 'raw_file': f'raw/{raw_filename}', 'extracted_file': f"extracted/{meta['id']}.json"},
   'quality': {**extracted['quality'], 'article_count': len(structured), 'expected_articles': expected,
    'missing_article_numbers': missing, 'body_complete_by_number': bool(expected) and not missing,
-   'limitations': ['OCR belum dijalankan pada halaman tanpa teks.', 'Enrichment berbasis aturan, belum divalidasi ahli.', 'Lampiran/penjelasan disimpan terpisah bila tersedia.']},
+   'limitations': ['OCR has not been run on pages without text.', 'Enrichment berbasis aturan, belum divalidasi ahli.', 'Annexes/explanations are stored separately when available.']},
   'articles': structured}
 
 def write_json(path: Path, obj: object) -> None:

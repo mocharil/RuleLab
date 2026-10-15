@@ -34,7 +34,7 @@ def test_unavailable_legal_identity_never_calls_model(client, monkeypatch, quest
     assert response.status_code == 200
     r = response.json()
     assert r['status'] == 'document_not_found' and not r['sources'] and not r['sections']
-    assert 'UU 10/2018' in r['message'] and len(r['documents']) == 6
+    assert 'UU 10/2018' in r['message'] and len(r['documents']) == len(store.regulations())
 
 
 def test_explicit_law_overrides_open_document(client):
@@ -136,10 +136,10 @@ def test_vertex_chat_rest_schema_rulebook_and_exact_quotes(client, monkeypatch):
 
 def test_user_guide_and_download_are_available(client):
     page = client.get('/guide')
-    assert page.status_code == 200 and 'Galeri &amp; bot' in page.text
+    assert page.status_code == 200 and 'Library &amp; assistant' in page.text
     assert 'id="section-10"' in page.text and '<table>' in page.text
     assert 'href="/guide/download"' in page.text
     download = client.get('/guide/download')
-    assert download.status_code == 200 and 'Panduan penggunaan RuleLab 1.3' in download.text
-    assert 'UU 10/2018 belum tersedia' in download.text
+    assert download.status_code == 200 and 'RuleLab 1.3 user guide' in download.text
+    assert 'document is not available yet' in download.text
     assert 'attachment' in download.headers['content-disposition']

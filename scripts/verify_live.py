@@ -52,7 +52,7 @@ def verify_full(timeout=600):
             checks.append({'feature':'Eksekusi job '+intent,'status':'passed','events':len(job['events'])})
             if intent=='social':
                 reactions=[event for event in job['events'] if event['tool']=='social_reaction' and event['status']=='completed']
-                assert len(reactions)==48
+                assert len(reactions)==job['social_options']['persona_count']*job['social_options']['rounds']*2
         report=checked('Ekspor laporan DOCX','GET','/api/drafts/'+draft['id']+'/export',params={'format':'report'})
         assert report.content.startswith(b'PK')
         imported=checked('Impor DOCX round trip','POST','/api/import',json={'filename':'verification.docx','content_base64':__import__('base64').b64encode(checked('Ekspor draft DOCX','GET','/api/drafts/'+draft['id']+'/export').content).decode()}).json()

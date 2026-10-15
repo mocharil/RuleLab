@@ -24,14 +24,18 @@ def test_elasticsearch_fusion_filters(client,monkeypatch):
 
 def test_vertex_endpoint_adc(monkeypatch):
  import google.auth
- monkeypatch.setattr(settings,'provider','vertex');monkeypatch.setattr(settings,'project','unit-project');monkeypatch.setattr(settings,'location','global')
+ monkeypatch.setattr(settings,'provider','vertex');monkeypatch.setattr(settings,'project','unit-project');monkeypatch.setattr(settings,'location','global');monkeypatch.setattr(settings,'credentials_path','')
+ ai.reset_auth_cache()
  class Credentials:
   token=None
   def refresh(self,request):self.token='test-access-token'
  monkeypatch.setattr(google.auth,'default',lambda scopes:(Credentials(),'unit-project'))
- url,headers=asyncio.run(ai.endpoint())
- assert url.startswith('https://aiplatform.googleapis.com/v1/projects/unit-project/locations/global/')
- assert headers['Authorization']=='Bearer test-access-token'
+ try:
+  url,headers=asyncio.run(ai.endpoint())
+  assert url.startswith('https://aiplatform.googleapis.com/v1/projects/unit-project/locations/global/')
+  assert headers['Authorization']=='Bearer test-access-token'
+ finally:
+  ai.reset_auth_cache()
 
 def test_incomplete_and_malformed_ai_rejected(monkeypatch):
  monkeypatch.setattr(settings,'provider','gemini');monkeypatch.setattr(settings,'api_key','test-key')

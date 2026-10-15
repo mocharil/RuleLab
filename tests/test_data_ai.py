@@ -7,8 +7,8 @@ from app.services import ai,analysis
 from app.services.ingestion import extract_file,structure
 
 def test_corpus_integrity():
- corpus=json.loads((ROOT/'data/corpus.json').read_text())['documents']
- assert len(corpus)==6
+ corpus=json.loads((ROOT/'data/corpus.json').read_text(encoding='utf-8'))['documents']
+ assert len(corpus)>=26
  for d in corpus:
   path=ROOT/'data'/d['provenance']['raw_file'];assert path.exists()
   import hashlib
@@ -50,7 +50,7 @@ def test_live_failure_does_not_become_demo(client,monkeypatch):
  monkeypatch.setattr(settings,'provider','gemini');monkeypatch.setattr(settings,'api_key','')
  d=client.get('/api/drafts').json()[0]
  r=client.post('/api/drafts/'+d['id']+'/analyze');assert r.status_code==502
- assert 'belum dikonfigurasi' in r.json()['detail']
+ assert 'not configured' in r.json()['detail']
  assert client.get('/api/drafts/'+d['id']+'/runs').json()==[]
 
 def test_simulation_boundaries():

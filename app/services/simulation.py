@@ -5,40 +5,40 @@ from app.services import ai, retrieval, legal
 
 DOMAIN_STAKEHOLDERS = {
     'labor': [
-        ('Serikat Buruh & Pekerja Pabrik', 'Perlindungan upah layak, jaminan kepastian kerja tetap PKWTT, dan keselamatan kerja K3.'),
-        ('Asosiasi Pengusaha (APINDO) & Manufaktur', 'Kepastian beban operasional, fleksibilitas jam kerja, dan kelangsungan daya saing usaha.'),
-        ('Pelaku Usaha Mikro & Kecil (UMKM)', 'Kemampuan modal terbatas, beban kepatuhan administratif, dan fleksibilitas aturan pengupahan.'),
-        ('Pengawas Ketenagakerjaan Dinas', 'Kapasitas inspeksi lapangan, kejelasan norma kerja, dan efektivitas mediasi hubungan industrial.')
+        ('Factory Unions & Workers', 'Decent wage protection, permanent employment (PKWTT) and occupational safety.'),
+        ('Employers’ Association (APINDO) & Manufacturing', 'Predictable operating costs, flexible working hours and continued competitiveness.'),
+        ('Micro & Small Businesses (MSMEs)', 'Limited capital, administrative compliance burden and flexible wage rules.'),
+        ('Government Labour Inspectors', 'Field inspection capacity, clear labour standards and effective industrial mediation.')
     ],
     'maritime': [
-        ('Nelayan Tradisional Skala Kecil', 'Perlindungan wilayah tangkap pesisir dari kapal besar, kemudahan BBM bersubsidi, dan keselamatan melaut.'),
-        ('Pengusaha Kapal Tangkap & Industri Perikanan', 'Kepastian kuota penangkapan terukur, efisiensi perizinan berlayar (SPB), dan kelancaran ekspor.'),
-        ('Pembudidaya Tambak Pesisir & Pengolah Hasil Laut', 'Kepastian sempadan pantai, pasokan air bersih pesisir, dan fasilitas cold storage terjangkau.'),
-        ('Pengawas Perikanan & Konservasi Sumber Daya Laut', 'Pencegahan overfishing, kepatuhan e-logbook tangkapan, dan perlindungan terumbu karang.')
+        ('Small-scale Traditional Fishers', 'Protection of coastal fishing zones from large vessels, access to subsidized fuel and safety at sea.'),
+        ('Fishing Fleet & Fisheries Industry', 'Certain measured catch quotas, efficient sailing permits (SPB) and smooth exports.'),
+        ('Coastal Pond Farmers & Seafood Processors', 'Clear shoreline boundaries, clean coastal water and affordable cold storage.'),
+        ('Fisheries & Marine Resource Conservation Supervisors', 'Preventing overfishing, catch e-logbook compliance and coral reef protection.')
     ],
     'environment': [
-        ('Petani Sekitar Hutan & Masyarakat Hukum Adat', 'Akses legal kelola perhutanan sosial, kepastian batas lahan adat, dan pencegahan kriminalisasi.'),
-        ('Pengelola Operasional Industri & Tambang', 'Kejelasan baku mutu lingkungan, kepastian prosedur AMDAL, dan investasi teknologi bersih.'),
-        ('Koalisi Pemerhati Lingkungan Hidup', 'Pencegahan degradasi ekologis, transparansi kajian dampak lingkungan, dan sanksi tegas bagi pencemar.'),
-        ('Pengawas Lingkungan Hidup & Polisi Kehutanan', 'Kapasitas patroli pengawasan, instrumen penindakan hukum perusakan hutan, dan pemulihan sungai.')
+        ('Forest-Edge Farmers & Customary Law Communities', 'Legal access to manage social forestry, certainty of customary land boundaries and preventing criminalization.'),
+        ('Industrial & Mining Operators', 'Clear environmental standards, certain AMDAL procedures and clean technology investment.'),
+        ('Environmental Watchdog Coalition', 'Preventing ecological degradation, transparent environmental impact studies and firm sanctions for polluters.'),
+        ('Environmental Supervisors & Forest Rangers', 'Patrol capacity, enforcement tools against forest destruction and river restoration.')
     ],
     'health': [
-        ('Pasien & Peserta Jaminan Kesehatan Nasional', 'Kemudahan alur rujukan berjenjang, antrean faskes tertib, dan ketersediaan obat rutin tanpa iur biaya.'),
-        ('Tenaga Medis & Faskes Layanan Primer', 'Kelengkapan alat diagnostik dasar, logistik obat esensial tepat waktu, dan insentif di daerah terpencil.'),
-        ('Direksi Rumah Sakit & Fasilitas Rujukan', 'Kecukupan tarif paket Ina-CBGs dengan biaya riil operasional dan kepastian likuiditas klaim.'),
-        ('Verifikator Penjaminan & Pengamat Kebijakan Kesehatan', 'Pencegahan fraud medis, standarisasi pedoman klinis, dan keberlanjutan solvabilitas dana kesehatan.')
+        ('Patients & National Health Insurance Members', 'Easy tiered referrals, orderly health facility queues and routine medicines without co-payments.'),
+        ('Medical Staff & Primary Care Facilities', 'Basic diagnostic equipment, timely essential medicine logistics and incentives in remote areas.'),
+        ('Hospital Directors & Referral Facilities', 'Ina-CBGs package rates that cover real operating costs and reliable claim liquidity.'),
+        ('Insurance Verifiers & Health Policy Observers', 'Preventing medical fraud, standard clinical guidelines and sustainable health fund solvency.')
     ],
     'digital_service': [
-        ('Warga dengan Hambatan Akses & Pedesaan', 'Hambatan jaringan internet, perangkat minim, literasi digital rendah, dan kebutuhan loket fisik.'),
-        ('Penyandang Disabilitas & Aksesibilitas', 'Standar aksesibilitas antarmuka (WCAG), akomodasi layak, kemandirian, dan perlindungan privasi data.'),
-        ('Petugas Loket & Front-Office Pelayanan', 'Kapasitas pendampingan tatap muka, rasio beban kerja antrean, dan petunjuk teknis yang jelas.'),
-        ('Pengelola Anggaran & Keuangan Publik', 'Kelayakan belanja lisensi infrastruktur TI, alokasi dana pendampingan luring, dan efisiensi APBD.')
+        ('Residents with Access Barriers & Rural Communities', 'Internet network barriers, few devices, low digital literacy and the need for a physical counter.'),
+        ('Persons with Disabilities & Accessibility', 'Interface accessibility standards (WCAG), reasonable accommodation, independence and data privacy protection.'),
+        ('Counter & Front-Office Service Officers', 'Capacity for in-person assistance, queue workload ratios and clear technical guidance.'),
+        ('Public Budget & Finance Officers', 'Feasibility of IT infrastructure licence spending, funding for offline assistance, and regional budget efficiency.')
     ],
     'governance': [
-        ('Masyarakat Umum & Konsumen Layanan', 'Kemudahan pemenuhan hak administrasi, transparansi prosedur, dan kepastian durasi pelayanan.'),
-        ('Pelaku Usaha & Dunia Usaha Lokal', 'Penyederhanaan regulasi, kepastian izin berusaha, dan pencegahan beban kepatuhan berulang.'),
-        ('Aparatur Pelaksana Teknis di Lapangan', 'Kejelasan petunjuk operasional teknis, mitigasi risiko kesalahan administrasi, dan kesiapan fasilitas.'),
-        ('Pengawas Kepatuhan & Akuntabilitas Publik', 'Kepatuhan hierarki peraturan perundang-undangan, asas keterbukaan, dan mitigasi maladministrasi.')
+        ('General Public & Service Users', 'Easy fulfilment of administrative rights, transparent procedures and certainty of service duration.'),
+        ('Local Businesses', 'Simpler regulation, business licensing certainty and preventing repeated compliance burdens.'),
+        ('Field Technical Officers', 'Clear technical operating guidance, mitigation of administrative errors and facility readiness.'),
+        ('Compliance & Public Accountability Supervisors', 'Compliance with the legal hierarchy, the openness principle and maladministration mitigation.')
     ]
 }
 
@@ -82,20 +82,20 @@ async def simulate(draft, alternative_text, assumptions):
         if settings.provider == 'demo':
             return {
                 'stakeholder': name,
-                'benefits': ['Alternatif B membuka akses dan akomodasi perlindungan bagi kelompok terdampak.' if assist_b else 'Naskah memuat kepastian alur baku namun membutuhkan ruang mitigasi lapangan.'],
-                'risks': [description, 'Kualitas pelaksanaan memerlukan verifikasi kesiapan sarana dan personil lapangan.'],
-                'mitigations': ['Uji keterlaksanaan bersama perwakilan pemangku kepentingan.', 'Tetapkan standar operasional prosedur dan mekanisme pengaduan.'],
+                'benefits': ['Alternative B opens access and protective accommodation for affected groups.' if assist_b else 'The text sets a clear standard flow but needs room for field mitigation.'],
+                'risks': [description, 'Implementation quality needs verification of facility and field staff readiness.'],
+                'mitigations': ['Test feasibility together with stakeholder representatives.', 'Set standard operating procedures and a complaints mechanism.'],
                 'evidence_ids': [e['id'] for e in evidence[:2]],
-                'questions_to_validate': ['Bagaimana kesiapan unit pelaksana di wilayah sasaran?', 'Apakah alokasi sarana dan anggaran pendukung sudah mencukupi?']
+                'questions_to_validate': ['How ready are the implementing units in the target region?', 'Are the supporting facilities and budget adequate?']
             }
         output, _ = await ai.generate(
-            'Bandingkan dampak alternatif A dan B dari sudut persona ini. Jangan menghasilkan statistik populasi atau mengklaim mewakili masyarakat. Tunjukkan manfaat, risiko, mitigasi dan kebutuhan validasi lapangan.',
+            'Compare the impact of alternatives A and B from this persona’s point of view. Do not produce population statistics or claim to represent society. Show benefits, risks, mitigations and the field validation needed. Write in English.',
             {'stakeholder': name, 'description': description, 'A': current, 'B': alternative_text,
              'assumptions': assumptions, 'evidence': retrieval.evidence_payload(evidence),
              'legal_context': legal.context(draft['regulation_type'], evidence)}, StakeholderOutput)
         output['stakeholder'] = name
         if any(id not in allowed for id in output['evidence_ids']):
-            raise ai.AIError('Sumber persona di luar evidence. Hasil ditolak.')
+            raise ai.AIError('Persona source outside the evidence. Result rejected.')
         return output
 
     tasks = [asyncio.create_task(stakeholder(n, d)) for n, d in stakeholders]
@@ -130,10 +130,10 @@ async def simulate(draft, alternative_text, assumptions):
         'sensitivity': sensitivity,
         'evidence': evidence,
         'limitations': [
-            'Angka dihitung dari asumsi input pengguna, bukan statistik masyarakat atau prediksi Gemini.',
-            'Persona pemangku kepentingan tidak menggantikan konsultasi publik langsung.',
-            'Model biaya hanya menghitung layanan variabel, belum mencakup biaya tetap atau investasi modal awal.',
-            'Deteksi kanal bantuan berbasis kata kunci, perlu dicek pengguna.',
-            'Ini simulasi skenario kebijakan, bukan engine populasi terkalibrasi.'
+            'Numbers are computed from the user’s input assumptions, not public statistics or Gemini predictions.',
+            'Stakeholder personas do not replace direct public consultation.',
+            'The cost model only counts variable service costs; it excludes fixed costs and initial capital investment.',
+            'Assistance-channel detection is keyword-based and needs user checking.',
+            'This is a policy scenario simulation, not a calibrated population engine.'
         ]
     }

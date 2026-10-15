@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // "Terapkan Perbaikan Klausul" Button
+    // "Apply clause fix" Button
     const btnApply = document.getElementById('btn-apply-suggestion');
     if (btnApply) {
       btnApply.addEventListener('click', (e) => {
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // "Ulangi Uji Coba" Button
+    // "Run the test again" Button
     const btnReset = document.getElementById('btn-reset-diff');
     if (btnReset) {
       btnReset.addEventListener('click', (e) => {
@@ -103,12 +103,12 @@ document.addEventListener('DOMContentLoaded', () => {
         verdict: '1 Perhatian Norma',
         verdictType: 'warning',
         quote: '“Pelayanan publik yang diselenggarakan secara elektronik wajib tetap mengedepankan asas kemudahan aksesibilitas serta akomodasi bagi masyarakat rentan.”',
-        provenance: 'Uji Keselarasan Antar-Regulasi · Rekomendasi Tersedia'
+        provenance: 'Cross-regulation consistency test · Recommendation available'
       },
       disability: {
         doc: 'UU No. 8 Tahun 2016 · Penyandang Disabilitas',
         article: 'Pasal 19 huruf a & b',
-        verdict: 'Wajib Akomodasi',
+        verdict: 'Accommodation required',
         verdictType: 'info',
         quote: '“Hak pelayanan publik bagi Penyandang Disabilitas meliputi hak: a. memperoleh akomodasi yang layak... dan format dokumen yang aksesibel secara mandiri.”',
         provenance: 'Standar Internasional WCAG 2.1 AA · Terdaftar'
@@ -167,30 +167,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const personas = {
       sari: {
         name: 'Sari',
-        role: 'Warga Rural (Wilayah 3T)',
+        role: 'Rural resident (remote area)',
         round1: {
           stance: 'concern',
           stanceLabel: 'Perhatian (Concern)',
-          text: '“Di desa kami jaringan listrik dan sinyal seluler sering padam berhari-hari. Kalau izin dan bantuan hanya lewat portal aplikasi, urusan warga pasti macet total.”'
+          text: '“In our village power and mobile signal are often out for days. If permits and aid only go through an app portal, residents’ affairs will grind to a halt.”'
         },
         round2: {
           stance: 'conditional',
           stanceLabel: 'Bersyarat (Conditional)',
-          text: '“Penambahan opsi loket luring dan asistensi di kantor desa pada revisi Pasal 4 sangat melegakan, agar warga yang jauh tidak dirugikan batas waktu.”'
+          text: '“Adding an offline counter and assistance at the village office in the revised Article 4 is a relief, so residents far away are not hurt by deadlines.”'
         }
       },
       nadia: {
         name: 'Nadia',
-        role: 'Penyandang Disabilitas (Screen Reader)',
+        role: 'Person with a disability (screen reader)',
         round1: {
           stance: 'conditional',
           stanceLabel: 'Bersyarat (Conditional)',
-          text: '“Portal digital sering kali hanya memuat dokumen pindaian (PDF scan) tanpa tag teks yang tidak terbaca pembaca layar. Harus ada kepatuhan standar WCAG.”'
+          text: '“Digital portals often hold only scanned PDFs without text tags that screen readers cannot read. WCAG compliance is a must.”'
         },
         round2: {
           stance: 'support',
           stanceLabel: 'Mendukung (Support)',
-          text: '“Klausul akomodasi yang layak kini tercantum jelas di rancangan. Kami menunggu petunjuk teknis audit aksesibilitas portal ini.”'
+          text: '“The reasonable-accommodation clause is now clearly in the draft. We are waiting for technical guidance on auditing the portal’s accessibility.”'
         }
       },
       raka: {
@@ -199,40 +199,40 @@ document.addEventListener('DOMContentLoaded', () => {
         round1: {
           stance: 'support',
           stanceLabel: 'Mendukung (Support)',
-          text: '“Integrasi satu pintu memotong rantai pungutan liar dan mempersingkat izin edar kami. Yang penting server stabil dan verifikasi selesai maksimal 3 hari kerja.”'
+          text: '“One-stop integration cuts illegal fees and shortens our distribution permits. What matters is a stable server and verification within 3 working days.”'
         },
         round2: {
           stance: 'support',
           stanceLabel: 'Mendukung (Support)',
-          text: '“Integrasi data izin pusat dan pendampingan loket fisik bagi produsen bahan baku tradisional sudah seimbang. Aturan ini memberi kepastian berusaha.”'
+          text: '“Integrating central permit data with physical counter assistance for traditional producers is balanced. This rule gives business certainty.”'
         }
       },
       bima: {
         name: 'Bima',
-        role: 'Petugas Pelayanan Terpadu',
+        role: 'One-stop service officer',
         round1: {
           stance: 'conditional',
           stanceLabel: 'Bersyarat (Conditional)',
-          text: '“Masyarakat lansia yang datang ke loket masih banyak. Kami siap mendampingi, asalkan ada kuota petugas dan pedoman operasional tertulis.”'
+          text: '“Many elderly residents still come to the counter. We are ready to assist them, as long as there is staff quota and written operating guidance.”'
         },
         round2: {
           stance: 'conditional',
           stanceLabel: 'Bersyarat (Conditional)',
-          text: '“Dengan alokasi anggaran pelatihan dari Bu Dewi, kami siap menjalankan posko asistensi digital jemput bola ke desa-desa binaan.”'
+          text: '“With Ms Dewi’s training budget, we are ready to run mobile digital assistance posts in the villages we support.”'
         }
       },
       dewi: {
         name: 'Dewi',
-        role: 'Pengelola Anggaran Operasional',
+        role: 'Operational budget officer',
         round1: {
           stance: 'support',
           stanceLabel: 'Mendukung (Support)',
-          text: '“Transformasi digital memangkas 65% beban cetak kertas dan arsip fisik. Penghematan ini dapat dialihkan untuk subsidi bandwidth kantor pelayanan.”'
+          text: '“Digital transformation cuts 65% of paper printing and physical archives. The savings can fund bandwidth for service offices.”'
         },
         round2: {
           stance: 'support',
           stanceLabel: 'Mendukung (Support)',
-          text: '“Anggaran untuk pendampingan daerah 3T masih berada dalam batas efisiensi fiskal yang sehat. Model simulasi dampak RuleLab sangat membantu proyeksi ini.”'
+          text: '“The budget for assistance in remote areas is still within healthy fiscal limits. RuleLab’s impact simulation model really helps this projection.”'
         }
       }
     };
@@ -298,9 +298,9 @@ document.addEventListener('DOMContentLoaded', () => {
       1: {
         stream: [
           { type: 'tag', text: '[retrieval_agent]' },
-          { text: ' Memulai pemindaian naskah sumber (6 regulasi, 406 pasal)...' },
+          { text: ' Scanning the source corpus…' },
           { type: 'dim', text: ' > Index: sqlite_rag + bm25_hybrid' },
-          { type: 'success', text: ' ✔ Ditemukan: UU 12/2011 (Hierarki) & UU 25/2009 (Pelayanan Publik)' },
+          { type: 'success', text: ' ✔ Found: UU 12/2011 (hierarchy) & UU 25/2009 (public services)' },
           { type: 'dim', text: ' > Provenance: Lembaran Negara No. 82/2011 · SHA256 terverifikasi' }
         ],
         telemetry: [
@@ -316,45 +316,45 @@ document.addEventListener('DOMContentLoaded', () => {
           { type: 'tag', text: '[legal_review_agent]' },
           { text: ' Menganalisis Pasal 4 RPP terhadap hierarki UU 12/2011...' },
           { type: 'warn', text: ' ⚠ Deteksi: Benturan klausul mutlak format digital vs asas keadilan' },
-          { type: 'dim', text: ' > Dasar pengujian: Pasal 5 ayat (3) UU 25/2009' },
-          { type: 'success', text: ' ✔ Menyusun usulan redaksional alternatif dan catatan mitigasi' }
+          { type: 'dim', text: ' > Test basis: Article 5(3) UU 25/2009' },
+          { type: 'success', text: ' ✔ Composing alternative drafting proposals and mitigation notes' }
         ],
         telemetry: [
           { type: 'tag', text: '[telemetry :: legal_review]' },
           { text: ' Status: COMPLETED · Latency: 240ms · 1 Isu Kritis' },
           { text: ' Harmonisasi Model: Legal-BERT fine-tuned PUU Indonesia' },
-          { type: 'warn', text: ' Skor Risiko Norma: 0.78 (Tinggi pada pasal kewajiban mutlak)' },
-          { type: 'dim', text: ' Rekomendasi Terverifikasi: 1 Usulan Redaksional Inklusif' }
+          { type: 'warn', text: ' Norm risk score: 0.78 (high on absolute-obligation articles)' },
+          { type: 'dim', text: ' Verified recommendation: 1 inclusive drafting proposal' }
         ]
       },
       3: {
         stream: [
           { type: 'tag', text: '[social_simulation_agent]' },
-          { text: ' Menjalankan 5 persona sintetis dalam 3 putaran dialog...' },
-          { type: 'dim', text: ' > Persona: Sari (Rural 3T), Nadia (Disabilitas), Raka (UMKM), Bima, Dewi' },
-          { type: 'warn', text: ' ⚠ Reaksi Putaran 1: 2 Perhatian (Aksesibilitas & Infrastruktur)' },
-          { type: 'success', text: ' ✔ Reaksi Putaran 2: Tercapai kesepahaman opsi pendampingan luring' }
+          { text: ' Running 5 synthetic personas over 3 dialogue rounds...' },
+          { type: 'dim', text: ' > Personas: Sari (rural, remote), Nadia (disability), Raka (MSME), Bima, Dewi' },
+          { type: 'warn', text: ' ⚠ Round 1 reactions: 2 concerns (accessibility & infrastructure)' },
+          { type: 'success', text: ' ✔ Round 2 reactions: agreement reached on offline assistance' }
         ],
         telemetry: [
           { type: 'tag', text: '[telemetry :: social_simulation]' },
           { text: ' Status: COMPLETED · Latency: 320ms · 5 Persona Aktif' },
-          { text: ' Konvergensi Opini: 76.4% setelah mitigasi klausul luring' },
+          { text: ' Opinion convergence: 76.4% after the offline-channel mitigation' },
           { type: 'success', text: ' Resonansi Tertinggi: Sari (Rural 3T) & Nadia (Disabilitas)' },
-          { type: 'dim', text: ' Biaya Pelaksanaan: Sesuai pagu APBN (Konfirmasi Dewi)' }
+          { type: 'dim', text: ' Implementation cost: within the state budget ceiling (confirmed by Dewi)' }
         ]
       },
       4: {
         stream: [
           { type: 'tag', text: '[human_in_the_loop]' },
-          { text: ' Konsolidasi seluruh temuan dan jejak pemeriksaan...' },
-          { type: 'success', text: ' ✔ Keputusan perancang: Usulan mitigasi disetujui untuk versi 2.2' },
-          { type: 'dim', text: ' > Catatan reviewer tersimpan · Riwayat revisi terikat snapshot' },
-          { type: 'success', text: ' ✔ Siap diekspor ke naskah resmi Microsoft Word (.DOCX)' }
+          { text: ' Consolidating all findings and the review trail...' },
+          { type: 'success', text: ' ✔ Drafter decision: mitigation proposal approved for version 2.2' },
+          { type: 'dim', text: ' > Reviewer notes saved · Revision history bound to snapshot' },
+          { type: 'success', text: ' ✔ Ready to export as an official Microsoft Word document (.DOCX)' }
         ],
         telemetry: [
           { type: 'tag', text: '[telemetry :: human_review]' },
           { text: ' Status: READY_FOR_EXPORT · Reviewer: Aril Indra Permana' },
-          { text: ' Draf Target: RPP_Layanan_Digital_2026_Final.docx' },
+          { text: ' Target draft: RPP_Layanan_Digital_2026_Final.docx' },
           { type: 'success', text: ' Integritas Format: Sesuai Lampiran II UU 12/2011' },
           { type: 'dim', text: ' Tanda Tangan Hash: a9f8e4c7... terikat sesi' }
         ]
@@ -412,7 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const statusChip = item.querySelector('.step-status-chip');
         if (statusChip) {
           if (num < stepNum) {
-            statusChip.textContent = 'Selesai ✔';
+            statusChip.textContent = 'Done ✔';
             statusChip.className = 'step-status-chip complete';
           } else if (num === stepNum) {
             statusChip.textContent = 'Running';
@@ -451,7 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (autoplayToggle) {
         autoplayToggle.classList.remove('paused');
         const lbl = autoplayToggle.querySelector('.autoplay-label');
-        if (lbl) lbl.textContent = '▶ Simulasi Otomatis Berjalan (4s)';
+        if (lbl) lbl.textContent = '▶ Auto simulation running (4s)';
       }
       setActiveStep(currentStep, true);
 
@@ -461,7 +461,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }, STEP_DURATION);
     }
 
-    function stopAutoplay(label = '⏸ Simulasi Dijeda') {
+    function stopAutoplay(label = '⏸ Simulation paused') {
       if (autoplayTimer) {
         clearInterval(autoplayTimer);
         autoplayTimer = null;
@@ -515,7 +515,7 @@ document.addEventListener('DOMContentLoaded', () => {
       autoplayToggle.addEventListener('click', (e) => {
         e.preventDefault();
         if (isAutoplayRunning) {
-          stopAutoplay('⏸ Dijeda (Klik untuk lanjut)');
+          stopAutoplay('⏸ Paused (click to continue)');
         } else {
           startAutoplay();
         }
@@ -565,7 +565,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (okBadge) {
         okBadge.textContent = 'Memindai...';
         setTimeout(() => {
-          okBadge.textContent = '✔ 12 Pasal Siap';
+          okBadge.textContent = '✔ 12 articles ready';
         }, 600);
       }
     });
@@ -575,9 +575,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (exportChip) {
     exportChip.addEventListener('click', () => {
       const orig = exportChip.innerHTML;
-      exportChip.innerHTML = '<span class="exp-icon-svg"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></span><span>Mempersiapkan Dokumen...</span>';
+      exportChip.innerHTML = '<span class="exp-icon-svg"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></span><span>Preparing document...</span>';
       setTimeout(() => {
-        exportChip.innerHTML = '<span class="exp-icon-svg"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></span><span>Draf Terunduh (Simulasi)</span>';
+        exportChip.innerHTML = '<span class="exp-icon-svg"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></span><span>Draft downloaded (simulation)</span>';
         setTimeout(() => { exportChip.innerHTML = orig; }, 2000);
       }, 700);
     });

@@ -57,11 +57,11 @@ def render(text):
 
 
 def main():
-    text = (ROOT/'docs/PANDUAN_PENGGUNA.md').read_text()
-    toc = ['Jalankan aplikasi', 'Orientasi', 'Galeri & bot', 'Editor', 'Review', 'Dampak A/B', 'Network netizen', 'Agen & ekspor', 'Checklist tes', 'Tes teknis']
-    output = '<!doctype html><html lang="id"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Panduan pengguna · RuleLab</title><link rel="stylesheet" href="/static/guide.css"><body><header><a href="/workspace">RuleLab</a><span>PANDUAN PENGGUNA · 1.3</span><a href="/guide/download">Unduh Markdown</a></header><div class="guide-layout"><nav aria-label="Daftar isi"><strong>Mulai di sini</strong>'+''.join(f'<a href="#section-{i+1}">{i+1:02}. {html.escape(label)}</a>' for i,label in enumerate(toc))+'<a class="guide-back" href="/workspace?view=gallery">Buka Galeri ↗</a></nav><main>'+render(text)+'</main></div></body></html>'
-    (ROOT/'app/static/guide.html').write_text(output)
-    print('Guide built: 10 sections, 2 tables, Markdown download and app links.')
+    text = (ROOT/'docs/USER_GUIDE.md').read_text(encoding='utf-8')
+    toc = ['Run the app', 'Orientation', 'Data & map', 'Library & assistant', 'Editor', 'Review', 'A/B impact', 'Public network', 'Activity & export', 'Test checklist', 'Technical tests']
+    output = '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>User guide · RuleLab</title><link rel="stylesheet" href="/static/guide.css"><link rel="stylesheet" href="/static/workspace-visual.css"><script type="module" src="/static/guide-visual.js"></script><body><header><a href="/workspace">RuleLab</a><span>USER GUIDE · 1.3</span><a href="/guide/download">Download Markdown</a></header><div class="guide-layout"><nav aria-label="Contents"><strong>Start here</strong>'+''.join(f'<a href="#section-{i+1}">{i+1:02}. {html.escape(label)}</a>' for i,label in enumerate(toc))+'<a class="guide-back" href="/workspace?view=library">Open Library ↗</a></nav><main>'+render(text)+'</main></div></body></html>'
+    (ROOT/'app/static/guide.html').write_text(output, encoding='utf-8')
+    print(f'Guide built: {len(toc)} sections, 2 tables, Markdown download and app links.')
 
 
 if __name__ == '__main__':

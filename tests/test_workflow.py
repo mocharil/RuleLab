@@ -2,7 +2,7 @@ import base64,io,json
 from docx import Document
 
 def test_full_workflow(client):
- status=client.get('/api/status').json();assert status['regulations']==6;assert status['articles']>=400
+ status=client.get('/api/status').json();assert status['regulations']>=26;assert status['articles']>=1300
  draft=client.get('/api/drafts').json()[0];id=draft['id']
  result=client.post(f'/api/drafts/{id}/analyze');assert result.status_code==200
  run=result.json();findings=run['payload']['findings'];assert len(findings)==3
@@ -30,7 +30,7 @@ def test_full_workflow(client):
   export=client.get(f'/api/drafts/{id}/export?format={fmt}');assert export.status_code==200
   document=Document(io.BytesIO(export.content));texts=[p.text for p in document.paragraphs]
   assert 'Pasal 2' in texts;assert any('kanal pendampingan' in t for t in texts)
-  if fmt=='report':assert 'Lampiran review RuleLab' in texts
+  if fmt=='report':assert 'RuleLab review annex' in texts
  js=client.get(f'/api/drafts/{id}/export?format=json').json();assert js['revision']==2
 
 def test_conflict_optimistic_save(client):
@@ -42,7 +42,7 @@ def test_search_compare_provenance(client):
  hits=client.get('/api/search',params={'q':'pengaduan tanggapan masyarakat'}).json()['results'];assert hits
  assert all(h['source']['sha256'] for h in hits)
  r=client.post('/api/compare',json={'left_id':'pp-96-2012','right_id':'uu-25-2009','left_article':'7','right_article':'4'})
- assert r.status_code==200;assert 'lebih tinggi' in r.json()['hierarchy_relation']
+ assert r.status_code==200;assert 'ranks higher' in r.json()['hierarchy_relation']
  assert r.json()['provider']['mode']=='demo'
  doc=client.get('/api/corpus/uu-25-2009').json();assert len(doc['articles'])==62;assert doc['provenance']['source_url'].startswith('https://jdih.kemenkeu')
  assert client.get('/api/corpus/pp-96-2012/raw').content.startswith(b'%PDF')

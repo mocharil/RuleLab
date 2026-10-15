@@ -36,4 +36,4 @@ def test_readiness_rejects_legacy_or_mismatched_index(client,monkeypatch):
     monkeypatch.setattr(readiness.retrieval,'elastic_client',lambda:httpx.AsyncClient(base_url='http://elastic-test',transport=httpx.MockTransport(handler)))
     import pytest
     from app.services.ai import AIError
-    with pytest.raises(AIError,match='belum sesuai'):asyncio.run(readiness.validate_elastic_index())
+    with pytest.raises(AIError,match='does not match'):asyncio.run(readiness.validate_elastic_index())

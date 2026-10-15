@@ -29,7 +29,7 @@ def fetch(url):
 
 def run(offline=False, selected=None, refresh=False):
  manifest = []
- for meta in json.loads((DATA/'sources.json').read_text()):
+ for meta in json.loads((DATA/'sources.json').read_text(encoding='utf-8')):
   if selected and meta['id'] not in selected: continue
   failures = []
   success = None
@@ -85,7 +85,7 @@ def run(offline=False, selected=None, refresh=False):
    except Exception as exc:failures.append({'url':url,'error':str(exc)})
   manifest.append({**(success or {'id':meta['id'],'status':'failed'}),'attachments':attachments,'attempt_errors':failures})
  write_json(DATA/'manifest.json', {'generated_at':datetime.now(timezone.utc).isoformat(),'documents':manifest})
- corpus = [json.loads(p.read_text()) for p in sorted((DATA/'enriched').glob('*.json'))]
+ corpus = [json.loads(p.read_text(encoding='utf-8')) for p in sorted((DATA/'enriched').glob('*.json'))]
  write_json(DATA/'corpus.json', {'schema_version':'1.0','documents':corpus})
  if all((DATA/'enriched'/f'{rid}.json').exists() for rid in ('uu-15-2019','uu-13-2022')):
   from scripts.extract_changes import extract

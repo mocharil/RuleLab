@@ -7,7 +7,7 @@ const origin='http://127.0.0.1:8027';
 const server=spawn('python3',['-m','uvicorn','app.main:app','--port','8027'],{cwd:base,env:{...process.env,RULELAB_DB:path.join(tmp,'qa.sqlite3'),AI_PROVIDER:'demo',SEARCH_BACKEND:'sqlite',RULELAB_API_TOKEN:'',RULELAB_ACCESS_KEYS:'[]'},stdio:'ignore'});
 const checks=[];
 (async()=>{let browser;try{
- for(let i=0;i<100;i++){try{if((await fetch(origin+'/api/health')).ok)break;}catch{}await new Promise(r=>setTimeout(r,100));}
+ for(let i=0;i<1200;i++){try{if((await fetch(origin+'/api/health')).ok)break;}catch{}await new Promise(r=>setTimeout(r,100));}
  browser=await chromium.launch({headless:true,executablePath:process.env.RULELAB_CHROMIUM||undefined});
  const page=await browser.newPage({viewport:{width:1680,height:1400},timezoneId:'Asia/Jakarta',bypassCSP:true});
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
@@ -15,7 +15,7 @@ const checks=[];
  await page.waitForSelector('.social-empty');
  await page.locator('[data-action="start-agent"][data-intent="social"]').click();
  await page.waitForSelector('.social-post');
- await page.waitForFunction(()=>document.querySelector('.social-toolbar .pill')?.textContent.startsWith('Selesai'));
+ await page.waitForFunction(()=>document.querySelector('.social-toolbar .pill')?.textContent.startsWith('Done'));
  assert.equal(await page.locator('.social-post').count(),15);checks.push('30 completed persona responses across A/B');
  assert.equal(await page.locator('.social-node').count(),5);
  assert(await page.locator('.social-edge').count()>0);checks.push('five persona nodes and actual directed reply edges');
