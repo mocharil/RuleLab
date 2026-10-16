@@ -42,3 +42,15 @@ screenshots/forms-network berisi screenshot builder dan network terbaru. screens
 ## Red/white explorer design (0.7.1)
 
 The simulation retains the red/white brand. Persona nodes open their latest opinion; numbered satellites open the exact completed opinion for that round. The center opens the scenario snapshot, and legal nodes open actual retrieved text and provenance. Zoom/pan/reset, replay and live-event motion are preserved. The reference video informs graph interaction only; none of its assets or example statistics are embedded. See DESIGN_PROMPT.md. Latest screenshots: screenshots/v0.7.1.
+
+
+## Crowd network (MiroFish/OASIS-inspired)
+
+`app/services/network.py` adds four stages to every social run (set `crowd_size` to 0 to skip):
+
+1. **Knowledge graph** (`build_graph`): typed entities (policy, articles, sources, issues, stakeholders) and relations (`impacts`, `shares_concern`, `tension`, ...). In live mode Gemini adds institutions/instruments/relations; only relations that resolve to known entities are kept, and failure falls back to the rule-based graph with a note.
+2. **Spawn** (`Crowd`): `crowd_size` agents derived from the AI core personas, each with activity, influence (heavy-tailed), openness and stubbornness. A seeded follow network mixes homophily, hubs and bridges, so runs are reproducible.
+3. **Diffusion** (`Crowd.step`, once per round and scenario): synchronous update from the previous round. Feed = followees (core personas weighted 2.5x), trending accounts and an occasional recommended stranger. Bounded confidence pulls stances together, a small backfire push applies to views beyond the agent's range, and follow/unfollow rewiring is logged.
+4. **Analytics** (`export_scenario`): PageRank influencers, label-propagation communities, bridge accounts, polarization (stance std), echo-chamber index (edge homophily minus random baseline) and the A→B comparison.
+
+Core persona stances come from their real comments each round; crowd agents never call the provider. Events: `build_graph`, `spawn_crowd`, `crowd_diffusion`. The result is stored in `payload.network` and rendered by `app/static/crowd-network.js`.

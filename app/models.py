@@ -113,3 +113,4 @@ class CompareRequest(BaseModel):
 class SocialOptions(BaseModel):
  persona_count: Literal[8,16,24,32] = 24
  rounds: int = Field(default=4,ge=2,le=5)
+ crowd_size: Literal[0,50,100,200,500] = 100

@@ -65,6 +65,14 @@ def export_docx(draft,runs,report=False):
      document.add_paragraph('Proposal: '+f['proposed_text'])
    elif run['kind']=='social':
     document.add_paragraph('Assumptions: '+str(p['assumptions']))
+    net=p.get('network')
+    if net:
+     document.add_heading('Crowd network',2)
+     g=net['graph'];document.add_paragraph(f"Knowledge graph: {len(g['entities'])} entities, {len(g['relations'])} relations ({g['extraction']}). Crowd: {net['crowd']['core']} AI core personas + {net['crowd']['size']} rule-based crowd agents.")
+     for name,sc in net['scenarios'].items():
+      last=sc['rounds'][-1];document.add_paragraph(f"Scenario {name}: mean stance {last['mean']}, polarization {last['polarization']}, support {last['support']} / neutral {last['neutral']} / oppose {last['oppose']}, echo-chamber index {last['echo_chamber']}.")
+      document.add_paragraph('Top influencers: '+', '.join(f"{i['name']} ({i['followers']} followers)" for i in sc['influencers'][:5]))
+     if net.get('comparison'):document.add_paragraph('A to B change: '+str(net['comparison']))
     for scenario in ['A','B']:
      document.add_heading('Scenario '+scenario,2)
      for comment in p['scenarios'][scenario]['comments']:

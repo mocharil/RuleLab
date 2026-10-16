@@ -10,7 +10,7 @@ import asyncio, re
 from typing import Literal
 from pydantic import BaseModel, Field
 from app.config import settings
-from app.services import ai, legal, retrieval, simulation
+from app.services import ai, legal, retrieval, simulation, network
 
 DOMAIN_PERSONAS = {
     'labor': [
@@ -296,12 +296,35 @@ async def simulate(draft, alternative, assumptions, evidence, emit, options=None
     personas = get_personas_for_draft(draft, options['persona_count'])
     domain = detect_domain(draft)
     capacity=asyncio.Semaphore(settings.ai_concurrency)
-    async def generate_persona(task,data):
+    async def generate_with(task,data,model):
         async with capacity:
-            return await asyncio.wait_for(ai.generate(task,data,Reaction),timeout=settings.agent_step_timeout)
+            return await asyncio.wait_for(ai.generate(task,data,model),timeout=settings.agent_step_timeout)
+    async def generate_persona(task,data):
+        return await generate_with(task,data,Reaction)
+
+    crowd = graph = None
+    states = {}
+    if options['crowd_size']:
+        emit('coordinator', 'build_graph', 'running', {})
+        graph = network.build_graph(draft, alternative, evidence, personas)
+        if settings.provider != 'demo':
+            try:
+                extraction, _ = await generate_with(
+                    'Extract the stakeholder knowledge graph of this draft regulation: institutions, groups, instruments, places and key concepts, '
+                    'and how they relate (regulates, funds, affects, opposes, supports, depends_on, enforces). Use only entities that the text or sources mention '
+                    'or that the listed stakeholders clearly interact with. Names of stakeholders must match the stakeholders list exactly when you relate to them. Write in English.',
+                    {'regulation_text': texts['A'][:6000], 'alternative_text': alternative[:3000], 'stakeholders': [p['role'] or p['name'] for p in personas],
+                     'evidence': retrieval.evidence_payload(evidence)}, network.GraphExtraction)
+                graph = network.merge_extraction(graph, network.GraphExtraction.model_validate(extraction), personas)
+            except Exception as exc:
+                graph['notes'].append(f'LLM graph enrichment skipped ({type(exc).__name__}); rule-based graph kept.')
+        emit('coordinator', 'build_graph', 'completed', {'entities': len(graph['entities']), 'relations': len(graph['relations']), 'extraction': graph['extraction']})
+        crowd = network.Crowd(personas, options['crowd_size'], draft.get('id', '') + draft.get('title', '') + ','.join(p['id'] for p in personas))
+        emit('coordinator', 'spawn_crowd', 'completed', {'agents': len(crowd.nodes), 'core': crowd.k, 'follow_edges': len(crowd.edges)})
 
     for scenario, text in texts.items():
         transcript = []
+        crowd_state = crowd.new_scenario(scenario) if crowd else None
         for round_number in range(1, options['rounds']+1):
             previous = list(transcript)
             emit('coordinator', 'gather_opinions', 'running', {'scenario': scenario, 'round': round_number})
@@ -350,11 +373,16 @@ async def simulate(draft, alternative, assumptions, evidence, emit, options=None
                 await asyncio.gather(*tasks, return_exceptions=True)
                 raise
             transcript.extend(comments)
+            if crowd:
+                stats = crowd.step(crowd_state, round_number, {c['persona_id']: network.STANCE_SCORE[c['stance']] for c in comments})
+                emit('coordinator', 'crowd_diffusion', 'completed', {'scenario': scenario, 'round': round_number, 'stats': stats})
             emit('coordinator', 'gather_opinions', 'completed',
                  {'scenario': scenario, 'round': round_number, 'summary': aggregate(transcript)})
+        if crowd: states[scenario] = crowd_state
         scenarios[scenario] = {'text': text, 'comments': transcript, 'summary': aggregate(transcript),
                                'metrics': simulation.quantitative(assumptions, simulation.has_assistance(text))}
-    return {'provider': provider, 'domain': domain, 'personas': personas, 'scenarios': scenarios, 'assumptions': assumptions,
+    net = crowd.export(graph, states) if crowd else None
+    return {'provider': provider, 'domain': domain, 'personas': personas, 'scenarios': scenarios, 'network': net, 'assumptions': assumptions,
             'evidence': evidence, 'rounds': options['rounds'], 'options':options, 'calls_planned': len(personas)*2*options['rounds'],
             'limitations': [f'{len(personas)} synthetic personas tailored to the regulation topic ({domain}), not a statistical sample of society.',
                            'Stance is computed from each agent’s latest comment; it is not a percentage of public opinion.',

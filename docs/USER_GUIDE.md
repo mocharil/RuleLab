@@ -118,6 +118,14 @@ Choose 8, 16, 24 or 32 agents and 2–5 rounds before running the two A/B scenar
 - Choose A/B, filter rounds, pan/zoom or reset the view.
 - Replay re-enacts the recorded order without calling the LLM again. Pausing a replay does not cancel the server job.
 
+### Crowd network (spread of opinion)
+
+Below the policy network, the **Crowd network** panel shows what happens after the AI personas speak. Before the first round the run builds a stakeholder knowledge graph (articles, sources, issues, stakeholders and, in live mode, institutions and instruments extracted by Gemini). Then it spawns 0, 50, 100, 200 or 500 lightweight **crowd agents** (Crowd selector, default 100) around the AI core personas and wires a follow network (same-group ties, a few bridges to other groups).
+
+Each round, active crowd agents read a feed (accounts they follow, trending accounts and an occasional recommended stranger), move toward views within their openness range, may push back on views that are too far, and may follow or unfollow accounts. Node colour is stance, size is influence, and AI core personas are outlined. Use **Replay rounds** or the round slider, click a node for its stance journey, or click a community to isolate it. The side panel lists top influencers (PageRank), communities, bridge accounts, polarization, an echo-chamber index and the A→B shift.
+
+Crowd agents follow transparent rules and do not call the AI provider, so a large crowd adds no cost. Their starting stances come from what the core personas actually said; they are not survey data.
+
 These opinions are synthetic, not real public comments or a statistical forecast of public opinion. Demo uses templates; live uses Gemini. A social run makes agents × rounds × two scenarios persona calls, plus the planner, so it takes longer than a single review.
 
 ## 9. Activity and export
