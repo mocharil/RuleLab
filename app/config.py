@@ -30,6 +30,9 @@ class Settings:
  ai_concurrency: int = int(os.getenv('RULELAB_AI_CONCURRENCY','5'))
  embedding_dimensions: int = int(os.getenv('EMBEDDING_DIMENSIONS','768'))
  db_path: Path = ROOT/os.getenv('RULELAB_DB','data/rulelab.sqlite3')
+ database_url: str = os.getenv('DATABASE_URL','')  # PostgreSQL DSN (Cloud SQL); empty = local SQLite
+ sources_bucket: str = os.getenv('RULELAB_SOURCES_BUCKET','')  # GCS bucket holding original documents; empty = local data/ folder
+ sources_prefix: str = os.getenv('RULELAB_SOURCES_PREFIX','data/')
  api_token: str = os.getenv('RULELAB_API_TOKEN','')
  deployment_mode: str = os.getenv('RULELAB_DEPLOYMENT_MODE','development')
  access_keys: str = os.getenv('RULELAB_ACCESS_KEYS','[]')

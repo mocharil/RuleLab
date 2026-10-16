@@ -18,6 +18,7 @@ from docx import Document
 from pydantic import BaseModel, Field, model_validator
 
 from app import store
+from app.services import sources
 from app.config import ROOT
 from app.models import RegType
 
@@ -139,19 +140,19 @@ def intake_items():
         return [json.loads(r['payload']) for r in connection.execute('SELECT payload FROM source_intake ORDER BY created_at DESC')]
 
 
-@lru_cache(maxsize=128)
-def file_digest(path, size, modified):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
-
-
 def document_inventory():
     # Return metadata and counts without loading all article bodies into Python.
     with store.db() as connection:
-        rows = connection.execute("SELECT json_remove(payload,'$.articles') AS doc, json_array_length(json_extract(payload,'$.articles')) AS count FROM regulations").fetchall()
-        topics = connection.execute("SELECT a.regulation_id,t.value AS topic FROM articles a,json_each(a.payload,'$.enrichment.topics') t GROUP BY a.regulation_id,t.value").fetchall()
+        if store.is_postgres():
+            rows = connection.execute("SELECT (payload::jsonb - 'articles')::text AS doc, jsonb_array_length(payload::jsonb->'articles') AS count FROM regulations").fetchall()
+            topics = connection.execute("SELECT a.regulation_id,t AS topic FROM articles a, jsonb_array_elements_text(a.payload::jsonb #> '{enrichment,topics}') t GROUP BY a.regulation_id,t").fetchall()
+        else:
+            rows = connection.execute("SELECT json_remove(payload,'$.articles') AS doc, json_array_length(json_extract(payload,'$.articles')) AS count FROM regulations").fetchall()
+            topics = connection.execute("SELECT a.regulation_id,t.value AS topic FROM articles a,json_each(a.payload,'$.enrichment.topics') t GROUP BY a.regulation_id,t.value").fetchall()
     doc_topics = {}
     for row in topics:
         doc_topics.setdefault(row['regulation_id'], []).append(row['topic'])
+    checksums = sources.checksums()
     documents = []
     known = {p['id'] for p in provinces()}
     for row in rows:
@@ -161,9 +162,9 @@ def document_inventory():
         national = m['type'] in NATIONAL
         scope = g.get('scope', 'national' if national and m.get('jurisdiction') == 'Indonesia' else 'unknown')
         source = d['provenance'];valid = None
-        raw = (ROOT/'data'/source.get('raw_file', '')).resolve()
-        if raw.is_relative_to((ROOT/'data/raw').resolve()) and raw.is_file():
-            stat = raw.stat();valid = file_digest(str(raw), stat.st_size, stat.st_mtime_ns) == source.get('sha256')
+        actual = checksums.get(source.get('raw_file', ''))
+        if actual:
+            valid = actual == source.get('sha256')
         documents.append({'id': d['id'], 'title': m['title'], 'regulation_type': m['type'], 'number': str(m['number']),
                           'year': m['year'], 'version_id': d['version_id'], 'version_kind': m['version_kind'],
                           'issuer_level': 'national' if national else 'province' if province else 'unknown',

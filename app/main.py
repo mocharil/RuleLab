@@ -5,7 +5,7 @@ from pathlib import Path
 import fitz,httpx
 from docx import Document
 from fastapi import FastAPI,Request,HTTPException,Query
-from fastapi.responses import FileResponse,Response,JSONResponse
+from fastapi.responses import FileResponse,Response,JSONResponse,StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from app import store
 from app.config import ROOT,settings
@@ -14,7 +14,7 @@ from app.services import analysis,simulation,retrieval,ai,legal,agents,social,re
 from app import security
 from app.models import AnalyzeRequest
 from app.services.export import export_docx
-from app.services import library_chat,collection
+from app.services import library_chat,collection,sources
 
 @asynccontextmanager
 async def lifespan(app):
@@ -179,10 +179,13 @@ def regulation(id:str):
  return result
 @app.get('/api/corpus/{id}/raw')
 def raw(id:str,inline:bool=Query(default=False)):
- d=regulation(id);filename=d['provenance']['raw_file'];path=(ROOT/'data'/filename).resolve()
- if not path.is_relative_to((ROOT/'data/raw').resolve()) or not path.is_file():raise HTTPException(404,'Source document not available.')
- if inline:return FileResponse(path,media_type='application/pdf' if path.suffix.lower()=='.pdf' else 'text/html; charset=utf-8',headers={'Content-Disposition':f'inline; filename="{path.name}"'})
- return FileResponse(path,filename=path.name,media_type='application/pdf' if path.suffix=='.pdf' else 'text/html')
+ d=regulation(id);rel=d['provenance']['raw_file']
+ if not sources.safe(rel) or not sources.exists(rel):raise HTTPException(404,'Source document not available.')
+ name=Path(rel).name;pdf=name.lower().endswith('.pdf')
+ media='application/pdf' if pdf else 'text/html; charset=utf-8'
+ disposition=('inline' if inline else 'attachment')+f'; filename="{name}"'
+ try:return StreamingResponse(sources.stream(rel),media_type=media,headers={'Content-Disposition':disposition})
+ except FileNotFoundError:raise HTTPException(404,'Source document not available.')
 @app.get('/api/corpus/{id}/json')
 def enriched(id:str):return Response(json.dumps(regulation(id),ensure_ascii=False,indent=2),media_type='application/json',headers={'Content-Disposition':f'attachment; filename="{id}.json"'})
 @app.get('/api/search')

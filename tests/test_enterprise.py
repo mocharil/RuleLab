@@ -1,3 +1,4 @@
+import os
 import asyncio
 import json
 import pytest
@@ -145,6 +146,7 @@ def test_actual_body_limit_even_without_declared_length(client):
     assert response.status_code==413
 
 
+@pytest.mark.skipif(bool(os.getenv('RULELAB_TEST_DATABASE_URL')),reason='SQLite online backup; PostgreSQL uses Cloud SQL backups')
 def test_online_backup_preserves_job_audit_and_revision(client, tmp_path):
     from scripts.backup_workspace import backup
     import sqlite3

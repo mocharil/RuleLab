@@ -42,10 +42,10 @@ def initialize():
           result TEXT DEFAULT '{}',error TEXT DEFAULT '',created_at TEXT,updated_at TEXT,
           UNIQUE(owner,request_key));
         CREATE TABLE IF NOT EXISTS agent_events(
-          id INTEGER PRIMARY KEY AUTOINCREMENT,job_id TEXT,agent TEXT,tool TEXT,
+          id ''' + store.auto_pk() + ''',job_id TEXT,agent TEXT,tool TEXT,
           status TEXT,detail TEXT,created_at TEXT);
         CREATE TABLE IF NOT EXISTS audit_events(
-          id INTEGER PRIMARY KEY AUTOINCREMENT,request_id TEXT,actor TEXT,role TEXT,
+          id ''' + store.auto_pk() + ''',request_id TEXT,actor TEXT,role TEXT,
           action TEXT,status INTEGER,created_at TEXT);
         ''')
         rows = c.execute("SELECT id FROM agent_jobs WHERE status IN ('queued','running','cancelling')").fetchall()

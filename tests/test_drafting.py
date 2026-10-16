@@ -102,7 +102,7 @@ def test_live_network_caps_concurrency_and_context(client,monkeypatch):
         return {'stance':'conditional','comment':'Saya meminta prosedur yang bisa ditinjau.','rationale':'Kapasitas pelaksanaan perlu dipastikan.','issue':'capacity','proposal':'Uji prosedur bersama kelompok terdampak.','reply_to':targets[-1]['id'] if targets else None,'evidence_ids':[]},{}
     monkeypatch.setattr(ai,'generate',fake)
     draft=client.get('/api/drafts').json()[0]
-    result=asyncio.run(social.simulate(draft,'Alternatif pelayanan yang inklusif.',{},[],lambda *args:None,{'persona_count':32,'rounds':5}))
+    result=asyncio.run(social.simulate(draft,'Alternatif pelayanan yang inklusif.',{},[],lambda *args:None,{'persona_count':32,'rounds':5,'crowd_size':0}))
     assert maximum<=3 and len(calls)==320
     assert all(len(c['previous_comments'])<=96 for c in calls)
     assert result['provider']['mode']=='live'

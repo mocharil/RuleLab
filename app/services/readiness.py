@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from typing import Literal
 from app.config import ROOT,settings
 from app import store
-from app.services import ai,retrieval
+from app.services import ai,retrieval,sources
 from app.services.credentials import service_account_info,CredentialError
 
 _last_probe=None
@@ -22,7 +22,7 @@ def signature():
             path.stat().st_mtime_ns if path and path.exists() else None,settings.search_backend,
             settings.embedding_model,settings.embedding_location,settings.embedding_dimensions,settings.elastic_url,settings.elastic_index,str(settings.db_path),
             hashlib.sha256((settings.api_key+settings.elastic_key+settings.elastic_password).encode()).hexdigest(),
-            (ROOT/'data/corpus.json').stat().st_mtime_ns if (ROOT/'data/corpus.json').exists() else None)
+            store.corpus_sha())
 
 
 def inspect():
@@ -50,8 +50,9 @@ def inspect():
             count=connection.execute('SELECT COUNT(*) FROM articles').fetchone()[0]
             fts=connection.execute('SELECT COUNT(*) FROM article_search').fetchone()[0]
         add('corpus','Corpus and local index','passed' if count and count==fts else 'failed',f'{len(regulations)} regulations · {count} articles/blocks · {fts} FTS entries.')
-        missing=[doc['id'] for doc in regulations if not (ROOT/'data'/doc['provenance']['raw_file']).is_file()]
-        add('sources','Source documents','failed' if missing else 'passed','Source files not available yet.' if missing else 'Original texts available for tracing.')
+        missing=sources.missing(regulations)
+        where='Google Cloud Storage' if sources.using_gcs() else 'local folder'
+        add('sources','Source documents','failed' if missing else 'passed',f'{len(missing)} source files not available yet.' if missing else f'Original texts available for tracing ({where}).')
     except Exception:
         add('corpus','Local database','failed','The database or corpus cannot be read. Check the data folder and write permissions.')
     add('search','Retrieval','passed' if settings.search_backend=='sqlite' else 'pending' if settings.search_backend=='elasticsearch' else 'failed',
@@ -68,7 +69,7 @@ async def validate_elastic_index():
   response=await client.get('/'+settings.elastic_index+'/_mapping');response.raise_for_status()
   mapping=response.json().get(settings.elastic_index,{}).get('mappings',{})
   metadata=mapping.get('_meta',{}).get('rulelab',{})
-  expected={'corpus_sha':hashlib.sha256((ROOT/'data/corpus.json').read_bytes()).hexdigest(),'model':settings.embedding_model,'dimensions':settings.embedding_dimensions,'provider':settings.provider,'location':settings.embedding_location}
+  expected={'corpus_sha':store.corpus_sha(),'model':settings.embedding_model,'dimensions':settings.embedding_dimensions,'provider':settings.provider,'location':settings.embedding_location}
   if any(metadata.get(key)!=value for key,value in expected.items()):raise ai.AIError('The Elasticsearch index does not match the current corpus/model. Run scripts/index_elasticsearch.py before enabling retrieval.','retrieval')
   count=await client.get('/'+settings.elastic_index+'/_count');count.raise_for_status()
   if count.json()['count']!=sum(len(doc['articles']) for doc in store.regulations()):raise ai.AIError('Index document count differs from the corpus. Use a new index and re-index.','retrieval')

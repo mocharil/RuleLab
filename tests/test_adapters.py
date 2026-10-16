@@ -7,7 +7,7 @@ from app.models import AnalysisOutput
 
 def test_elasticsearch_fusion_filters(client,monkeypatch):
  monkeypatch.setattr(settings,'search_backend','elasticsearch')
- doc=store.regulations()[0];ids=[a['id'] for a in doc['articles'][:3]]
+ doc=next(d for d in store.regulations() if len(d['articles'])>=3);ids=[a['id'] for a in doc['articles'][:3]]
  async def emb(query):return [0.1]*settings.embedding_dimensions
  monkeypatch.setattr(retrieval,'embedding',emb)
  bodies=[]

@@ -1,4 +1,7 @@
-"""Online SQLite backup. Run on the host with the configured RULELAB_DB."""
+"""Online SQLite backup. Run on the host with the configured RULELAB_DB.
+
+With PostgreSQL (Cloud SQL) use the managed backups instead:  gcloud sql backups create --instance rulelab-db
+"""
 import argparse
 from pathlib import Path
 import sqlite3
@@ -7,6 +10,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from app import store
 
 def backup(destination):
+    if store.is_postgres():raise SystemExit('DATABASE_URL is set: back up Cloud SQL with `gcloud sql backups create --instance <name>` (automated daily backups are enabled).')
     path=Path(destination).resolve()
     if path.exists(): raise ValueError('Destination already exists; choose a new backup filename.')
     path.parent.mkdir(parents=True,exist_ok=True)

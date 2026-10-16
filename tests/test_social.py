@@ -46,8 +46,8 @@ def test_live_personas_receive_prior_context_and_scenario_isolation(client, monk
     monkeypatch.setattr(ai, 'generate', fake)
     draft = client.get('/api/drafts').json()[0]
     events = []
-    p = asyncio.run(social.simulate(draft, 'Alternatif dengan kanal bantuan.', Assumptions().model_dump(), [], lambda *e: events.append(e), {'persona_count':8,'rounds':3}))
-    assert len(calls) == 48 and p['provider']['mode'] == 'live'
+    p = asyncio.run(social.simulate(draft, 'Alternatif dengan kanal bantuan.', Assumptions().model_dump(), [], lambda *e: events.append(e), {'persona_count':8,'rounds':3,'crowd_size':0}))
+    assert len(calls) == 48 and p['provider']['mode'] == 'live' and p['network'] is None
     for data in calls:
         assert len(data['previous_comments']) == 8 * (data['round'] - 1)
         assert all(c['scenario'] == data['scenario'] and c['round'] < data['round'] for c in data['previous_comments'])
@@ -146,3 +146,28 @@ def test_domain_persona_adaptation():
     m_names = [p['name'] for p in maritime_personas]
     assert any('Nelayan' in n or 'Rusli' in n for n in m_names)
     assert any('Kapal Tangkap' in n or 'Edward' in n for n in m_names)
+
+
+def test_live_knowledge_graph_extraction_is_one_extra_call_and_only_keeps_resolvable_relations(client, monkeypatch):
+    from app.services import network
+    monkeypatch.setattr(settings, 'provider', 'gemini')
+    persona_calls, graph_calls = [], []
+    async def fake(task, data, schema):
+        if schema is network.GraphExtraction:
+            graph_calls.append(data)
+            role = data['stakeholders'][0]
+            return {'entities': [{'name': 'Labour Ministry', 'type': 'institution', 'description': 'National labour regulator.'}],
+                    'relations': [{'source': 'Labour Ministry', 'target': role, 'type': 'regulates', 'description': 'Sets the rules this group follows.'},
+                                  {'source': 'Unknown body', 'target': role, 'type': 'funds', 'description': 'Not a known entity.'}]}, {'mode': 'live'}
+        persona_calls.append(data)
+        previous = [x for x in data['previous_comments'] if x['persona_id'] != data['persona']['id']]
+        return {'stance': 'support', 'comment': 'Prosedur ini jelas dan dapat dijalankan.', 'rationale': 'Sesuai kebutuhan persona ini.',
+                'issue': 'clarity', 'proposal': 'Pertahankan prosedur.', 'reply_to': previous[-1]['id'] if previous else None, 'evidence_ids': []}, {'mode': 'live'}
+    monkeypatch.setattr(ai, 'generate', fake)
+    draft = client.get('/api/drafts').json()[0]
+    p = asyncio.run(social.simulate(draft, 'Alternatif dengan kanal bantuan.', Assumptions().model_dump(), [], lambda *e: None, {'persona_count':8,'rounds':2,'crowd_size':50}))
+    assert len(graph_calls) == 1 and len(persona_calls) == 8 * 2 * 2
+    graph = p['network']['graph']
+    assert graph['extraction'] == 'rules+llm' and any(e['label'] == 'Labour Ministry' for e in graph['entities'])
+    assert sum(1 for r in graph['relations'] if r['type'] == 'regulates') == 1 and not any(r['type'] == 'funds' for r in graph['relations'])
+    assert p['network']['crowd']['size'] == 50 and set(p['network']['scenarios']) == {'A', 'B'}

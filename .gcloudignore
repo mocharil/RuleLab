@@ -19,3 +19,9 @@ artifacts_pptx_media/
 *.pptx
 *.png
 !app/static/**/*.png
+
+# Not needed at runtime (build-time pipeline outputs)
+
+# Data lives in Cloud SQL + Cloud Storage; only the legal rulebook is part of the image
+data/*
+!data/legal

@@ -16,9 +16,21 @@ def tokens(query):
  for w in list(words):words.extend(SYNONYMS.get(w,[]))
  return list(dict.fromkeys(words))[:55]
 
+def postgres_search(words,limit,regulation_id):
+ query=' | '.join(w for w in words if w.replace('_','').isalnum())
+ if not query:return []
+ sql=("SELECT s.id,ts_rank_cd(s.tsv,q.query,32) AS rank FROM article_search s JOIN articles a ON a.id=s.id,"
+      " to_tsquery('simple',?) AS q(query) WHERE s.tsv @@ q.query")
+ params=[query]
+ if regulation_id:sql+=' AND a.regulation_id=?';params.append(regulation_id)
+ sql+=' ORDER BY rank DESC LIMIT ?';params.append(limit)
+ with store.db() as c:rows=c.execute(sql,params).fetchall()
+ return [{**store.article(r['id']),'retrieval_score':round(float(r['rank']),5),'retrieval_method':'postgres_fts'} for r in rows]
+
 def sqlite_search(query,limit=12,regulation_id=None):
  words=tokens(query)
  if not words:return []
+ if store.is_postgres():return postgres_search(words,limit,regulation_id)
  fts=' OR '.join('"'+w+'"' for w in words)
  with store.db() as c:
   sql='SELECT s.id,bm25(article_search,0,1,1.5,0.5) rank FROM article_search s JOIN articles a ON s.id=a.id WHERE article_search MATCH ?'
