@@ -155,7 +155,6 @@ class Crowd:
         for i in range(k, n):
             by_arch[self.nodes[i]['archetype']].append(i); by_cluster[self.nodes[i]['cluster']].append(i)
         crowd_ids = list(range(k, n))
-        infl = [self.nodes[i]['influence'] for i in crowd_ids]
         def pick(pool, m, exclude):
             pool = [x for x in pool if x not in exclude]
             if not pool: return []

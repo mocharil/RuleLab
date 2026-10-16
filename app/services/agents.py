@@ -14,7 +14,7 @@ from pydantic import BaseModel, Field
 from app import store
 from app.config import settings
 from app.models import Assumptions, SocialOptions
-from app.services import ai, analysis, legal, retrieval, simulation, social
+from app.services import ai, analysis, retrieval, simulation, social
 
 ACTIVE = {'queued', 'running', 'cancelling'}
 TASKS = {}

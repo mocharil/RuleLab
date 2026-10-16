@@ -14,7 +14,7 @@ const $=s=>document.querySelector(s), E=(v='')=>String(v).replace(/[&<>"']/g,c=>
 const labels={high:'High',medium:'Medium',low:'Low',potential_vertical_conflict:'Potential vertical conflict',potential_horizontal_conflict:'Potential horizontal conflict',ambiguity:'Ambiguity',implementation_risk:'Implementation risk',coverage_gap:'Context incomplete',potential_only:'Initial indication',requires_review:'Needs review',temporal:'Time and version',scope:'Scope',authority:'Authority',exceptions:'Exceptions',alternative_interpretation:'Alternative interpretation',binding_statute:'Statutory norm',drafting_technique:'Drafting technique',engineering_guardrail:'Application protocol',needs_review:'Needs review',reviewed_with_notes:'Reviewed with notes'};
 const label=v=>labels[v]||v;
 const fmt=n=>new Intl.NumberFormat('id-ID').format(n), rup=n=>'Rp '+fmt(n);
-const names={home:'Workspace overview',data:'Data dashboard',editor:'Draft editor',analysis:'Conflict check',simulation:'Impact & public simulation',library:'Legal library',history:'Activity',social:'Impact & public simulation',agents:'Activity'};
+const names={home:'Overview',data:'Data dashboard',editor:'Draft editor',analysis:'Conflict check',simulation:'Impact & public simulation',library:'Legal library',history:'Activity',social:'Impact & public simulation',agents:'Activity'};
 const canonicalView=view=>['gallery','corpus'].includes(view)?'library':view==='social'?'simulation':Object.hasOwn(names,view)?view:'home';
 const workflowViews=['editor','analysis','simulation'];
 const activityViews=['history','agents'];
@@ -391,6 +391,8 @@ import:()=>modal('Import draft','<p class="help-text">TXT, JSON DraftInput, DOCX
 'run-import':async()=>{await save();const f=$('#import-file').files[0];if(!f)throw Error('Choose a file.');if(f.size>10*1024*1024)throw Error('Maximum 10MB.');const b64=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result.split(',')[1]);r.onerror=reject;r.readAsDataURL(f);});const d=await api('/import','POST',{filename:f.name,content_base64:b64});close();S.drafts=await api('/drafts');await select(d.id);S.view='editor';render();toast('Draft imported.');}
 };
 document.addEventListener('click',async e=>{
+ const moreBtn=e.target.closest('[data-gallery-more]');
+ if(moreBtn){e.preventDefault();e.stopPropagation();const card=moreBtn.closest('.gallery-card'),expanded=card?.classList.toggle('is-title-expanded');moreBtn.textContent=expanded?'See less':'See more';moreBtn.setAttribute('aria-expanded',expanded?'true':'false');return;}
  const el=e.target.closest('[data-action],button[data-view],a[data-view]');if(!el||el.disabled||isBusy())return;
  const kind=el.dataset.view?'navigate':el.dataset.action;
  try{el.disabled=true;await withLoading(kind,()=>el.dataset.view?view(el.dataset.view):actions[el.dataset.action]?.(el));}
@@ -758,7 +760,6 @@ function agentControls(){
  document.querySelectorAll('#main [data-action=start-agent]').forEach(el=>{el.disabled=active||role==='viewer'||role==='reviewer';if(active)el.title='Wait for or cancel the active run before starting a new one.';});
 }
 
-function socialPage(){S.simSection='social';return simulation();}
 actions['go-social']=()=>view('social');
 actions['go-sim']=()=>{S.simSection='projection';return view('simulation');};
 actions['sim-section']=el=>{S.simSection=el.dataset.section||'projection';render();requestAnimationFrame(()=>document.querySelector('.sim-unified-tab[aria-selected=true]')?.focus({preventScroll:true}));};
@@ -799,6 +800,8 @@ document.addEventListener('change',e=>{
  if(e.target.id==='gallery-scope'){S.gallery.scopeId=e.target.value;$('.scope-indicator').textContent=e.target.value?'1 regulation selected':'Entire collection';}
 });
 document.addEventListener('keydown',e=>{
+ const moreBtn=e.target.closest?.('[data-gallery-more]');
+ if(moreBtn&&(e.key==='Enter'||e.key===' ')){e.preventDefault();e.stopPropagation();moreBtn.click();return;}
  if(e.target.id==='gallery-question'&&e.key==='Enter'&&!e.shiftKey&&!e.isComposing){
   e.preventDefault();
   if(!isBusy())$('#gallery-chat-form')?.requestSubmit();

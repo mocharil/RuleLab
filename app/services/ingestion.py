@@ -3,7 +3,6 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-from datetime import datetime, timezone
 from pathlib import Path
 import fitz
 from bs4 import BeautifulSoup

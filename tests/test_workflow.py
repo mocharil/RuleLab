@@ -1,4 +1,4 @@
-import base64,io,json
+import base64,io
 from docx import Document
 
 def test_full_workflow(client):

@@ -29,11 +29,10 @@ select.rl-select-native { display: none !important; }
 .modal-body-scroll .rl-select { margin-bottom: 14px; }
 
 /* Keep the shared navigation quiet; highlight the next meaningful action. */
-:root { --sidebar-size: 252px; }
-.sidebar { background: #fff !important; border-right-color: #e8eaf0 !important; }
-.sidebar #nav button { min-height: 46px !important; font-size: 13px !important; }
-.sidebar #nav button.active { background: #fff0f2 !important; color: #a61d33 !important; box-shadow: none !important; }
-.workspace { border-radius: 10px !important; }
+:root { --sidebar-size: 256px; }
+.sidebar { background: #fff !important; border-right-color: #e2e8f0 !important; }
+.sidebar #nav button, .sidebar .workspace-home-link { min-height: 44px !important; font-size: 13.5px !important; }
+.sidebar #nav button.active, .sidebar .workspace-home-link.active { background: #fff1f2 !important; color: #9f1239 !important; border-color: #fecdd3 !important; box-shadow: 0 2px 6px rgba(180, 35, 56, 0.06) !important; }
 .topbar { background: #ffffffed !important; backdrop-filter: blur(16px); }
 .page-heading { align-items: flex-start; gap: 24px; }
 .page-heading .actions { gap: 8px; }
@@ -45,7 +44,7 @@ select.rl-select-native { display: none !important; }
 .btn:disabled, .fx-button:disabled { cursor: not-allowed; }
 .panel { border-color: #e4e8ef; border-radius: 14px; }
 .panel-head { padding: 18px 22px; }
-.workspace-context { background: #fff; border: 1px solid #e6eaf0; border-radius: 10px; }
+.workspace-context { background: #fff; border: 1px solid #e4e8ef; border-radius: 11px; padding: 11px 16px; min-height: 48px; align-items: center; gap: 12px; box-shadow: 0 1px 3px rgba(15, 23, 42, .02); }
 .menu-guide { margin-top: 28px; }
 .demo-note { border-left: 3px solid #e8c978; background: #fffcf5; font-size: 13px; }
 .document-header { padding-top: 26px; }
@@ -102,7 +101,7 @@ select.rl-select-native { display: none !important; }
 }
 .search-field { position: relative; }
 .gallery-search-controls .search-field input { padding-left: 38px; }
-.resume-manuscript::after { content: 'SNAPSHOT RANCANGAN' !important; }
+.resume-manuscript::after { content: 'DRAFT SNAPSHOT' !important; }
 #nav button::after { display: none !important; }
 .persona-row { flex-wrap: wrap; font-size: 13px; }
 .persona-row .p-info { flex: 1; min-width: 0; width: auto; flex-wrap: wrap; }

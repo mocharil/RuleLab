@@ -13,7 +13,7 @@ def test_vertex_contract_end_to_end(tmp_path,monkeypatch):
         token='unit-access-token';valid=True
     ai.reset_auth_cache()
     monkeypatch.setattr(google.auth,'default',lambda scopes:(Credential(),'unit-project'))
-    sample=json.loads((ROOT/'data/example_draft.json').read_text())
+    sample=json.loads((ROOT/'app/samples/sample_draft.json').read_text())
     original=httpx.AsyncClient;seen=[]
     def provider(request):
         assert request.url.host=='aiplatform.googleapis.com' and request.headers['Authorization']=='Bearer unit-access-token'

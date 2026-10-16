@@ -182,7 +182,7 @@ addCSS(css`
 .sbar i { display: block; height: 100%; }
 .slg { display: flex; gap: 14px; font-size: 12.5px; color: var(--muted); margin-top: 12px; font-weight: 600; }
 .slg span::before { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; background: var(--c); }
-.disc { left: 70px; bottom: 120px; font-size: 15px; color: var(--muted); font-weight: 600; display: flex; gap: 8px; align-items: center; }
+.disc { left: 1400px; top: 735px; width: 460px; font-size: 20px; line-height: 1.35; align-items: flex-start; color: var(--ink2); font-weight: 700; display: flex; gap: 10px; align-items: center; background: #fff; padding: 10px 20px; border-radius: 18px; box-shadow: 0 0 0 1px rgba(20,22,30,.1), 0 10px 24px -12px rgba(0,0,0,.25); }
 
 .pg { position: absolute; width: 540px; height: 720px; background: #fff; border-radius: 10px; padding: 50px 54px; box-shadow: 0 50px 100px -30px rgba(20,22,30,.4), 0 0 0 1px rgba(20,22,30,.06); }
 .pg .ph { font-family: 'Cormorant', serif; font-weight: 700; text-align: center; font-size: 20px; line-height: 1.35; }
@@ -278,9 +278,9 @@ scene('problem', `<div class="whip"><div class="cam">
     <svg class="pb-svg" viewBox="0 0 2600 1900"></svg></div>
   <div class="pb-fade abs"></div>
   <div class="pb-head mega abs"><div class="l1">Thousands of rules.</div><div class="l2">They don’t fit<span class="red">.</span></div></div>
-  <div class="pnl p1"><div class="pb-txt mega abs">By hand.<br>For weeks<span class="red">.</span></div>
+  <div class="pnl p1"><div class="pb-txt mega abs">By hand.<br>Under deadline<span class="red">.</span></div>
     <div class="pb-vis card" style="overflow:hidden;height:645px"><img class="drimg" src="assets/drafter.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
-      <span class="chip amber" style="position:absolute;right:24px;top:24px;font-size:20px;padding:10px 16px">${ic('timer', 20)}<span class="dayc">Day 1</span></span>
+      <span class="chip amber" style="position:absolute;right:24px;top:24px;font-size:20px;padding:10px 16px">${ic('timer', 20)}<span class="dayc">Deadline in 6 days</span></span>
       <span class="chip" style="position:absolute;left:24px;top:24px;font-size:17px;padding:9px 14px">${ic('scale', 17)}Manual harmonization</span></div></div>
   <div class="pnl p2"><div class="pb-txt mega abs">AI that makes things up<span class="red">.</span></div>
     <div class="pb-vis card"><div style="padding:30px 40px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;font-weight:800;font-size:20px;color:var(--muted)">${ic('bot', 24)} Generic AI chatbot</div>
@@ -332,7 +332,7 @@ scene('problem', `<div class="whip"><div class="cam">
     });
     // panel 1: days crawl by
     const d = P(t, L[1].t, L[2].t - L[1].t, Ez.lin);
-    q('.dayc').textContent = 'Day ' + Math.max(1, Math.round(1 + d * 20));
+    q('.dayc').textContent = 'Deadline in ' + Math.max(1, 6 - Math.round(d * 5)) + ' days';
     st(q('.drimg'), { s: 1.04 + 0.05 * P(t, L[1].t - 0.4, L[2].t - L[1].t + 0.5, Ez.lin), x: -14 * d });
     // panel 2: confident hallucination
     q('.p2 .bt').textContent = typed(bt, P(t, L[2].t + 0.3, 1.4, Ez.lin));
@@ -351,6 +351,7 @@ scene('reveal', `<div class="whip"><div class="cam">
   <div class="rv-tag abs">An AI workspace for Indonesian lawmaking</div>
   <div class="rv-gem abs"><span>${ic('sparkles', 22)} Built on Gemini</span></div>
   <div class="rv-pills abs"><span><b>01</b>Draft</span><span><b>02</b>Verify</span><span><b>03</b>Test impact</span></div>
+  <div class="rv-comp abs"><em>Complements</em><span>e-Harmonisasi</span><span>Allex</span><span>Partisipasiku</span></div>
   <div class="wipe abs"></div>
 </div></div>`, ({ q, qa, sc, el }) => {
   el.dataset.bg = '#0B0B0C';
@@ -368,6 +369,8 @@ scene('reveal', `<div class="whip"><div class="cam">
     word.style.clipPath = `inset(0 ${100 - wr * 100}% 0 0)`;
     st(lock, { x: (1 - wr) * ((word.offsetWidth + 34) / 2) });
     const tg = P(t, R1.t - 0.1, 0.7, Ez.out5);
+    const cp = P(t, W('reveal', 'complement') - 0.1, 0.6, Ez.out5);
+    st(q('.rv-comp'), { y: (1 - cp) * 24, o: cp });
     st(q('.rv-tag'), { y: (1 - tg) * 30, o: tg });
     const gm = P(t, W('reveal', 'gemini') - 0.1, 0.6, Ez.back);
     st(q('.rv-gem'), { s: lerp(0.8, 1, gm), o: gm });
@@ -623,11 +626,11 @@ scene('impact', `<div class="whip"><div class="cam">
     <div class="mini panel mi0" style="left:424px"><small>VARIABLE COST</small><div class="v">Rp 35.0M → 65.0M</div><em>A → B, per intake cycle</em></div>
     <div class="mini panel mi1" style="left:731px"><small>ASSISTED WORKLOAD</small><div class="v">15 staff-days</div><em>600 cases ÷ 40 per day</em></div>
     <div class="mini panel mi2" style="left:1038px"><small>SENSITIVITY ±10 PTS</small><div class="v" style="font-size:22px">A 60–80% · B 92–96%</div><em>Digital access 60% / 80%</em></div>
-    <div class="formula panel">${ic('shield-check', 20)}<span>Deterministic model</span><code>served = N·p + N·(1−p)·q</code><span style="color:var(--muted)">no LLM arithmetic</span></div>
+    <div class="formula panel">${ic('shield-check', 20)}<span>Assumption-based model</span><code>served = N·p + N·(1−p)·q</code><span style="color:var(--muted)">no LLM arithmetic</span></div>
     <div class="boom">+600 people served</div>
   </div>` })}</div></div>
   <div class="im-c">
-    <div class="nw-k abs"><span class="kicker">Public forum simulation</span><span class="chip dark">${ic('users', 15)}32 AI personas × 5 rounds</span><span class="chip">Draft A / B</span></div>
+    <div class="nw-k abs"><span class="kicker">Public forum simulation</span><span class="chip dark">${ic('users', 15)}32 synthetic personas × 5 rounds</span><span class="chip">Draft A / B</span></div>
     <div class="nw-cnt abs"><div><small>ROUND</small><b class="rnd">1 / 5</b></div><div><small>RESPONSES</small><b class="rsp">0</b></div></div>
     <svg class="nw-svg" width="1360" height="800" viewBox="0 0 1360 800"></svg>
     <div class="insp abs">${QUOTES.map(([a, n, r, c, tx]) => `<div class="qc"><div class="who"><div class="av" style="background:${c}">${a}</div><div><b>${n}</b><small>${r}</small></div></div><p>${tx}</p><div class="rt"><span class="chip">${ic('message-square', 14)}Round ${3 + (a.length % 2)}</span><span class="chip blue">${ic('book-open', 14)}Cites UU 25/2009</span></div></div>`).join('')}
@@ -635,7 +638,7 @@ scene('impact', `<div class="whip"><div class="cam">
         <div class="srow"><b>Draft A · digital only</b><div class="sbar"><i class="sA0" style="background:var(--green)"></i><i class="sA1" style="background:#E3B341"></i><i class="sA2" style="background:var(--red)"></i></div></div>
         <div class="srow"><b>Draft B · assisted channel</b><div class="sbar"><i class="sB0" style="background:var(--green)"></i><i class="sB1" style="background:#E3B341"></i><i class="sB2" style="background:var(--red)"></i></div></div>
         <div class="slg"><span style="--c:var(--green)">Support</span><span style="--c:#E3B341">Conditional</span><span style="--c:var(--red)">Object</span></div></div></div>
-    <div class="disc abs">${ic('circle-alert', 16)} Synthetic personas: an exploration of assumptions, not a survey.</div>
+    <div class="disc abs">${ic('circle-alert', 16)} Synthetic personas: not a survey, and not a substitute for public consultation.</div>
   </div>
 </div></div>`, ({ q, qa, sc }) => {
   const I = [0, 1, 2, 3, 4, 5, 6].map(i => LN('impact', i));
@@ -793,11 +796,15 @@ scene('close', `<div class="whip"><div class="cam">
     <div class="cl-lock abs">${logo(140)}<div class="cl-word">RuleLab</div></div>
     <div class="cl-team abs">Team RuleLab</div>
     <div class="cl-git abs">github.com/mocharil/RuleLab</div>
+    <div class="cl-prod abs"></div>
+    <div class="cl-next abs"><em>NEXT</em><span>Practitioner validation</span><span>Real public-input module</span></div>
     <div class="cl-built abs"><span class="chip" style="font-size:20px;padding:10px 18px">${ic('sparkles', 20)}Built with Gemini</span><span class="chip" style="font-size:20px;padding:10px 18px">${ic('building-2', 20)}Google Cloud</span></div>
   </div>
   <div class="cl-dot abs"></div>
 </div></div>`, ({ q, qa, sc }) => {
   const C0 = LN('close', 0), C1 = LN('close', 1), C2 = LN('close', 2);
+  const PRODUCT_URL = 'rulelab-627843549213.asia-southeast2.run.app';
+  q('.cl-prod').textContent = PRODUCT_URL ? 'Live demo · ' + PRODUCT_URL : '';
   const tLaws = W('close', 'laws'), tPeople = W('close', 'people');
   cue(sc.start, 'whoosh'); [0, 1, 2].forEach(i => cue(C0.t + 0.1 + i * 0.12, 'pop')); cue(tLaws, 'tick'); cue(C2.t - 0.5, 'whoosh'); cue(C2.t - 0.2, 'swell');
   const cards = qa('.pp'), lk = qa('.pp-lock.lk'), un = qa('.pp-lock.un'), sv = qa('.sv-img');
@@ -821,6 +828,9 @@ scene('close', `<div class="whip"><div class="cam">
     st(q('.cl-lock'), { y: (1 - b) * 40, o: b });
     st(q('.cl-team'), { o: P(t, W('close', 'team') - 0.2, 0.5) });
     st(q('.cl-git'), { o: P(t, W('close', 'team') + 0.2, 0.5) });
+    st(q('.cl-prod'), { o: P(t, W('close', 'team') + 0.35, 0.5) });
+    const nx = P(t, W('close', 'next') - 0.1, 0.6, Ez.out5);
+    st(q('.cl-next'), { y: (1 - nx) * 24, o: nx });
     const bu = P(t, W('close', 'gemini') - 0.2, 0.5, Ez.back);
     st(q('.cl-built'), { o: bu, s: lerp(0.9, 1, bu) });
     // final beat: everything clears to the red dot
@@ -830,3 +840,13 @@ scene('close', `<div class="whip"><div class="cam">
     st(q('.cl-dot'), { s: d, o: d });
   };
 });
+
+addCSS(css`
+.rv-comp { left: 0; right: 0; top: 905px; display: flex; justify-content: center; align-items: center; gap: 18px; }
+.rv-comp em { font-style: normal; font-size: 22px; color: #8f929a; font-weight: 600; margin-right: 6px; }
+.rv-comp span { font-size: 22px; font-weight: 700; color: #d9dbe0; padding: 9px 20px; border-radius: 999px; border: 1px solid #3a3c42; background: #18191c; }
+.cl-prod { left: 0; right: 0; top: 748px; text-align: center; font-size: 30px; font-weight: 600; color: var(--ink2); }
+.cl-next { left: 0; right: 0; top: 880px; display: flex; justify-content: center; align-items: center; gap: 14px; }
+.cl-next em { font-style: normal; font-size: 18px; font-weight: 800; letter-spacing: .12em; color: var(--red); margin-right: 6px; }
+.cl-next span { font-size: 22px; font-weight: 600; color: var(--ink2); padding: 9px 20px; border-radius: 999px; background: #fff; box-shadow: 0 0 0 1px rgba(20,22,30,.1); }
+`);

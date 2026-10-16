@@ -1,53 +1,226 @@
 {
-  "voice": "en-US-AndrewMultilingualNeural",
-  "rate": "-3%",
-  "note": "Each scene: lead (s) before the first line, then [text, gap-after] parts, then tail (s).",
-  "scenes": [
-    {"id": "hook", "lead": 1.6, "tail": 1.8, "parts": [
-      ["This is one sentence from a draft regulation.", 0.5],
-      ["\"Applications may only be submitted through a digital app.\"", 0.7],
-      ["It sounds like progress.", 0.4],
-      ["But for elderly citizens, people with disabilities, and villages without a signal... it's a locked door.", 0]]},
-    {"id": "problem", "lead": 0.5, "tail": 1.4, "parts": [
-      ["Indonesia has thousands of overlapping regulations, and they don't always fit together.", 0.5],
-      ["Drafters cross-check them by hand, for weeks.", 0.5],
-      ["Generic AI chatbots invent articles that don't exist.", 0.5],
-      ["And the real impact only shows up after the law is signed.", 0]]},
-    {"id": "reveal", "lead": 1.0, "tail": 1.8, "parts": [
-      ["Meet RuleLab.", 0.7],
-      ["An AI workspace for Indonesian lawmaking, built on Gemini.", 0.4],
-      ["Draft, verify, and test a regulation, before it reaches a single citizen.", 0]]},
-    {"id": "draft", "lead": 0.6, "tail": 1.6, "parts": [
-      ["It starts with a plain-language brief.", 2.4],
-      ["Gemini turns it into a draft in the official legal structure: one of fifteen regulation types, with considerations, legal basis, and numbered articles, grounded in retrieved laws.", 1.0],
-      ["Then, under budget pressure, a drafter tightens Article 2.", 0.3],
-      ["Digital only.", 0.5],
-      ["Saved as version two.", 0]]},
-    {"id": "review", "lead": 0.6, "tail": 1.4, "parts": [
-      ["Now RuleLab checks every article.", 0.4],
-      ["Hybrid search pulls the relevant clauses from more than twelve thousand regulations, and specialist agents analyze each one.", 0.8],
-      ["In under a minute: three findings.", 0.7],
-      ["Article 2 excludes citizens without internet, colliding with the Public Service Law and the Disability Law.", 0.6],
-      ["Every claim links to the exact source: article, page, and document fingerprint.", 0.6],
-      ["If the model cites anything outside the evidence, it's rejected.", 0.7],
-      ["The reviewer stays in charge. One click applies the fix, as a new version.", 0]]},
-    {"id": "impact", "lead": 0.6, "tail": 1.8, "parts": [
-      ["Next, RuleLab tests the impact.", 0.3],
-      ["Same assumptions, two drafts.", 0.5],
-      ["Digital only serves seventy percent of applicants.", 0.3],
-      ["Draft B, with assisted channels, serves ninety-four.", 0.3],
-      ["That's six hundred more people, with the cost and staff workload in plain view.", 1.0],
-      ["Then thirty-two AI personas, from a blind citizen to a counter officer to a budget analyst, debate both drafts over five rounds.", 0.7],
-      ["Three hundred and twenty grounded reactions, clustered by issue, so drafters hear the concerns before they become complaints.", 0]]},
-    {"id": "outcome", "lead": 0.5, "tail": 1.6, "parts": [
-      ["The result: a formatted draft and a full review report, exported to Word,", 0.2],
-      ["with every step logged for audit.", 0]]},
-    {"id": "platform", "lead": 0.5, "tail": 1.8, "parts": [
-      ["Around it: a legal library with a source-cited assistant,", 0.3],
-      ["and a regulation map across all thirty-eight provinces.", 0]]},
-    {"id": "close", "lead": 0.8, "tail": 4.0, "parts": [
-      ["RuleLab.", 0.5],
-      ["Laws that fit together, and fit the people they serve.", 0.9],
-      ["Built by team RuleLab, with Gemini on Google Cloud.", 0]]}
-  ]
+ "voice": "en-US-AndrewMultilingualNeural",
+ "rate": "+8%",
+ "note": "Each scene: lead (s) before the first line, then [text, gap-after] parts, then tail (s). Animations are anchored to words (see W() in scenes.js).",
+ "scenes": [
+  {
+   "id": "hook",
+   "lead": 0.8,
+   "tail": 0.8,
+   "parts": [
+    [
+     "One sentence from a draft regulation.",
+     0.4
+    ],
+    [
+     "\"Applications may only be submitted through a digital app.\"",
+     0.5
+    ],
+    [
+     "It sounds like progress.",
+     0.3
+    ],
+    [
+     "But for elderly citizens, people with disabilities, and villages without a signal, it's a locked door.",
+     0
+    ]
+   ]
+  },
+  {
+   "id": "problem",
+   "lead": 0.3,
+   "tail": 0.7,
+   "parts": [
+    [
+     "Thousands of overlapping regulations, and they don't always fit together.",
+     0.25
+    ],
+    [
+     "Drafters cross-check them by hand, under tight deadlines.",
+     0.25
+    ],
+    [
+     "Generic AI chatbots invent articles that don't exist.",
+     0.25
+    ],
+    [
+     "And the real impact only shows up after the law is signed.",
+     0
+    ]
+   ]
+  },
+  {
+   "id": "reveal",
+   "lead": 0.6,
+   "tail": 0.8,
+   "parts": [
+    [
+     "Meet RuleLab.",
+     0.4
+    ],
+    [
+     "An AI workspace for Indonesian lawmaking, built on Gemini.",
+     0.25
+    ],
+    [
+     "Draft, verify, and test a regulation before it reaches a citizen.",
+     0.25
+    ],
+    [
+     "Built to complement existing legal tools, not replace them.",
+     0
+    ]
+   ]
+  },
+  {
+   "id": "draft",
+   "lead": 0.4,
+   "tail": 0.9,
+   "parts": [
+    [
+     "It starts with a plain-language brief.",
+     1.9
+    ],
+    [
+     "Gemini drafts in the official format: fifteen regulation types, considerations, legal basis, numbered articles, grounded in real laws.",
+     0.5
+    ],
+    [
+     "Then, under budget pressure, a drafter tightens Article 2.",
+     0.2
+    ],
+    [
+     "Digital only.",
+     0.3
+    ],
+    [
+     "Saved as version two.",
+     0
+    ]
+   ]
+  },
+  {
+   "id": "review",
+   "lead": 0.5,
+   "tail": 0.8,
+   "parts": [
+    [
+     "Now RuleLab checks every article.",
+     0.25
+    ],
+    [
+     "Hybrid search pulls clauses from more than twelve thousand regulations, and specialist agents check each one.",
+     0.25
+    ],
+    [
+     "In under a minute: three findings.",
+     0.25
+    ],
+    [
+     "Article 2 excludes citizens without internet, colliding with the Public Service Law and the Disability Law.",
+     0.25
+    ],
+    [
+     "Every claim links to its exact source: article, page, and document fingerprint.",
+     0.25
+    ],
+    [
+     "If the model cites anything outside the evidence, it's rejected.",
+     0.25
+    ],
+    [
+     "The reviewer stays in charge. One click applies the fix, as a new version.",
+     0
+    ]
+   ]
+  },
+  {
+   "id": "impact",
+   "lead": 0.4,
+   "tail": 1.0,
+   "parts": [
+    [
+     "Next, RuleLab tests the impact.",
+     0.2
+    ],
+    [
+     "Same assumptions, two drafts.",
+     0.25
+    ],
+    [
+     "Digital only serves seventy percent of applicants.",
+     0.2
+    ],
+    [
+     "Draft B, with assisted channels, serves ninety-four.",
+     0.2
+    ],
+    [
+     "That's six hundred more people, with the cost and staff workload in plain view.",
+     0.5
+    ],
+    [
+     "Then up to thirty-two synthetic personas, from a blind citizen to a counter officer to a budget analyst, debate both drafts over five rounds.",
+     0.3
+    ],
+    [
+     "Three hundred and twenty reactions, clustered by issue. They help drafters prepare for public consultation, not replace it.",
+     0
+    ]
+   ]
+  },
+  {
+   "id": "outcome",
+   "lead": 0.3,
+   "tail": 0.6,
+   "parts": [
+    [
+     "The result: a formatted draft and a full review report, exported to Word,",
+     0.1
+    ],
+    [
+     "with every step logged for audit.",
+     0
+    ]
+   ]
+  },
+  {
+   "id": "platform",
+   "lead": 0.3,
+   "tail": 0.7,
+   "parts": [
+    [
+     "Around it: a source-cited legal library,",
+     0.15
+    ],
+    [
+     "and a regulation map of all thirty-eight provinces.",
+     0
+    ]
+   ]
+  },
+  {
+   "id": "close",
+   "lead": 0.5,
+   "tail": 2.6,
+   "parts": [
+    [
+     "RuleLab.",
+     0.3
+    ],
+    [
+     "Laws that fit together, and fit the people they serve.",
+     0.5
+    ],
+    [
+     "Built by team RuleLab, with Gemini on Google Cloud.",
+     0.3
+    ],
+    [
+     "Next: practitioner validation, and real public input.",
+     0
+    ]
+   ]
+  }
+ ]
 }

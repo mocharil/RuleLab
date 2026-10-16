@@ -34,15 +34,15 @@ export function CommandMenu() {
   return <Dialog.Root open={open} onOpenChange={value=>{setOpen(value);if(value){setQuery("");setSelected(0);}}}>
     <Dialog.Trigger asChild><Button className="fx-command-trigger" size="small" aria-label="Quick navigation" onClick={event=>{if(document.querySelector("dialog[open]")||document.querySelector<HTMLElement>("#main")?.inert)event.preventDefault();}}><Command size={14}/><span>Quick menu</span><kbd>⌘ K</kbd></Button></Dialog.Trigger>
     <Dialog.Portal><Dialog.Overlay className="fx-dialog-overlay"/><Dialog.Content className="fx-command-content" onOpenAutoFocus={e=>{e.preventDefault();document.getElementById("framework-command-input")?.focus();}}>
-      <Dialog.Title className="fx-command-title">Navigasi workspace</Dialog.Title><Dialog.Description className="fx-command-description">Search the menu and continue your work. Changed drafts are saved before switching.</Dialog.Description>
+      <Dialog.Title className="fx-command-title">Workspace navigation</Dialog.Title><Dialog.Description className="fx-command-description">Search the menu and continue your work. Changed drafts are saved before switching.</Dialog.Description>
       <Dialog.Close className="fx-command-close" aria-label="Close quick menu"><X size={15}/></Dialog.Close>
       <div className="fx-command-search"><Search size={17}/><input id="framework-command-input" role="combobox" aria-controls="framework-command-results" aria-expanded="true" aria-autocomplete="list" aria-activedescendant={filtered[selected]?"framework-command-"+filtered[selected][0]:undefined} aria-label="Search menu" autoComplete="off" placeholder="Search editor, simulation, sources…" value={query} onChange={e=>{setQuery(e.target.value);setSelected(0);}} onKeyDown={e=>{
         if(e.key==="ArrowDown"){e.preventDefault();setSelected(i=>Math.max(0,Math.min(filtered.length-1,i+1)));}
         if(e.key==="ArrowUp"){e.preventDefault();setSelected(i=>Math.max(0,i-1));}
         if(e.key==="Enter"&&filtered[selected]){e.preventDefault();navigate(filtered[selected][0]);}
       }}/></div>
-      <div className="fx-command-results" id="framework-command-results" role="listbox" aria-label="Menu workspace">{filtered.map(([view,title,description],i)=><button key={view} id={"framework-command-"+view} role="option" aria-selected={i===selected} tabIndex={-1} onClick={()=>navigate(view)} className={i===selected?"selected":""}><span><b>{title}</b><small>{description}</small></span><ArrowUpRight size={14}/></button>)}{!filtered.length&&<p>No matching menu. Try another term.</p>}</div>
-      <div className="fx-command-footer"><span>↑ ↓ Pilih</span><span>Enter Open</span><span>Esc Tutup</span></div>
+      <div className="fx-command-results" id="framework-command-results" role="listbox" aria-label="Workspace menu">{filtered.map(([view,title,description],i)=><button key={view} id={"framework-command-"+view} role="option" aria-selected={i===selected} tabIndex={-1} onClick={()=>navigate(view)} className={i===selected?"selected":""}><span><b>{title}</b><small>{description}</small></span><ArrowUpRight size={14}/></button>)}{!filtered.length&&<p>No matching menu. Try another term.</p>}</div>
+      <div className="fx-command-footer"><span>↑ ↓ Select</span><span>Enter Open</span><span>Esc Close</span></div>
     </Dialog.Content></Dialog.Portal>
   </Dialog.Root>;
 }

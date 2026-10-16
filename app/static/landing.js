@@ -92,15 +92,15 @@ document.addEventListener('DOMContentLoaded', () => {
       hierarchy: {
         doc: 'UU No. 12 Tahun 2011 · Pembentukan PUU',
         article: 'Pasal 7 ayat (2)',
-        verdict: 'Hierarki Selaras',
+        verdict: 'Hierarchy Aligned',
         verdictType: 'valid',
         quote: '“Kekuatan hukum Peraturan Perundang-undangan adalah sesuai dengan hierarki sebagaimana dimaksud pada ayat (1)... materi muatan Peraturan Pemerintah tidak boleh melampaui delegasi UU.”',
-        provenance: 'Corpus Resmi Lembaran Negara RI · Terverifikasi'
+        provenance: 'Official State Gazette Corpus · Verified'
       },
       harmony: {
         doc: 'UU No. 25 Tahun 2009 · Pelayanan Publik',
         article: 'Pasal 5 ayat (3) & (4)',
-        verdict: '1 Perhatian Norma',
+        verdict: '1 Norm Concern',
         verdictType: 'warning',
         quote: '“Pelayanan publik yang diselenggarakan secara elektronik wajib tetap mengedepankan asas kemudahan aksesibilitas serta akomodasi bagi masyarakat rentan.”',
         provenance: 'Cross-regulation consistency test · Recommendation available'
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         verdict: 'Accommodation required',
         verdictType: 'info',
         quote: '“Hak pelayanan publik bagi Penyandang Disabilitas meliputi hak: a. memperoleh akomodasi yang layak... dan format dokumen yang aksesibel secara mandiri.”',
-        provenance: 'Standar Internasional WCAG 2.1 AA · Terdaftar'
+        provenance: 'WCAG 2.1 AA International Standard · Registered'
       }
     };
 
@@ -149,11 +149,11 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         navigator.clipboard.writeText(quoteBox.textContent).then(() => {
           const orig = btnCopy.textContent;
-          btnCopy.textContent = 'Tersalin ✓';
+          btnCopy.textContent = 'Copied ✓';
           setTimeout(() => { btnCopy.textContent = orig; }, 1500);
         }).catch(() => {
-          btnCopy.textContent = 'Tersalin ✓';
-          setTimeout(() => { btnCopy.textContent = 'Salin'; }, 1500);
+          btnCopy.textContent = 'Copied ✓';
+          setTimeout(() => { btnCopy.textContent = 'Copy quote'; }, 1500);
         });
       });
     }
@@ -170,13 +170,13 @@ document.addEventListener('DOMContentLoaded', () => {
         role: 'Rural resident (remote area)',
         round1: {
           stance: 'concern',
-          stanceLabel: 'Perhatian (Concern)',
+          stanceLabel: 'Concern',
           text: '“In our village power and mobile signal are often out for days. If permits and aid only go through an app portal, residents’ affairs will grind to a halt.”'
         },
         round2: {
           stance: 'conditional',
-          stanceLabel: 'Bersyarat (Conditional)',
-          text: '“Adding an offline counter and assistance at the village office in the revised Article 4 is a relief, so residents far away are not hurt by deadlines.”'
+          stanceLabel: 'Conditional',
+          text: '“Adding an offline counter and assistance at the village office in the revised Pasal 4 is a relief, so residents far away are not hurt by deadlines.”'
         }
       },
       nadia: {
@@ -184,26 +184,26 @@ document.addEventListener('DOMContentLoaded', () => {
         role: 'Person with a disability (screen reader)',
         round1: {
           stance: 'conditional',
-          stanceLabel: 'Bersyarat (Conditional)',
+          stanceLabel: 'Conditional',
           text: '“Digital portals often hold only scanned PDFs without text tags that screen readers cannot read. WCAG compliance is a must.”'
         },
         round2: {
           stance: 'support',
-          stanceLabel: 'Mendukung (Support)',
+          stanceLabel: 'Support',
           text: '“The reasonable-accommodation clause is now clearly in the draft. We are waiting for technical guidance on auditing the portal’s accessibility.”'
         }
       },
       raka: {
         name: 'Raka',
-        role: 'Pelaku UMKM Kuliner',
+        role: 'Culinary MSME owner',
         round1: {
           stance: 'support',
-          stanceLabel: 'Mendukung (Support)',
+          stanceLabel: 'Support',
           text: '“One-stop integration cuts illegal fees and shortens our distribution permits. What matters is a stable server and verification within 3 working days.”'
         },
         round2: {
           stance: 'support',
-          stanceLabel: 'Mendukung (Support)',
+          stanceLabel: 'Support',
           text: '“Integrating central permit data with physical counter assistance for traditional producers is balanced. This rule gives business certainty.”'
         }
       },
@@ -212,12 +212,12 @@ document.addEventListener('DOMContentLoaded', () => {
         role: 'One-stop service officer',
         round1: {
           stance: 'conditional',
-          stanceLabel: 'Bersyarat (Conditional)',
+          stanceLabel: 'Conditional',
           text: '“Many elderly residents still come to the counter. We are ready to assist them, as long as there is staff quota and written operating guidance.”'
         },
         round2: {
           stance: 'conditional',
-          stanceLabel: 'Bersyarat (Conditional)',
+          stanceLabel: 'Conditional',
           text: '“With Ms Dewi’s training budget, we are ready to run mobile digital assistance posts in the villages we support.”'
         }
       },
@@ -226,12 +226,12 @@ document.addEventListener('DOMContentLoaded', () => {
         role: 'Operational budget officer',
         round1: {
           stance: 'support',
-          stanceLabel: 'Mendukung (Support)',
+          stanceLabel: 'Support',
           text: '“Digital transformation cuts 65% of paper printing and physical archives. The savings can fund bandwidth for service offices.”'
         },
         round2: {
           stance: 'support',
-          stanceLabel: 'Mendukung (Support)',
+          stanceLabel: 'Support',
           text: '“The budget for assistance in remote areas is still within healthy fiscal limits. RuleLab’s impact simulation model really helps this projection.”'
         }
       }
@@ -301,28 +301,28 @@ document.addEventListener('DOMContentLoaded', () => {
           { text: ' Scanning the source corpus…' },
           { type: 'dim', text: ' > Index: sqlite_rag + bm25_hybrid' },
           { type: 'success', text: ' ✔ Found: UU 12/2011 (hierarchy) & UU 25/2009 (public services)' },
-          { type: 'dim', text: ' > Provenance: Lembaran Negara No. 82/2011 · SHA256 terverifikasi' }
+          { type: 'dim', text: ' > Provenance: Lembaran Negara No. 82/2011 · SHA256 verified' }
         ],
         telemetry: [
           { type: 'tag', text: '[telemetry :: retrieval]' },
-          { text: ' Status: COMPLETED · Latency: 118ms · Corpus: 406 pasal' },
+          { text: ' Status: COMPLETED · Latency: 118ms · Corpus: 406 Pasal' },
           { text: ' Retrieval Strategy: Hybrid (Dense Vector + BM25 Lexical)' },
-          { type: 'success', text: ' Top Match: UU 12/2011 (Skor Relevansi: 0.942)' },
+          { type: 'success', text: ' Top Match: UU 12/2011 (Relevance Score: 0.942)' },
           { type: 'dim', text: ' Cache Hit: 100% · Memory: 42.1 MB' }
         ]
       },
       2: {
         stream: [
           { type: 'tag', text: '[legal_review_agent]' },
-          { text: ' Menganalisis Pasal 4 RPP terhadap hierarki UU 12/2011...' },
-          { type: 'warn', text: ' ⚠ Deteksi: Benturan klausul mutlak format digital vs asas keadilan' },
-          { type: 'dim', text: ' > Test basis: Article 5(3) UU 25/2009' },
+          { text: ' Analyzing Pasal 4 RPP against UU 12/2011 hierarchy...' },
+          { type: 'warn', text: ' ⚠ Detected: Conflict between strict digital-only clause and fairness principle' },
+          { type: 'dim', text: ' > Test basis: Pasal 5 ayat (3) UU 25/2009' },
           { type: 'success', text: ' ✔ Composing alternative drafting proposals and mitigation notes' }
         ],
         telemetry: [
           { type: 'tag', text: '[telemetry :: legal_review]' },
-          { text: ' Status: COMPLETED · Latency: 240ms · 1 Isu Kritis' },
-          { text: ' Harmonisasi Model: Legal-BERT fine-tuned PUU Indonesia' },
+          { text: ' Status: COMPLETED · Latency: 240ms · 1 Critical Issue' },
+          { text: ' Harmonization Model: Legal-BERT fine-tuned on Indonesian regulations' },
           { type: 'warn', text: ' Norm risk score: 0.78 (high on absolute-obligation articles)' },
           { type: 'dim', text: ' Verified recommendation: 1 inclusive drafting proposal' }
         ]
@@ -337,9 +337,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ],
         telemetry: [
           { type: 'tag', text: '[telemetry :: social_simulation]' },
-          { text: ' Status: COMPLETED · Latency: 320ms · 5 Persona Aktif' },
+          { text: ' Status: COMPLETED · Latency: 320ms · 5 Active Personas' },
           { text: ' Opinion convergence: 76.4% after the offline-channel mitigation' },
-          { type: 'success', text: ' Resonansi Tertinggi: Sari (Rural 3T) & Nadia (Disabilitas)' },
+          { type: 'success', text: ' Highest Resonance: Sari (Remote Rural) & Nadia (Disability)' },
           { type: 'dim', text: ' Implementation cost: within the state budget ceiling (confirmed by Dewi)' }
         ]
       },
@@ -355,8 +355,8 @@ document.addEventListener('DOMContentLoaded', () => {
           { type: 'tag', text: '[telemetry :: human_review]' },
           { text: ' Status: READY_FOR_EXPORT · Reviewer: Aril Indra Permana' },
           { text: ' Target draft: RPP_Layanan_Digital_2026_Final.docx' },
-          { type: 'success', text: ' Integritas Format: Sesuai Lampiran II UU 12/2011' },
-          { type: 'dim', text: ' Tanda Tangan Hash: a9f8e4c7... terikat sesi' }
+          { type: 'success', text: ' Format Integrity: Complies with Lampiran II UU 12/2011' },
+          { type: 'dim', text: ' Hash Signature: a9f8e4c7... session-bound' }
         ]
       }
     };
@@ -418,7 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
             statusChip.textContent = 'Running';
             statusChip.className = 'step-status-chip running';
           } else {
-            statusChip.textContent = 'Antrean';
+            statusChip.textContent = 'Queued';
             statusChip.className = 'step-status-chip pending';
           }
         }
@@ -484,7 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
       item.addEventListener('click', (e) => {
         e.preventDefault();
         const stepNum = parseInt(item.dataset.step, 10);
-        stopAutoplay('⏸ Dijeda (Manual)');
+        stopAutoplay('⏸ Paused (Manual)');
         setActiveStep(stepNum, false);
       });
     });
@@ -494,7 +494,7 @@ document.addEventListener('DOMContentLoaded', () => {
       badge.addEventListener('click', (e) => {
         e.preventDefault();
         const stepNum = parseInt(badge.dataset.step, 10);
-        stopAutoplay('⏸ Dijeda (Manual)');
+        stopAutoplay('⏸ Paused (Manual)');
         setActiveStep(stepNum, false);
       });
     });
@@ -528,7 +528,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isAutoplayRunning) {
           if (autoplayTimer) clearInterval(autoplayTimer);
           const lbl = autoplayToggle ? autoplayToggle.querySelector('.autoplay-label') : null;
-          if (lbl) lbl.textContent = '⏸ Jeda (Kursor aktif)';
+          if (lbl) lbl.textContent = '⏸ Paused (Cursor active)';
         }
       });
 
@@ -563,7 +563,7 @@ document.addEventListener('DOMContentLoaded', () => {
     docChip.addEventListener('click', () => {
       const okBadge = docChip.querySelector('.doc-status-ok');
       if (okBadge) {
-        okBadge.textContent = 'Memindai...';
+        okBadge.textContent = 'Scanning...';
         setTimeout(() => {
           okBadge.textContent = '✔ 12 articles ready';
         }, 600);

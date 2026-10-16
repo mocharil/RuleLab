@@ -1,5 +1,5 @@
 from __future__ import annotations
-import base64,io,json,re,secrets,uuid
+import base64,io,json,re,uuid
 from contextlib import asynccontextmanager
 from pathlib import Path
 import fitz,httpx

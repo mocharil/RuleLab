@@ -5,6 +5,9 @@ import { resolve } from "node:path";
 
 export default defineConfig(({ mode }) => ({
   plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: { "@": resolve(import.meta.dirname, "src") },
+  },
   define: { "process.env.NODE_ENV": JSON.stringify(mode === "test" ? "test" : "production") },
   build: {
     outDir: "../app/static/framework",

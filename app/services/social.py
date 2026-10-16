@@ -251,7 +251,6 @@ def demo_reaction(persona, scenario, round_number, text, previous, personas=None
     if persona_comments:
         raw_comment = persona_comments['B'] if (scenario == 'B' or assistance) else persona_comments['A']
     else:
-        quoted = text[:150]
         if scenario == 'B' or assistance:
             raw_comment = f"As {persona['name']} ({persona.get('role', 'representative')}), I support this alternative because it provides certainty on {issue} and fairer accommodation."
         else:

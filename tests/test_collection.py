@@ -5,7 +5,6 @@ import pytest
 import fitz
 from app import store
 from app.config import settings
-from app.services import collection
 
 
 def upload(**overrides):

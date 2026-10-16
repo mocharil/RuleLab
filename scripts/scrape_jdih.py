@@ -10,7 +10,6 @@ from __future__ import annotations
 import argparse
 import asyncio
 import base64
-import hashlib
 import json
 import os
 import re
@@ -37,7 +36,6 @@ from app.services import ai, collection
 from app.services.ingestion import (
     HIERARCHY,
     TOPICS,
-    clean_line,
     enrich as deterministic_enrich,
     extract_file,
     sha256,

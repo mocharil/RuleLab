@@ -79,17 +79,17 @@ export function enhanceVisualSurface(root,state={view:'editor'}){
   empty.insertAdjacentHTML('afterbegin',menuArtwork(kind,true));
  });
  const title=root.querySelector('.modal-head h2');
- if(title)markTitle(title,/integrasi/i.test(title.textContent)?'settings':/review/i.test(title.textContent)?'reviewer':visual.icon,visual.tone);
+ if(title)markTitle(title,/integrasi|integration/i.test(title.textContent)?'settings':/review/i.test(title.textContent)?'reviewer':visual.icon,visual.tone);
 }
 
 export function enhanceDesign(state){
  document.body.dataset.view=state.view;
- document.querySelectorAll('#nav [data-view]').forEach(button=>{
+ document.querySelectorAll('.sidebar [data-view]').forEach(button=>{
   const tone=menuVisuals[button.dataset.view]?.tone||'crimson';
   button.classList.add(`visual-tone-${tone}`);
  });
  document.body.classList.toggle('editor-focus',state.view==='editor'&&preferences.get('rulelab.editorFocus')==='1');
- const toggle=document.querySelector('[data-ux="focus-editor"]');if(toggle){const focused=document.body.classList.contains('editor-focus');toggle.setAttribute('aria-pressed',String(focused));toggle.innerHTML=icon('focus')+(focused?'Show assistant':'Fokus menulis');}
+ const toggle=document.querySelector('[data-ux="focus-editor"]');if(toggle){const focused=document.body.classList.contains('editor-focus');toggle.setAttribute('aria-pressed',String(focused));toggle.innerHTML=icon('focus')+(focused?'Show assistant':'Focus mode');}
  enhanceVisualSurface(document.querySelector('#main'),state);
  document.querySelectorAll('[data-article]').forEach(field=>{
   const update=()=>{const a=field.closest('.article-card');document.querySelectorAll('.document-outline [data-index]').forEach(b=>{const active=b.dataset.index===field.dataset.article;b.classList.toggle('active',active);if(active)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current');});document.querySelectorAll('.article-card').forEach(el=>el.classList.toggle('article-active',el===a));};
@@ -99,5 +99,5 @@ export function enhanceDesign(state){
 document.addEventListener('click',event=>{
  if(!event.target.closest('[data-ux="focus-editor"]'))return;
  const focused=!document.body.classList.contains('editor-focus');preferences.set('rulelab.editorFocus',focused?'1':'0');document.body.classList.toggle('editor-focus',focused);
- const button=event.target.closest('button');button.setAttribute('aria-pressed',String(focused));button.innerHTML=icon('focus')+(focused?'Show assistant':'Fokus menulis');
+ const button=event.target.closest('button');button.setAttribute('aria-pressed',String(focused));button.innerHTML=icon('focus')+(focused?'Show assistant':'Focus mode');
 });

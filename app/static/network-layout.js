@@ -2,10 +2,10 @@
 export const NETWORK={width:1100,height:850,cx:550,cy:375};
 export const CLUSTERS=[
  {id:'access',label:'Service access',x:230,y:185,color:'#bd2945'},
- {id:'accessibility',label:'Akomodasi',x:550,y:145,color:'#9754b6'},
- {id:'capacity',label:'Pelaksanaan',x:870,y:220,color:'#317e9c'},
+ {id:'accessibility',label:'Accommodation',x:550,y:145,color:'#9754b6'},
+ {id:'capacity',label:'Implementation',x:870,y:220,color:'#317e9c'},
  {id:'cost',label:'Cost & budget',x:865,y:555,color:'#b5852d'},
- {id:'clarity',label:'Kepastian norma',x:550,y:635,color:'#3e8b69'},
+ {id:'clarity',label:'Norm clarity',x:550,y:635,color:'#3e8b69'},
  {id:'other',label:'Sector impact',x:220,y:555,color:'#6b7a9b'},
 ];
 export function layoutNetwork(personas){

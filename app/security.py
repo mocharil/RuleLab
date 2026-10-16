@@ -36,6 +36,8 @@ def validate_deployment():
     if settings.deployment_mode not in {'development', 'production'}:
         raise ValueError('Invalid RULELAB_DEPLOYMENT_MODE.')
     if settings.deployment_mode == 'production':
+        if settings.provider == 'demo':
+            raise ValueError('Production must use a live provider (AI_PROVIDER=gemini or vertex); demo templates are for local development only.')
         if not keys or not any(k['role'] == 'admin' for k in keys):
             raise ValueError('Production requires named access keys with an admin role.')
         origins = settings.allowed_origins.split(',') if settings.allowed_origins else []

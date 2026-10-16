@@ -20,7 +20,7 @@ global.setTimeout=(callback,delay,...args)=>{const timer=originalTimeout(()=>{pe
  global.d3=require(path.join(base,'app/static/vendor/d3.min.js'));
  global.ResizeObserver=class{observe(){}disconnect(){}};
  global.fetch=(url,options)=>originalFetch(url.startsWith('/')?origin+url:url,options);
- for(const name of ['app','ui','studio','agents','social','workspace-ux','design','gallery','icons','select','draft-builder','network-layout','collection-ui']){
+ for(const name of ['app','ui','studio','agents','social','crowd-network','workspace-ux','design','gallery','icons','select','draft-builder','network-layout','collection-ui']){
   let code=fs.readFileSync(path.join(base,'app/static',name+'.js'),'utf8');
   code=code.replace(/from '\/static\/([^']+)\.js'/g,(_,dep)=>"from '"+pathToFileURL(dep.startsWith('framework/')?path.join(base,'app/static',dep+'.js'):path.join(temp,dep+'.mjs')).href+"'");
   code=code.replace(/import '\/static\/([^']+)\.js';/g,(_,dep)=>"import '"+pathToFileURL(path.join(base,'app/static',dep+'.js')).href+"';");

@@ -5,7 +5,7 @@ import google.auth
 import pytest
 from app import store
 from app.config import settings
-from app.services import ai, library_chat
+from app.services import ai
 
 
 def ask(client, question, **kwargs):

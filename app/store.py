@@ -7,7 +7,6 @@ FTS5 (SQLite) / tsvector (PostgreSQL) is the built-in retrieval backend; Elastic
 from __future__ import annotations
 from contextlib import contextmanager
 from datetime import datetime, timezone
-from pathlib import Path
 import hashlib,json,os,sqlite3,time,uuid
 from app.config import ROOT,settings
 
@@ -120,6 +119,8 @@ PG_SCHEMA='''
   CREATE TABLE IF NOT EXISTS source_files(path TEXT PRIMARY KEY,size BIGINT,sha256 TEXT,checked_at TEXT)
   '''
 
+SAMPLE_DRAFT=ROOT/'app/samples/sample_draft.json'
+
 def corpus_sha():
  with db() as c:
   row=c.execute("SELECT value FROM metadata WHERE key='corpus_sha'").fetchone()
@@ -174,11 +175,7 @@ def initialize():
     old=c.execute("SELECT value FROM metadata WHERE key='corpus_sha'").fetchone()
     if not old or old['value']!=hashlib.sha256(content).hexdigest():ingest_corpus(c,content)
   if not c.execute('SELECT id FROM drafts LIMIT 1').fetchone():
-   create_draft({'title':'Layanan Publik Digital yang Inklusif','regulation_type':'PP','scope':'Layanan permohonan administrasi publik','preamble':'Rancangan simulasi untuk pengujian RuleLab. Belum merupakan naskah resmi.',
-    'articles':[{'number':'1','text':'Dalam rancangan ini, layanan digital adalah layanan permohonan administrasi melalui aplikasi elektronik.'},
-     {'number':'2','text':'(1) Permohonan hanya dapat diajukan melalui aplikasi digital.\n(2) Pemohon yang tidak memiliki akses internet tidak dapat mengajukan permohonan.'},
-     {'number':'3','text':'Pengaduan masyarakat tidak perlu ditanggapi oleh penyelenggara.'},
-     {'number':'4','text':'Peraturan ini berlaku sejak ditetapkan tanpa masa transisi.'}]},connection=c)
+   create_draft(json.loads(SAMPLE_DRAFT.read_text(encoding='utf8')),connection=c)  # clearly labelled sample (preamble says so), editable and deletable,connection=c)
  _ensure_corpus_cache()
 
 def create_draft(payload,connection=None):

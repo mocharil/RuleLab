@@ -1,6 +1,6 @@
 from io import BytesIO
 from docx import Document
-from docx.shared import Cm,Pt,RGBColor
+from docx.shared import Cm,Pt
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 

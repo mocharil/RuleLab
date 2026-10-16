@@ -11,4 +11,4 @@ for(const name of packages){
   const file=fs.readdirSync(folder).find(name=>/^licen[sc]e/i.test(name));
   if(file)notices+=name+"\n"+"=".repeat(70)+"\n"+fs.readFileSync(path.join(folder,file),"utf8")+"\n\n";
 }
-fs.writeFileSync(path.join(output,"THIRD_PARTY_NOTICES.txt"),notices);
+fs.writeFileSync(path.join(output,"THIRD_PARTY_NOTICES.txt"),notices.replace(/\r\n/g,"\n"));

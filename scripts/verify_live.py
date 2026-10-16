@@ -25,7 +25,7 @@ def verify_full(timeout=600):
         if not probe['ready']:raise RuntimeError(probe['detail'])
         generated=checked('Generasi draft','POST','/api/generate',json={'brief':'Rancang pelayanan administrasi digital yang inklusif, dengan kanal pendampingan, akomodasi disabilitas dan tanggapan pengaduan.','regulation_type':'PP'}).json()
         assert generated['provider']['mode']=='live' and generated['draft']['regulation_type']=='PP'
-        sample=json.loads((ROOT/'data/example_draft.json').read_text())
+        sample=json.loads((ROOT/'app/samples/sample_draft.json').read_text())
         draft=checked('Impor JSON draft','POST','/api/import',json={'filename':'verification.json','content_base64':__import__('base64').b64encode(json.dumps(sample).encode()).decode()}).json()
         draft=checked('Edit dan simpan versi','PUT','/api/drafts/'+draft['id'],json={**draft,'title':'Verifikasi layanan publik digital','expected_revision':draft['revision']}).json()
         analyzed=checked('Review legal live','POST','/api/drafts/'+draft['id']+'/analyze',json={'as_of_date':time.strftime('%Y-%m-%d')}).json()

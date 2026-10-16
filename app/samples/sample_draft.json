@@ -1,0 +1,12 @@
+{
+  "title": "Layanan Publik Digital yang Inklusif",
+  "regulation_type": "PP",
+  "scope": "Layanan permohonan administrasi publik",
+  "preamble": "Rancangan simulasi untuk pengujian RuleLab. Belum merupakan naskah resmi.",
+  "articles": [
+    {"number": "1", "text": "Dalam rancangan ini, layanan digital adalah layanan permohonan administrasi melalui aplikasi elektronik."},
+    {"number": "2", "text": "(1) Permohonan hanya dapat diajukan melalui aplikasi digital.\n(2) Pemohon yang tidak memiliki akses internet tidak dapat mengajukan permohonan."},
+    {"number": "3", "text": "Pengaduan masyarakat tidak perlu ditanggapi oleh penyelenggara."},
+    {"number": "4", "text": "Peraturan ini berlaku sejak ditetapkan tanpa masa transisi."}
+  ]
+}

@@ -12750,30 +12750,23 @@ function Ww() {
     /* @__PURE__ */ S.jsxs("div", { className: "sidebar-brand", children: [
       /* @__PURE__ */ S.jsxs("a", { className: "brand", href: "/", "aria-label": "RuleLab, home page", children: [
         /* @__PURE__ */ S.jsx("span", { className: "brand-icon", "aria-hidden": "true" }),
-        /* @__PURE__ */ S.jsxs("div", { children: [
-          "RuleLab",
+        /* @__PURE__ */ S.jsxs("div", { className: "brand-copy", children: [
+          /* @__PURE__ */ S.jsx("span", { className: "brand-name", children: "RuleLab" }),
           /* @__PURE__ */ S.jsx("span", { className: "brand-edition", children: "INDONESIA" })
         ] })
       ] }),
       /* @__PURE__ */ S.jsx("button", { id: "sidebar-toggle", className: "sidebar-toggle", "data-ux": "sidebar", "aria-controls": "workspace-sidebar", "aria-expanded": "true", "aria-label": "Collapse sidebar", children: /* @__PURE__ */ S.jsx(qw, { size: 17, "aria-hidden": "true" }) })
     ] }),
-    /* @__PURE__ */ S.jsxs("div", { className: "workspace", children: [
-      /* @__PURE__ */ S.jsx("span", { className: "workspace-icon", children: "ID" }),
-      /* @__PURE__ */ S.jsxs("div", { children: [
-        "Workspace Indonesia",
-        /* @__PURE__ */ S.jsx("small", { children: "Regulation drafting" })
-      ] })
-    ] }),
     /* @__PURE__ */ S.jsx("div", { className: "nav-label", children: "WORKSPACE" }),
     /* @__PURE__ */ S.jsxs("button", { className: "workspace-home-link", "data-view": "home", "aria-label": "Workspace overview", children: [
-      /* @__PURE__ */ S.jsx(Hw, { size: 18, "aria-hidden": "true" }),
+      /* @__PURE__ */ S.jsx("span", { className: "nav-icon", "aria-hidden": "true", children: /* @__PURE__ */ S.jsx(Hw, { size: 17, "aria-hidden": "true" }) }),
       /* @__PURE__ */ S.jsx("span", { className: "home-label", children: "Overview" })
     ] }),
-    /* @__PURE__ */ S.jsx("nav", { id: "nav", "aria-label": "Navigasi utama", children: Fw.map(([n, i, s], l) => /* @__PURE__ */ S.jsxs("div", { className: l === 1 ? "nav-section-start" : "nav-item", children: [
+    /* @__PURE__ */ S.jsx("nav", { id: "nav", "aria-label": "Main navigation", children: Fw.map(([n, i, s], l) => /* @__PURE__ */ S.jsxs("div", { className: l === 1 ? "nav-section-start" : "nav-item", children: [
       l === 1 && /* @__PURE__ */ S.jsx("div", { className: "nav-label", children: "SOURCES & ACTIVITY" }),
       /* @__PURE__ */ S.jsxs(Cw, { children: [
         /* @__PURE__ */ S.jsx(Mw, { asChild: !0, children: /* @__PURE__ */ S.jsxs("button", { "data-view": n, "aria-label": i, children: [
-          /* @__PURE__ */ S.jsx("span", { className: "nav-icon", "aria-hidden": "true", children: /* @__PURE__ */ S.jsx(s, { size: 18 }) }),
+          /* @__PURE__ */ S.jsx("span", { className: "nav-icon", "aria-hidden": "true", children: /* @__PURE__ */ S.jsx(s, { size: 17 }) }),
           /* @__PURE__ */ S.jsx("span", { className: "nav-title", children: i })
         ] }) }),
         /* @__PURE__ */ S.jsx(Dw, { children: /* @__PURE__ */ S.jsxs(Ow, { className: "fx-tooltip", side: "right", sideOffset: 12, children: [
@@ -12783,31 +12776,18 @@ function Ww() {
       ] })
     ] }, n)) }),
     /* @__PURE__ */ S.jsxs("div", { className: "sidebar-bottom", children: [
+      /* @__PURE__ */ S.jsx("div", { className: "nav-label", children: "RESOURCES & SYSTEM" }),
       /* @__PURE__ */ S.jsxs("a", { className: "settings-link", href: "/guide", target: "_blank", rel: "noopener", children: [
-        /* @__PURE__ */ S.jsx(T0, { size: 17, "aria-hidden": "true" }),
+        /* @__PURE__ */ S.jsx("span", { className: "nav-icon", "aria-hidden": "true", children: /* @__PURE__ */ S.jsx(T0, { size: 16, "aria-hidden": "true" }) }),
         /* @__PURE__ */ S.jsx("span", { className: "settings-label", children: "User guide" })
       ] }),
-      /* @__PURE__ */ S.jsxs("div", { className: "source-badge", children: [
-        /* @__PURE__ */ S.jsx("span", { className: "dot" }),
-        /* @__PURE__ */ S.jsxs("div", { children: [
-          "Source trail available",
-          /* @__PURE__ */ S.jsx("small", { children: "Document · Article · Version" })
-        ] })
-      ] }),
       /* @__PURE__ */ S.jsxs("button", { className: "settings-link", "data-action": "audit", "aria-label": "Audit workspace", children: [
-        /* @__PURE__ */ S.jsx(Xw, { size: 17, "aria-hidden": "true" }),
+        /* @__PURE__ */ S.jsx("span", { className: "nav-icon", "aria-hidden": "true", children: /* @__PURE__ */ S.jsx(Xw, { size: 16, "aria-hidden": "true" }) }),
         /* @__PURE__ */ S.jsx("span", { className: "settings-label", children: "Audit workspace" })
       ] }),
       /* @__PURE__ */ S.jsxs("button", { id: "settings-btn", className: "settings-link", "aria-label": "Integration settings", children: [
-        /* @__PURE__ */ S.jsx(Zw, { size: 17, "aria-hidden": "true" }),
+        /* @__PURE__ */ S.jsx("span", { className: "nav-icon", "aria-hidden": "true", children: /* @__PURE__ */ S.jsx(Zw, { size: 16, "aria-hidden": "true" }) }),
         /* @__PURE__ */ S.jsx("span", { className: "settings-label", children: "Integration settings" })
-      ] }),
-      /* @__PURE__ */ S.jsxs("div", { className: "sidebar-foot", children: [
-        /* @__PURE__ */ S.jsx("span", { className: "workspace-icon", children: "RL" }),
-        /* @__PURE__ */ S.jsxs("div", { children: [
-          "RuleLab Studio",
-          /* @__PURE__ */ S.jsx("small", { children: "Hackathon workspace" })
-        ] })
       ] })
     ] })
   ] });
@@ -16280,7 +16260,7 @@ function $2() {
         var p;
         m.preventDefault(), (p = document.getElementById("framework-command-input")) == null || p.focus();
       }, children: [
-        /* @__PURE__ */ S.jsx(a2, { className: "fx-command-title", children: "Navigasi workspace" }),
+        /* @__PURE__ */ S.jsx(a2, { className: "fx-command-title", children: "Workspace navigation" }),
         /* @__PURE__ */ S.jsx(s2, { className: "fx-command-description", children: "Search the menu and continue your work. Changed drafts are saved before switching." }),
         /* @__PURE__ */ S.jsx(r2, { className: "fx-command-close", "aria-label": "Close quick menu", children: /* @__PURE__ */ S.jsx(Qw, { size: 15 }) }),
         /* @__PURE__ */ S.jsxs("div", { className: "fx-command-search", children: [
@@ -16291,7 +16271,7 @@ function $2() {
             m.key === "ArrowDown" && (m.preventDefault(), f((p) => Math.max(0, Math.min(d.length - 1, p + 1)))), m.key === "ArrowUp" && (m.preventDefault(), f((p) => Math.max(0, p - 1))), m.key === "Enter" && d[u] && (m.preventDefault(), h(d[u][0]));
           } })
         ] }),
-        /* @__PURE__ */ S.jsxs("div", { className: "fx-command-results", id: "framework-command-results", role: "listbox", "aria-label": "Menu workspace", children: [
+        /* @__PURE__ */ S.jsxs("div", { className: "fx-command-results", id: "framework-command-results", role: "listbox", "aria-label": "Workspace menu", children: [
           d.map(([m, p, g], y) => /* @__PURE__ */ S.jsxs("button", { id: "framework-command-" + m, role: "option", "aria-selected": y === u, tabIndex: -1, onClick: () => h(m), className: y === u ? "selected" : "", children: [
             /* @__PURE__ */ S.jsxs("span", { children: [
               /* @__PURE__ */ S.jsx("b", { children: p }),
@@ -16302,9 +16282,9 @@ function $2() {
           !d.length && /* @__PURE__ */ S.jsx("p", { children: "No matching menu. Try another term." })
         ] }),
         /* @__PURE__ */ S.jsxs("div", { className: "fx-command-footer", children: [
-          /* @__PURE__ */ S.jsx("span", { children: "↑ ↓ Pilih" }),
+          /* @__PURE__ */ S.jsx("span", { children: "↑ ↓ Select" }),
           /* @__PURE__ */ S.jsx("span", { children: "Enter Open" }),
-          /* @__PURE__ */ S.jsx("span", { children: "Esc Tutup" })
+          /* @__PURE__ */ S.jsx("span", { children: "Esc Close" })
         ] })
       ] })
     ] })
@@ -21299,11 +21279,11 @@ function H1({ state: n }) {
     /* @__PURE__ */ S.jsxs("section", { className: "home-grid", "aria-label": "Workflow", children: [
       /* @__PURE__ */ S.jsxs("div", { className: "section-toolbar", children: [
         /* @__PURE__ */ S.jsxs("div", { children: [
-          /* @__PURE__ */ S.jsx("h2", { children: "Lanjutkan alur Anda" }),
+          /* @__PURE__ */ S.jsx("h2", { children: "Continue your workflow" }),
           /* @__PURE__ */ S.jsx("p", { children: "Draft the document, verify sources, then weigh its impact." })
         ] }),
         /* @__PURE__ */ S.jsxs(Oe, { variant: "ghost", "data-action": "legal-guide", children: [
-          "Pedoman legal",
+          "Legal guidelines",
           /* @__PURE__ */ S.jsx(qi, { size: 14 })
         ] })
       ] }),
@@ -21327,7 +21307,7 @@ function H1({ state: n }) {
       ] }),
       /* @__PURE__ */ S.jsx("span", { children: n.status.provider === "demo" ? "Demo without credentials" : `Provider ${n.status.provider}` }),
       /* @__PURE__ */ S.jsxs(Oe, { size: "small", variant: "ghost", "data-view": "data", children: [
-        "Jelajahi data & peta",
+        "Explore data & map",
         /* @__PURE__ */ S.jsx(qi, { size: 13 })
       ] }),
       /* @__PURE__ */ S.jsxs(Oe, { size: "small", variant: "ghost", "data-view": "library", children: [

@@ -1,12 +1,11 @@
 import asyncio
 import hashlib
 import json
-from copy import deepcopy
 import pytest
 from app import store
 from app.config import ROOT,settings
 from app.models import AnalysisOutput
-from app.services import ai,analysis,legal,retrieval
+from app.services import ai,legal,retrieval
 
 def source(client,reg='uu-25-2009',number='4'):
     doc=next(d for d in store.regulations() if d['id']==reg)

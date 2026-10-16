@@ -34,6 +34,9 @@ def test_deployment_fails_closed(monkeypatch):
     monkeypatch.setattr(settings, 'allowed_origins', 'http://example.com')
     with pytest.raises(ValueError): security.validate_deployment()
     monkeypatch.setattr(settings, 'allowed_origins', 'https://example.com')
+    monkeypatch.setattr(settings, 'provider', 'demo')
+    with pytest.raises(ValueError, match='live provider'): security.validate_deployment()  # no template data in production
+    monkeypatch.setattr(settings, 'provider', 'vertex')
     security.validate_deployment()
 
 def test_job_snapshot_idempotency_and_recovery(client):

@@ -12,3 +12,11 @@ gemini_sa.json
 # Generated demo-video output and scratch
 demo/video/out/
 demo/video/audio/
+
+# ad-hoc local debugging artifacts
+/capture_8personas.py
+/inspect_buttons.py
+/test_modal.py
+/verify_personas_visual.py
+/modal_*.png
+/scrape_jdih.py
