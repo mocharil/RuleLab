@@ -14,8 +14,8 @@ const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.ma
   const choose=async(id,value)=>{const text=await page.locator('#'+id).evaluate((el,value)=>[...el.options].find(o=>o.value===value).text,value);await page.locator('#'+id+'-trigger').click();const popup=page.locator('.rl-select-popup:popover-open');if(await popup.locator('input').isVisible())await popup.locator('input').fill(text);await popup.getByRole('option',{name:text,exact:true}).click();await settled();};
   const screenshot=async name=>{await page.evaluate(()=>document.fonts.ready);await page.screenshot({path:path.join(out,name+'.png'),animations:'disabled'});};
   const fits=async label=>assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),label+' overflows');
-  await page.goto(origin+'/workspace');await page.waitForSelector('.home-banner');await settled();
-  await click('[data-action="new"]');
+  await page.goto(origin+'/workspace');await page.waitForSelector('.ov-header');await settled();
+  await click('.ov-new-toggle');await click('.ov-menu [data-action="new"]');
   assert.equal(await page.locator('#new-type option').count(),15);
   await choose('new-type','PERDA_KAB');await choose('builder-level','kota');
   await page.locator('#new-title').fill('Pelayanan Publik Digital yang Inklusif');await page.locator('#builder-region').fill('Bandung');await page.locator('#builder-place').fill('Bandung');
@@ -68,7 +68,7 @@ const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.ma
   }
   await page.setViewportSize({width:1440,height:1100});await click('#workflow-stage-editor');await click('#tab-social');await fits('compact editor social');
   await screenshot('editor-network');
-  await click('.workspace-home-link');await click('[data-action="new"]');await choose('new-type','PERPPU');await choose('builder-form','amendment');
+  await click('.workspace-home-link');await click('.ov-new-toggle');await click('.ov-menu [data-action="new"]');await choose('new-type','PERPPU');await choose('builder-form','amendment');
   await page.locator('#new-title').fill('Perubahan atas Ketentuan Pelayanan Publik');await click('[data-action="preview-draft"]');
   const amendment=await page.locator('.builder-paper').textContent();assert(amendment.includes('Pasal I')&&amendment.includes('Pasal II')&&!amendment.includes('Persetujuan Bersama'));
   await screenshot('perppu-amendment-preview');

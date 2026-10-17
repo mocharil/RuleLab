@@ -43,8 +43,9 @@ global.setTimeout=(callback,delay,...args)=>{const timer=originalTimeout(()=>{pe
  for(const view of ['home','editor','analysis','simulation','library','history','agents']){
   if(['history','agents'].includes(view)&&!document.querySelector('.activity-tabs')){click('#nav [data-view=activity]');await wait(()=>!document.querySelector('#main').inert);}
   if(['editor','analysis','simulation'].includes(view)&&!document.querySelector('#workflow-stage-'+view)){click('#nav [data-view=studio]');await wait(()=>!document.querySelector('#main').inert);}click(['editor','analysis','simulation'].includes(view)?'#workflow-stage-'+view:'button[data-view="'+view+'"]');await wait(()=>!document.querySelector('#main').inert);
-  assert(document.querySelector('.menu-guide'));
-  assert(document.querySelectorAll('.guide-flow>span').length>=3);
+  if(view==='home')assert(!document.querySelector('.menu-guide'),'the overview has its own quick start; its guide opens from the ? button');
+  else{assert(document.querySelector('.menu-guide'));assert(document.querySelectorAll('.guide-flow>span').length>=3);}
+  if(view==='home')await wait(()=>document.querySelector('.ov-continue'));
   click('#menu-help');assert(document.querySelector('#guide-dialog').open);assert.equal(document.querySelectorAll('.guide-highlight').length,1);
   let steps=0;while(document.querySelector('#guide-dialog').open&&steps<6){click('#guide-dialog [data-ux=next]');steps++;}
   assert(!document.querySelector('#guide-dialog').open);assert(!document.querySelector('.guide-highlight'));
@@ -98,15 +99,16 @@ global.setTimeout=(callback,delay,...args)=>{const timer=originalTimeout(()=>{pe
  fill('#review-notes','Perlu konsultasi publik dan verifikasi sumber.');click('[data-action="save-review"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.history-row'));
  assert(document.querySelector('.history-row').textContent.includes('Perlu konsultasi publik'));checks.push('review notes persist through redesigned dialog');
  await navigate('editor');fill('#draft-title','<img src=x onerror="window.injected=true">');click('[data-action="save"]');await wait(()=>!document.querySelector('#main').inert);
- click('.workspace-home-link');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.draft-table'));
- assert(document.querySelector('.draft-table').textContent.includes('<img src=x'));assert(!document.querySelector('.draft-table img'));assert.equal(w.injected,undefined);checks.push('dashboard renders user titles as escaped text');
- assert(document.querySelector('.resume-manuscript').textContent.includes('<img src=x'));assert(!document.querySelector('.resume-manuscript img'));assert(document.querySelector('.resume-copy [data-view=library]'));checks.push('dashboard manuscript uses actual escaped draft data and links to learning');
+ click('.workspace-home-link');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.ov-drafts')?.textContent.includes('<img src=x'));
+ assert(document.querySelector('.ov-drafts').textContent.includes('<img src=x'));assert(!document.querySelector('.ov-drafts img'));assert.equal(w.injected,undefined);checks.push('overview renders user titles as escaped text');
+ assert(document.querySelector('.ov-continue').textContent.includes('<img src=x'));assert(!document.querySelector('.ov-continue img'));assert(document.querySelector('.ov-quick [data-view=library]'));checks.push('overview continue card uses actual escaped draft data and links to the library');
  click('#settings-btn');await wait(()=>document.querySelector('#modal').open&&!document.querySelector('#main').inert);
  assert(document.querySelectorAll('.integration-checks>div').length>=4);
  assert(!document.querySelector('#modal').textContent.includes('PRIVATE KEY'));checks.push('integration settings show safe readiness metadata');
  click('[data-action="probe-ai"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#modal').textContent.includes('Demo mode ready'));
  assert(document.querySelector('#modal').textContent.includes('No LLM connection tested'));checks.push('demo integration probe is explicit and does not imply live access');
  click('#modal [data-action="close"]');await wait(()=>!document.querySelector('#main').inert);
+ if(!document.querySelector('[data-action="new"]')){click('.ov-new-toggle');await wait(()=>document.querySelector('.ov-menu [data-action="new"]'));}
  click('[data-action="new"]');await wait(()=>document.querySelector('#new-title')&&!document.querySelector('#main').inert);
  fill('#new-title','UU');click('[data-action="create"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#toast').textContent.includes('Draft title: at least 3 characters.'));
  assert(document.querySelector('#modal').open);assert.equal(document.activeElement.id,'new-title');assert.equal(document.querySelector('#new-title').value,'UU');checks.push('API validation shows field guidance, keeps input and restores focus');
@@ -135,6 +137,6 @@ global.setTimeout=(callback,delay,...args)=>{const timer=originalTimeout(()=>{pe
  fill('#gallery-question','<img src=x onerror="window.chatInjected=true"> UU 25/2009');document.querySelector('#gallery-chat-form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.gallery-question'));assert(document.querySelector('.gallery-question').textContent.includes('<img'));assert(!document.querySelector('.gallery-question img'));assert.equal(w.chatInjected,undefined);checks.push('chat questions are rendered as escaped text');
  await navigate('editor');await navigate('gallery');assert.equal(document.querySelectorAll('.gallery-chat-turn').length,1);assert.equal(document.querySelector('#gallery-article').value,'4');checks.push('gallery document and conversation survive menu navigation in session');
 
- const landingHTML=await (await originalFetch(origin+'/')).text();assert(landingHTML.includes('uu-12-2011-source.webp'));assert(!landingHTML.includes('class="product-preview"'));assert.equal((await originalFetch(origin+'/static/art/uu-12-2011-source.webp')).status,200);checks.push('landing serves a real source-page asset and retires fabricated product preview');
+ const landingHTML=await (await originalFetch(origin+'/')).text();assert(landingHTML.includes('data-landing-hero')&&landingHTML.includes('id="landing-collection"'));assert(!landingHTML.includes('class="product-preview"'));for(const asset of ['/static/landing-app/landing.js','/static/landing/hero-loop.mp4','/static/landing/step-verify.mp4'])assert.equal((await originalFetch(origin+asset)).status,200,asset);checks.push('landing shell, live collection map host and product clips are served; no fabricated product preview');
  console.log(JSON.stringify({passed:checks.length,checks,limitation:'DOM checks only; no browser rendering or visual screenshots'},null,2));
 }finally{for(const timer of pendingTimers)clearTimeout(timer);global.setTimeout=originalTimeout;dom?.window.close();server.kill();global.fetch=originalFetch}})().catch(e=>{console.error(e);process.exitCode=1});

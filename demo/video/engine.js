@@ -159,6 +159,7 @@ const SUBS = [];
   }
 })();
 const subsEl = document.querySelector('#subs span');
+const NOSUBS = new URLSearchParams(location.search).has('nosubs');  // landing-page clips: no captions
 function renderSubs(t) {
   const s = SUBS.find(x => t >= x.t0 && t < x.t1);
   const txt = s ? s.text : '';
@@ -173,7 +174,7 @@ function render(t) {
     if (on) s.update(t);
   }
   stage.style.background = SCENES.find(s => t >= s.start && t < s.end)?.el.dataset.bg || '';
-  renderSubs(t);
+  if (!NOSUBS) renderSubs(t);
 }
 
 window.addEventListener('load', async () => {

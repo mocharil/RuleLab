@@ -33,7 +33,7 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
   const activityTab=async tab=>{if(!(await page.locator('.activity-tabs').count())){await page.locator('#nav [data-view="activity"]').click();await page.waitForFunction(()=>!document.querySelector('#main').inert);}await page.locator('#activity-tab-'+tab).click();await page.waitForFunction(()=>!document.querySelector('#main').inert);};
   const studioStage=async stage=>{if(!(await page.locator('#workflow-stage-'+stage).count())){await page.locator('#nav [data-view="studio"]').click();await page.waitForFunction(()=>!document.querySelector('#main').inert);}await page.locator('#workflow-stage-'+stage).click();await page.waitForFunction(()=>!document.querySelector('#main').inert);};
 
-  await page.goto(origin); await page.waitForSelector('.landing-hero');
+  await page.goto(origin); await page.waitForSelector('[data-landing-hero]');
   await page.screenshot({path:path.join(temp,'landing.png'),fullPage:true});
   await page.setViewportSize({width:390,height:844});
   assert(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1));
@@ -45,9 +45,9 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
   assert.equal(await page.locator('#main').getAttribute('aria-busy'),'true');
   await page.keyboard.press('Escape');assert(await page.locator('#progress-modal').evaluate(x=>x.open));
   await page.screenshot({path:path.join(temp,'loading.png')});
-  releaseInit();await page.waitForSelector('.home-banner');await page.waitForFunction(()=>!document.querySelector('#main').inert);
+  releaseInit();await page.waitForSelector('.ov-header');await page.waitForFunction(()=>!document.querySelector('#main').inert);
   await page.unroute('**/api/status');
-  assert.equal(await page.locator('.workspace-path').count(),3);
+  assert.equal(await page.locator('.ov-continue .ov-stepper li').count(),3);assert(await page.locator('.ov-continue .ov-btn-primary').count()===1);
   assert.equal(await page.locator('#nav .active').count(),0);
   assert.equal(await page.locator('.workspace-home-link').getAttribute('aria-current'),'page');
   for (const width of [360,390,768]) {
@@ -56,7 +56,7 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
   }
   await page.setViewportSize({width:1440,height:1100});
   await page.screenshot({path:path.join(temp,'home.png'),fullPage:true});
-  await page.locator('.workspace-path[data-view="editor"]').click();await page.waitForSelector('#draft-title');
+  await page.locator('.ov-continue [data-target="editor"]').click();await page.waitForSelector('#draft-title');
   await page.evaluate(() => document.fonts.ready);
   assert(await page.evaluate(() => document.fonts.check('500 16px Manrope') && document.fonts.check('500 40px "Cormorant Garamond"')));
   assert((await page.locator('h1').evaluate(x => getComputedStyle(x).fontFamily)).includes('Manrope'));
@@ -83,7 +83,7 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
   assert.equal(await page.locator('.finding').count(), 3);
   await page.locator('#legal-date').fill('2000-01-01');
   await page.locator('[data-action="analyze"]').first().click();
-  await page.waitForFunction(() => [...document.querySelectorAll('.note')].some(x => x.textContent.includes('Tanggal 2000-01-01')));
+  await page.waitForFunction(() => [...document.querySelectorAll('.note')].some(x => x.textContent.includes('Date 2000-01-01')));
   assert.equal(await page.locator('.finding-bottom[data-category="potential_vertical_conflict"]').count(),0);
   await page.locator('#legal-date').fill(new Date().toISOString().slice(0,10));
   await page.locator('[data-action="analyze"]').first().click();

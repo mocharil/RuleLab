@@ -51,7 +51,7 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
       await page.waitForFunction(() => !document.querySelector('#main').inert);
       assert.equal(await page.locator('body').getAttribute('data-view'), view);
     };
-    await page.goto(origin); await page.waitForSelector('.landing-hero'); await capture('landing-desktop', true);
+    await page.goto(origin); await page.waitForSelector('[data-landing-hero]'); await capture('landing-desktop', true);
     const views = ['home', 'data', 'editor', 'analysis', 'simulation', 'library', 'history', 'agents'];
     for (const view of views) { await navigate(view); await capture(view + '-desktop'); checks.push(view + ' desktop capture'); }
     await navigate('library');
@@ -79,7 +79,7 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
     await page.locator('[data-scenario="B"]').click(); await capture('social-alternative-B');
     checks.push('exact opinion and legal source inspectors');
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto(origin); await page.waitForSelector('.landing-hero');
+    await page.goto(origin); await page.waitForSelector('[data-landing-hero]');
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)); await capture('landing-mobile', true);
     for (const view of views) {
       await navigate(view); assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), view + ' mobile overflow');
@@ -91,7 +91,7 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
     await page.route('**/api/status', async route => { await gate; await route.continue(); });
     await page.goto(origin + '/workspace', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('#progress-modal[open]'); await capture('loading'); release();
-    await page.waitForSelector('.home-banner'); await page.unroute('**/api/status');
+    await page.waitForSelector('.ov-header'); await page.unroute('**/api/status');
     await page.emulateMedia({ reducedMotion: 'reduce' });
     assert.equal(await page.locator('.loading-spinner').evaluate(element => getComputedStyle(element).animationName), 'none');
     assert.deepEqual(errors, []);

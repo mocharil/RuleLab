@@ -1,6 +1,10 @@
 @import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/utilities.css" layer(utilities);
-@source "./";
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+/* Workspace sources only: the landing page (src/landing, MagicUI components) has its own stylesheet. */
+@source "./entry.tsx";
+@source "./state.ts";
+@source "./components/*.tsx";
+@source "./components/ui/number-ticker.tsx";
 /* Product tokens and component appearance are defined once in /static/design.css. */
 .number-ticker {
   position: relative;

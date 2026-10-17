@@ -42,10 +42,10 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
     };
     // Enter through the landing page, using the actual app link.
     await page.goto(origin);
-    await page.waitForSelector('.landing-hero');
+    await page.waitForSelector('[data-landing-hero]');
     await screenshot('landing');
     await page.goto(origin + '/workspace');
-    await page.waitForSelector('.home-banner'); await settled();
+    await page.waitForSelector('.ov-header'); await settled();
     await screenshot('home'); checks.push('landing and dashboard');
     await click('#workflow-stage-simulation');
     await click('[data-section="unified"]');
@@ -185,7 +185,8 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
     await page.waitForFunction(()=>document.body.dataset.view==='library');
     checks.push('keyboard command menu navigation');
     await click('.workspace-home-link');
-    await click('[data-action="new"]');
+    await click('.ov-new-toggle');
+    await click('.ov-menu [data-action="new"]');
     await page.locator('#new-title').fill('Rancangan kedua');await select('new-type', 'PERMEN');
     await click('[data-action="create"]');
     const currentDraft = new URL(page.url()).searchParams.get('draft');

@@ -6,10 +6,11 @@ const GUIDES={
   ['Choose distribution meaning','Distinguish issuing region, regulated coverage and mentioned locations. Click a province or use the region picker.','.collection-map-panel'],
   ['Explore sources','Choose a document to open the gallery and read its source articles.','.collection-documents'],
   ['Add data','Upload sources or record JDIH links. The queue shows review and OCR status.','.collection-intake']]},
- home:{title:'Start from the policy goal',intro:'Choose a draft or start from a brief. Every result stays bound to a document version.',steps:[
-  ['Choose a task','Open an existing draft or create a new one.','.home-grid'],
-  ['Understand the workflow','Draft the document, run a legal review, then test impact and persona reactions.','.home-banner'],
-  ['Continue a draft','This list opens saved documents, not new copies.','.home-bottom']]},
+ home:{title:'Pick up where you left off',intro:'The overview shows each draft’s stage. Every result stays bound to the document version it was made on.',steps:[
+  ['Continue your work','The most recently edited draft, its stage and the suggested next step.','.ov-continue'],
+  ['Decide what is waiting','Results to review, runs in progress and results that are outdated after a new version.','.ov-attention'],
+  ['Find any draft','Search and filter drafts by stage, then open one.','.ov-drafts'],
+  ['Start something new','Draft from a brief, import a document or explore the sources.','.ov-quick']]},
  editor:{title:'Draft, review and simulate on one screen',intro:'Write articles on the left. Use the assistant tabs on the right for review and impact tests.',steps:[
   ['Choose a document','Choose the draft you want to work on. Title and regulation type can be edited.','.document-header'],
   ['Edit articles','Every change is marked as unsaved. Save before sharing or reviewing the latest version.','.article-list'],
@@ -58,7 +59,7 @@ export function enhanceWorkspace(state){
  context=state;const guide=GUIDES[state.view]||GUIDES.home,main=document.querySelector('#main');
  const intro=document.createElement('details');intro.className='menu-guide';intro.id='page-guide';
  intro.innerHTML='<summary><span class="guide-symbol" aria-hidden="true">'+icon('book')+'</span><span><b>'+E(guide.title)+'</b><small>Quick guide for this menu</small></span><span class="guide-expand" aria-hidden="true">'+icon('down',16)+'</span></summary><div class="guide-content"><p>'+E(guide.intro)+'</p><div class="guide-flow">'+guide.steps.map(([title],i)=>'<span><em>0'+(i+1)+'</em>'+E(title)+'</span>').join('')+'</div><button class="btn" data-ux="tour">Start interactive guide ↗</button></div>';
- main.append(intro);
+ if(state.view!=='home')main.append(intro);  // the overview has its own quick start; the ? button still opens this guide
  if(lastView!==state.view){main.classList.remove('ux-enter');void main.offsetWidth;main.classList.add('ux-enter');lastView=state.view;}
  document.querySelectorAll('#nav [data-view]').forEach(el=>{const name=el.querySelector('.nav-title')?.textContent;el.setAttribute('aria-label',name);if(document.body.classList.contains('framework-ready'))el.removeAttribute('title');else el.title=name;});
  const topHelp=document.querySelector('#menu-help');if(topHelp){topHelp.title='Guide '+guide.title;topHelp.setAttribute('aria-label','Open menu guide '+guide.title);}

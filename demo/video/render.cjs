@@ -7,7 +7,7 @@ const fs = require('node:fs'), path = require('node:path'), { spawn } = require(
 const { chromium } = require(process.env.PW || 'playwright');
 const here = __dirname, out = path.join(here, 'out');
 fs.mkdirSync(out, { recursive: true });
-const url = 'file:///' + path.join(here, 'index.html').replace(/\\/g, '/') + '?capture=1';
+const url = 'file:///' + path.join(here, 'index.html').replace(/\\/g, '/') + '?capture=1' + (process.env.NOSUBS ? '&nosubs=1' : '');
 const FPS = +(process.env.FPS || 30), WORKERS = +(process.env.WORKERS || 4);
 const arg = (k) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : null; };
 
@@ -39,16 +39,19 @@ async function openPage(browser) {
   const total = await probe.evaluate(() => window.TIMELINE.total);
   fs.writeFileSync(path.join(out, 'cues.json'), JSON.stringify(await probe.evaluate(() => window.CUES)));
   await probe.close();
-  const frames = Math.min(Math.ceil(total * FPS), +(process.env.MAXF || 1e9)), per = Math.ceil(frames / WORKERS);
+  // FROM/TO (seconds) render a time range, e.g. landing-page clips; OUT names the result (default video.mp4)
+  const F0 = Math.round(+(process.env.FROM || 0) * FPS), F1 = Math.min(Math.ceil(+(process.env.TO || total) * FPS), Math.ceil(total * FPS));
+  const frames = Math.min(F1 - F0, +(process.env.MAXF || 1e9)), per = Math.ceil(frames / WORKERS);
+  const OUT = process.env.OUT || 'video.mp4', TAG = OUT.replace(/\.mp4$/, '');
   const t0 = Date.now();
   await Promise.all(Array.from({ length: WORKERS }, async (_, w) => {
     const a = w * per, b = Math.min(frames, a + per);
     const wb = await chromium.launch({ headless: true, args: ['--disable-gpu-vsync', '--disable-frame-rate-limit'] });
     const page = await openPage(wb);
     const ff = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
-      '-c:v', 'libx264', '-preset', 'medium', '-crf', '16', '-pix_fmt', 'yuv420p', path.join(out, `seg${w}.mp4`)], { stdio: ['pipe', 'inherit', 'inherit'] });
+      '-c:v', 'libx264', '-preset', 'medium', '-crf', '16', '-pix_fmt', 'yuv420p', path.join(out, `${TAG}-seg${w}.mp4`)], { stdio: ['pipe', 'inherit', 'inherit'] });
     for (let f = a; f < b; f++) {
-      await page.evaluate(t => window.seek(t), f / FPS);
+      await page.evaluate(t => window.seek(t), (F0 + f) / FPS);
       const buf = await page.screenshot({ type: 'jpeg', quality: 94, timeout: 120000 });
       if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once('drain', r));
       if (w === 0 && f % 150 === 0) console.log(`frame ${f}/${b} (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
@@ -57,8 +60,8 @@ async function openPage(browser) {
     await new Promise(r => ff.on('close', r));
     await wb.close();
   }));
-  fs.writeFileSync(path.join(out, 'segs.txt'), Array.from({ length: WORKERS }, (_, w) => `file 'seg${w}.mp4'`).join('\n'));
-  await new Promise((res, rej) => spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', path.join(out, 'segs.txt'), '-c', 'copy', path.join(out, 'video.mp4')], { stdio: 'inherit' }).on('close', c => (c ? rej(c) : res())));
+  fs.writeFileSync(path.join(out, `${TAG}-segs.txt`), Array.from({ length: WORKERS }, (_, w) => `file '${TAG}-seg${w}.mp4'`).join('\n'));
+  await new Promise((res, rej) => spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', path.join(out, `${TAG}-segs.txt`), '-c', 'copy', path.join(out, OUT)], { stdio: 'inherit' }).on('close', c => (c ? rej(c) : res())));
   console.log(`video done: ${frames} frames in ${((Date.now() - t0) / 1000).toFixed(0)}s`);
   await browser.close();
 })();

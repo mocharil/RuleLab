@@ -1,7 +1,8 @@
 // @vitest-environment jsdom
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { HomeWorkspace, BentoStats } from "./workspace";
+import { OverviewHome, nextStep, stagesOf } from "./overview";
+import type { OverviewData, OverviewDraft } from "../state";
 import { CommandMenu } from "./command-menu";
 import { Sidebar } from "./sidebar";
 import { NumberTicker } from "./ui/number-ticker";
@@ -16,16 +17,6 @@ const state:WorkspaceState={
   view:"home",dirty:false,draft:{id:"d",title:"Example",revision:3,articles:[]},drafts:[{},{}],corpus:[{},{}],runs:[{kind:"analysis",revision:3,review_status:"needs_review"}],jobs:[{status:"queued"},{status:"completed"}],status:{provider:"demo",regulations:6,articles:406},
 };
 describe("framework components",()=>{
-  it("shows source counts from state rather than decorative metrics",()=>{
-    render(<HomeWorkspace state={state}/>);
-    expect(screen.getByText("6 regulation sources · 406 articles/blocks")).toBeTruthy();
-    expect(screen.getByText("406 articles/blocks")).toBeTruthy();
-    expect(screen.getByText("Demo without credentials")).toBeTruthy();
-  });
-  it("counts active jobs rather than all jobs",()=>{
-    const {container}=render(<BentoStats state={state}/>);
-    expect(Array.from(container.querySelectorAll("strong")).map(el=>el.textContent)).toEqual(["2","6","1","1"]);
-  });
   it("formats Indonesian numbers and preserves accessible textContent in NumberTicker",()=>{
     const {container}=render(<NumberTicker value={5463}/>);
     const ticker=container.querySelector(".number-ticker");
@@ -40,11 +31,6 @@ describe("framework components",()=>{
       {value:[19,38],title:"Provinces in collection",caption:"Sebaran",iconHtml:"<svg></svg>",tone:"green"},
     ]);
     expect(Array.from(host.querySelectorAll("strong")).map(el=>el.textContent)).toEqual(["109","19 / 38"]);
-  });
-  it("preserves the action bridge for existing legal workflows",()=>{
-    const {container}=render(<HomeWorkspace state={state}/>);
-    expect(container.querySelector('[data-action="new"]')).toBeTruthy();
-    expect(container.querySelector('[data-action="generate"]')).toBeTruthy();
   });
   it("sidebar provides labelled destinations and folding control",()=>{
     const {container}=render(<Sidebar/>);
@@ -93,10 +79,54 @@ describe("framework components",()=>{
     fireEvent.keyDown(document,{key:"k",ctrlKey:true});
     expect(screen.queryByRole("dialog")).toBeNull();
   });
-  it("keeps mutation actions disabled for a read-only workspace role",()=>{
-    const {container}=render(<HomeWorkspace state={{...state,status:{...state.status,principal:{role:"viewer"}}}}/>);
-    expect((container.querySelector('[data-action="new"]') as HTMLButtonElement).disabled).toBe(true);
-    expect((container.querySelector('[data-action="generate"]') as HTMLButtonElement).disabled).toBe(true);
-  });
 });
 
+const base:OverviewDraft={id:"d",title:"Example",regulation_type:"PP",revision:3,articles:4,updated_at:new Date().toISOString(),analysis:null,impact:null,forum:null,job:null,pending_reviews:0};
+const overview:OverviewData={drafts:[{...base,pending_reviews:1,analysis:{id:"r",revision:3,findings:3,review_status:"needs_review",outdated:false,at:base.updated_at}},
+  {...base,id:"e",title:"Wage protection",analysis:{id:"q",revision:1,findings:2,review_status:"reviewed_with_notes",outdated:true,at:base.updated_at}}],
+  attention:[{kind:"review",draft_id:"d",draft:"Example",label:"1 result awaiting review",detail:"Source check · v3",target:"history"}],
+  activity:[{at:base.updated_at,draft_id:"d",draft:"Example",kind:"analysis",label:"Source check finished on v3 · 3 findings"}]};
+
+describe("overview",()=>{
+  it("picks the next step by the documented rule order",()=>{
+    const run={active:true,id:"j",intent:"legal",status:"running",revision:3,at:""};
+    const checked={id:"r",revision:3,findings:2,review_status:"reviewed_with_notes",outdated:false,at:""};
+    expect(nextStep(base,true)).toEqual({label:"Save draft",action:"save"});
+    expect(nextStep({...base,job:run},false).target).toBe("agents");
+    expect(nextStep({...base,pending_reviews:2},false).label).toBe("Review 2 results");
+    expect(nextStep(base,false)).toEqual({label:"Run source check on v3",target:"analysis"});
+    expect(nextStep({...base,analysis:{...checked,outdated:true,revision:2}},false).target).toBe("analysis");
+    expect(nextStep({...base,analysis:checked},false).target).toBe("simulation");
+    expect(nextStep({...base,analysis:checked,impact:{id:"s",kind:"simulation",revision:3,outdated:false,at:""}},false).action).toBe("export-draft");
+  });
+  it("reports each stage with version-bound wording",()=>{
+    const steps=stagesOf({...base,analysis:{id:"r",revision:2,findings:3,review_status:"needs_review",outdated:true,at:""}},false);
+    expect(steps.map(s=>s.state)).toEqual(["done","warn","todo"]);
+    expect(steps[1].detail).toBe("Outdated · ran on v2");
+  });
+  it("keeps the workspace action bridge and routes other drafts through open-draft-at",()=>{
+    const {container}=render(<OverviewHome state={{...state,draft:{...state.draft,id:"d"},overview}}/>);
+    expect(container.querySelector('.ov-continue [data-view="history"]')?.textContent).toContain("Review 1 result");
+    expect(container.querySelector('.ov-quick [data-action="generate"]')).toBeTruthy();
+    expect(container.querySelector('.ov-quick [data-action="import"]')).toBeTruthy();
+    fireEvent.click(screen.getByRole("button",{name:"More ways to start a draft"}));
+    expect(container.querySelector('.ov-menu [data-action="new"]')).toBeTruthy();
+    const row=container.querySelector('[aria-label="Open Wage protection"]') as HTMLElement;
+    expect(row.dataset.action).toBe("open-draft-at");expect(row.dataset.id).toBe("e");expect(row.dataset.target).toBe("editor");
+    expect(screen.getByText("1 result awaiting review")).toBeTruthy();
+  });
+  it("filters drafts and hides creation for read-only roles",()=>{
+    const {container}=render(<OverviewHome state={{...state,overview,status:{...state.status,principal:{role:"viewer"}}}}/>);
+    expect(container.querySelector('[data-action="generate"],[data-action="new"],[data-action="import"]')).toBeNull();
+    fireEvent.click(screen.getByRole("button",{name:"Outdated"}));
+    expect(container.querySelectorAll(".ov-row:not(.ov-row-head)")).toHaveLength(1);
+    expect(screen.getByText("Wage protection")).toBeTruthy();
+  });
+  it("shows loading and empty states without zero-heavy metrics",()=>{
+    const {container}=render(<OverviewHome state={state}/>);
+    expect(container.querySelector('[aria-label="Loading overview"]')).toBeTruthy();
+    cleanup();
+    render(<OverviewHome state={{...state,overview:{...overview,attention:[]}}}/>);
+    expect(screen.getByText(/All clear/)).toBeTruthy();
+  });
+});

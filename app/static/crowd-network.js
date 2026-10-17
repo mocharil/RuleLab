@@ -44,6 +44,7 @@ function bar(r,total){
 
 function draw(canvas,net,scenario){
   const sc=net.scenarios[scenario],nodes=net.crowd.nodes,pos=layout(net,scenario),ri=st.round-1,ctx=canvas.getContext('2d');
+  if(!ctx)return;  // no 2D canvas (e.g. headless DOM tests)
   const dpr=window.devicePixelRatio||1;
   if(canvas.width!==W*dpr){canvas.width=W*dpr;canvas.height=H*dpr;}
   ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);

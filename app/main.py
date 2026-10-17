@@ -14,7 +14,7 @@ from app.services import analysis,simulation,retrieval,ai,legal,agents,social,re
 from app import security
 from app.models import AnalyzeRequest
 from app.services.export import export_docx
-from app.services import library_chat,collection,sources
+from app.services import library_chat,collection,sources,overview
 
 @asynccontextmanager
 async def lifespan(app):
@@ -129,6 +129,8 @@ def drafting_preview(body:drafting.TemplateRequest):return drafting.build(body)
 def drafting_create(body:drafting.TemplateRequest):
  result=drafting.build(body)
  return {**result,'draft':store.create_draft(result['draft'])}
+@app.get('/api/overview')
+def workspace_overview():return overview.summary()
 @app.get('/api/drafts')
 def drafts():
  items=store.list_drafts()
