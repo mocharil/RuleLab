@@ -109,7 +109,7 @@
      0.25
     ],
     [
-     "Hybrid search pulls clauses from more than twelve thousand regulations, and specialist agents check each one.",
+     "Hybrid search pulls clauses from more than twenty-five thousand official articles, and specialist agents check each one.",
      0.25
     ],
     [
@@ -161,6 +161,10 @@
     ],
     [
      "Then up to thirty-two synthetic personas, from a blind citizen to a counter officer to a budget analyst, debate both drafts over five rounds.",
+     0.3
+    ],
+    [
+     "Their views then ripple through a crowd of two hundred agents, node by node.",
      0.3
     ],
     [

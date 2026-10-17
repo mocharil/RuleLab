@@ -63,28 +63,32 @@ const show = (el, on) => el && (el.style.display = on ? '' : 'none');
 const typed = (str, prog) => str.slice(0, Math.round(str.length * clamp(prog)));
 
 // ---------- shared components ----------
-const NAV = [['house', 'Overview'], ['square-pen', 'Policy Studio'], ['map', 'Data Dashboard'], ['book-open', 'Legal Library'], ['history', 'Activity']];
+// The workspace shell as it ships: grouped sidebar, breadcrumb, live corpus size and the quick menu.
+const NAV = [['WORKSPACE', [['house', 'Overview', 'crimson'], ['square-pen', 'Policy Studio', 'crimson']]],
+  ['SOURCES & ACTIVITY', [['map', 'Data dashboard', 'blue'], ['library', 'Legal library', 'violet'], ['history', 'Activity', 'green']]]];
+const NAV_FOOT = [['book-open', 'User guide'], ['scan-search', 'Audit workspace'], ['sliders', 'Integration settings']];
+const CORPUS = '838 regulations · 25,310 articles';
 function appWindow({ crumb = 'Policy Studio · Draft', active = 1, body = '', cls = '' } = {}) {
+  let k = 0;
   return `<div class="win ${cls}">
     <aside class="side">
-      <div class="brand">${logo(40)}<div><b>RuleLab</b><small>INDONESIA</small></div></div>
-      <div class="wscard"><div class="av">ID</div><div><b>Workspace Indonesia</b><small>Regulation drafting</small></div></div>
-      <div class="navlbl">WORKSPACE</div>
-      ${NAV.map(([i, l], k) => `<div class="nav ${k === active ? 'on' : ''}"><span class="ni">${ic(i, 17)}</span>${l}</div>`).join('')}
-      <div class="navlbl" style="margin-top:22px">TRUST</div>
-      <div class="nav"><span class="ni">${ic('fingerprint', 17)}</span>Source trail</div>
-      <div class="nav"><span class="ni">${ic('list-checks', 17)}</span>Audit log</div>
+      <div class="brand">${logo(40)}<div><b>RuleLab</b><small>INDONESIA</small></div><span class="fold">${ic('panel-left', 16)}</span></div>
+      ${NAV.map(([group, items]) => `<div class="navlbl">${group}</div>${items.map(([i, l, tone]) => `<div class="nav ${k++ === active ? 'on' : ''}"><span class="ni t-${tone}">${ic(i, 17)}</span>${l}</div>`).join('')}`).join('<div class="navsep"></div>')}
+      <div class="navfoot"><div class="navlbl">RESOURCES & SYSTEM</div>${NAV_FOOT.map(([i, l]) => `<div class="nav sm"><span class="ni">${ic(i, 15)}</span>${l}</div>`).join('')}</div>
     </aside>
     <div class="main">
-      <div class="top"><span class="crumb">Workspace / <b>${crumb}</b></span><span class="sp"></span>
+      <div class="top"><span class="crumb"><i></i>Workspace <em>/</em> <b>${crumb}</b></span><span class="sp"></span>
         <span class="chip green"><span class="dot"></span>Gemini · Vertex AI</span>
-        <span class="chip">12,000+ regulations</span></div>
+        <span class="chip">${CORPUS}</span>
+        <span class="chip">${ic('command', 14)}Quick menu<kbd>⌘K</kbd></span></div>
       <div class="body">${body}</div>
     </div></div>`;
 }
-function stages(active, sub = ['Draft v2', 'Not checked yet', 'No A/B projection']) {
-  const S = [['square-pen', 'Draft'], ['scan-search', 'Verify sources'], ['chart-column', 'Test impact']];
-  return `<div class="stages">${S.map(([i, l], k) => `<div class="stg ${k === active ? 'on' : ''} ${k < active ? 'done' : ''}"><span class="si">${ic(k < active ? 'check' : i, 20)}</span><div><b>${l}</b><small class="stg-sub-${k}">${sub[k]}</small></div><em>0${k + 1}</em></div>`).join('')}</div>`;
+/** Policy Studio document bar + stepper. Subtitles stay addressable as .stg-sub-k, the version as .bar-ver. */
+function stages(active, sub = ['Saved · v2', 'Not checked yet', 'No A/B projection'], { primary = '', icon = 'save', articles = 6, ver = 'v2' } = {}) {
+  const S = ['Draft', 'Verify sources', 'Test impact'];
+  return `<div class="psbar"><div class="psrow"><div class="psdoc"><b>Layanan Publik Digital yang Inklusif ${ic('chevron-down', 18)}</b><small>Peraturan Pemerintah<i></i>${articles} articles<i></i><span class="ok">Saved · <span class="bar-ver">${ver}</span></span></small></div><span class="sp"></span>${primary ? `<span class="btn pri psp">${ic(icon, 17)}${primary}</span>` : ''}<span class="btn more">More ${ic('chevron-down', 15)}</span></div>
+    <div class="stages">${S.map((l, k) => `<div class="stg ${k === active ? 'on' : ''} ${k < active ? 'done' : ''}"><span class="si">${k < active ? ic('check', 15, 3) : k + 1}</span><div><b>${l}</b><small class="stg-sub-${k}">${sub[k]}</small></div></div>`).join('')}</div></div>`;
 }
 const CURSOR_SVG = `<svg width="34" height="34" viewBox="0 0 24 24"><path d="M4 2.5 19.5 12l-6.8 1.6L9.6 20z" fill="#111" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
 const cursorEl = () => `<div class="cursor">${CURSOR_SVG}<div class="ring"></div></div>`;
