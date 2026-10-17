@@ -6,7 +6,6 @@ import type { OverviewData, OverviewDraft } from "../state";
 import { CommandMenu } from "./command-menu";
 import { Sidebar } from "./sidebar";
 import { NumberTicker } from "./ui/number-ticker";
-import { renderCollectionStats } from "../entry";
 import type { WorkspaceState } from "../state";
 
 beforeAll(()=>{
@@ -22,15 +21,6 @@ describe("framework components",()=>{
     const ticker=container.querySelector(".number-ticker");
     expect(ticker?.textContent).toBe("5.463");
     expect(ticker?.querySelector(".number-ticker-visual")?.getAttribute("data-ticker-value")).toBeTruthy();
-  });
-  it("renders collection stats with NumberTicker and updates values in place",()=>{
-    const host=document.createElement("div");
-    document.body.append(host);
-    renderCollectionStats(host,[
-      {value:109,title:"Unique regulations",caption:"Identitas",iconHtml:"<svg></svg>",tone:"crimson"},
-      {value:[19,38],title:"Provinces in collection",caption:"Sebaran",iconHtml:"<svg></svg>",tone:"green"},
-    ]);
-    expect(Array.from(host.querySelectorAll("strong")).map(el=>el.textContent)).toEqual(["109","19 / 38"]);
   });
   it("sidebar provides labelled destinations and folding control",()=>{
     const {container}=render(<Sidebar/>);

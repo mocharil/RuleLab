@@ -1,18 +1,54 @@
-import {icon} from '/static/design.js';
-// Shared scenario controls keep the editor and impact lab consistent.
+// Shared Policy Studio helpers: scenario assumptions, text comparison and alternative B from proposals.
 export const defaultAssumptions={population:1000,digital_access_pct:70,assisted_success_pct:80,digital_cost:20000,assisted_cost:50000,staff_capacity:40};
 export const assumptionFields=[['population','Applicants','people',1,10000000],['digital_access_pct','Digital access','%',0,100],['assisted_success_pct','Assisted success','%',0,100],['digital_cost','Digital cost','Rp / case',0,100000000],['assisted_cost','Assisted cost','Rp / case',0,100000000],['staff_capacity','Staff capacity','applicants / day',1,100000]];
 export function assumptionInputs(values){return assumptionFields.map(([key,title,unit,min,max])=>`<label class="scenario-field" for="ass-${key}"><span>${title}</span><div><input id="ass-${key}" type="number" value="${Number(values[key])}" min="${min}" max="${max}" step="${key.includes('pct')||key.includes('cost')?'any':'1'}"><small>${unit}</small></div></label>`).join('');}
 export function readAssumptions(root=document){return Object.fromEntries(assumptionFields.map(([key])=>{const input=root.querySelector('#ass-'+key);if(!input||!input.value||!input.checkValidity()){const error=Error('Check the assumption inputs: '+(input?.closest('label')?.textContent||key));error.fieldId='ass-'+key;throw error;}return [key,Number(input.value)];}));}
-export function studioPanel({state,analysis,simulation,alternative,escape:E,button:btn,source,legalValidation,agentPanel,socialPanel}){
- const tab=state.studioTab||'impact',p=simulation?.payload,old=state.dirty||simulation?.revision!==state.draft.revision;
- const tabs=[['impact','Simulation'],['review','Review'],['sources','Source'],['social','Public'],['agents','Agents']];
- let body='';
- if(tab==='impact')body=`<div class="studio-intro"><span class="studio-glyph">${icon('chart')}</span><div><h2>Scenario comparison</h2><p>Your draft becomes A. Compare it with alternative B.</p></div></div><div class="inline-assumptions">${assumptionInputs(state.simAss||p?.assumptions||defaultAssumptions)}</div><label for="alternative">Alternative B</label><textarea id="alternative" rows="6" aria-label="Alternative B text">${E(alternative)}</textarea><div class="studio-inline-actions">${btn('Copy draft A','copy')}${btn('Run simulation','simulate','',true)}</div><p class="micro">Draft changes are saved before the simulation. Results are an assumption scenario.</p>${p?`<div class="studio-result" data-simulation-revision="${simulation.revision}"><div class="studio-result-head"><h3>Access comparison</h3><span class="tag studio-freshness">${old?'Older result · run again':'Draft v'+simulation.revision}</span></div><p class="micro">Model results based on the assumptions at simulation time.</p><div class="impact-mini-grid">${['A','B'].map(k=>`<div class="impact-mini ${k==='B'?'b':''}"><small>ALTERNATIVE ${k}</small><strong>${p[k].access_pct}%</strong><div class="bar"><span style="width:${Number(p[k].access_pct)}%"></span></div><span>${p[k].served} served</span><span>Rp ${new Intl.NumberFormat('id-ID').format(p[k].cost)}</span></div>`).join('')}</div><div class="impact-change"><strong>${p.delta.access_points>0?'+':''}${p.delta.access_points} access points</strong><span>${p.delta.served>0?'+':''}${p.delta.served} more applicants served</span></div><details><summary>Perspectives & mitigations (${p.stakeholders.length})</summary>${p.stakeholders.map(s=>`<div class="inline-stakeholder"><h3>${E(s.stakeholder)}</h3><b>Risks</b><ul>${s.risks.map(x=>`<li>${E(x)}</li>`).join('')}</ul><b>Mitigations</b><ul>${s.mitigations.map(x=>`<li>${E(x)}</li>`).join('')}</ul></div>`).join('')}</details><details><summary>Result assumptions, sensitivity & limits</summary><p class="micro">The results above use the assumptions at simulation time, not inputs changed afterwards.</p>${Object.entries(p.assumptions).map(([k,v])=>`<div class="mini-stat"><span>${E(assumptionFields.find(x=>x[0]===k)?.[1]||k)}</span><b>${v}</b></div>`).join('')}<table><thead><tr><th>Digital</th><th>A</th><th>B</th></tr></thead><tbody>${p.sensitivity.map(x=>`<tr><td>${x.digital_access_pct}%</td><td>${x.A}%</td><td>${x.B}%</td></tr>`).join('')}</tbody></table><ul>${p.limitations.map(x=>`<li>${E(x)}</li>`).join('')}</ul></details><div class="studio-inline-actions">${btn('Review alternative B','apply-alt',old?'disabled':'',true)}${btn('Reviewer notes','review',`data-run="${simulation.id}"`)}</div></div>`:`<div class="studio-empty">${'<span aria-hidden="true">A ↔ B</span>'}<h3>One decision, two scenarios.</h3><p>Access, cost and mitigation results will appear here.</p></div>`}`;
- if(tab==='impact'&&p){const resultStart=body.indexOf('<div class="studio-result"'),controlsStart=body.indexOf('<div class="inline-assumptions">');body=body.slice(0,controlsStart)+body.slice(resultStart)+`<section class="studio-scenario-controls"><h3>Prepare the next scenario</h3>`+body.slice(controlsStart,resultStart)+'</section>';}
- if(tab==='review')body=`<div class="studio-intro"><span class="studio-glyph">${icon('shield')}</span><div><h2>Document check</h2><p>Verify sources and review proposals per article.</p></div></div><label for="legal-date">Analysis date</label><input id="legal-date" type="date" value="${E(state.asOf)}">${btn('Check draft','analyze-inline','',true)}${analysis?`<div class="studio-result"><span class="tag studio-analysis-freshness">${state.dirty||analysis.revision!==state.draft.revision?'Older result · re-check':'Draft v'+analysis.revision}</span><p class="help-text">${E(analysis.payload.summary)}</p>${analysis.payload.findings.map((f,i)=>`<details class="inline-finding"><summary><span class="tag ${E(f.severity)}">${E(f.severity==='high'?'High':f.severity==='medium'?'Medium':'Low')}</span> Pasal ${E(f.article_number)} · ${E(f.title)}</summary><p>${E(f.reasoning)}</p><div class="quote">${E(f.proposed_text)}</div>${f.evidence.map(source).join('')}${legalValidation(f)}<details><summary>Alternative interpretation</summary><p>${E(f.counterargument)}</p></details>${btn('Apply proposal','apply',`data-index="${i}" ${state.dirty||analysis.revision!==state.draft.revision?'disabled':''}`,true)}</details>`).join('')||'<p>No problem patterns detected. Review it anyway.</p>'}</div>`:`<div class="studio-empty"><span aria-hidden="true">${icon('shield')}</span><h3>Start with one check.</h3><p>Findings and source quotes appear in this panel.</p></div>`}`;
- if(tab==='social')body=socialPanel()+`<label for="alternative">Alternative B for the forum</label><textarea id="alternative" rows="5">${E(alternative)}</textarea><p class="micro">Assumptions use the inputs on the Simulation tab.</p>${btn('Open full forum','go-social')}`;
- if(tab==='agents')body=agentPanel();
- if(tab==='sources')body=`<div class="studio-intro"><span class="studio-glyph">${icon('book')}</span><div><h2>Sources related to the document</h2><p>${state.status.regulations} regulations · ${state.status.articles} articles/blocks</p></div></div>${[...(analysis?.payload.findings||[]).flatMap(f=>f.evidence),...(p?.evidence||[])].filter((a,i,all)=>all.findIndex(x=>x.id===a.id)===i).slice(0,8).map(source).join('')||'<div class="studio-empty"><h3>Sources follow the check.</h3><p>Run a review or simulation to retrieve sources related to this draft.</p></div>'}${btn('Indonesian legal guidelines','legal-guide')}<p class="micro">Original text snapshots and amendments are separate. Source status needs verification.</p>`;
- return `<aside class="studio-side"><section class="panel studio-panel"><div class="studio-panel-top"><div><div class="eyebrow">REVIEW & SIMULATION</div><h2>Draft assistant</h2></div><span class="studio-live">v${state.draft.revision}</span></div><div class="studio-tabs" role="tablist" aria-label="Editor assistant">${tabs.map(([id,title])=>`<button id="tab-${id}" role="tab" aria-selected="${tab===id}" aria-controls="studio-content" data-action="studio-tab" data-tab="${id}" tabindex="${tab===id?'0':'-1'}">${title}</button>`).join('')}</div><div id="studio-content" role="tabpanel" aria-labelledby="tab-${tab}" tabindex="0">${body}</div><div class="studio-footer">${btn('Create a draft from a brief','generate')}<span>Human review is still required.</span></div></section></aside>`;
+
+export const articlesText=articles=>articles.map(a=>'Pasal '+a.number+'\n'+a.text).join('\n\n');
+// Whitespace-only differences never count as a different alternative.
+export const sameText=(a,b)=>String(a||'').replace(/\s+/g,' ').trim()===String(b||'').replace(/\s+/g,' ').trim();
+
+// Word-level diff (LCS over words; whitespace runs collapse to a space or a line break).
+// Returns null when the texts are too long to compare interactively.
+export function wordDiff(before,after){
+ const split=text=>String(text||'').split(/(\s+)/).filter(Boolean).map(t=>/^\s+$/.test(t)?(t.includes('\n')?'\n':' '):t);
+ const a=split(before),b=split(after),n=a.length,m=b.length;
+ if(n*m>2_000_000)return null;
+ const table=new Uint32Array((n+1)*(m+1)),w=m+1;
+ for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)table[i*w+j]=a[i]===b[j]?table[(i+1)*w+j+1]+1:Math.max(table[(i+1)*w+j],table[i*w+j+1]);
+ const parts=[],push=(type,text)=>{const last=parts.at(-1);if(last?.type===type)last.text+=text;else parts.push({type,text});};
+ let i=0,j=0;
+ while(i<n&&j<m){if(a[i]===b[j]){push('same',a[i]);i++;j++;}else if(table[(i+1)*w+j]>=table[i*w+j+1])push('del',a[i++]);else push('ins',b[j++]);}
+ while(i<n)push('del',a[i++]);while(j<m)push('ins',b[j++]);
+ const words=type=>parts.filter(p=>p.type===type).reduce((count,p)=>count+(p.text.match(/\S+/g)||[]).length,0);
+ return {parts:readable(parts),added:words('ins'),removed:words('del')};
+}
+// Word-by-word alternation is hard to read; short unchanged runs (≤2 words) between edits join the
+// surrounding edit so each hunk reads as one removed phrase followed by one added phrase.
+function readable(parts){
+ const out=[];let del='',ins='';
+ const flush=()=>{if(del)out.push({type:'del',text:del});if(ins)out.push({type:'ins',text:ins});del=ins='';};
+ parts.forEach((part,k)=>{
+  if(part.type==='del')del+=part.text;else if(part.type==='ins')ins+=part.text;
+  else if((del||ins)&&k<parts.length-1&&(part.text.match(/\S+/g)||[]).length<=2&&!part.text.includes('\n')){del+=part.text;ins+=part.text;}
+  else{flush();out.push(part);}
+ });
+ flush();return out;
+}
+export function diffHTML(before,after,E){
+ const diff=wordDiff(before,after);
+ if(!diff)return `<div class="ps-diff-fallback"><del>${E(before)}</del><ins>${E(after)}</ins></div>`;
+ return diff.parts.map(p=>p.type==='same'?E(p.text):`<${p.type}>${E(p.text)}</${p.type}>`).join('');
+}
+
+// Alternative B built from the latest check: each article takes the first proposal made for it,
+// the same whole-article replacement the server performs when a proposal is applied.
+export function alternativeFromProposals(articles,findings){
+ const proposals=new Map();let duplicates=0;
+ for(const f of findings||[]){
+  if(!f.proposed_text?.trim()||!articles.some(a=>a.number===f.article_number))continue;
+  if(proposals.has(f.article_number)){duplicates++;continue;}
+  proposals.set(f.article_number,f.proposed_text);
+ }
+ return {text:articlesText(articles.map(a=>({...a,text:proposals.get(a.number)??a.text}))),used:proposals.size,duplicates};
 }

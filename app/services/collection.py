@@ -6,6 +6,7 @@ import hashlib
 import io
 import json
 import re
+import time
 import uuid
 import zipfile
 from functools import lru_cache
@@ -140,8 +141,29 @@ def intake_items():
         return [json.loads(r['payload']) for r in connection.execute('SELECT payload FROM source_intake ORDER BY created_at DESC')]
 
 
+_inventory = {'key': None, 'documents': [], 'built': 0.0}
+INVENTORY_MAX_AGE = 300  # seconds; raw-file checksums are re-read at least this often
+
+
+def _inventory_key(connection):
+    """Cheap change signature for the regulations table: row count and total payload bytes.
+
+    octet_length reads the stored size without parsing the JSON (PostgreSQL: from the TOAST header;
+    SQLite >= 3.43: from the record header). Older SQLite falls back to LENGTH.
+    """
+    try:
+        row = connection.execute('SELECT COUNT(*) AS n, SUM(octet_length(payload)) AS size FROM regulations').fetchone()
+    except Exception:
+        row = connection.execute('SELECT COUNT(*) AS n, SUM(LENGTH(payload)) AS size FROM regulations').fetchone()
+    return (row['n'], row['size'])
+
+
 def document_inventory():
-    # Return metadata and counts without loading all article bodies into Python.
+    # Return metadata and counts without loading all article bodies into Python; reuse it until the corpus changes.
+    with store.db() as connection:
+        key = _inventory_key(connection)
+    if _inventory['key'] == key and time.monotonic() - _inventory['built'] < INVENTORY_MAX_AGE:
+        return _inventory['documents']
     with store.db() as connection:
         if store.is_postgres():
             rows = connection.execute("SELECT (payload::jsonb - 'articles')::text AS doc, jsonb_array_length(payload::jsonb->'articles') AS count FROM regulations").fetchall()
@@ -174,12 +196,18 @@ def document_inventory():
                           'articles': row['count'] or 0, 'topics': doc_topics.get(d['id'], []),
                           'needs_ocr': bool(d['quality'].get('ocr_needed_pages')), 'human_verified': bool(d['quality'].get('human_verified')),
                           'checksum_valid': valid, 'source_url': source.get('source_url', ''), 'retrieved_at': source.get('retrieved_at', '')})
+    _inventory.update(key=key, documents=documents, built=time.monotonic())
     return documents
 
 
+def _host(url):
+    return (urlsplit(url).hostname or 'unknown').removeprefix('www.')
+
+
 def overview(kind='', start=None, end=None, mode='issuer', include_private=True):
-    docs = [d for d in document_inventory() if (not kind or d['regulation_type'] == kind)
-            and (start is None or d['year'] >= start) and (end is None or d['year'] <= end)]
+    inventory = document_inventory()
+    of_kind = [d for d in inventory if not kind or d['regulation_type'] == kind]
+    docs = [d for d in of_kind if (start is None or d['year'] >= start) and (end is None or d['year'] <= end)]
     regions = {p['id']: {**p, 'count': 0, 'districts': {}} for p in provinces()}
     national = unknown = 0
     for d in docs:
@@ -201,13 +229,83 @@ def overview(kind='', start=None, end=None, mode='issuer', include_private=True)
         type_counts[d['regulation_type']] = type_counts.get(d['regulation_type'], 0)+1
         for t in d['topics']:
             topic_counts[t] = topic_counts.get(t, 0)+1
+    years, days, hosts = {}, {}, {}
+    for d in of_kind:  # the year chart keeps every year of the selected type so a year filter can be widened again
+        years[d['year']] = years.get(d['year'], 0)+1
+    for d in docs:
+        if d['retrieved_at']:
+            day = d['retrieved_at'][:10]; days[day] = days.get(day, 0)+1
+        host = _host(d['source_url']); hosts[host] = hosts.get(host, 0)+1
     result = {'mode': mode, 'provinces': list(regions.values()), 'types': type_counts, 'topics': topic_counts,
+              'years': {str(y): n for y, n in sorted(years.items())},
+              'retrieval_days': [{'date': day, 'count': n} for day, n in sorted(days.items())],
+              'sources': [{'host': h, 'count': n} for h, n in sorted(hosts.items(), key=lambda x: -x[1])],
               'summary': {'unique_regulations': len(identities), 'documents': len(docs), 'articles': sum(d['articles'] for d in docs),
                           'national': national, 'unknown_region': unknown, 'mapped_provinces': sum(r['count'] > 0 for r in regions.values()),
                           'province_total': len(regions), 'needs_ocr': sum(d['needs_ocr'] for d in docs),
-                          'human_verified': sum(d['human_verified'] for d in docs), 'checksum_issues': sum(d['checksum_valid'] is False for d in docs)},
+                          'human_verified': sum(d['human_verified'] for d in docs), 'checksum_issues': sum(d['checksum_valid'] is False for d in docs),
+                          'amendments': sum(d['version_kind'] != 'original' for d in docs), 'text_available': sum(not d['needs_ocr'] for d in docs)},
               'latest_retrieval': max((d['retrieved_at'] for d in docs), default=None),
               'geometry_source': json.loads((ROOT/'app/static/geo/source.json').read_text())}
     if include_private:
-        result.update(documents=docs, intake=intake_items())
+        result.update(intake=intake_items())
     return result
+
+
+def _in_region(d, mode, province, district=''):
+    # Same region semantics as the map: '' = every document, 'national', 'unmapped', or a province id.
+    if not province:
+        return True
+    if province == 'national':
+        return d['issuer_level'] == 'national' if mode == 'issuer' else d['scope'] == 'national' if mode == 'scope' else False
+    if province == 'unmapped':
+        hit = d['issuer_level'] == 'unknown' if mode == 'issuer' else d['scope'] == 'unknown' if mode == 'scope' else not d['mentioned_provinces']
+    else:
+        hit = (d['issuer_level'] == 'province' and d['province_id'] == province) if mode == 'issuer' else province in d['scope_provinces'] if mode == 'scope' else province in d['mentioned_provinces']
+    return hit and (not district or d['district'] == district)
+
+
+STATUS = {'text': lambda d: not d['needs_ocr'], 'ocr': lambda d: d['needs_ocr'], 'verified': lambda d: d['human_verified'],
+          'unverified': lambda d: not d['human_verified'], 'amendment': lambda d: d['version_kind'] != 'original',
+          'checksum': lambda d: d['checksum_valid'] is False}
+STOPWORDS = {'nomor', 'no', 'no.', 'tahun', 'thn'}
+SORTS = {'retrieved': (lambda d: d['retrieved_at'] or '', True), 'year': (lambda d: (d['year'], d['retrieved_at'] or ''), True),
+         'articles': (lambda d: d['articles'], True), 'title': (lambda d: d['title'].lower(), False)}
+
+
+def documents_page(q='', kind='', start=None, end=None, mode='issuer', province='', district='', status='', topic='', host='',
+                   day='', sort='retrieved', page=1, size=25):
+    words = [w for w in q.lower().replace('/', ' ').split() if w and w not in STOPWORDS]
+    def matches(d):
+        text = ' '.join([d['title'], d['regulation_type'], d['number'], str(d['year']), d['district']]).lower()
+        return all(w in text for w in words)
+    docs = [d for d in document_inventory() if (not kind or d['regulation_type'] == kind)
+            and (start is None or d['year'] >= start) and (end is None or d['year'] <= end)
+            and _in_region(d, mode, province, district) and (not status or STATUS[status](d))
+            and (not topic or topic in d['topics']) and (not host or _host(d['source_url']) == host)
+            and (not day or (d['retrieved_at'] or '').startswith(day)) and matches(d)]
+    if sort == 'relevance':
+        # Exact number/year hits and title words rank first; newer documents break ties.
+        def score(d):
+            title = set(re.findall(r'\w+', d['title'].lower()))
+            return (sum(2 for w in words if w in (d['number'].lower(), str(d['year']))) + sum(1 for w in words if w in title), d['year'])
+        docs = sorted(docs, key=score, reverse=True)
+    else:
+        key, reverse = SORTS[sort]
+        docs = sorted(docs, key=key, reverse=reverse)
+    pages = max(1, -(-len(docs)//size))
+    page = min(max(1, page), pages)
+    items = [{k: d[k] for k in ('id', 'title', 'regulation_type', 'number', 'year', 'version_kind', 'issuer_level', 'province_id', 'district',
+                                 'articles', 'needs_ocr', 'human_verified', 'checksum_valid', 'retrieved_at', 'topics')}
+             for d in docs[(page-1)*size:page*size]]
+    return {'total': len(docs), 'page': page, 'pages': pages, 'size': size, 'items': items}
+
+
+def document_index():
+    # A small id/label list for pickers (Compare); the full metadata stays on the server.
+    return [{'id': d['id'], 'label': f"{d['regulation_type']} {d['number']}/{d['year']}", 'title': d['title'][:90], 'articles': d['articles']}
+            for d in sorted(document_inventory(), key=lambda d: (d['regulation_type'], -d['year'], d['number']))]
+
+
+def titles():
+    return {d['id']: d['title'] for d in document_inventory()}

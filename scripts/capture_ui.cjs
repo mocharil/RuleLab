@@ -8,7 +8,7 @@ const output = path.join(root, 'screenshots', 'v1.3');
 fs.mkdirSync(output, { recursive: true });
 const origin = 'http://127.0.0.1:8051';
 const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 'app.main:app', '--port', '8051'], {
-  cwd: root, env: { ...process.env, RULELAB_DB: path.join(temp, 'qa.sqlite3'), AI_PROVIDER: 'demo', SEARCH_BACKEND: 'sqlite', RULELAB_API_TOKEN: '', RULELAB_ACCESS_KEYS: '[]' }, stdio: 'ignore',
+  cwd: root, env: { ...process.env, RULELAB_DB: path.join(temp, 'qa.sqlite3'), AI_PROVIDER: 'demo', SEARCH_BACKEND: 'sqlite', RULELAB_API_TOKEN: '', RULELAB_ACCESS_KEYS: '[]', DATABASE_URL: '', RULELAB_SOURCES_BUCKET: '' }, stdio: 'ignore',
 });
 (async () => {
   let browser;
@@ -47,9 +47,9 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
     };
     const navigate = async view => {
       await page.goto(origin + '/workspace?view=' + view);
-      await page.waitForSelector('.menu-guide');
+      await page.waitForSelector('#main h1');
       await page.waitForFunction(() => !document.querySelector('#main').inert);
-      assert.equal(await page.locator('body').getAttribute('data-view'), view);
+      assert.equal(await page.locator('body').getAttribute('data-view'), view === 'agents' ? 'history' : view);
     };
     await page.goto(origin); await page.waitForSelector('[data-landing-hero]'); await capture('landing-desktop', true);
     const views = ['home', 'data', 'editor', 'analysis', 'simulation', 'library', 'history', 'agents'];
@@ -66,13 +66,14 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
     await page.locator('#sidebar-toggle').click();
     await page.waitForFunction(() => document.querySelector('.sidebar').getBoundingClientRect().width < 90);
     await capture('editor-folded');
-    await page.locator('[data-ux="focus-editor"]').click();
-    assert.equal(await page.locator('.studio-side').isVisible(), false); await capture('editor-focus');
-    await page.locator('[data-ux="focus-editor"]').click(); await page.locator('#sidebar-toggle').click();
+    await page.locator('.ps-more-toggle').click(); await page.locator('.ps-menu [data-ux="focus-editor"]').click();
+    assert.equal(await page.locator('.ps-insights').isVisible(), false); await capture('editor-focus');
+    await page.locator('.ps-focus-chip').click(); await page.locator('#sidebar-toggle').click();
     await page.locator('[aria-label="Quick navigation"]').click(); await page.waitForSelector('.fx-command-content'); await capture('command-menu'); await page.keyboard.press('Escape');
     await page.locator('#menu-help').click(); await page.waitForSelector('#guide-dialog[open]'); await capture('menu-guide'); await page.keyboard.press('Escape');
     await navigate('social');
     assert.equal(await page.locator('.social-node').count(), 5); assert.equal(await page.locator('.social-post').count(), 15);
+    await page.locator('#graph-tab-persona').click();
     await page.locator('.social-opinion-node[data-comment="A-1-sari"]').click();
     assert.equal(await page.locator('.social-selected-opinion').getAttribute('data-opinion-id'), 'A-1-sari'); await capture('social-opinion');
     await page.locator('.social-law-node').first().click(); assert((await page.locator('.social-inspector').textContent()).includes('SHA256')); await capture('social-source');

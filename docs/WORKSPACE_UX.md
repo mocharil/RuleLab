@@ -8,13 +8,15 @@ Ctrl/Cmd+K opens the Radix command menu. Search, Arrow/Enter/Escape, labelled op
 
 ## Editor
 
-`rulelab.editorFocus` stores focus mode. It hides the assistant through layout classes, leaving document input nodes intact. The button can restore the assistant. Draft title/clauses still use existing save-aware handlers and optimistic revisions. Editing updates the document context to unsaved. Selected article navigation is marked when its textarea receives focus.
+Policy Studio (see `docs/POLICY_STUDIO_REVAMP_STRATEGY.md`) keeps one sticky document bar on every stage: draft switcher, save state, the stage's primary action and a More menu (Arrow/Home/End/Escape). The stage stepper uses Arrow/Home/End like other tablists.
 
-Assistant tabs remain simulation, review, sources, netizen and agents. Arrow/Home/End navigate the tabs through the existing handler, which collects unsaved editor text before rerendering the page. Agent polling refreshes agent outputs without replacing the editor.
+The Draft stage has an outline (articles with finding counts), the document, and an Insights rail that follows the focused article. The rail re-renders on its own, so editing never replaces document inputs; becoming dirty disables older proposals with a written reason. `rulelab.editorFocus` stores focus mode, which hides the outline and insights through a body class; a visible "Focus mode · Exit" chip in the bar turns it off. Draft title/clauses still use existing save-aware handlers and optimistic revisions.
+
+Verify sources is master–detail (J/K or arrows move between findings); Test impact compares A/B only when B differs from the draft.
 
 ## Help
 
-All eight destinations have a contextual guide. The header help control starts a native dialog tour with actual target highlighting, Next/Previous/Close/Escape and focus restoration. The quick guide lives at the end of the page to preserve task space. The legal rulebook is a separate action on the application footer and in the source assistant.
+All eight destinations have a contextual guide. The header help control starts a native dialog tour with actual target highlighting, Next/Previous/Close/Escape and focus restoration. The quick guide lives at the end of the page to preserve task space; Overview and the Policy Studio stages show it only through the help control. The legal rulebook is a separate action on the application footer and in the source assistant.
 
 ## Loading and errors
 

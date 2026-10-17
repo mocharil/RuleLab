@@ -11,7 +11,7 @@ const out=path.join(root,'artifacts/workspace-visual');
 fs.mkdirSync(out,{recursive:true});
 const origin='http://127.0.0.1:8058';
 const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.main:app','--port','8058'],{
- cwd:root,env:{...process.env,RULELAB_DB:path.join(temp,'qa.sqlite3'),AI_PROVIDER:'demo',SEARCH_BACKEND:'sqlite',RULELAB_API_TOKEN:'',RULELAB_ACCESS_KEYS:'[]'},stdio:'ignore',
+ cwd:root,env:{...process.env,RULELAB_DB:path.join(temp,'qa.sqlite3'),AI_PROVIDER:'demo',SEARCH_BACKEND:'sqlite',RULELAB_API_TOKEN:'',RULELAB_ACCESS_KEYS:'[]',DATABASE_URL:'',RULELAB_SOURCES_BUCKET:''},stdio:'ignore',
 });
 (async()=>{
  let browser;

@@ -4,7 +4,7 @@ const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),asse
 const root=path.resolve(__dirname,'..'),tmp=fs.mkdtempSync(path.join(os.tmpdir(),'rulelab-collection-'));
 const out=path.join(root,'artifacts','collection-qa');fs.mkdirSync(out,{recursive:true});
 const origin='http://127.0.0.1:8059';
-const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.main:app','--port','8059'],{cwd:root,env:{...process.env,AI_PROVIDER:'demo',SEARCH_BACKEND:'sqlite',RULELAB_DB:path.join(tmp,'db.sqlite'),RULELAB_API_TOKEN:'',RULELAB_ACCESS_KEYS:'[]'},stdio:'ignore'});
+const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.main:app','--port','8059'],{cwd:root,env:{...process.env,DATABASE_URL:'',RULELAB_SOURCES_BUCKET:'',AI_PROVIDER:'demo',SEARCH_BACKEND:'sqlite',RULELAB_DB:path.join(tmp,'db.sqlite'),RULELAB_API_TOKEN:'',RULELAB_ACCESS_KEYS:'[]'},stdio:'ignore'});
 (async()=>{let browser,page;const errors=[],checks=[],network=[];
  try{
   for(let i=0;i<1200;i++){try{if((await fetch(origin+'/api/health')).ok)break;}catch{}await new Promise(r=>setTimeout(r,100));}
@@ -41,25 +41,28 @@ const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.ma
   checks.push('38 published province shapes, live corpus counts, keyboard province selection, filters, unmapped metadata, zoom/reset and responsive landing');
   await page.setViewportSize({width:1600,height:1100});await click('.collection-dashboard-link');await loaded('#collection-dashboard');
   assert.equal(await page.locator('#nav [data-view="data"]').getAttribute('aria-current'),'page');
-  {const total=(await (await fetch(origin+'/api/public/collection')).json()).summary.documents;assert.equal(await page.locator('.collection-document-row').count(),Math.min(50,total));}await screenshot('dashboard-collection');await screenshot('source-channels');
-  await click('.collection-document-row');assert.equal(await page.locator('.gallery-reader').count(),1);assert((await page.locator('#crumb').textContent()).includes('Legal library'));
+  {const s=(await (await fetch(origin+'/api/public/collection')).json()).summary;assert.equal(await page.locator('.dd-kpis strong').first().getAttribute('data-value'),String(s.unique_regulations));
+   await click('#dd-tab-explore');await page.waitForSelector('.dd-table .dd-row');assert.equal(await page.locator('.dd-row').count(),Math.min(25,s.documents));assert((await page.locator('.dd-count').textContent()).startsWith(new Intl.NumberFormat('id-ID').format(s.documents)+' documents'));}
+  await screenshot('dashboard-collection');
+  await click('.dd-row');assert.equal(await page.locator('.gallery-reader').count(),1);assert((await page.locator('#crumb').textContent()).includes('Legal library'));
   await click('#nav [data-view="data"]');await loaded('#collection-dashboard');
-  await click('.page-heading [data-action="collection-upload"]');
+  await click('#dd-tab-overview');await click('[data-dd-add]');await click('.dd-menu [data-action="collection-upload"]');
   await choose('intake-kind','PERDA_KAB');await page.locator('#intake-title').fill('Pengelolaan Perikanan Kota Bandung');await page.locator('#intake-number').fill('3');await choose('intake-province','32');await choose('intake-scope','district');await page.locator('#intake-district').fill('Kota Bandung');
   const source='Pasal 1\nNelayan dapat memperoleh pendampingan.\n\nPasal 2\nPemerintah menyediakan informasi.';
   await page.locator('#intake-file').setInputFiles({name:'perda-bandung.txt',mimeType:'text/plain',buffer:Buffer.from(source)});await click('[data-action="collection-submit"]');await loaded('#collection-dashboard');
-  assert.equal(await page.locator('.collection-intake-row').count(),1);{const total=(await (await fetch(origin+'/api/public/collection')).json()).summary.documents;assert.equal(await page.locator('.collection-document-row').count(),Math.min(50,total));}
+  assert.equal(await page.locator('[data-dd-tab-count="queue"]').textContent(),'1');
+  await click('#dd-tab-queue');assert.equal(await page.locator('.collection-intake-row').count(),1);await screenshot('source-channels');
   await click('.collection-intake-row');assert((await page.locator('.intake-preview').textContent()).includes('Nelayan dapat memperoleh pendampingan'));
   const download=page.waitForEvent('download');await click('[data-action="collection-raw"]');const file=await download;assert.equal(file.suggestedFilename(),'perda-bandung.txt');const downloaded=path.join(out,'uploaded-source.txt');await file.saveAs(downloaded);assert.equal(fs.readFileSync(downloaded,'utf8'),source);await click('[data-action="close"]');
-  await click('[data-action="collection-jdih"]');await choose('intake-kind','PERDA_KAB');await page.locator('#intake-title').fill('Sumber JDIH untuk pemeriksaan');await page.locator('#intake-number').fill('4');await choose('intake-province','32');await choose('intake-scope','district');await page.locator('#intake-district').fill('Kota Bandung');await page.locator('#intake-url').fill('https://jdih.bandung.go.id/dokumen/perda.pdf');await click('[data-action="collection-submit"]');await loaded('#collection-dashboard');
+  await click('.collection-source-card[data-action="collection-jdih"]');await choose('intake-kind','PERDA_KAB');await page.locator('#intake-title').fill('Sumber JDIH untuk pemeriksaan');await page.locator('#intake-number').fill('4');await choose('intake-province','32');await choose('intake-scope','district');await page.locator('#intake-district').fill('Kota Bandung');await page.locator('#intake-url').fill('https://jdih.bandung.go.id/dokumen/perda.pdf');await click('[data-action="collection-submit"]');await loaded('#collection-dashboard');
   assert.equal(await page.locator('.collection-intake-row').count(),2);
   assert((await page.locator('.collection-intake-list').textContent()).includes('Waiting for retrieval'));
-  await choose('data-collection-layer','intake');await choose('data-collection-province','32');
-  assert((await page.locator('[data-region-content]').textContent()).includes('2 documents'));
+  await click('#dd-tab-overview');await choose('data-collection-layer','intake');await choose('data-collection-province','32');
+  assert((await page.locator('[data-region-content]').textContent()).includes('2 queued sources'));
   assert.equal(await page.locator('.province-shape[data-province="32"]').getAttribute('data-count'),'2');
   await click('[data-district="Kota Bandung"]');assert.equal(await page.locator('[data-district="Kota Bandung"]').getAttribute('aria-pressed'),'true');
   await page.locator('.collection-map-panel').scrollIntoViewIfNeeded();await screenshot('dashboard-intake-map');
-  await page.reload();await loaded('#collection-dashboard');assert.equal(await page.locator('.collection-intake-row').count(),2);assert.equal(await page.locator('#data-collection-layer').inputValue(),'intake');assert.equal(await page.locator('#data-collection-province').inputValue(),'32');assert((await page.locator('[data-region-content]').textContent()).includes('2 documents'));await choose('data-collection-layer','corpus');await choose('data-collection-province','');{const total=(await (await fetch(origin+'/api/public/collection')).json()).summary.documents;assert.equal(await page.locator('.collection-document-row').count(),Math.min(50,total));}
+  await page.reload();await loaded('#collection-dashboard');assert.equal(await page.locator('[data-dd-tab-count="queue"]').textContent(),'2');assert.equal(await page.locator('#data-collection-layer').inputValue(),'intake');assert.equal(await page.locator('#data-collection-province').inputValue(),'32');assert((await page.locator('[data-region-content]').textContent()).includes('2 queued sources'));await choose('data-collection-layer','corpus');await choose('data-collection-province','');assert.equal(await page.locator('.dd-rank-national strong').textContent(),new Intl.NumberFormat('id-ID').format((await (await fetch(origin+'/api/public/collection')).json()).summary.national));
   const publicResponse=await page.request.get(origin+'/api/public/collection');const publicData=await publicResponse.json();assert.equal(publicData.summary.documents,summary.documents);assert(!('intake' in publicData));{const raw=JSON.stringify(publicData);assert(!raw.includes('Pengelolaan Perikanan Kota Bandung')&&!raw.includes('Sumber JDIH untuk pemeriksaan')&&!raw.includes('jdih.bandung.go.id'),'Queued intake data must not appear in public data');}
   assert(!network.some(url=>url.startsWith('https://jdih.bandung.go.id')),'Queued JDIH link must not trigger an unrequested fetch');
   checks.push('dashboard navigation, actual gallery documents, source upload/extraction/download, JDIH queue, province/district drill-down, persistence and public/private separation');

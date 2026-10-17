@@ -19,7 +19,7 @@ const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.ma
   const click=async selector=>{await page.locator(selector).first().click();await settled();};
   const shot=async name=>{await page.evaluate(()=>document.fonts.ready);await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:path.join(out,name+'.png'),animations:'disabled'});};
   for(const [old,stage] of [['editor','editor'],['analysis','analysis'],['simulation','simulation'],['social','simulation']]){
-   await page.goto(origin+'/workspace?view='+old);await page.waitForSelector('.workflow-stage-nav');await settled();
+   await page.goto(origin+'/workspace?view='+old);await page.waitForSelector('.ps-steps');await settled();
    assert.equal(new URL(page.url()).searchParams.get('view'),'studio');
    assert.equal(new URL(page.url()).searchParams.get('stage'),stage);
    assert.equal(await page.locator('#nav [data-view="studio"]').count(),1);
@@ -38,7 +38,7 @@ const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.ma
   assert.equal(await page.locator('#workflow-stage-analysis').evaluate(el=>el===document.activeElement),true);
   const saved=await (await page.request.get(origin+'/api/drafts/'+draftId)).json();
   assert.equal(saved.title,'Studio layanan inklusif');assert.equal(saved.revision,before.revision+1);
-  await click('.page-heading [data-action="analyze"]');assert(await page.locator('.finding').count()>0);
+  await click('.ps-bar [data-action="analyze"]');assert(await page.locator('.finding').count()>0);
   assert((await page.locator('#workflow-stage-analysis').textContent()).includes('findings'));
   await shot('studio-review');
   await click('#workflow-stage-simulation');await click('[data-section="projection"]');
@@ -50,8 +50,8 @@ const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.ma
   await click('#workflow-stage-simulation');
   assert.equal(await page.locator('#ass-population').inputValue(),'2500');
   assert((await page.locator('#alternative').inputValue()).includes('Pendampingan disediakan'));
-  await click('.page-heading [data-action="simulate"]');assert.equal(await page.locator('.scenario').count(),2);
-  assert((await page.locator('#workflow-stage-simulation').textContent()).includes('Proyeksi v'));
+  await click('#ps-compare');assert.equal(await page.locator('.scenario').count(),2);
+  assert((await page.locator('#workflow-stage-simulation').textContent()).includes('A/B v'));
   await shot('studio-impact');
   await click('#workflow-stage-analysis');await page.goBack();await settled();
   assert.equal(await page.locator('#workflow-stage-simulation').getAttribute('aria-selected'),'true');
@@ -91,9 +91,9 @@ const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.ma
   await viewer.goto(origin+'/workspace?view=studio');await viewer.waitForSelector('#draft-title');
   assert(await viewer.locator('#draft-title').isDisabled());
   await viewer.locator('#workflow-stage-analysis').click();await viewer.locator('#main[aria-busy="false"]').waitFor({state:'attached'});
-  assert(await viewer.locator('.page-heading [data-action="analyze"]').isDisabled());
+  assert(await viewer.locator('.ps-bar [data-action="analyze"]').isDisabled());
   await viewer.locator('#workflow-stage-simulation').click();await viewer.locator('#main[aria-busy="false"]').waitFor({state:'attached'});
-  assert(await viewer.locator('.page-heading [data-action="simulate"]').isDisabled());await viewer.close();
+  assert(await viewer.locator('#ps-compare').isDisabled());await viewer.close();
   assert.deepEqual(errors,[]);checks.push('viewer navigation remains available while draft editing, review and simulation actions stay disabled');
   fs.writeFileSync(path.join(out,'report.json'),JSON.stringify({status:'passed',checks,errors},null,2));
   console.log(JSON.stringify({status:'passed',checks,screenshots:out},null,2));

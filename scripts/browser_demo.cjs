@@ -11,7 +11,7 @@ const output = path.join(root, 'artifacts', 'demo-qa');
 fs.mkdirSync(output, { recursive: true });
 const origin = 'http://127.0.0.1:8055';
 const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 'app.main:app', '--port', '8055'], {
-  cwd: root, env: { ...process.env, RULELAB_DB: path.join(temp, 'qa.sqlite'), AI_PROVIDER: 'demo', SEARCH_BACKEND: 'sqlite', RULELAB_API_TOKEN: '', RULELAB_ACCESS_KEYS: '[]' }, stdio: 'ignore',
+  cwd: root, env: { ...process.env, RULELAB_DB: path.join(temp, 'qa.sqlite'), AI_PROVIDER: 'demo', SEARCH_BACKEND: 'sqlite', RULELAB_API_TOKEN: '', RULELAB_ACCESS_KEYS: '[]', DATABASE_URL: '', RULELAB_SOURCES_BUCKET: '' }, stdio: 'ignore',
 });
 (async () => {
   let browser, page;
@@ -27,7 +27,7 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
     page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, acceptDownloads: true, bypassCSP: true, timezoneId: 'Asia/Jakarta' });
     page.on('pageerror', error => errors.push(error.message));
     const settled = () => page.waitForFunction(() => document.querySelector('#main')?.getAttribute('aria-busy') === 'false');
-    const click = async selector => { if(selector.startsWith('#activity-tab-')&&!(await page.locator(selector).count())){await page.locator('#nav [data-view="activity"]').click();await settled();}if(selector.startsWith('#workflow-stage-')&&!(await page.locator(selector).count())){await page.locator('#nav [data-view="studio"]').click();await settled();}await page.locator(selector).first().click(); await settled();if(selector.includes('[data-action="close"]'))assert.equal(await page.locator('#modal').isVisible(),false,'Closed dialog must not intercept the next click'); };
+    const click = async selector => { if(selector.startsWith('#workflow-stage-')&&!(await page.locator(selector).count())){await page.locator('#nav [data-view="studio"]').click();await settled();}if(!selector.startsWith('.ps-menu')&&await page.locator('.ps-menu '+selector).count()&&!(await page.locator(selector).first().isVisible()))await page.locator('.ps-more-toggle').click();await page.locator(selector).first().click(); await settled();if(selector.includes('[data-action="close"]'))assert.equal(await page.locator('#modal').isVisible(),false,'Closed dialog must not intercept the next click'); };
     const screenshot = async name => {
       await page.evaluate(() => document.fonts.ready);
       await page.screenshot({ path: path.join(output, name + '.png'), animations: 'disabled' });
@@ -53,17 +53,24 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
     assert.equal(await page.locator('[data-action="review"]').count(), 0);
     assert(!(await page.locator('#simulation-content').textContent()).includes('94%'));
     await screenshot('unified-empty'); checks.push('synthesis requires actual results');
-    // Run from the tab without form fields: this previously threw a null error.
-    await click('.page-heading [data-action="simulate"]');
+    // B starts as the draft itself, so the comparison stays disabled until B differs.
+    await click('[data-section="projection"]');
+    assert.equal(await page.locator('#ps-compare').isDisabled(), true);
+    assert((await page.locator('#ps-alt-status').textContent()).includes('identical'));
+    const assisted='Pasal 2\n(1) Permohonan dapat diajukan melalui aplikasi digital atau kanal pendampingan.\n(2) Penyelenggara menyediakan bantuan dan akomodasi yang layak bagi pemohon yang mengalami hambatan akses.';
+    await page.locator('#alternative').fill((await page.locator('#alternative').inputValue()).replace(/Pasal 2\n[\s\S]*?(?=\n\nPasal 3)/, assisted));
+    await page.waitForFunction(() => !document.querySelector('#ps-compare').disabled);
+    await click('#ps-compare');
+    assert.deepEqual(await page.locator('.scenario .number').allTextContents(), ['70%', '94%']);
+    await click('[data-section="unified"]');
     assert.equal(await page.locator('.synthesis-stats .stat-box').count(), 3);
     await click('[data-section="projection"]');
-    assert.deepEqual(await page.locator('.scenario .number').allTextContents(), ['70%', '94%']);
     await screenshot('simulation-projection');
     await page.locator('#ass-population').fill('2500');
+    await click('#ps-compare');
     await click('[data-section="unified"]');
-    await click('.page-heading [data-action="simulate"]');
     assert((await page.locator('.synthesis-stats').textContent()).includes('2.500'));
-    checks.push('simulation on every subtab and assumption persistence');
+    checks.push('A/B comparison needs a different B, unified synthesis and assumption persistence');
     await click('#workflow-stage-editor');
     await screenshot('editor');
     await page.locator('#reg-type-trigger').click();
@@ -80,75 +87,80 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
     await page.locator('#draft-title').fill('Demo layanan inklusif');
     await page.keyboard.press('Control+s');await settled();
     assert((await page.locator('#save-state').textContent()).includes('Saved'));
-    await page.locator('#tab-review').click();await settled();
-    await click('[data-action="analyze-inline"]');
-    assert(await page.locator('.inline-finding').count() > 0);
+    await click('#ps-insights [data-action="analyze-inline"]');
+    assert(await page.locator('.ps-outline .ps-count').count() > 0);
     await screenshot('editor-review');
     await click('#workflow-stage-analysis');
     assert(await page.locator('.finding').count() > 0);
     await click('[data-filter="high"]');
     assert.equal(await page.locator('[data-filter="high"]').getAttribute('aria-pressed'), 'true');
     await click('[data-filter="all"]');
+    // "Review in Activity" opens this result in the Activity timeline, where the decision is recorded.
     await click('[data-action="review"]');
-    await page.locator('#review-status-trigger').click();await page.keyboard.press('Escape');
-    assert.equal(await page.locator('#modal').evaluate(el=>el.open),true,'Escape from a dropdown keeps its parent dialog open');
-    await select('review-status', 'Reviewed with notes');
+    assert.equal(new URL(page.url()).searchParams.get('view'),'activity');assert((await page.locator('#activity-timeline [aria-current="true"]').getAttribute('data-item')).startsWith('run:'));
+    await page.locator('.act-seg label',{hasText:'Reviewed with notes'}).click();
     await page.locator('#review-notes').fill('Rujukan diperiksa untuk demonstrasi.');
     await click('[data-action="save-review"]');
+    assert.equal(await page.locator('.act-review-history li').count(),1);
     const download = page.waitForEvent('download');await click('[data-action="report"]');
     assert((await download).suggestedFilename().endsWith('.docx'));
-    await screenshot('analysis');checks.push('save shortcut, inline review, filters and review DOCX');
-    await click('#activity-tab-results');
-    await click('[data-filter="analysis"]');
-    await click('[data-action="run-detail"]');
-    await page.waitForSelector('#modal[open] .analysis-findings-list');
-    await click('#modal [data-action="close"]');
-    await click('[data-action="versions"]');
-    assert(await page.locator('#modal .source-details').count() >= 2);
-    await click('#modal [data-action="close"]');
+    await screenshot('analysis');checks.push('save shortcut, check from the insights rail, filters and review DOCX');
+    await click('#nav [data-view="activity"]');await click('.act-chip[data-status="all"]');
+    await select('activity-kind', 'Source checks');
+    await click('#activity-timeline [data-item^="run:"]');
+    await page.waitForSelector('#activity-detail .act-findings');
+    await select('activity-kind', 'All types');
+    assert(await page.locator('#activity-timeline [data-item^="version:"]').count() >= 2);
+    await click('#activity-timeline [data-item^="version:"]');await page.waitForFunction(()=>/Changes from version|First version/.test(document.querySelector('#activity-detail')?.textContent||''));
     await screenshot('history');checks.push('historical results, review status and draft versions');
     await click('#nav [data-view="library"]');
     assert.equal(await page.locator('#nav [data-view="gallery"],#nav [data-view="corpus"]').count(),0);
-    assert(await page.locator('.gallery-card').count()>0,'Gallery must list documents');
+    await page.waitForSelector('.lib-doc');assert(await page.locator('.lib-doc').count()>0,'Library must list documents');
     await screenshot('library');
     await click('#library-tab-passages');
     await screenshot('corpus');
     await click('[data-action="compare"]');
-    await select('cmp-right', 'UU 8/2016');
+    await select('cmp-right', (await page.locator('#cmp-right option[value="uu-8-2016"]').textContent()).trim());
     assert(await page.locator('#art-right option').count() > 20);
     await select('art-right', 'Pasal 4');
     await click('[data-action="run-compare"]');
     await page.waitForSelector('.relation'); await screenshot('compare');
     await click('#modal [data-action="close"]');
     await page.locator('#search-q').fill('pengaduan');await page.locator('#search-form').evaluate(f => f.requestSubmit());await settled();
-    assert(await page.locator('#main .source-details').count() > 0);
+    assert(await page.locator('#main .lib-hit mark').count() > 0);
     checks.push('unified library, article search and dependent comparison dropdowns');
     await click('#nav [data-view="library"]');await click('#library-tab-documents');
-    await select('gallery-type', 'PP');assert(await page.locator('.gallery-card').count()>=1);
-    await select('gallery-type', 'All types');assert(await page.locator('.gallery-card').count()>=1);
-    await page.locator('#gallery-search').fill('Pelayanan Publik');await page.waitForTimeout(500);await settled();
+    // One search box serves both modes: clear the article query before filtering documents by type.
+    await page.locator('#search-q').fill('');await page.waitForFunction(()=>/^[\d.]+ documents$/.test(document.querySelector('.library-result-count')?.textContent||''));
+    await select('library-type', 'Peraturan Pemerintah');await page.waitForFunction(()=>document.querySelector('.lib-doc')&&[...document.querySelectorAll('.lib-doc small')].every(el=>el.textContent.startsWith('PP ')));
+    await select('library-type', 'All types');await page.waitForSelector('.lib-doc');
+    await page.locator('#search-q').fill('Pelayanan Publik');await page.waitForSelector('.lib-doc[data-id="uu-25-2009"]');
     await click('[data-action="gallery-open"][data-id="uu-25-2009"]');
     await page.locator('#gallery-article-trigger').click();
     await page.locator('.rl-select-popup:popover-open input').fill('Pasal 4');
     await page.locator('.rl-select-popup:popover-open').getByRole('option', { name: 'Pasal 4', exact: true }).click();await settled();
     assert.equal(await page.locator('#gallery-article').inputValue(), '4');
-    await select('gallery-scope', (await page.locator('#gallery-scope option[value=""]').textContent()).trim());
-    assert.equal(await page.locator('.scope-indicator').textContent(), 'Entire collection');
+    assert((await page.locator('.lib-scope-chip').textContent()).includes('UU 25/2009'));
+    await click('[data-action="lib-scope-clear"]');
+    assert((await page.locator('.lib-scope').textContent()).includes('Entire collection'));
     await page.locator('#gallery-question').fill('What is UU 25/2009 about?');
     await page.locator('#gallery-chat-form').evaluate(f => f.requestSubmit());await settled();
     assert.equal(await page.locator('.gallery-chat-turn').count(), 1);
     await screenshot('gallery-chat');
-    await page.locator('.gallery-citation summary').first().click();await click('[data-action="gallery-read-source"]');await click('#modal [data-action="close"]');
+    await page.locator('.gallery-citation summary').first().click();await click('[data-action="gallery-read-source"]');await page.locator('#gallery-reader').waitFor();assert.equal(await page.locator('#modal[open]').count(), 0);
     await click('[data-action="toggle-assistant"]');await click('[data-action="toggle-assistant"]');
     await click('[data-action="gallery-clear"]');
     assert.equal(await page.locator('.gallery-chat-turn').count(), 0);
     checks.push('gallery filters, searchable article picker, context, chat citations and folding');
     await click('#workflow-stage-simulation');await click('[data-section="social"]');
     await click('.social-launch [data-action="start-agent"]');
-    await page.waitForSelector('.social-network', { timeout: 60000 });
+    await page.waitForSelector('.social-network', { state: 'attached', timeout: 60000 });
     await page.waitForFunction(() => document.querySelectorAll('.social-post').length > 0, { timeout: 60000 });
     await page.waitForFunction(() => !document.querySelector('.social-launch [data-action="start-agent"]').disabled, null, { timeout: 60000 });
     await click('[data-scenario="B"]');
+    // A finished run opens on the knowledge graph; the persona network is the third view.
+    assert(await page.locator('#graph-pane-kg .kg-node').count() > 10);
+    await click('#graph-tab-persona');
     await page.locator('.social-node').first().click();
     await screenshot('social');
     await click('[data-section="unified"]');
@@ -164,11 +176,11 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
     }
     await page.setViewportSize({width:1440,height:1000});
     checks.push('populated simulation, social graph and synthesis at mobile/tablet sizes');
-    await click('#activity-tab-agents');
+    await click('#nav [data-view="activity"]');await click('.act-head [data-action="activity-sheet"]');
     await select('agent-intent', 'Legal review');
-    await click('[data-action="start-agent"]');
-    await page.waitForFunction(() => document.querySelector('#agent-live .status-badge')?.textContent === 'Done', null, { timeout: 60000 });
-    await click('[data-action="inspect-job"]');await click('#modal [data-action="close"]');
+    await click('.act-sheet [data-action="start-agent"]');
+    await page.waitForFunction(() => document.querySelector('#activity-detail .act-detail-head .status-badge')?.textContent === 'Done', null, { timeout: 60000 });
+    assert(await page.locator('#activity-detail .act-trace li').count() >= 4);
     await screenshot('agents');checks.push('social multi-persona run, graph, synthesis and legal agent trace');
     await click('#settings-btn');
     await screenshot('integration');
@@ -194,7 +206,7 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
     assert.equal(new URL(page.url()).searchParams.get('draft'), currentDraft);
     assert.equal(await page.locator('#draft-title').inputValue(), 'Rancangan kedua');
     await select('draft-select', 'Demo layanan inklusif');
-    await click('#activity-tab-results');await click('#nav [data-view="library"]');await click('#library-tab-documents');
+    await click('#nav [data-view="activity"]');await click('#nav [data-view="library"]');await click('#library-tab-documents');
     await page.goBack();await settled();assert.equal(await page.locator('body').getAttribute('data-view'), 'history');
     await page.goForward();await settled();assert.equal(await page.locator('body').getAttribute('data-view'), 'library');
     checks.push('new draft, draft switching, reload, browser Back and Forward');
@@ -212,7 +224,7 @@ const server = spawn(process.env.RULELAB_PYTHON || 'python3', ['-m', 'uvicorn', 
     for (const width of [360, 390, 768, 1024, 1440]) {
       await page.setViewportSize({width,height:900});
       for (const view of ['home','editor','analysis','simulation','library','history','agents']) {
-        await click(view === 'home' ? '.workspace-home-link' : ['editor','analysis','simulation'].includes(view)?'#workflow-stage-'+view:['history','agents'].includes(view)?'#activity-tab-'+(view==='agents'?'agents':'results'):'#nav [data-view="'+view+'"]');
+        await click(view === 'home' ? '.workspace-home-link' : ['editor','analysis','simulation'].includes(view)?'#workflow-stage-'+view:['history','agents'].includes(view)?'#nav [data-view="activity"]':'#nav [data-view="'+view+'"]');
         await page.waitForTimeout(250);
         const overflow = await page.evaluate(() => ({width:innerWidth,scroll:document.documentElement.scrollWidth}));
         assert(overflow.scroll <= overflow.width + 1, JSON.stringify({view,...overflow}));

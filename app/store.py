@@ -102,6 +102,8 @@ SQLITE_SCHEMA='''
   CREATE TABLE IF NOT EXISTS drafts(id TEXT PRIMARY KEY,revision INTEGER NOT NULL,payload TEXT NOT NULL,updated_at TEXT NOT NULL);
   CREATE TABLE IF NOT EXISTS revisions(draft_id TEXT,revision INTEGER,payload TEXT NOT NULL,created_at TEXT NOT NULL,PRIMARY KEY(draft_id,revision));
   CREATE TABLE IF NOT EXISTS runs(id TEXT PRIMARY KEY,draft_id TEXT,revision INTEGER,kind TEXT,payload TEXT,created_at TEXT,review_status TEXT DEFAULT 'needs_review',review_notes TEXT DEFAULT '');
+  CREATE TABLE IF NOT EXISTS run_reviews(id TEXT PRIMARY KEY,run_id TEXT NOT NULL,status TEXT NOT NULL,notes TEXT NOT NULL,reviewer TEXT NOT NULL,role TEXT NOT NULL,created_at TEXT NOT NULL);
+  CREATE INDEX IF NOT EXISTS run_reviews_run_idx ON run_reviews(run_id,created_at);
   CREATE TABLE IF NOT EXISTS metadata(key TEXT PRIMARY KEY,value TEXT NOT NULL);
   CREATE TABLE IF NOT EXISTS source_files(path TEXT PRIMARY KEY,size BIGINT,sha256 TEXT,checked_at TEXT);
   '''
@@ -115,6 +117,8 @@ PG_SCHEMA='''
   CREATE TABLE IF NOT EXISTS revisions(draft_id TEXT,revision INTEGER,payload TEXT NOT NULL,created_at TEXT NOT NULL,PRIMARY KEY(draft_id,revision));
   CREATE TABLE IF NOT EXISTS runs(id TEXT PRIMARY KEY,draft_id TEXT,revision INTEGER,kind TEXT,payload TEXT,created_at TEXT,review_status TEXT DEFAULT 'needs_review',review_notes TEXT DEFAULT '');
   CREATE INDEX IF NOT EXISTS runs_draft_idx ON runs(draft_id,created_at);
+  CREATE TABLE IF NOT EXISTS run_reviews(id TEXT PRIMARY KEY,run_id TEXT NOT NULL,status TEXT NOT NULL,notes TEXT NOT NULL,reviewer TEXT NOT NULL,role TEXT NOT NULL,created_at TEXT NOT NULL);
+  CREATE INDEX IF NOT EXISTS run_reviews_run_idx ON run_reviews(run_id,created_at);
   CREATE TABLE IF NOT EXISTS metadata(key TEXT PRIMARY KEY,value TEXT NOT NULL);
   CREATE TABLE IF NOT EXISTS source_files(path TEXT PRIMARY KEY,size BIGINT,sha256 TEXT,checked_at TEXT)
   '''
@@ -233,18 +237,27 @@ def add_run(draft,kind,payload):
  with db() as c:c.execute('INSERT INTO runs(id,draft_id,revision,kind,payload,created_at) VALUES (?,?,?,?,?,?)',(id,draft['id'],draft['revision'],kind,json.dumps(payload,ensure_ascii=False),now()))
  return get_run(id)
 
+def _review(r):return {k:r[k] for k in ('status','notes','reviewer','role','created_at')}
+
 def get_run(id):
  with db() as c:
   r=c.execute('SELECT * FROM runs WHERE id=?',(id,)).fetchone()
   if not r:raise KeyError('Analysis not found')
-  return {**dict(r),'payload':json.loads(r['payload'])}
+  reviews=[_review(x) for x in c.execute('SELECT * FROM run_reviews WHERE run_id=? ORDER BY created_at DESC',(id,))]
+  return {**dict(r),'payload':json.loads(r['payload']),'reviews':reviews}
 
 def runs(draft_id):
- with db() as c:return [{**dict(r),'payload':json.loads(r['payload'])} for r in c.execute('SELECT * FROM runs WHERE draft_id=? ORDER BY created_at DESC',(draft_id,))]
+ with db() as c:
+  reviews={}
+  for x in c.execute('SELECT v.* FROM run_reviews v JOIN runs r ON r.id=v.run_id WHERE r.draft_id=? ORDER BY v.created_at DESC',(draft_id,)):reviews.setdefault(x['run_id'],[]).append(_review(x))
+  return [{**dict(r),'payload':json.loads(r['payload']),'reviews':reviews.get(r['id'],[])} for r in c.execute('SELECT * FROM runs WHERE draft_id=? ORDER BY created_at DESC',(draft_id,))]
 
-def review_run(id,status,notes):
+def review_run(id,status,notes,reviewer,role):
+ """Record a review decision. Earlier decisions are kept; the run row holds the latest one."""
  get_run(id)
- with db() as c:c.execute('UPDATE runs SET review_status=?,review_notes=? WHERE id=?',(status,notes,id))
+ with db() as c:
+  c.execute('INSERT INTO run_reviews VALUES (?,?,?,?,?,?,?)',(uuid.uuid4().hex,id,status,notes,reviewer,role,now()))
+  c.execute('UPDATE runs SET review_status=?,review_notes=? WHERE id=?',(status,notes,id))
  return get_run(id)
 
 def history(id):

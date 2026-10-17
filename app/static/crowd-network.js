@@ -1,4 +1,4 @@
-// Crowd network panel: force layout on canvas, per-round stance replay, influencers, communities, knowledge graph.
+// Crowd network panel: force layout on canvas, per-round stance replay, influencers and communities.
 // Pure rendering of a saved run (`payload.network`); replay never calls AI.
 const E=(v='')=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const W=900,H=560;
@@ -83,14 +83,6 @@ function detail(net,scenario){
    (act.length?'<h4>Recent interactions</h4>'+act.map(a=>'<p class="micro">R'+a.round+' · '+E(name(a.actor))+' '+(ACTION[a.action]||a.action)+' '+E(name(a.target))+'</p>').join(''):'');
 }
 
-function graphBlock(g){
-  const types={};for(const e of g.entities)types[e.type]=(types[e.type]||0)+1;
-  const label=Object.fromEntries(g.entities.map(e=>[e.id,e.label]));
-  const rels=g.relations.filter(r=>!['part_of','concerned_with'].includes(r.type)).sort((a,b)=>(b.weight||1)-(a.weight||1)).slice(0,24);
-  return '<details class="crowd-graph"><summary>Stakeholder knowledge graph · '+g.entities.length+' entities · '+g.relations.length+' relations ('+E(g.extraction)+')</summary><div class="crowd-chips">'+Object.entries(types).map(([t,c])=>'<span class="tag">'+E(t)+' · '+c+'</span>').join('')+'</div>'+
-   '<ul class="crowd-rels">'+rels.map(r=>'<li><b>'+E(label[r.source]||r.source)+'</b> <em>'+E(r.type.replace('_',' '))+'</em> <b>'+E(label[r.target]||r.target)+'</b>'+(r.description?'<br><small>'+E(r.description)+'</small>':'')+'</li>').join('')+'</ul>'+g.notes.map(n=>'<p class="micro">'+E(n)+'</p>').join('')+'</details>';
-}
-
 export function mountCrowd(el,net,scenario,events=[]){
   if(!el)return;
   if(!net){
@@ -117,7 +109,7 @@ export function mountCrowd(el,net,scenario,events=[]){
    '<h4>Communities</h4>'+sc.communities.slice(0,6).map(c=>'<button class="crowd-row '+(st.community===c.id?'on':'')+'" type="button" data-crowd-community="'+c.id+'"><i style="background:'+stanceColor(c.mean_stance)+'"></i><span>#'+(c.id+1)+' · '+E(c.dominant_cluster)+'</span><small>'+c.size+' agents</small></button>').join('')+
    (sc.bridges.length?'<h4>Bridge accounts</h4><p class="micro">'+sc.bridges.map(b=>E(b.name)+' ('+b.cross_community_followers+')').join(', ')+'</p>':'')+
    '<div class="crowd-detail" id="crowd-detail">'+(st.node!==null?detail(net,scenario):'<p class="micro">No node selected.</p>')+'</div></aside></div>'+
-   '<div class="panel-body">'+graphBlock(net.graph)+net.limitations.map(l=>'<p class="micro">'+E(l)+'</p>').join('')+'</div>';
+   '<div class="panel-body">'+net.limitations.map(l=>'<p class="micro">'+E(l)+'</p>').join('')+'</div>';
   const canvas=el.querySelector('#crowd-canvas');draw(canvas,net,scenario);
   const redraw=()=>mountCrowd(el,net,scenario,events);
   el.querySelector('#crowd-round').onchange=e=>{st.round=Number(e.target.value);redraw();};

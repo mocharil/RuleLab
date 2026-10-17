@@ -2,11 +2,20 @@
 
 ## Pengalaman yang tersedia
 
-Landing page memperlihatkan peta Indonesia, ringkasan koleksi aktual, jenis peraturan, rentang tahun, serta pilihan makna distribusi. Tombol menuju dashboard membawa konteks filter dan wilayah yang dipilih. Dashboard tersedia di sidebar dan Menu cepat. Filter dashboard dipertahankan saat kembali dari galeri dan dicatat pada URL untuk reload.
+Landing page memperlihatkan peta Indonesia, ringkasan koleksi aktual, jenis peraturan, rentang tahun, serta pilihan makna distribusi. Tombol menuju dashboard membawa konteks filter dan wilayah yang dipilih. Dashboard tersedia di sidebar dan Menu cepat. Tab, filter, wilayah, pencarian, urutan dan halaman dicatat pada URL, sehingga bertahan saat kembali dari galeri dan saat reload.
+
+Dashboard mempunyai empat tab (rancangan: `docs/DATA_DASHBOARD_REVAMP_STRATEGY.md`):
+
+| Tab | Isi |
+|---|---|
+| Overview | Lima KPI dengan angka final (peraturan, pasal/blok, provinsi, nasional, perlu OCR); filter makna distribusi, jenis, tahun dan lapisan peta; peta provinsi; panel peringkat (nasional sebagai baris sendiri, provinsi teratas, daftar provinsi tanpa dokumen); grafik tahun terbit, jenis dan topik yang bisa diklik |
+| Explore documents | Seluruh dokumen dengan pencarian (judul, nomor, tahun, kabupaten/kota), filter yang sama, status, urutan dan paginasi server 25 per halaman; klik baris membuka dokumen di galeri |
+| Data quality | Teks tersedia, perlu OCR, ditinjau manusia, perubahan, masalah checksum, tanpa wilayah; pengambilan per hari dan situs sumber; setiap angka membuka daftar dokumennya |
+| Source queue | Unggah file, daftarkan tautan JDIH, status dan daftar antrean |
 
 Alur pembaca: **landing/peta → jenis atau wilayah → dashboard → dokumen dalam galeri → pasal dan bot penjelasan → editor/simulasi yang sudah tersedia**. Dashboard bersifat global terhadap koleksi dan tidak memakai konteks rancangan aktif sebagai ukuran koleksi.
 
-Alur pengelola: **dashboard → unggah sumber atau daftar tautan JDIH → identitas/wilayah/cakupan → antrean pemeriksaan → cuplikan/unduh file**. Pilihan **Impor rancangan saya** membuka alur impor draft yang sudah ada. Sumber dan rancangan pengguna mempunyai tujuan yang berbeda.
+Alur pengelola: **dashboard → Add source (unggah file atau tautan JDIH) → identitas/wilayah/cakupan → tab Source queue → cuplikan/unduh file**. Impor rancangan pengguna ada di Overview dan Policy Studio (More → Import draft), karena sumber hukum dan rancangan pengguna mempunyai tujuan yang berbeda.
 
 ## Angka dan makna peta
 
@@ -34,7 +43,6 @@ Pilih provinsi melalui peta atau dropdown yang bisa dicari pada workspace. Data 
 |---|---|---|
 | Unggah PDF/DOCX/TXT/JSON | File tersimpan pada SQLite, teks diekstrak dengan batas ukuran, heading pasal dihitung, SHA256 dicatat, file dapat diunduh ulang | Perlu pemeriksaan / Perlu OCR |
 | Daftarkan URL JDIH | URL HTTPS situs pemerintah `.go.id` dan identitas sumber dicatat pada antrean | Menunggu pengambilan |
-| Impor rancangan | Alur impor draft yang sudah ada; naskah masuk workspace editor | Draft untuk review |
 
 File maksimal 10 MB, PDF maksimal 150 halaman, DOCX dibatasi ukuran setelah ekstraksi. JSON unggahan memerlukan `articles` dengan `number` dan `text`. PDF dengan halaman tanpa teks cukup ditandai perlu OCR; OCR belum dijalankan otomatis. Identitas jenis, nomor, tahun, wilayah dan cakupan diisi pengguna dari naskah, belum disimpulkan otomatis sebagai metadata terverifikasi.
 
@@ -57,8 +65,9 @@ Aset dilayani dari aplikasi sendiri agar demo tidak bergantung pada tile/API eks
 ## API dan integrasi metadata
 
 - `GET /api/public/collection`: agregat korpus untuk landing page, tanpa auth dan tanpa antrean/dokumen privat.
-- `GET /api/data/overview`: agregat, metadata dokumen dan antrean; memakai auth workspace.
-- Filter `kind`, `start`, `end`, `mode=issuer|scope|mentions`.
+- `GET /api/data/overview`: agregat ringan (KPI, provinsi, jenis, topik, sebaran tahun, pengambilan per hari, situs sumber, status kualitas) dan antrean; tanpa daftar dokumen; memakai auth workspace.
+- Filter `kind`, `start`, `end`, `mode=issuer|scope|mentions`. Sebaran tahun tetap memuat semua tahun jenis terpilih agar filter tahun bisa diperlebar lagi.
+- `GET /api/data/documents`: daftar dokumen terpaginasi (`page`, `size` 5–100) dengan `q`, filter di atas, `province` (`national`, `unmapped` atau kode provinsi, mengikuti `mode`), `district`, `status` (`text`, `ocr`, `verified`, `unverified`, `amendment`, `checksum`), `topic`, `host`, `day` dan `sort` (`retrieved`, `year`, `articles`, `title`). Inventaris dokumen di-cache sampai jumlah atau ukuran korpus berubah.
 - `POST /api/data/intake`: unggah/daftarkan satu sumber; response memberi flag duplicate dan item tercatat.
 - `GET /api/data/intake/{id}`: identitas, status dan cuplikan.
 - `GET /api/data/intake/{id}/raw`: unduh file upload yang tersimpan; tautan tanpa file menghasilkan 404.

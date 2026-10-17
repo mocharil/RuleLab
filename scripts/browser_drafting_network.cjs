@@ -28,10 +28,10 @@ const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.ma
   await click('[data-action="preview-draft"]');assert((await page.locator('.builder-paper').textContent()).includes('SURABAYA'));
   await click('[data-action="create"]');
   assert.equal(await page.locator('[data-article]').count(),4);assert.equal(await page.locator('[data-chapter]').count(),4);
-  await page.locator('.document-format-fields summary').click();
+  await page.locator('#ps-closing summary').click();
   assert((await page.locator('#draft-closing').inputValue()).includes('WALI KOTA SURABAYA'));
   await page.locator('#draft-explanation').fill('I. UMUM\nNaskah ini menjelaskan layanan inklusif.');await click('[data-action="save"]');
-  const download=page.waitForEvent('download');await click('[data-action="export"]');await(await download).saveAs(path.join(out,'perda-preview.docx'));checks.push('save/restore structured metadata and actual DOCX export');
+  const download=page.waitForEvent('download');await page.locator('.ps-more-toggle').click();await click('.ps-menu [data-action="export"]');await(await download).saveAs(path.join(out,'perda-preview.docx'));checks.push('save/restore structured metadata and actual DOCX export');
   await click('#workflow-stage-simulation');await click('[data-section="social"]');
   assert.equal(await page.locator('.preview-persona').count(),24);
   await choose('social-persona-count','32');await choose('social-round-count','5');
@@ -43,6 +43,8 @@ const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.ma
   assert.equal(await page.locator('.social-post').count(),160);
   assert.equal(await page.locator('.network-cluster').count(),6);
   assert(await page.locator('.social-edge').count()>32);checks.push('32 agents, 5 rounds, 320 actual A/B responses and source-backed reply graph');
+  assert.equal(await page.locator('#graph-tab-kg').getAttribute('aria-selected'),'true');assert(await page.locator('#graph-pane-kg .kg-node.kg-t-stakeholder').count()===32);
+  await click('#graph-tab-persona');
   const graph=page.locator('#social-live .social-network > svg');
   await page.locator('#social-live .social-network').scrollIntoViewIfNeeded();await screenshot('network-32-agents');
   await choose('network-layer','connections');assert(await page.locator('.social-opinion-node').evaluateAll(nodes=>nodes.every(node=>getComputedStyle(node).display==='none')));
@@ -66,8 +68,8 @@ const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.ma
    await page.setViewportSize({width,height:1000});await fits('forum '+width);
    if(width===390){await page.locator('#social-live .social-network').scrollIntoViewIfNeeded();await screenshot('network-mobile');}
   }
-  await page.setViewportSize({width:1440,height:1100});await click('#workflow-stage-editor');await click('#tab-social');await fits('compact editor social');
-  await screenshot('editor-network');
+  await page.setViewportSize({width:1440,height:1100});await click('#workflow-stage-editor');await fits('editor with insights rail');
+  await screenshot('editor-insights');
   await click('.workspace-home-link');await click('.ov-new-toggle');await click('.ov-menu [data-action="new"]');await choose('new-type','PERPPU');await choose('builder-form','amendment');
   await page.locator('#new-title').fill('Perubahan atas Ketentuan Pelayanan Publik');await click('[data-action="preview-draft"]');
   const amendment=await page.locator('.builder-paper').textContent();assert(amendment.includes('Pasal I')&&amendment.includes('Pasal II')&&!amendment.includes('Persetujuan Bersama'));

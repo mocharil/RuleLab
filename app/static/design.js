@@ -19,8 +19,6 @@ const menuVisuals={
  gallery:{icon:'book',secondary:'message',tone:'violet'},
  library:{icon:'book',secondary:'message',tone:'violet'},
  activity:{icon:'clock',secondary:'network',tone:'green'},
- history:{icon:'clock',secondary:'reviewer',tone:'green'},
- agents:{icon:'network',secondary:'verified',tone:'violet'},
 };
 
 export function visualBadge(name,tone='crimson',size=20){
@@ -42,7 +40,7 @@ function markTitle(title,name,tone){
 
 export function enhanceVisualSurface(root,state={view:'editor'}){
  if(!root)return;
- const view=['history','agents'].includes(state.view)?'activity':state.view==='simulation'&&state.simSection==='social'?'social':state.view;
+ const view=state.view==='history'?'activity':state.view==='simulation'&&state.simSection==='social'?'social':state.view;
  const visual=menuVisuals[view]||menuVisuals.editor;
  const heading=root.querySelector('.page-heading,.enterprise-heading');
  if(heading&&!heading.classList.contains('visual-heading')){
@@ -55,8 +53,6 @@ export function enhanceVisualSurface(root,state={view:'editor'}){
  const sectionIcons=[
   ['.assumptions .panel-head h2','settings','blue'],
   ['.document-panel .preamble-title','landmark','crimson'],
-  ['.history-timeline .panel-head h2','clock','green'],
-  ['.mission-panel .panel-head h2','route','violet'],
   ['.gallery-collection-header h2','files','violet'],
   ['.social-feed .panel-head h3','message','violet'],
   ['.social-network .panel-head h3','network','violet'],
@@ -72,7 +68,7 @@ export function enhanceVisualSurface(root,state={view:'editor'}){
   if(card.classList.contains('visual-stat'))return;
   card.classList.add('visual-stat');card.insertAdjacentHTML('afterbegin',visualBadge(names[index%names.length],['crimson','blue','violet'][index%3],19));
  });
- root.querySelectorAll('.empty,.studio-empty,.agent-idle,.gallery-empty,.gallery-reader-empty,.sim-result-empty,.social-empty-copy').forEach(empty=>{
+ root.querySelectorAll('.empty,.studio-empty,.gallery-empty,.gallery-reader-empty,.sim-result-empty,.social-empty-copy').forEach(empty=>{
   if(empty.classList.contains('visual-empty'))return;
   empty.classList.add('visual-empty');
   const kind=empty.closest('.qual-card,.social-shell')?'social':empty.closest('.quant-card')?'simulation':view;
@@ -88,16 +84,13 @@ export function enhanceDesign(state){
   const tone=menuVisuals[button.dataset.view]?.tone||'crimson';
   button.classList.add(`visual-tone-${tone}`);
  });
- document.body.classList.toggle('editor-focus',state.view==='editor'&&preferences.get('rulelab.editorFocus')==='1');
- const toggle=document.querySelector('[data-ux="focus-editor"]');if(toggle){const focused=document.body.classList.contains('editor-focus');toggle.setAttribute('aria-pressed',String(focused));toggle.innerHTML=icon('focus')+(focused?'Show assistant':'Focus mode');}
+ const focused=state.view==='editor'&&preferences.get('rulelab.editorFocus')==='1';
+ document.body.classList.toggle('editor-focus',focused);syncFocusControls(focused);
  enhanceVisualSurface(document.querySelector('#main'),state);
- document.querySelectorAll('[data-article]').forEach(field=>{
-  const update=()=>{const a=field.closest('.article-card');document.querySelectorAll('.document-outline [data-index]').forEach(b=>{const active=b.dataset.index===field.dataset.article;b.classList.toggle('active',active);if(active)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current');});document.querySelectorAll('.article-card').forEach(el=>el.classList.toggle('article-active',el===a));};
-  field.addEventListener('focus',update);
- });
 }
+// Focus mode hides the outline and insights; the bar chip stays visible while it is on.
+function syncFocusControls(focused){document.querySelectorAll('[data-ux="focus-editor"]').forEach(button=>{button.setAttribute('aria-pressed',String(focused));const text=button.querySelector('span');if(text)text.textContent=focused?'Exit focus mode':'Focus mode';});}
 document.addEventListener('click',event=>{
  if(!event.target.closest('[data-ux="focus-editor"]'))return;
- const focused=!document.body.classList.contains('editor-focus');preferences.set('rulelab.editorFocus',focused?'1':'0');document.body.classList.toggle('editor-focus',focused);
- const button=event.target.closest('button');button.setAttribute('aria-pressed',String(focused));button.innerHTML=icon('focus')+(focused?'Show assistant':'Focus mode');
+ const focused=!document.body.classList.contains('editor-focus');preferences.set('rulelab.editorFocus',focused?'1':'0');document.body.classList.toggle('editor-focus',focused);syncFocusControls(focused);
 });

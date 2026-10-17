@@ -140,3 +140,38 @@ def test_unreadable_upload_is_rejected_without_creating_an_intake_record(client)
     response=client.post('/api/data/intake',json=upload(filename='bad.pdf',content_base64=base64.b64encode(b'not a PDF').decode()))
     assert response.status_code==400
     assert client.get('/api/data/overview').json()['intake']==[]
+
+
+def test_dashboard_summary_is_light_and_carries_actual_insights(client):
+    result = client.get('/api/data/overview').json()
+    summary = result['summary']
+    assert 'documents' not in result, 'documents are paged through /api/data/documents'
+    assert sum(result['years'].values()) == summary['documents']
+    assert sum(day['count'] for day in result['retrieval_days']) <= summary['documents']
+    assert sum(source['count'] for source in result['sources']) == summary['documents']
+    assert summary['text_available'] + summary['needs_ocr'] == summary['documents']
+    assert 0 <= summary['amendments'] <= summary['documents']
+    narrowed = client.get('/api/data/overview?start=2012&end=2012').json()
+    assert narrowed['years'] == result['years'], 'the year chart keeps every year so the filter can be widened again'
+
+
+def test_documents_endpoint_pages_searches_and_filters_like_the_map(client):
+    overview = client.get('/api/data/overview').json()['summary']
+    first = client.get('/api/data/documents?size=10').json()
+    assert first['total'] == overview['documents'] and len(first['items']) == min(10, overview['documents'])
+    assert first['pages'] == -(-overview['documents']//10)
+    assert 'articles' in first['items'][0] and 'text' not in first['items'][0]
+    last = client.get(f"/api/data/documents?size=10&page={first['pages']+5}").json()
+    assert last['page'] == first['pages']
+    found = client.get('/api/data/documents?q=96 2012').json()
+    assert any(item['id'] == 'pp-96-2012' for item in found['items'])
+    national = client.get('/api/data/documents?province=national').json()
+    assert national['total'] == overview['national']
+    ocr = client.get('/api/data/documents?status=ocr').json()
+    assert ocr['total'] == overview['needs_ocr']
+    titles = [i['title'].lower() for i in client.get('/api/data/documents?sort=title&size=20').json()['items']]
+    assert titles == sorted(titles)
+    jabar = next(p for p in client.get('/api/data/overview').json()['provinces'] if p['id'] == '32')
+    assert client.get('/api/data/documents?province=32').json()['total'] == jabar['count']
+    for bad in ['province=99x', 'status=deleted', 'sort=random', 'size=1000', 'start=2026&end=2020']:
+        assert client.get('/api/data/documents?'+bad).status_code in (400, 422)

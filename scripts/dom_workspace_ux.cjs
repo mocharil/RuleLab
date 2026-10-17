@@ -11,7 +11,7 @@ global.setTimeout=(callback,delay,...args)=>{const timer=originalTimeout(()=>{pe
  for(let i=0;i<250;i++){try{if((await originalFetch(origin+'/api/health')).ok)break}catch{}await new Promise(r=>setTimeout(r,100))}
  dom=new JSDOM(fs.readFileSync(path.join(base,'app/static/index.html'),'utf8'),{url:origin+'/workspace?view=editor',pretendToBeVisual:true});
  const w=dom.window;
- for(const k of ['window','document','localStorage','sessionStorage','location','HTMLElement','SVGElement','Node','Element','Event','MutationObserver'])global[k]=k==='window'?w:w[k];
+ for(const k of ['window','document','localStorage','sessionStorage','location','HTMLElement','SVGElement','Node','Element','Event','MutationObserver','navigator'])if(k==='navigator')Object.defineProperty(global,k,{value:w.navigator,configurable:true});else global[k]=k==='window'?w:w[k];
  global.matchMedia=w.matchMedia=()=>({matches:true,addListener(){},removeListener(){},addEventListener(){},removeEventListener(){}});
  global.getComputedStyle=w.getComputedStyle.bind(w);global.requestAnimationFrame=w.requestAnimationFrame.bind(w);global.cancelAnimationFrame=w.cancelAnimationFrame.bind(w);
  w.HTMLElement.prototype.scrollIntoView=function(){};w.scrollTo=function(){};
@@ -20,7 +20,7 @@ global.setTimeout=(callback,delay,...args)=>{const timer=originalTimeout(()=>{pe
  global.d3=require(path.join(base,'app/static/vendor/d3.min.js'));
  global.ResizeObserver=class{observe(){}disconnect(){}};
  global.fetch=(url,options)=>originalFetch(url.startsWith('/')?origin+url:url,options);
- for(const name of ['app','ui','studio','agents','social','crowd-network','workspace-ux','design','gallery','icons','select','draft-builder','network-layout','collection-ui']){
+ for(const name of ['app','ui','studio','activity','social','crowd-network','kg-graph','workspace-ux','design','gallery','icons','select','draft-builder','network-layout','collection-ui','data-dashboard']){
   let code=fs.readFileSync(path.join(base,'app/static',name+'.js'),'utf8');
   code=code.replace(/from '\/static\/([^']+)\.js'/g,(_,dep)=>"from '"+pathToFileURL(dep.startsWith('framework/')?path.join(base,'app/static',dep+'.js'):path.join(temp,dep+'.mjs')).href+"'");
   code=code.replace(/import '\/static\/([^']+)\.js';/g,(_,dep)=>"import '"+pathToFileURL(path.join(base,'app/static',dep+'.js')).href+"';");
@@ -28,22 +28,21 @@ global.setTimeout=(callback,delay,...args)=>{const timer=originalTimeout(()=>{pe
  }
  await import(pathToFileURL(path.join(temp,'app.mjs')).href);
  const wait=async predicate=>{for(let i=0;i<6000;i++){if(predicate())return;await new Promise(r=>setTimeout(r,20))}throw Error('DOM state did not settle')};
- await wait(()=>document.querySelector('.menu-guide')&&!document.querySelector('#main').inert);
- const click=selector=>{if(selector.includes('[data-view="history"]'))selector='#activity-tab-results';if(selector.includes('[data-view="agents"]'))selector='#activity-tab-agents';const el=document.querySelector(selector);assert(el,selector);if(typeof el.click==='function')el.click();else el.dispatchEvent(new w.MouseEvent('click',{bubbles:true}))};
+ await wait(()=>document.querySelector('.ps-bar')&&!document.querySelector('#main').inert);
+ const click=selector=>{if(/\[data-view="(history|agents)"\]/.test(selector))selector='#nav [data-view=activity]';const el=document.querySelector(selector);assert(el,selector);if(typeof el.click==='function')el.click();else el.dispatchEvent(new w.MouseEvent('click',{bubbles:true}))};
  const title=document.querySelector('#draft-title');const original=title.value;title.value='Naskah belum disimpan';title.dispatchEvent(new w.Event('input',{bubbles:true}));
  click('#sidebar-toggle');assert(document.body.classList.contains('sidebar-folded'));assert.equal(document.querySelector('#sidebar-toggle').getAttribute('aria-expanded'),'false');assert.equal(document.querySelector('#draft-title').value,'Naskah belum disimpan');checks.push('sidebar fold preserves input');
  assert.equal(localStorage.getItem('rulelab.sidebarFolded'),'1');checks.push('fold choice persisted');
  assert.equal(document.querySelector('#nav [data-view=studio]').getAttribute('aria-label'),'Policy Studio');checks.push('icons have accessible labels');
- click('#menu-help');assert(document.querySelector('#guide-dialog').open);assert(document.querySelector('.document-header.guide-highlight'));assert.equal(document.activeElement.dataset.ux,'next');checks.push('guide opens, highlights actual target and focuses next');
- click('#guide-dialog [data-ux=next]');assert(document.querySelector('.article-list.guide-highlight'));checks.push('guide next highlights article editor');
- click('#guide-dialog [data-ux=previous]');assert(document.querySelector('.document-header.guide-highlight'));checks.push('guide previous');
+ click('#menu-help');assert(document.querySelector('#guide-dialog').open);assert(document.querySelector('.ps-bar.guide-highlight'));assert.equal(document.activeElement.dataset.ux,'next');checks.push('guide opens, highlights actual target and focuses next');
+ click('#guide-dialog [data-ux=next]');assert(document.querySelector('.ps-outline.guide-highlight'));checks.push('guide next highlights the document outline');
+ click('#guide-dialog [data-ux=previous]');assert(document.querySelector('.ps-bar.guide-highlight'));checks.push('guide previous');
  click('#guide-dialog [data-ux=end-tour]');assert(!document.querySelector('#guide-dialog').open);assert(!document.querySelector('.guide-highlight'));assert.equal(document.activeElement.id,'menu-help');checks.push('close cleans highlight and restores focus');
  assert.equal(document.querySelector('#draft-title').value,'Naskah belum disimpan');checks.push('tour leaves input intact');
  title.value=original;title.dispatchEvent(new w.Event('input',{bubbles:true}));
  for(const view of ['home','editor','analysis','simulation','library','history','agents']){
-  if(['history','agents'].includes(view)&&!document.querySelector('.activity-tabs')){click('#nav [data-view=activity]');await wait(()=>!document.querySelector('#main').inert);}
   if(['editor','analysis','simulation'].includes(view)&&!document.querySelector('#workflow-stage-'+view)){click('#nav [data-view=studio]');await wait(()=>!document.querySelector('#main').inert);}click(['editor','analysis','simulation'].includes(view)?'#workflow-stage-'+view:'button[data-view="'+view+'"]');await wait(()=>!document.querySelector('#main').inert);
-  if(view==='home')assert(!document.querySelector('.menu-guide'),'the overview has its own quick start; its guide opens from the ? button');
+  if(['home','editor','analysis','simulation','library','history','agents'].includes(view))assert(!document.querySelector('.menu-guide'),'these menus keep the screen for work; their guide opens from the ? button');
   else{assert(document.querySelector('.menu-guide'));assert(document.querySelectorAll('.guide-flow>span').length>=3);}
   if(view==='home')await wait(()=>document.querySelector('.ov-continue'));
   click('#menu-help');assert(document.querySelector('#guide-dialog').open);assert.equal(document.querySelectorAll('.guide-highlight').length,1);
@@ -55,23 +54,24 @@ global.setTimeout=(callback,delay,...args)=>{const timer=originalTimeout(()=>{pe
  assert.equal(document.querySelector('#main .ux-enter'),null);
 
  const fill=(selector,value)=>{const el=document.querySelector(selector);assert(el,selector);el.value=value;el.dispatchEvent(new w.Event('input',{bubbles:true}));};
- const navigate=async view=>{const target=view==='social'?'simulation':['gallery','corpus'].includes(view)?'library':view;if(['history','agents'].includes(target)&&!document.querySelector('.activity-tabs')){click('#nav [data-view=activity]');await wait(()=>!document.querySelector('#main').inert);}if(['editor','analysis','simulation'].includes(target)&&!document.querySelector('#workflow-stage-'+target)){click('#nav [data-view=studio]');await wait(()=>!document.querySelector('#main').inert);}click(['editor','analysis','simulation'].includes(target)?'#workflow-stage-'+target:'#nav [data-view="'+target+'"]');await wait(()=>!document.querySelector('#main').inert&&document.body.dataset.view===target);if(['gallery','corpus'].includes(view)){click('#library-tab-'+(view==='corpus'?'passages':'documents'));await wait(()=>!document.querySelector('#main').inert);}if(view==='social'){click('[data-action="sim-section"][data-section="social"]');await wait(()=>!document.querySelector('#main').inert);}};
+ const navigate=async view=>{const target=view==='social'?'simulation':['gallery','corpus'].includes(view)?'library':view;if(['editor','analysis','simulation'].includes(target)&&!document.querySelector('#workflow-stage-'+target)){click('#nav [data-view=studio]');await wait(()=>!document.querySelector('#main').inert);}click(['editor','analysis','simulation'].includes(target)?'#workflow-stage-'+target:'#nav [data-view="'+target+'"]');await wait(()=>!document.querySelector('#main').inert&&document.body.dataset.view===target);if(['gallery','corpus'].includes(view)){click('#library-tab-'+(view==='corpus'?'passages':'documents'));await wait(()=>!document.querySelector('#main').inert);}if(view==='social'){click('[data-action="sim-section"][data-section="social"]');await wait(()=>!document.querySelector('#main').inert);}};
  await navigate('editor');
  fill('#draft-title','Judul fokus belum disimpan');
  click('[data-ux="focus-editor"]');
  assert(document.body.classList.contains('editor-focus'));assert.equal(document.querySelector('#draft-title').value,'Judul fokus belum disimpan');assert.equal(document.querySelector('[data-ux="focus-editor"]').getAttribute('aria-pressed'),'true');
- click('[data-ux="focus-editor"]');assert(!document.body.classList.contains('editor-focus'));checks.push('focus mode preserves unsaved draft and toggles assistant');
- assert.equal(document.querySelector('.context-dirty').textContent,'Not saved');checks.push('document context updates when draft becomes dirty');
+ click('[data-ux="focus-editor"]');assert(!document.body.classList.contains('editor-focus'));checks.push('focus mode preserves unsaved draft and toggles outline and insights');
+ assert.equal(document.querySelector('#save-state').textContent,'Not saved');assert.equal(document.querySelector('#workflow-stage-editor small').textContent,'Not saved');checks.push('document bar and stepper update when draft becomes dirty');
  fill('#draft-title',original);
  click('[data-action="save"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#save-state').textContent.includes('Saved'));
- assert(document.querySelector('.context-saved'));checks.push('save refreshes document version and context');
+ assert(/^Saved · v\d+$/.test(document.querySelector('#save-state').textContent));checks.push('save refreshes document version in the bar');
  const data=await (await originalFetch(origin+'/api/status')).json();
  assert.equal(data.social_personas.length,24);
  await navigate('social');assert.equal(document.querySelectorAll('.preview-persona').length,data.social_personas.length);assert.equal(document.querySelectorAll('.social-post').length,0);checks.push('persona preview comes from configured metadata without fabricated opinions');
  await navigate('corpus');assert(document.querySelector('#search-form'));assert.equal(document.querySelectorAll('#nav [data-view=library]').length,1);assert.equal(document.querySelectorAll('#nav [data-view=gallery],#nav [data-view=corpus]').length,0);
  fill('#search-q','pelayanan');document.querySelector('#search-form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));
- await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.source-details'));
- assert(document.querySelector('.source-details a').href.startsWith('https://'));checks.push('source search renders official provenance');
+ await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.lib-hit'));assert(document.querySelector('.lib-hit mark'));
+ click('.lib-hit [data-action="library-read-source"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.gallery-article-text'));
+ assert(document.querySelector('.gallery-reader-footer a').href.startsWith('https://'));checks.push('article search highlights matches and the reader shows official provenance');
  click('[data-action="reset"]');await wait(()=>!document.querySelector('#main').inert);
  click('[data-action="compare"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#art-right')?.options.length);
  click('[data-action="run-compare"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.relation'));
@@ -79,25 +79,28 @@ global.setTimeout=(callback,delay,...args)=>{const timer=originalTimeout(()=>{pe
  await navigate('analysis');click('[data-action="analyze"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.finding'));
  assert(document.querySelector('.finding .source-details'));checks.push('review results keep evidence, legal validation and proposed revisions');
  await navigate('editor');fill('[data-article="0"]','Penyelenggara menyediakan kanal pendampingan untuk pelayanan publik.');
+ await navigate('simulation');click('[data-section="projection"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#ps-compare'));
  fill('#ass-population','2000');fill('#ass-digital_access_pct','60');fill('#ass-staff_capacity','0');fill('#alternative','Pasal 1\nPermohonan hanya diajukan melalui aplikasi digital.');
- click('[data-action="simulate"]');await wait(()=>!document.querySelector('#main').inert);
- assert(document.querySelector('#toast').textContent.includes('Check the assumption inputs'));assert(document.querySelector('#save-state').textContent.includes('Not saved'));checks.push('invalid assumptions retain unsaved draft and scenario');
- fill('#ass-staff_capacity','50');click('[data-action="simulate"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.studio-result'));
- assert.deepEqual([...document.querySelectorAll('.impact-mini>strong')].map(el=>el.textContent),['92%','60%']);assert.equal(document.body.dataset.view,'editor');checks.push('editor simulation saves snapshot and renders A/B without navigation');
- fill('[data-article="0"]','Penyelenggara menyediakan kanal pendampingan bagi seluruh pemohon.');
- assert(document.querySelector('[data-action="apply-alt"]').disabled);checks.push('unsaved revision invalidates old proposed alternative');
- click('#tab-review');await wait(()=>!document.querySelector('#main').inert);
- assert.equal(document.querySelector('[data-article="0"]').value,'Penyelenggara menyediakan kanal pendampingan bagi seluruh pemohon.');checks.push('assistant tabs preserve edited article');
- click('#tab-social');await wait(()=>!document.querySelector('#main').inert);click('[data-intent="social"]');
+ await wait(()=>!document.querySelector('#ps-compare').disabled);
+ click('#ps-compare');await wait(()=>!document.querySelector('#main').inert);
+ assert(document.querySelector('#toast').textContent.includes('Check the assumption inputs'));assert(document.querySelector('#alternative').value.includes('hanya'));checks.push('invalid assumptions keep the scenario');
+ fill('#ass-staff_capacity','50');click('#ps-compare');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.scenario'));
+ assert.deepEqual([...document.querySelectorAll('.scenario .number')].map(el=>el.textContent),['92%','60%']);assert.equal(document.body.dataset.view,'simulation');checks.push('Test impact saves the draft and renders A/B');
+ click('[data-action="copy"]');await wait(()=>!document.querySelector('#main').inert);assert(document.querySelector('#ps-compare').disabled);assert(document.querySelector('#ps-alt-status').textContent.includes('identical'));checks.push('B identical to A cannot be compared');
+ await navigate('editor');fill('[data-article="0"]','Penyelenggara menyediakan kanal pendampingan bagi seluruh pemohon.');
+ assert(document.querySelector('#ps-insights .ps-ins-note').textContent.includes('Unsaved changes'));checks.push('unsaved revision invalidates older proposals in the insights rail');
+ click('.ps-outline [data-action="jump-article"]');await wait(()=>!document.querySelector('#main').inert);
+ assert.equal(document.querySelector('[data-article="0"]').value,'Penyelenggara menyediakan kanal pendampingan bagi seluruh pemohon.');checks.push('outline navigation preserves edited article');
+ await navigate('social');click('.social-launch [data-intent="social"]');
  await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.social-toolbar .pill')?.textContent.startsWith('Done'));
  assert.equal(document.querySelectorAll('.social-post').length,data.social_personas.length*4);assert.equal(document.querySelectorAll('.social-node').length,data.social_personas.length);assert.equal(document.querySelectorAll('.social-law-node').length,6);checks.push('social job produces real demo transcript and retrieved legal context');
  click('.social-opinion-node[data-comment="A-1-sari_desa"]');assert.equal(document.querySelector('.social-selected-opinion').dataset.opinionId,'A-1-sari_desa');checks.push('opinion node opens its exact comment');
  click('[data-source]');assert(document.querySelector('.social-inspector').textContent.includes('SHA256'));checks.push('legal node opens source quotation and provenance');
  click('[data-scenario="B"]');assert.equal(document.querySelectorAll('.social-post').length,data.social_personas.length*4);assert(document.querySelector('.social-selected-opinion').dataset.opinionId.startsWith('B-'));checks.push('A/B switch selects separate transcript and opinion');
  click('[data-social-round="1"]');assert.equal(document.querySelectorAll('.social-post').length,data.social_personas.length);click('#social-latest');assert.equal(document.querySelectorAll('.social-post').length,data.social_personas.length*4);checks.push('round selection filters recorded events and latest restores transcript');
- await navigate('history');click('[data-action="review"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#review-notes'));
- fill('#review-notes','Perlu konsultasi publik dan verifikasi sumber.');click('[data-action="save-review"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.history-row'));
- assert(document.querySelector('.history-row').textContent.includes('Perlu konsultasi publik'));checks.push('review notes persist through redesigned dialog');
+ await navigate('history');click('.act-chip[data-status="all"]');click('#activity-timeline [data-item^="run:"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#review-notes'));
+ click('input[name="review-status"][value="reviewed_with_notes"]');fill('#review-notes','Perlu konsultasi publik dan verifikasi sumber.');click('[data-action="save-review"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.act-review-history li'));
+ assert(document.querySelector('.act-review-history li').textContent.includes('Perlu konsultasi publik'));assert(document.querySelector('.act-review-history li small').textContent.includes('local-developer'));checks.push('review decision recorded inline with reviewer and history');
  await navigate('editor');fill('#draft-title','<img src=x onerror="window.injected=true">');click('[data-action="save"]');await wait(()=>!document.querySelector('#main').inert);
  click('.workspace-home-link');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.ov-drafts')?.textContent.includes('<img src=x'));
  assert(document.querySelector('.ov-drafts').textContent.includes('<img src=x'));assert(!document.querySelector('.ov-drafts img'));assert.equal(w.injected,undefined);checks.push('overview renders user titles as escaped text');
@@ -116,17 +119,17 @@ global.setTimeout=(callback,delay,...args)=>{const timer=originalTimeout(()=>{pe
  fill('#new-title','Judul diperbaiki');assert.equal(invalidTitle.hasAttribute('aria-invalid'),false);assert(!document.getElementById(description.id));checks.push('editing invalid input clears its error while retaining corrected value');
  click('#modal [data-action="close"]');await wait(()=>!document.querySelector('#main').inert);
 
- await navigate('gallery');assert(document.querySelectorAll('.gallery-card').length>=6);assert(document.querySelector('.gallery-reader-empty'));checks.push('gallery lists actual documents with educational assistant');
- fill('#gallery-search','UU 25 tahun 2009');assert(document.querySelectorAll('.gallery-card').length>=1);assert([...document.querySelectorAll('.gallery-card')].some(el=>el.dataset.id==='uu-25-2009'));checks.push('gallery search accepts regulation number and year');
- fill('#gallery-search','');document.querySelector('#gallery-type').value='PP';document.querySelector('#gallery-type').dispatchEvent(new w.Event('change',{bubbles:true}));assert(document.querySelectorAll('.gallery-card').length>=1);checks.push('gallery document type filter shows actual matching count');
- document.querySelector('#gallery-type').value='all';document.querySelector('#gallery-type').dispatchEvent(new w.Event('change',{bubbles:true}));
- fill('#gallery-search','Pelayanan Publik');
- click('[data-action="gallery-open"][data-id="uu-25-2009"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#gallery-article'));assert(document.querySelector('#gallery-reader').textContent.includes('Pelayanan Publik'));assert.equal(document.querySelector('#gallery-scope').value,'uu-25-2009');checks.push('document selection loads reader and sets bot context');
+ await navigate('gallery');await wait(()=>document.querySelectorAll('.lib-doc').length>=6);assert(document.querySelector('#gallery-reader'));assert(document.querySelector('.library-result-count').textContent.match(/^[\d.]+ documents/));checks.push('library lists server-paged documents next to the reader');
+ fill('#search-q','UU 25 tahun 2009');await wait(()=>document.querySelector('.library-result-count')?.textContent.includes('UU 25 tahun 2009')&&document.querySelector('.lib-doc'));assert.equal(document.querySelector('.lib-doc').dataset.id,'uu-25-2009');checks.push('library search accepts regulation number and year and ranks the exact match first');
+ fill('#search-q','');document.querySelector('#library-type').value='PP';document.querySelector('#library-type').dispatchEvent(new w.Event('change',{bubbles:true}));await wait(()=>document.querySelector('.lib-doc')&&[...document.querySelectorAll('.lib-doc small')].every(el=>el.textContent.startsWith('PP ')));checks.push('library type filter lists only that type');
+ document.querySelector('#library-type').value='';document.querySelector('#library-type').dispatchEvent(new w.Event('change',{bubbles:true}));
+ fill('#search-q','Pelayanan Publik');await wait(()=>document.querySelector('.lib-doc[data-id="uu-25-2009"]'));
+ click('[data-action="gallery-open"][data-id="uu-25-2009"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#gallery-article'));assert(document.querySelector('#gallery-reader').textContent.includes('Pelayanan Publik'));assert(document.querySelector('.lib-scope-chip').textContent.includes('UU 25/2009'));checks.push('document selection loads reader and sets bot context');
  document.querySelector('#gallery-article').value='4';document.querySelector('#gallery-article').dispatchEvent(new w.Event('change',{bubbles:true}));assert(document.querySelector('.gallery-article-text').textContent.includes('Pasal 4')||document.querySelector('.gallery-article-text').textContent.includes('PASAL 4'));assert(document.querySelector('.gallery-article-text').textContent.includes('kepentingan umum'));assert(document.querySelector('.legal-structured-body'));checks.push('gallery reads chosen article from extracted source');
  click('[data-action="gallery-reader-mode"][data-mode="split"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.gallery-raw-iframe'));assert(document.querySelector('.gallery-raw-iframe').src.includes('/api/corpus/uu-25-2009/raw?inline=1'));click('[data-action="gallery-reader-mode"][data-mode="original"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.gallery-raw-iframe'));click('[data-action="gallery-reader-mode"][data-mode="formatted"]');await wait(()=>!document.querySelector('#main').inert&&!document.querySelector('.gallery-raw-iframe'));checks.push('gallery reader switches between formatted legal text, split view, and inline raw file iframe');
  click('#gallery-reader [data-action="gallery-prompt"]');await wait(()=>!document.querySelector('#main').inert);assert(document.querySelector('#gallery-question').value.includes('Article 4'));assert.equal(document.activeElement.id,'gallery-question');checks.push('ask this article fills question and restores keyboard focus');
  document.querySelector('#gallery-chat-form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));assert(!document.querySelector('#progress-modal').open);await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.gallery-citation'));assert(document.querySelector('.gallery-bot-answer').textContent.includes('Demo'));assert.equal(document.querySelector('#gallery-question').value,'');checks.push('gallery question reaches API inline in chatroom without progress modal and renders verified demo excerpts');
- click('[data-action="gallery-read-source"]');await wait(()=>!document.querySelector('#main').inert&&document.querySelector('#modal').open);assert(document.querySelector('#modal').textContent.includes('SHA256'));assert(document.querySelector('#modal').textContent.includes('kepentingan umum'));click('#modal [data-action="close"]');await wait(()=>!document.querySelector('#main').inert);checks.push('bot citation opens complete source context and provenance');
+ click('[data-action="gallery-read-source"]');await wait(()=>!document.querySelector('#main').inert);assert(!document.querySelector('#modal').open);assert(document.querySelector('.gallery-provenance').textContent.includes('SHA256'));const citedArticle=document.querySelector('#gallery-article').value;checks.push('bot citation opens the quoted article and its provenance in the reader');
  fill('#gallery-question','What is UU 10/2018 about?');document.querySelector('#gallery-chat-form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await wait(()=>!document.querySelector('#main').inert&&document.querySelectorAll('.gallery-chat-turn').length===2);assert(document.querySelector('.gallery-chat-turn:last-child').textContent.includes('not in the RuleLab collection'));assert.equal(document.querySelectorAll('.gallery-chat-turn:last-child .gallery-citation').length,0);checks.push('unknown regulation is explained without invented legal quotations');
  const galleryFetch=global.fetch;global.d3=require(path.join(base,'app/static/vendor/d3.min.js'));
  global.ResizeObserver=class{observe(){}disconnect(){}};
@@ -135,7 +138,7 @@ global.setTimeout=(callback,delay,...args)=>{const timer=originalTimeout(()=>{pe
  click('[data-action="gallery-retry"]');await wait(()=>!document.querySelector('#main').inert);assert.equal(document.activeElement.id,'gallery-question');checks.push('retry returns to editable question');
  click('[data-action="gallery-clear"]');await wait(()=>!document.querySelector('#main').inert);assert.equal(document.querySelectorAll('.gallery-chat-turn').length,0);assert.equal(document.querySelector('#gallery-question').value,'');checks.push('chat history can be cleared without clearing selected document');
  fill('#gallery-question','<img src=x onerror="window.chatInjected=true"> UU 25/2009');document.querySelector('#gallery-chat-form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await wait(()=>!document.querySelector('#main').inert&&document.querySelector('.gallery-question'));assert(document.querySelector('.gallery-question').textContent.includes('<img'));assert(!document.querySelector('.gallery-question img'));assert.equal(w.chatInjected,undefined);checks.push('chat questions are rendered as escaped text');
- await navigate('editor');await navigate('gallery');assert.equal(document.querySelectorAll('.gallery-chat-turn').length,1);assert.equal(document.querySelector('#gallery-article').value,'4');checks.push('gallery document and conversation survive menu navigation in session');
+ await navigate('editor');await navigate('gallery');assert.equal(document.querySelectorAll('.gallery-chat-turn').length,1);assert.equal(document.querySelector('#gallery-article').value,citedArticle);checks.push('library document and conversation survive menu navigation in session');
 
  const landingHTML=await (await originalFetch(origin+'/')).text();assert(landingHTML.includes('data-landing-hero')&&landingHTML.includes('id="landing-collection"'));assert(!landingHTML.includes('class="product-preview"'));for(const asset of ['/static/landing-app/landing.js','/static/landing/hero-loop.mp4','/static/landing/step-verify.mp4'])assert.equal((await originalFetch(origin+asset)).status,200,asset);checks.push('landing shell, live collection map host and product clips are served; no fabricated product preview');
  console.log(JSON.stringify({passed:checks.length,checks,limitation:'DOM checks only; no browser rendering or visual screenshots'},null,2));

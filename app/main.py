@@ -100,6 +100,14 @@ def data_overview(kind:str=Query(default='',max_length=30),start:int|None=Query(
  if start is not None and end is not None and start>end:raise ValueError('The start year cannot be after the end year.')
  return collection.overview(kind,start,end,mode)
 
+@app.get('/api/data/documents')
+def data_documents(q:str=Query(default='',max_length=200),kind:str=Query(default='',max_length=30),start:int|None=Query(default=None,ge=1945,le=2100),end:int|None=Query(default=None,ge=1945,le=2100),
+ mode:str=Query(default='issuer',pattern='^(issuer|scope|mentions)$'),province:str=Query(default='',pattern='^(|national|unmapped|[0-9]{2})$'),district:str=Query(default='',max_length=100),
+ status:str=Query(default='',pattern='^(|text|ocr|verified|unverified|amendment|checksum)$'),topic:str=Query(default='',max_length=60),host:str=Query(default='',max_length=120),day:str=Query(default='',pattern=r'^(|\d{4}-\d{2}-\d{2})$'),
+ sort:str=Query(default='retrieved',pattern='^(retrieved|year|articles|title|relevance)$'),page:int=Query(default=1,ge=1,le=10000),size:int=Query(default=25,ge=5,le=100)):
+ if start is not None and end is not None and start>end:raise ValueError('The start year cannot be after the end year.')
+ return collection.documents_page(q,kind,start,end,mode,province,district,status,topic,host,day,sort,page,size)
+
 @app.post('/api/data/intake',status_code=201)
 def source_intake(body:collection.IntakeRequest):return collection.add_intake(body)
 
@@ -166,7 +174,9 @@ def apply(id:str,body:RevisionRequest):
  payload=DraftInput.model_validate(draft).model_dump()
  return store.save_draft(id,payload,body.expected_revision)
 @app.post('/api/runs/{id}/review')
-def review(id:str,body:ReviewRequest):return store.review_run(id,body.status,body.notes)
+def review(id:str,body:ReviewRequest,request:Request):
+ principal=request.state.principal
+ return store.review_run(id,body.status,body.notes,principal['id'],principal['role'])
 @app.post('/api/generate')
 async def generate(body:GenerateRequest):
  result=await analysis.generate_draft(body.brief,body.regulation_type);draft=store.create_draft(result['draft']);return {**result,'draft':draft}
@@ -174,6 +184,8 @@ async def generate(body:GenerateRequest):
 def corpus():return [{k:v for k,v in d.items() if k!='articles'} for d in store.regulations()]
 @app.post('/api/gallery/chat')
 async def gallery_chat(body:library_chat.ChatRequest):return await library_chat.answer(body)
+@app.get('/api/corpus/index')
+def corpus_index():return collection.document_index()
 @app.get('/api/corpus/{id}')
 def regulation(id:str):
  result=next((d for d in store.regulations() if d['id']==id),None)
@@ -191,7 +203,9 @@ def raw(id:str,inline:bool=Query(default=False)):
 @app.get('/api/corpus/{id}/json')
 def enriched(id:str):return Response(json.dumps(regulation(id),ensure_ascii=False,indent=2),media_type='application/json',headers={'Content-Disposition':f'attachment; filename="{id}.json"'})
 @app.get('/api/search')
-async def search(q:str=Query(min_length=2,max_length=4000),limit:int=Query(default=12,ge=1,le=50),regulation_id:str|None=None):return {'query':q,'results':await retrieval.search(q,limit,regulation_id)}
+async def search(q:str=Query(min_length=2,max_length=4000),limit:int=Query(default=12,ge=1,le=60),regulation_id:str|None=None):
+ results=await retrieval.search(q,limit,regulation_id);names=collection.titles()
+ return {'query':q,'results':[{**r,'regulation_title':names.get(r.get('regulation_id'),'')} for r in results]}
 @app.post('/api/compare')
 async def compare(body:CompareRequest):
  left=regulation(body.left_id);right=regulation(body.right_id)

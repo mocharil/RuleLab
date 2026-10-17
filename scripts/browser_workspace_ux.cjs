@@ -3,7 +3,7 @@ const {spawn}=require('child_process');
 const fs=require('fs'),path=require('path'),assert=require('assert'),os=require('os');
 const base=path.resolve(__dirname,'..'),tmp=fs.mkdtempSync(path.join(os.tmpdir(),'rulelab-ux-')),origin='http://127.0.0.1:8048';
 const out=path.join(base,'screenshots','v1.0');fs.mkdirSync(out,{recursive:true});
-const server=spawn('python3',['-m','uvicorn','app.main:app','--port','8048'],{cwd:base,env:{...process.env,RULELAB_DB:path.join(tmp,'qa.sqlite3'),AI_PROVIDER:'demo',SEARCH_BACKEND:'sqlite',RULELAB_API_TOKEN:'',RULELAB_ACCESS_KEYS:'[]'},stdio:'ignore'});
+const server=spawn('python3',['-m','uvicorn','app.main:app','--port','8048'],{cwd:base,env:{...process.env,RULELAB_DB:path.join(tmp,'qa.sqlite3'),AI_PROVIDER:'demo',SEARCH_BACKEND:'sqlite',RULELAB_API_TOKEN:'',RULELAB_ACCESS_KEYS:'[]',DATABASE_URL:'',RULELAB_SOURCES_BUCKET:''},stdio:'ignore'});
 (async()=>{let browser;const checks=[];try{
  for(let i=0;i<1200;i++){try{if((await fetch(origin+'/api/health')).ok)break}catch{}await new Promise(r=>setTimeout(r,100))}
  browser=await chromium.launch({headless:true,executablePath:process.env.RULELAB_CHROMIUM||undefined});

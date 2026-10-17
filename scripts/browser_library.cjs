@@ -6,7 +6,7 @@ const root=path.resolve(__dirname,'..'),temp=fs.mkdtempSync(path.join(os.tmpdir(
 const out=path.join(root,'artifacts/library-qa');fs.mkdirSync(out,{recursive:true});
 const origin='http://127.0.0.1:8057';
 const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.main:app','--port','8057'],{
- cwd:root,env:{...process.env,RULELAB_DB:path.join(temp,'qa.sqlite3'),AI_PROVIDER:'demo',SEARCH_BACKEND:'sqlite',RULELAB_API_TOKEN:'',RULELAB_ACCESS_KEYS:'[]'},stdio:'ignore',
+ cwd:root,env:{...process.env,DATABASE_URL:'',RULELAB_SOURCES_BUCKET:'',RULELAB_DB:path.join(temp,'qa.sqlite3'),AI_PROVIDER:'demo',SEARCH_BACKEND:'sqlite',RULELAB_API_TOKEN:'',RULELAB_ACCESS_KEYS:'[]'},stdio:'ignore',
 });
 (async()=>{
  let browser,page;const checks=[],errors=[];
@@ -34,10 +34,10 @@ const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.ma
    assert.equal(await page.locator('#nav [data-view="corpus"],#nav [data-view="gallery"]').count(),0);
   }
   await click('#library-tab-documents');
-  assert(await page.locator('.gallery-card').count()>0,'Gallery must list documents');
+  await page.waitForSelector('.lib-doc');assert(await page.locator('.lib-doc').count()>0,'Library must list documents');
   await shot('library-documents');
-  // The collection is paginated and keeps growing: search for the document before opening it.
-  await page.locator('#gallery-search').fill('Pelayanan Publik');await page.waitForTimeout(500);await settled();
+  // The collection is paged on the server and keeps growing: search for the document before opening it.
+  await page.locator('#search-q').fill('Pelayanan Publik');await page.waitForSelector('.lib-doc[data-id="uu-25-2009"]');
   await click('[data-action="gallery-open"][data-id="uu-25-2009"]');
   await choose('gallery-article','Pasal 4');
   await page.locator('#gallery-question').fill('Jelaskan Pasal 4 untuk pemula.');
@@ -73,7 +73,7 @@ const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.ma
   assert.equal(await page.locator('.gallery-chat-turn').count(),1);
   await click('#library-tab-passages');await click('#library-tab-documents');
   assert.equal(await page.locator('.gallery-chat-turn').count(),1);
-  await click('.page-heading [data-action="compare"]');
+  await click('.lib-head [data-action="compare"]');
   assert.equal(await page.locator('#cmp-left').inputValue(),first.regulation_id);
   assert.equal(await page.locator('#art-left').inputValue(),first.number);
   assert(/(Pasal|Article) /.test(await page.locator('#art-left-trigger').textContent())&&(await page.locator('#art-left-trigger').textContent()).includes(first.number));
@@ -92,17 +92,15 @@ const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.ma
   await page.keyboard.press('Control+k');await page.getByRole('combobox',{name:'Search menu'}).fill('galeri');
   assert.equal(await page.getByRole('option').count(),1);await page.keyboard.press('Enter');await settled();
   checks.push('both library tabs fit 360/390/768/1440px; old menu terminology finds the single command destination');
-  // A disposable fixture tests pagination at a larger collection size without modifying the corpus.
-  const corpus=await (await page.request.get(origin+'/api/corpus')).json();
-  const fixture=Array.from({length:13},(_,index)=>({...corpus[0],id:'fixture-'+index}));
-  const fixturePage=await browser.newPage({viewport:{width:1440,height:1000}});
-  await fixturePage.route('**/api/corpus',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(fixture)}));
-  await fixturePage.goto(origin+'/workspace?view=library');await fixturePage.waitForSelector('.library-document-pagination');
-  assert.equal(await fixturePage.locator('.gallery-card').count(),12);
-  await fixturePage.locator('[data-action="library-doc-page"][data-page="2"]').click();
-  assert.equal(await fixturePage.locator('.gallery-card').count(),1);await fixturePage.close();
+  // Documents are paged on the server; the workspace never downloads the whole corpus list.
+  const pagedPage=await browser.newPage({viewport:{width:1440,height:1000}});const corpusRequests=[];pagedPage.on('request',request=>{if(/\/api\/corpus(\?|$)/.test(request.url()))corpusRequests.push(request.url());});
+  await pagedPage.goto(origin+'/workspace?view=library');await pagedPage.waitForSelector('.lib-doc');
+  const total=(await (await page.request.get(origin+'/api/data/documents?size=5')).json()).total;
+  assert.equal(await pagedPage.locator('.lib-doc').count(),Math.min(20,total));
+  if(total>20){await pagedPage.locator('[data-action="library-more"]').click();await pagedPage.waitForFunction(n=>document.querySelectorAll('.lib-doc').length===n,Math.min(40,total));}
+  assert.deepEqual(corpusRequests,[]);await pagedPage.close();
   assert.deepEqual(errors,[]);
-  checks.push('document pagination handles 13 source records in an isolated fixture');
+  checks.push('server-paged documents with Load more, without downloading the corpus list');
   fs.writeFileSync(path.join(out,'report.json'),JSON.stringify({status:'passed',checks,errors},null,2));
   console.log(JSON.stringify({status:'passed',checks,screenshots:out},null,2));
  }catch(error){if(page)await page.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});console.error(error);process.exitCode=1;}
