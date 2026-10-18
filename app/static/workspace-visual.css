@@ -203,8 +203,6 @@
   #main .workspace-path { transition: none; }
 }
 
-/* Activity uses the same type { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:22px 0; }
-#activity-content { min-width:0; }
 .reader-mode-pills {
   display: inline-flex;
   align-items: center;

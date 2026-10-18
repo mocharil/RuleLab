@@ -43,10 +43,12 @@ export async function withLoading(kind,task){
   document.querySelector('#progress-title').textContent=title;
   document.querySelector('#progress-copy').textContent=description;
  }
- const timer=inline?null:setTimeout(()=>{if(pending&&!dialog.open)dialog.showModal();},180);
+ let elapsed=null;
+ const started=Date.now(),tick=()=>{const el=document.querySelector('#progress-elapsed');if(el)el.textContent=Math.floor((Date.now()-started)/1000)+' s';};
+ const timer=inline?null:setTimeout(()=>{if(pending&&!dialog.open){tick();dialog.showModal();elapsed=setInterval(tick,1000);}},180);
  try{return await task();}
  finally{
-  if(timer)clearTimeout(timer);if(!inline&&dialog.open)dialog.close();
+  if(timer)clearTimeout(timer);clearInterval(elapsed);if(!inline&&dialog.open)dialog.close();
   surfaces.forEach(([el,value])=>el.inert=value);
   main.setAttribute('aria-busy','false');delete document.body.dataset.busyAction;
   pending=false;

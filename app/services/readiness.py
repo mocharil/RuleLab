@@ -39,7 +39,7 @@ def inspect():
                 add('credentials','Service account','failed',str(exc));project=settings.project
         else:
             add('credentials','Application Default Credentials','pending','Run the connection test to check ADC on the server.');project=settings.project
-        add('project','Google Cloud project','passed' if project else 'pending',project or 'Will be inferred from ADC during the connection test.')
+        add('project','Google Cloud project','passed' if project else 'pending','Configured on the server.' if project else 'Will be inferred from ADC during the connection test.')  # the id itself is never returned
     elif settings.provider=='gemini':
         add('credentials','Gemini API key','passed' if settings.api_key else 'failed','Available on the server.' if settings.api_key else 'GEMINI_API_KEY is not configured.');project=None
     else:
@@ -58,7 +58,7 @@ def inspect():
     add('search','Retrieval','passed' if settings.search_backend=='sqlite' else 'pending' if settings.search_backend=='elasticsearch' else 'failed',
         'SQLite BM25 ready; embeddings not needed.' if settings.search_backend=='sqlite' else 'Elasticsearch and embeddings are checked during the connection test.' if settings.search_backend=='elasticsearch' else 'Invalid SEARCH_BACKEND.')
     recent=_last_probe['result'] if _last_probe and _last_probe['signature']==signature() else None
-    return {'provider':settings.provider,'model':None if settings.provider=='demo' else settings.model,'project':project,
+    return {'provider':settings.provider,'model':None if settings.provider=='demo' else settings.model,'project_configured':bool(project),
             'location':settings.location,'embedding_location':settings.embedding_location,'search_backend':settings.search_backend,
             'local_ready':not any(check['status']=='failed' for check in checks),'live_ready':recent['ready'] if recent else None,
             'checks':checks,'last_probe':recent,'notice':'Local checks do not prove IAM access, billing, quota or live model availability.'}

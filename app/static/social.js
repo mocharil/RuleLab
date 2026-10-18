@@ -8,6 +8,53 @@ const labels={support:'Support',concern:'Concern',conditional:'Conditional',unce
 const issues={access:'Access',accessibility:'Accessibility',capacity:'Capacity',cost:'Cost',clarity:'Clarity',other:'Other'};
 
 const active=s=>['queued','running','cancelling'].includes(s);
+const STANCE_ORDER=['support','conditional','concern','uncertain'];
+const clock2=ms=>{const s=Math.max(0,Math.round(ms/1000));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
+
+// Progress of a running forum job, derived from its recorded events (no extra requests).
+function runProgress(job){
+  const ev=job.events||[],done=t=>ev.some(e=>e.tool===t&&e.status==='completed'),opts=job.social_options||{};
+  const total=Math.max(1,(opts.persona_count||8)*(opts.rounds||3)*2);
+  const responses=ev.filter(e=>e.tool==='social_reaction'&&['completed','failed'].includes(e.status)).length;
+  const last=ev.filter(e=>e.tool!=='social_reaction').at(-1),gather=ev.filter(e=>e.tool==='gather_opinions'&&e.status==='running').at(-1);
+  let pct=2+(done('snapshot_draft')?2:0)+(done('plan_workflow')?4:0)+(done('search_sources')?6:0)+(done('build_graph')?6:0);
+  pct=Math.min(97,Math.round(pct+(responses?72*Math.min(1,responses/total):0)+(done('validate_results')?10:0)));
+  const stage=job.status==='queued'?0:!done('plan_workflow')?1:!done('search_sources')?2:!done('build_graph')?3:responses<total?4:5;
+  let label='Starting the run…';
+  if(job.status==='cancelling')label='Cancelling after the current step…';
+  else if(job.status==='running'){
+    if(!done('plan_workflow'))label='The coordinator is planning the public test…';
+    else if(!done('search_sources'))label='Retrieving legal context for A and B…';
+    else if(!done('build_graph'))label='Building the stakeholder knowledge graph…';
+    else if(responses<total)label=(gather?'Round '+gather.detail.round+' · Draft '+gather.detail.scenario+' · ':'')+responses+' of '+total+' persona responses';
+    else label='Spreading opinions through the crowd and validating results…';
+  }else if(job.status==='queued')label='Queued: waiting for a free worker…';
+  void last;
+  return {pct,stage,label,responses,total};
+}
+const PROGRESS_STEPS=['Queued','Plan','Sources','Knowledge graph','Persona rounds','Crowd & checks'];
+function progressHTML(job,state){
+  const p=runProgress(job),role=state.status.principal?.role,canCancel=!['viewer','reviewer'].includes(role)&&(role==='admin'||state.status.principal?.id===job.owner);
+  return '<section class="social-progress" role="group" aria-label="Forum run progress"><div class="sp-head"><div><b>Running the public forum</b><span class="sp-label" role="status" aria-live="polite">'+E(p.label)+'</span></div><div class="sp-side"><span class="sp-time" data-elapsed="'+E(job.created_at)+'">Elapsed '+clock2(Date.now()-Date.parse(job.created_at))+'</span>'+
+    (job.status==='cancelling'?'':'<button type="button" class="btn" data-action="cancel-agent" data-job="'+E(job.id)+'" '+(canCancel?'':'disabled title="Only the run owner or an admin can cancel"')+'>Cancel run</button>')+'</div></div>'+
+    '<div class="sp-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+p.pct+'" aria-label="Forum run progress"><i style="width:'+p.pct+'%"></i></div>'+
+    '<ol class="sp-steps">'+PROGRESS_STEPS.map((t,i)=>'<li class="'+(i<p.stage?'done':i===p.stage?'now':'')+'">'+E(t)+'</li>').join('')+'</ol></section>';
+}
+function issuesHTML(latest,personas){
+  const roleOf=id=>personas.find(p=>p.id===id)?.role||'Synthetic persona';
+  const rows=Object.values(latest),groups=Object.entries(issues).map(([k,label])=>({k,label,items:rows.filter(c=>c.issue===k)})).filter(g=>g.items.length)
+    .sort((a,b)=>(a.k==='other')-(b.k==='other')||b.items.length-a.items.length);
+  const card=g=>{
+    const mix=STANCE_ORDER.map(s=>[s,g.items.filter(c=>c.stance===s).length]).filter(([,n])=>n);
+    return '<article class="issue-card"><header><h4>'+E(g.label)+'</h4><span class="issue-count">'+g.items.length+(g.items.length===1?' agent':' agents')+'</span></header>'+
+      '<div class="issue-mix" role="img" aria-label="'+E(mix.map(([s,n])=>n+' '+labels[s].toLowerCase()).join(', '))+'">'+mix.map(([s,n])=>'<i class="'+s+'" style="flex:'+n+'"></i>').join('')+'</div>'+
+      '<p class="issue-mix-legend">'+mix.map(([s,n])=>'<span class="'+s+'">'+n+' '+labels[s].toLowerCase()+'</span>').join('')+'</p>'+
+      '<ul class="issue-list">'+g.items.map(c=>{const long=(c.proposal||'').length>230;return '<li class="issue-item '+E(c.stance)+'"><div class="issue-who"><span class="social-avatar">'+E(c.name.slice(0,2).toUpperCase())+'</span><div><b>'+E(c.name)+'</b><small>'+E(roleOf(c.persona_id))+'</small></div><span class="social-tag '+E(c.stance)+'">'+labels[c.stance]+'</span></div>'+
+        '<p class="issue-text'+(long?' clamp':'')+'">'+(c.proposal?E(c.proposal):'No proposal recorded.')+'</p><div class="issue-actions">'+(long?'<button type="button" class="text-button" data-expand aria-expanded="false">Show more</button>':'')+'<button type="button" class="text-button" data-comment="'+E(c.id)+'" data-to-detail>View original comment</button></div></li>';}).join('')+'</ul></article>';
+  };
+  return '<section class="panel social-summary"><div class="panel-head"><div><h3>Issues &amp; mitigation proposals</h3><p class="micro">Latest proposal from each persona, grouped by issue.</p></div><span class="tag">'+groups.length+(groups.length===1?' issue':' issues')+' · '+rows.length+' proposals</span></div>'+
+    (groups.length?'<div class="issue-board">'+groups.map(card).join('')+'</div>':'<p class="social-placeholder">Proposals appear as personas respond.</p>')+'</section>';
+}
 let stageView=null,graphZoom=1,panX=0,panY=0,lastSignature='',state,root,jobId,scenario='A',selected=null,selectedComment=null,selectedSource=null,selectedDraft=false,cursor=null,playing=false,speed=1,clock,networkQuery='',networkIssue='all',networkLayer='all';
 
 // Opening the forum from elsewhere (e.g. the Draft insights rail) can pick the network view first.
@@ -120,6 +167,7 @@ function paint(){
   root.innerHTML='<div class="social-toolbar"><div class="social-switch"><button data-scenario="A" aria-pressed="'+(scenario==='A')+'">A · Initial draft</button><button data-scenario="B" aria-pressed="'+(scenario==='B')+'">B · Alternative</button></div><span class="pill">'+E(({queued:'Queued',running:'Running',cancelling:'Cancelling',cancelled:'Cancelled',completed:'Done',failed:'Failed',interrupted:'Interrupted'})[job.status]||job.status)+' · '+(mode==='demo'?'Template demo':'AI live')+'</span><span class="micro">'+(cursor===null?'Recorded activity':'Recorded replay')+' · '+comments.length+'/'+(personas.length*totalRounds)+' responses '+scenario+'</span>'+(live?'<button class="btn" id="social-freeze">'+(cursor===null?'Ⅱ Pause visual':'▶ Follow live')+'</button><button class="btn" data-action="cancel-agent" data-job="'+E(job.id)+'" '+(state.status.principal?.role==='admin'||state.status.principal?.id===job.owner?'':'disabled')+'>Cancel</button>':'')+'</div>'+
   (job.stale||state.dirty||job.revision!==state.draft?.revision?'<div class="note">Results bound to draft v'+job.revision+'. The draft has changed; run again for the latest version.</div>':'')+
   (job.status==='failed'||job.status==='interrupted'||job.status==='cancelled'?'<div class="note">'+E(job.error||'Run stopped. Partial opinions can still be reviewed.')+'</div>':'')+
+  (live?progressHTML(job,state):'')+
   '<section class="panel graph-stage" aria-label="Network views"><div class="graph-stage-head"><div class="graph-tabs" role="tablist" aria-label="Network view">'+graphTabs+'</div><span class="micro graph-stage-note">'+graphNote+'</span></div>'+
   '<div class="graph-pane" id="graph-pane-kg" role="tabpanel" aria-labelledby="graph-tab-kg" '+(view==='kg'?'':'hidden')+'><div id="kg-root"></div></div>'+
   '<div class="graph-pane" id="graph-pane-crowd" role="tabpanel" aria-labelledby="graph-tab-crowd" '+(view==='crowd'?'':'hidden')+'><section class="crowd-panel" id="crowd-root"></section></div>'+
@@ -130,13 +178,13 @@ function paint(){
   (scenarioText?'<details class="social-draft"><summary>Draft '+scenario+' read by agents · v'+job.revision+'</summary><pre>'+E(scenarioText)+'</pre></details>':'')+
   '<div class="social-grid social-below">'+
   '<section class="panel social-feed"><div class="panel-head"><h3>Persona conversation ('+personas.length+' agents)</h3><span class="tag">'+comments.length+' opinions</span></div><div class="social-feed-body" aria-live="off">'+preparation+(pending.length?'<div class="social-typing">'+E(pending.map(e=>e.detail.persona.name).join(', '))+' is responding <span>● ● ●</span></div>':'')+(feed||'<p class="social-placeholder">Waiting for completed responses. No substitute comments are produced when the provider fails.</p>')+'</div></section>'+
-  '<section class="panel social-summary"><div class="panel-head"><h3>Issues & mitigation proposals</h3><span class="micro">Click to view the original comment</span></div><div class="social-clusters">'+Object.entries(issues).filter(([k])=>Object.values(latest).some(c=>c.issue===k)).map(([k,label])=>'<details><summary>'+label+' · '+Object.values(latest).filter(c=>c.issue===k).length+' agents</summary>'+Object.values(latest).filter(c=>c.issue===k).map(c=>'<p><button class="text-button" data-comment="'+E(c.id)+'">'+E(c.name)+' · '+E(c.id)+'</button><br>'+E(c.proposal)+'</p>').join('')+'</details>').join('')+'</div></section>'+'</div>'+
+  issuesHTML(latest,personas)+'</div>'+
   (run?'<details class="social-data"><summary>Data used & A/B comparison</summary><table><thead><tr><th>Persona</th><th>Final opinion A</th><th>Final opinion B</th></tr></thead><tbody>'+run.payload.personas.map(p=>'<tr><td>'+E(p.name)+' ('+E(p.role||'')+')</td>'+['A','B'].map(k=>'<td>'+labels[run.payload.scenarios[k].comments.filter(c=>c.persona_id===p.id).at(-1)?.stance||'uncertain']+'</td>').join('')+'</tr>').join('')+'</tbody></table><p class="micro">RAG: '+run.payload.evidence.length+' articles/blocks. Assumptions: '+E(JSON.stringify(run.payload.assumptions))+'.</p><div class="social-metrics">'+['A','B'].map(k=>'<div><b>'+k+' · Separate assumption model</b><p>'+run.payload.scenarios[k].metrics.access_pct+'% access · Rp '+new Intl.NumberFormat('id-ID').format(run.payload.scenarios[k].metrics.cost)+'</p><small>Not a number derived from agent opinions.</small></div>').join('')+'</div>'+run.payload.limitations.map(l=>'<p class="micro">'+E(l)+'</p>').join('')+'</details>':'')+
   '<p class="micro social-footnote">'+personas.length+' personas and '+totalRounds+' rounds per scenario ('+(personas.length*totalRounds*2)+' total responses). Replay plays back saved events without new AI calls.</p>';
 
   const svg=root.querySelector('.social-network > svg');
   const updateViewport=()=>svg?.setAttribute('viewBox',(NETWORK.cx-NETWORK.width/(2*graphZoom)+panX)+' '+(NETWORK.height/2-NETWORK.height/(2*graphZoom)+panY)+' '+(NETWORK.width/graphZoom)+' '+(NETWORK.height/graphZoom));
-  updateViewport();filterNetwork();refreshExpandedNetwork();
+  updateViewport();filterNetwork();refreshExpandedNetwork();keepElapsedTicking();
   if(focusedSearch){const search=root.querySelector('#network-search');search?.focus({preventScroll:true});if(searchRange)search?.setSelectionRange(...searchRange);}
 
   attachNetworkPan(svg);
@@ -167,7 +215,15 @@ function paint(){
   });
 }
 
+// Elapsed time of a running forum job ticks without repainting the page.
+let elapsedTimer=null;
+function keepElapsedTicking(){
+  if(elapsedTimer||!document.querySelector('[data-elapsed]'))return;
+  elapsedTimer=setInterval(()=>{const nodes=document.querySelectorAll('[data-elapsed]');if(!nodes.length){clearInterval(elapsedTimer);elapsedTimer=null;return;}nodes.forEach(el=>{el.textContent='Elapsed '+clock2(Date.now()-Date.parse(el.dataset.elapsed));});},1000);
+}
 function click(e){
+  const more=e.target.closest('[data-expand]');
+  if(more){const item=more.closest('.issue-item'),open=item.classList.toggle('open');more.textContent=open?'Show less':'Show more';more.setAttribute('aria-expanded',String(open));return;}
   const tab=e.target.closest('[data-graph-view]');
   if(tab){stageView=tab.dataset.graphView;paint();root.querySelector('#graph-tab-'+stageView)?.focus({preventScroll:true});return;}
   const el=e.target.closest('[data-network-expand],[data-network-close],[data-person],[data-source],[data-draft],[data-zoom],[data-scenario],[data-comment],[data-social-round],#social-play,#social-latest,#social-freeze');
@@ -188,7 +244,9 @@ function click(e){
   if(el.id==='social-freeze'){cursor=cursor===null?d.events.length:null;playing=false;clearTimeout(clock);}
   if(el.id==='social-latest'){cursor=null;playing=false;clearTimeout(clock);}
   if(el.id==='social-play'){playing=!playing;if(playing){if(cursor===null||cursor>=d.events.length){cursor=d.events.findIndex(e=>e.detail.scenario===scenario);if(cursor<0)cursor=0;}schedule();}else clearTimeout(clock);}
+  if(el.hasAttribute('data-to-detail'))stageView='persona';  // the opinion detail lives in the persona network view
   paint();
+  if(el.hasAttribute('data-to-detail'))root.querySelector('.social-inspector')?.scrollIntoView({block:'center',behavior:'smooth'});
   if(el.matches('[data-person],[data-source],[data-comment],[data-draft]')&&document.querySelector('#network-dialog')?.open){document.querySelector('#network-dialog').close();root.querySelector('.social-inspector')?.scrollIntoView({block:'nearest',behavior:'smooth'});}
 }
 

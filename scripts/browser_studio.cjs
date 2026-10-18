@@ -73,7 +73,7 @@ const server=spawn(process.env.RULELAB_PYTHON||'python3',['-m','uvicorn','app.ma
   checks.push('failed save retains the draft/stage; retry saves safely, marks old results and resumes the last Studio stage');
   await page.keyboard.press('Control+k');await page.getByRole('combobox',{name:'Search menu'}).fill('netizen');
   assert.equal(await page.getByRole('option').count(),1);await page.keyboard.press('Enter');await settled();
-  assert.equal(new URL(page.url()).searchParams.get('sub'),'social');
+  await page.waitForURL(/sub=social/);assert.equal(new URL(page.url()).searchParams.get('sub'),'social');
   assert.equal(await page.locator('#workflow-stage-simulation').getAttribute('aria-selected'),'true');
   await click('[data-section="unified"]');assert.equal(await page.locator('.synthesis-stats .stat-box').count(),3);
   for(const width of [360,390,768,1440]){

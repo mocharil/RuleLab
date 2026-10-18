@@ -152,3 +152,11 @@ def test_perspective_failure_cancels_siblings(client,monkeypatch):
     monkeypatch.setattr(ai,'generate',generate)
     with pytest.raises(ai.AIError):asyncio.run(simulation.simulate(client.get('/api/drafts').json()[0],'Alternatif layanan publik.',Assumptions().model_dump()))
     assert len(cancelled)==3
+
+
+def test_project_id_is_never_returned(monkeypatch):
+    import json
+    monkeypatch.setattr(settings,'provider','vertex');monkeypatch.setattr(settings,'project','secret-project-id');monkeypatch.setattr(settings,'credentials_path','')
+    from app.services import readiness
+    result=readiness.inspect()
+    assert result['project_configured'] is True and 'secret-project-id' not in json.dumps(result)

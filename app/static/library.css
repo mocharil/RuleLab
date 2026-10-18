@@ -12,6 +12,7 @@
 body .lib-search .library-tabs { display: inline-flex; flex: none; gap: 2px; margin: 0 !important; padding: 3px !important; border: 0 !important; border-radius: 12px !important; background: var(--paper) !important; box-shadow: none !important; }
 body .lib-search .library-tab { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 14px !important; border: 0 !important; border-radius: 9px !important; background: none !important; color: var(--muted) !important; font: 650 13.5px/1 var(--body-font) !important; box-shadow: none !important; }
 body .lib-search .library-tab[aria-selected=true] { background: #fff !important; color: var(--accent) !important; box-shadow: 0 1px 4px rgba(20, 26, 40, .1) !important; }
+.lib-search .search-field > .ui-icon { position: static; top: auto; left: auto; flex: none; color: var(--muted); }
 .lib-search .search-field { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; padding: 0 8px; color: var(--muted); }
 body .lib-search .search-field input { flex: 1; min-width: 0; min-height: 40px; margin: 0; padding: 0; border: 0 !important; background: none !important; box-shadow: none !important; font: 500 15px var(--body-font); color: var(--ink); outline: none; }
 .lib-search > .btn { flex: none; min-height: 40px; border-radius: 12px; }
