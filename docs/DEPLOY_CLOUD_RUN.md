@@ -24,6 +24,7 @@ The container image contains only code and `data/legal/` (the rulebook). The cor
 | --- | --- |
 | `DATABASE_URL` (+ `DATABASE_PASSWORD`) | PostgreSQL. Empty → local SQLite file (`RULELAB_DB`), used for development and the test suite. |
 | `RULELAB_SOURCES_BUCKET` (+ `RULELAB_SOURCES_PREFIX`, default `data/`) | Original documents and `corpus.json` are read from Cloud Storage with the service account. Empty → local `data/` folder. |
+| `RULELAB_LLM_CREDENTIALS` | Optional service-account JSON used only for Gemini and embeddings, for example a key from another project mounted from Secret Manager (`--set-secrets /etc/rulelab-sa/gemini_sa.json=<secret>:latest`). With `GOOGLE_CLOUD_PROJECT` unset, the project comes from that file. Cloud Storage and the rest keep using the Cloud Run service account; do not set `GOOGLE_APPLICATION_CREDENTIALS` for this, because it would also redirect Storage. The key's project needs the Vertex AI API enabled and `roles/aiplatform.user`. |
 | `SEARCH_BACKEND=elasticsearch` + `ELASTICSEARCH_*` | Hybrid BM25 + vector retrieval. `sqlite` (the default value, also used with PostgreSQL) → built-in full-text search (FTS5 / PostgreSQL `tsvector`). |
 
 ## 2. One-time setup (already applied to this project)

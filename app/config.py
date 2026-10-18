@@ -14,7 +14,9 @@ class Settings:
  provider: str = os.getenv('AI_PROVIDER','demo')
  model: str = os.getenv('GEMINI_MODEL','gemini-3.8-flash')
  api_key: str = os.getenv('GEMINI_API_KEY','')
- credentials_path: str = os.getenv('GOOGLE_APPLICATION_CREDENTIALS','')
+ # RULELAB_LLM_CREDENTIALS points Gemini/embedding calls at a service-account file without changing the runtime identity
+ # (Cloud Storage keeps using Application Default Credentials). GOOGLE_APPLICATION_CREDENTIALS is the local-development fallback.
+ credentials_path: str = os.getenv('RULELAB_LLM_CREDENTIALS') or os.getenv('GOOGLE_APPLICATION_CREDENTIALS','')
  project: str = os.getenv('GOOGLE_CLOUD_PROJECT','')
  location: str = os.getenv('GOOGLE_CLOUD_LOCATION','global')
  search_backend: str = os.getenv('SEARCH_BACKEND','sqlite')
