@@ -13,4 +13,5 @@ ENV RULELAB_DB=/app/var/rulelab.sqlite3
 RUN useradd --create-home rulelab && mkdir -p /app/var && chown -R rulelab:rulelab /app
 USER rulelab
 EXPOSE 8080
-CMD ["sh", "-c", "python -m uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}"]
+# Cloud Run terminates TLS and forwards X-Forwarded-Proto; trusting it keeps the same-origin check (https) correct for POST/PUT.
+CMD ["sh", "-c", "python -m uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080} --proxy-headers --forwarded-allow-ips=*"]
